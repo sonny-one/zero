@@ -1,0 +1,37 @@
+<a href="<?php echo $this->basePath()?>/conserje/reclamo"> <h2 class="page-header"> <i class="fa fa-arrow-circle-left fa-1x"></i></a> Volver... </h2>
+
+<div style="text-align: center; padding: 20px;">
+<i class="fa fa-thumbs-up fa-4x"></i> <h3>Su reclamo ha sido ingresado exitosamente!</h3>
+</div>
+
+<div class="table-responsive col-lg-8 col-lg-offset-2">
+                                <table class="table table-striped table-bordered table-hover" id="dataTables-example">
+                                    <tbody>
+                                        <tr class="odd gradeX">
+                                            <td>N° de su Reclamo: </td>
+                                            <td><label><?php echo $this->lista[0]['id']?></label></td>
+                                        </tr>
+                                        <tr class="odd gradeX">
+                                            <td>Departamento: </td>
+                                            <td><label><?php echo $this->lista[0]['id_dpto']?></label></td>
+                                        </tr>
+                                        <tr class="odd gradeX">
+                                            <td>Para </td>
+                                            <td><label><?php echo $this->lista[0]['receptor']?></label></td>
+                                        </tr>
+                                        <tr class="odd gradeX">
+                                            <td>Asunto </td>
+                                            <td><label><?php echo $this->lista[0]['asunto']?></label></td>
+                                        </tr>
+                                        <tr class="odd gradeX">
+                                            <td>Descripción </td>
+                                            <td><label><?php echo html_entity_decode ($this->lista[0]['descripcion'])?></label></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+<?php $urlEdit = $this->basePath()."/conserje/reclamo/nuevo/".$this->lista[0]['id']."/1";?>
+<div class="col-lg-12" style="text-align: center;">
+ <a href="<?php echo $urlEdit ?>"><h5>Cometí un error, modificar mi reclamo  &nbsp;&nbsp;<i class="fa fa-edit fa-2x"></i></h5></a>
+</div>
+

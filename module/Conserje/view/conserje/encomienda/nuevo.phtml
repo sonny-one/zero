@@ -1,0 +1,246 @@
+<script src="<?php echo $this->basePath()?>/js/typeahead.min.js"></script>
+<script src="<?php echo $this->basePath()?>/js/hogan-3.0.1.js"></script>
+
+<h2 class="page-header"><a href="<?php echo $this->basePath()?>/conserje/encomienda">
+<i class="fa fa-arrow-circle-left fa-1x"></i></a> Registrar Encomienda </h2>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="panel panel-info">
+                     <div class="panel-heading">
+                             <div id="alertaV"></div>
+                        </div>
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                <?php 
+                                    $form = $this->form;
+                                    $form->prepare();
+                                    ?>                                    
+                                        <div class="form-group">
+                                            <label>Destinatario</label>
+                                            
+                                            <?php                                             
+                                              echo $this->formRow($this->form->get('id_dpto'));
+                                            ?>
+                                            <br/>
+                                            <div id="mostrar1" class="table-responsive">
+                                            
+                                
+                                                
+                                            </div>                                       
+                                        </div>
+                                       
+                                   
+                                </div>
+                                 <div id="mostrar2" class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                     <div class="form-group">                                               
+                                             <label>RUT</label><br />                        
+                                             <input type="text" id= "rutE" class="form-control" placeholder="Ingrese Rut a Buscar"/>
+                                             <a id="nuevoPersona" data-toggle='modal' data-target='#modalRegistrarPersona' class="btn btn-social-icon btn-bitbucket"><i class="fa fa-user-plus"></i>Nuevo</a>
+                                        </div>
+                                        <div class="form-group">                                               
+                                             <label>Remitente Rut</label>                        
+                                            <input type="text" id="personaRutEnc" class="form-control" readonly />
+                                            
+                                        </div>
+                                      <div class="form-group">                                               
+                                             <label>Remitente Nombre</label>                        
+                                            <input type="text" id="remitenteE" class="form-control" readonly />
+                                            <input type="hidden" id="personaEnc"/>
+                                        </div> 
+                                        <div class="form-group">                                               
+                                          <label>Detalle Encomienda</label>                        
+                                          <textarea class="form-control" rows="3" id="detalleEnc"></textarea>
+                                        </div> 
+                                         
+                                        
+                                      <div class="form-group text-left">
+                                            <div class="fileUpload btn btn-primary">
+                                             <span>Subir Fotografia</span>
+                                            <input type="file" class="upload" id="seleccionaFoto"/>
+                                            </div>
+                                            <span id="archivoFoto">No se ha seleccionado foto</span>
+                                        </div> 
+                                                                               
+                                         <div class="form-group text-right">                                               
+                                             <input type="button" class="btn btn-danger" id="limpiarEnc" value="Limpiar"/>
+                                            <input type="button" class="btn btn-success" id="registrarEnc" value="Registrar"/>
+                                        </div>                                                                                 
+
+                                 </div> 
+                               
+                            </div>
+                           
+                        </div>
+                        <!-- /.panel-body -->
+                    </div>
+                    <!-- /.panel -->
+                </div>
+                <!-- /.col-lg-12 -->
+            </div>
+            <!-- /.row -->
+            <?php echo $nuevaPersona?>
+           <?php echo $rsptaOK?>          
+            
+            <style>
+                    .fileUpload {
+                        position: relative;
+                        overflow: hidden;
+                        margin: 10px;
+                    }
+                    .fileUpload input.upload {
+                        position: absolute;
+                        top: 0;
+                        right: 0;
+                        margin: 0;
+                        padding: 0;
+                        font-size: 20px;
+                        cursor: pointer;
+                        opacity: 0;
+                        filter: alpha(opacity=0);
+                    }
+            </style>
+            
+            <script>
+            $("#limpiarEnc").click(function(){
+                $(location).attr('href','<?php echo $this->basePath()."/conserje/encomienda/nuevo"?>');
+            });
+            $("#seleccionaFoto").change(function(){
+                $("#archivoFoto").text($(this).val().replace("C:\\fakepath\\", ""));
+            });
+            
+            
+        $("#rutE").typeahead({
+        
+        name : 'sear',
+		limit:10,
+        minLength: 4,
+        remote: {
+            url : '<?php echo $this->basePath()."/conserje/cfg/rut/"?>'+'%QUERY/1',
+			filter: function (d) {
+            var datums = [];
+            for (var i = 0; i < d.length; i++){
+                datums.push({
+                    id:d[i].id,
+                    rut: d[i].rut,
+                    dv:d[i].dv,
+                    nombre: d[i].nombre,
+                    apellido: d[i].apellido,
+                    apellido2: d[i].apellido2,
+                    rutformat:d[i].rut_format
+                    
+                });
+				}
+                
+                return datums;
+			}
+            
+   
+        },
+        
+       template:'<strong>{{rut}}-{{dv}}</strong>  {{nombre}} {{apellido}} {{apellido2}}',
+		engine: Hogan,
+		valueKey: 'rut',
+        
+    }).on('typeahead:selected', function (e, datum) {
+    $("#personaEnc").val(datum.id);
+    $("#personaRutEnc").val(datum.rutformat);
+    $("#remitenteE").val(datum.nombre+" "+datum.apellido+" "+datum.apellido2);
+    });
+            
+$("#mostrar1").hide();
+$("#mostrar2").hide();
+
+$("#id_dpto").change(function(){
+   $("#mostrar1").fadeIn(500);
+   
+    
+   var parametros = {"id_unidad" : $("#id_dpto").val()};
+
+	$.ajax( {  
+		data : parametros,
+        url : '<?php echo $this->basePath()."/conserje/encomienda/residentes"?>',
+		type : 'post',
+		beforeSend : function() {
+		  
+          $("#mostrar1").html("<img src='<?php echo $this->basePath()?>/img/loading.gif'/>");
+		},
+		success : function(r) {
+            if(r.status=='ok'){
+                $("#mostrar1").html(r.tabla);
+                $("#mostrar2").fadeIn(500);
+                
+            }else{
+                $("#mostrar1").html("Error en cargar la pagina");
+            }
+		}
+    
+    
+});
+    
+});
+
+$("#btnRegistrarNuevaPersona").click(function(){
+    var vector = new Array();
+    vector = registrarPersonaNueva();
+    $("#personaEnc").val(vector["id"]);
+    $("#rutE").val(vector["rut"]);
+    $("#personaRutEnc").val(vector["rutformat"]);
+    $("#remitenteE").val(vector["nombre"]+" "+vector["apellido1"]+" "+vector["apellido2"]);
+    
+
+    
+});
+
+$("#registrarEnc").click(function(){
+    
+    var file_data = $('#seleccionaFoto').prop('files')[0];
+    if(file_data != undefined){
+        if(file_data.size > 2000000){
+        $("#alertaV").html('<div class="alert alert-danger alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>Error : Archivo es superior a 2Mb</div>');
+        return false;
+        }
+    }
+    var parametros = new FormData();                  
+    parametros.append('fileData', file_data);
+    parametros.append('id_unidad',$("#id_dpto").val());
+    parametros.append('id_persona_remite',$("#personaEnc").val());
+    parametros.append('detalle',$("#detalleEnc").val());
+     parametros.append('remitente',$("#remitenteE").val());
+
+    $(this).attr("disabled","disabled");
+    $(this).val("Registrando...");
+	$.ajax( {
+	    contentType:false,
+		processData:false,	
+		cache:false,
+		data : parametros,
+        url : '<?php echo $this->basePath()."/conserje/encomienda/registrar"?>',
+		type : 'post',
+		beforeSend : function() {
+		},
+		success : function(r) {
+            if(r.status=='ok'){
+               $("#descrok").text("Se ha registrado la encomienda satisfactoriamente...");
+                    $("#respuestaOK").modal('show');
+                    setInterval(function(){
+                        $("#respuestaOK").modal('hide');
+                        $(location).attr('href','<?php echo $this->basePath()."/conserje/encomienda"?>'); 
+                    },1500); 
+                
+            }else{
+                alert(r.status);
+                $("#alertaV").html('<div class="alert alert-danger alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>Error : '+r.error+'</div>');
+            }
+             $("#registrarEnc").removeAttr("disabled");
+             $("#registrarEnc").val("Registrar");
+		}
+    
+    
+        });
+    
+});
+            
+            </script>
+            
+          

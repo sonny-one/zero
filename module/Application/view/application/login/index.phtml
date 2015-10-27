@@ -1,0 +1,134 @@
+<body class="login">
+<!-- BEGIN LOGO -->
+<div class="logo">
+	<a href="index.html">
+	<img src="<?php echo $this->basePath()?>/metronic/admin/layout4/img/logo-big.png" alt=""/>
+	</a>
+</div>
+<!-- END LOGO -->
+<!-- BEGIN SIDEBAR TOGGLER BUTTON -->
+<div class="menu-toggler sidebar-toggler">
+</div>
+<!-- END SIDEBAR TOGGLER BUTTON -->
+<!-- BEGIN LOGIN -->
+<div class="content">
+	<!-- BEGIN LOGIN FORM -->
+	<form class="login-form" id="logueo" name="logueo" role="form" action="<?php echo $this->basePath()?>/application/login/send" method="post">
+		<h3 class="form-title">Ingresa tu cuenta</h3>
+		<div class="alert alert-danger display-hide">
+			<button class="close" data-close="alert"></button>
+			<span>
+			Debes ingresar un usuario y una contrase&ntilde;a. </span>
+		</div>
+		<div class="form-group">
+			<!--ie8, ie9 does not support html5 placeholder, so we just show field title for that-->
+			<label class="control-label visible-ie8 visible-ie9">Username</label>
+			<div class="input-icon">
+				<i class="fa fa-user"></i>
+				<input class="form-control placeholder-no-fix" id="usuariobecheck" type="text" autocomplete="off" placeholder="Usuario" name="usuariobecheck"/>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="control-label visible-ie8 visible-ie9">Password</label>
+			<div class="input-icon">
+				<i class="fa fa-lock"></i>
+				<input class="form-control placeholder-no-fix" id="password" type="password" autocomplete="off" placeholder="Contrase&ntilde;a" name="password"/>
+                <input name="password2" id="password2" type="hidden" />
+			</div>
+		</div>
+		<div class="form-actions">
+			<label class="checkbox">
+			<input type="checkbox" name="remember" value="1"/> Recordar </label>
+			<a id="iniciar" class="btn blue pull-right">
+			Ingresar <i class="m-icon-swapright m-icon-white"></i>
+			</a>
+		</div>
+		<div class="forget-password">
+			<h4>Olvidaste tu constrase&ntilde;a ?</h4>
+			<p>
+				 Descuida, da un click <a href="javascript:;" id="forget-password">
+				aqu&iacute; </a>
+				para reestablecerla.
+			</p>
+		</div>
+	</form>
+	<!-- END LOGIN FORM -->
+	<!-- BEGIN FORGOT PASSWORD FORM -->
+	<form class="forget-form" action="index.html" method="post">
+		<h3>Contrase&ntilde;a Olvidada ?</h3>
+		<p>
+			 Ingresa tu correo para continuar con el proceso.
+		</p>
+		<div class="form-group">
+			<div class="input-icon">
+				<i class="fa fa-envelope"></i>
+				<input class="form-control placeholder-no-fix" type="text" autocomplete="off" placeholder="e-mail" name="email"/>
+			</div>
+		</div>
+		<div class="form-actions">
+			<button type="button" id="back-btn" class="btn">
+			<i class="m-icon-swapleft"></i> Volver </button>
+			<button type="submit" class="btn blue pull-right">
+			Enviar <i class="m-icon-swapright m-icon-white"></i>
+			</button>
+		</div>
+	</form>
+	<!-- END FORGOT PASSWORD FORM -->	
+</div>
+<!-- END LOGIN -->
+<!-- BEGIN COPYRIGHT -->
+<div class="copyright">
+	 <?php echo date('Y')?> &copy; becheck - Sistema de Administraci&oacute;n.
+</div>
+<!-- END COPYRIGHT -->
+</body>
+
+
+<script>
+    $(document).ready(function(e){
+        $('#usuario').focus();
+        $('#iniciar').click(function(e){
+            var pass = hex_md5($("#password").val());
+            var pass = binHash(pass);
+            $("#password2").val(pass);
+            $("#password").attr("disabled", "disabled");
+            $('form#logueo').submit();
+            
+        });
+        $('#password').keypress(function (e) {
+            if (e.which == 13) {
+            var pass = hex_md5($("#password").val());
+            var pass = binHash(pass);
+            $("#password2").val(pass);
+            $("#password").attr("disabled", "disabled");
+            $('form#logueo').submit();
+                }
+            });
+        
+    });
+$("#formemail").submit(function(e)
+{
+    var postData = $(this).serializeArray();
+    var formURL = $(this).attr("action");
+    $.ajax(
+    {
+        url : formURL,
+        type: "POST",
+        data : postData,
+        dataType : 'json',
+        success : function(response) {
+                    
+          $("#mostrarEmail").html('<div id="respuesta" class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>'+response.descripcion+'</div>');                                
+          $("#mostrarEmail").fadeOut(5000);
+          if (response.status == "ok"){
+          $("#enviarformemail").attr('disabled', 'disabled');
+          }
+        },
+        error: function(jqXHR, textStatus, errorThrown) 
+        {
+            $("#mostrarEmail").html('<div id="respuesta" class="alert alert-danger alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>Error en el env&iacute;o de datos al servidor</div>')      
+        }
+    });
+    e.preventDefault(); //STOP default action    
+});       
+    </script>

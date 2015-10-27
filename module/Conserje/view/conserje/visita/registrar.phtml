@@ -1,0 +1,616 @@
+
+<script src="<?php echo $this->basePath()?>/js/typeahead.min.js"></script>
+<script src="<?php echo $this->basePath()?>/js/hogan-3.0.1.js"></script>
+ 
+<h2 class="page-header"><a href="<?php echo $this->basePath()?>/conserje/visita">
+<i class="fa fa-arrow-circle-left fa-1x"></i></a> Registrar Visita </h2>
+ <?php 
+  $form = $this->form;
+  $form->prepare();
+?>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="panel panel-red">
+                        <div class="panel-body">
+                            <div class="row">   
+                             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                             <div id="alertaV" class="col-lg-8"></div>
+                             </div>                         
+                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">                                   
+                                    <div class="form-group">
+                                      <label>Nro DEPARTAMENTO <a id="verDpto" style="display: none;"  data-toggle='modal' data-target='#modalVerDpto'><i class="fa fa-eye fa-fw"></i> ver</a></label>
+                                           <?php
+                                              echo $this->formRow($this->form->get('id_pk_auto'));
+                                              echo $this->formRow($this->form->get('id_persona_v')); 
+                                              echo $this->formRow($this->form->get('id_persona_t'));                                              
+                                              echo $this->formRow($this->form->get('id_unidad'));
+                                            ?>
+                                            
+                                             
+                                    </div>
+                                    <div id="muestra_1" style="display: none;">
+                                    <div class="form-group">
+                                         <label>RUT</label><br/>
+                                         <?php                                             
+                                              echo $this->formRow($this->form->get('rutV'));
+                                         ?>
+                                         <a id="nuevoPersona" data-toggle='modal' data-target='#modalRegistrarPersona' class="btn btn-social-icon btn-bitbucket"><i class="fa fa-user-plus"></i>Nuevo</a>
+
+                                    </div>
+                                    <div class="form-group">
+                                         <label>DNI</label><br/>
+                                        <?php                                           
+                                              echo $this->formRow($this->form->get('dniV'));
+                                         ?>  
+                                    </div>
+                                    <div class="form-group">
+                                        
+                                      <label>Motivo</label>
+                                        <?php                                           
+                                              echo $this->formRow($this->form->get('id_motivo'));
+                                         ?>
+                                                
+                                    </div>   
+
+                                       </div>                              
+                                </div>
+                                <!-- /.col-lg-6 (nested) -->
+                                <div id="muestra_2" class="col-lg-4 col-md-4 col-sm-4 col-xs-12" style="display: none;">
+                                 <div class="form-group">
+                                            <label>Nombres</label>
+                                        <?php                                           
+                                              echo $this->formRow($this->form->get('nombreV'));
+                                         ?>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Apellidos</label>
+                                         <?php                                           
+                                              echo $this->formRow($this->form->get('apellidoV'));
+                                         ?>
+                                    </div>
+                                  <div class="form-group">
+                                        <label>Contacto</label>
+                                         <?php                                           
+                                              echo $this->formRow($this->form->get('contactoV'));
+                                         ?>
+                                    </div>
+                                  
+                                    <div class="form-group">
+                                        <label>Fecha Ingreso</label>
+                                         <?php                                           
+                                              echo $this->formRow($this->form->get('fechaHoraV'));
+                                         ?>
+                                    </div>
+                                </div>
+                                 <div id="muestra_3" class="col-lg-4 col-md-4 col-sm-4 col-xs-12" style="text-align: center; display: none;">
+                                        <img id="fotoV" src="<?php echo $this->basePath()?>/img/foto_perfil/avatar.png"  class="img-circle">
+                                        <p style="padding: 10px;">Fotografia</p>
+                                </div>
+                                <!-- /.col-lg-6 (nested) -->
+                            </div>
+                            <!-- /.row (nested) -->
+                             <div id="muestra_4" class="row" style="text-align: right; display: none;" >   
+                                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                        <?php     
+                                            echo $this->formRow($this->form->get('btnVincular')); 
+                                            echo " ";                                     
+                                             echo $this->formRow($this->form->get('btnRegistrar'));
+                                         ?>
+                                        </div>                                              
+
+                               </div>
+
+                        </div>
+                        <!-- /.panel-body -->
+                    </div>
+                    <!-- /.panel -->
+                </div>
+                <!-- /.col-lg-12 -->
+            </div>
+            <!-- /.row -->
+            
+            
+ 
+
+            <div class="row" id="vistaDatosEstacionamiento" style="display: none;">
+                <div class="col-lg-12">
+                    <div class="panel panel-red">                     
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                     <div class="form-group">
+                                      <label>ESTACIONAMIENTO</label>
+                                             <?php     
+                                            echo $this->formRow($this->form->get('nombreEst'));                                      
+                                         ?>
+                                             
+                                    </div>
+                                   <div class="form-group">
+                                      <label>Aplica Multa</label>
+                                           <?php     
+                                            echo $this->formRow($this->form->get('aplicaMulta'));                                      
+                                         ?>
+                                             
+                                    </div>
+                                   
+                                    <div class="form-group">
+                                         <label>Observaciones</label><br/>
+                                          <?php     
+                                            echo $this->formRow($this->form->get('observacionAuto'));                                      
+                                         ?>  
+                                    </div>
+  
+                                                                     
+                                </div>
+                                <!-- /.col-lg-6 (nested) -->
+                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+
+                                   <div class="form-group">
+                                         <label>Patente</label><br/>
+                                          <?php     
+                                            echo $this->formRow($this->form->get('patenteAuto'));                                      
+                                         ?> 
+                                    </div>
+                                    <div class="form-group">
+                                         <label>Modelo</label><br/>
+                                          <?php     
+                                            echo $this->formRow($this->form->get('modeloAuto'));                                      
+                                         ?> 
+                                    </div>
+                                </div>
+                                 <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12" style="text-align: center;">
+
+                                </div>
+                                <!-- /.col-lg-6 (nested) -->
+                            </div>
+                            <!-- /.row (nested) -->
+                        </div>
+                        <!-- /.panel-body -->
+                    </div>
+                    <!-- /.panel -->
+                </div>
+                <!-- /.col-lg-12 -->
+            </div>
+            <!-- /.row -->
+            
+            
+            <div class="modal fade" id="modalMapa" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
+               <div class="modal-dialog modal-lg">
+                 <div class="modal-content" >
+                        <div class="modal-header">
+                          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                          <h4 class="modal-title" id="myModalLabel" >Mapa Estacionamientos &nbsp;&nbsp;&nbsp;&nbsp;<?php echo $mostrarFechaEst?></h4>
+                           </div>
+                         <div class="modal-body">
+                            <div class="container-fluid">
+                                <div class="row">
+                                
+                                <?php for($i=0;$i<count($mapa);$i++){
+                                    
+                                $idEst = $mapa[$i]['pk'];
+                                $dptoEst = isset($mapa[$i]['nombre_unidad'])?$mapa[$i]['nombre_unidad']:"-";
+                                $nombreEst = $mapa[$i]['nombre'];
+                                $aplicaEst = isset($mapa[$i]['aplica'])?$mapa[$i]['aplica']:"";
+                                $fechaEst = isset($mapa[$i]['fecha'])?$mapa[$i]['fecha']:"";
+                                $ffEst = $fechaEst<>""?substr($fechaEst,0,10):"-";
+                                $fhEst =$fechaEst<>""?substr($fechaEst,10,9):"-";
+                                $estadoEst = isset($mapa[$i]['estado'])?$mapa[$i]['estado']:"";
+                                $horaEst = isset($mapa[$i]['horas'])?$mapa[$i]['horas']:"";
+                                $patenteEst = isset($mapa[$i]['patente'])?$mapa[$i]['patente']:"";
+                                $classBtn ="";
+                                $condicionEst="";
+                                $marcarHora='-';
+                                $sel_i="";
+                                $sel_f="";
+                                
+                                
+                                 
+                                if($aplicaEst==""){
+                                    
+                                     if($estadoEst=="1"){
+                                        $sel_i='<a href="javascript:void(0)" onclick="autoSelection('.$idEst.',&apos;'.$nombreEst.'&apos;)">';
+                                        $sel_f="</a>";
+                                        $patenteEst="Disponible";
+                                        $fhEst="Click";
+                                        $classBtn="btn-success";
+                                        $condicionEst="Libre";
+                                        $autoEst =$this->basePath()."/img/auto/auto_disponible.png";
+                                    }else{
+                                        $classBtn="";
+                                        $condicionEst="Bloqueado";
+                                        $autoEst =$this->basePath()."/img/auto/auto_ocupado_obs.png";
+                                        
+                                    }
+                                    
+                                }else{
+                                    $condicionEst="Ocupado";
+                                    $marcarHora = '<i class="fa fa-clock-o">'.$horaEst.'Hrs</i>';
+                                    $classBtn="btn-info";
+                                    $autoEst =$this->basePath()."/img/auto/auto_ocupado_normal.png";                                    
+                                    
+                                    if($aplicaEst=="1"){
+                                        if((double)$horaEst > 5.00){
+                                            $marcarHora='<span class="blink_me"><i class="fa fa-clock-o">'.$horaEst.'Hrs</i></span>';
+                                            $classBtn="btn-danger";
+                                            $alertaEst="1";
+                                            $autoEst =$this->basePath()."/img/auto/auto_ocupado_alerta.png";
+                                        }
+                                }
+                                }
+                                ?>
+                                <?php echo $sel_i?>
+                                <div class="col-lg-3 col-md-4 col-sm-4 col-xs-5">
+                                        <div style="border: 2.5px solid #dede60; text-align: center; 	border-top: none; border-bottom:none;">
+                                        <table class="table <?php echo $classBtn?>">
+                                            <thead>
+                                            <tr>
+                                                <th><?php echo $nombreEst?></th>
+                                                <th><?php echo $dptoEst?></th>
+                                            </tr>                                                
+                                            </thead>
+                                            <tbody>
+                                                <tr><td><img src="<?php echo $autoEst?>"/></td>
+                                                    <td><?php echo $condicionEst?><br/>
+                                                    <?php echo $patenteEst?><br/>
+                                                    <?php echo $fhEst?><br/>
+                                                    <?php echo $marcarHora?>
+                                                    </td>
+                                                </tr>
+                                                
+                                            </tbody>
+                                           
+                                         </table>       
+                                        </div>
+                                    </div>
+                                    <?php echo $sel_f?>  
+                                    <?php }?>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               
+                                    
+                                </div>
+                            </div>
+                            </div>
+
+                    </div>
+                </div>
+            </div>
+            
+            <div class="modal fade" id="modalIngresarAuto" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
+               <div class="modal-dialog modal-sm">
+                 <div class="modal-content" >
+                        
+                         <div >
+                         &nbsp;
+                            <div class="container-fluid">
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="panel panel-info">
+                                            <div class="panel-heading">
+                                            Ingresar los Datos del Auto
+                                         </div>
+                                        <div class="panel-body">
+                                            <div class="form-group input-group">
+                                                <span class="input-group-addon"><i class="fa fa-car"></i></span>
+                                                <input type="text" id="patenteAuto_w" class="form-control" placeholder="Patente"/>
+                                            </div>
+                                             <div class="form-group input-group">
+                                                   <span class="input-group-addon"><i class="fa fa-car"></i></span>
+                                                <input type="text" id="modeloAuto_w" class="form-control" placeholder="Modelo"/>
+                                            </div>
+                                            <div class="form-group input-group">
+                                                <span class="input-group-addon"><i class="fa fa-list-ul"></i></span>
+                                                <textarea class="form-control" id="observacionAuto_w" placeholder="Observaci&oacute;n" rows="3"></textarea>
+                                            </div>
+                                            <div align="right">
+                                            <button id="btnCancelarAuto" data-dismiss="modal"  data-toggle='modal' data-target='#modalMapa' class="btn btn-danger">Cerrar</button>
+                                            <button id="btnDatosAuto" data-dismiss="modal" class="btn btn-success">Aceptar</button>
+                                            </div>
+
+
+                                        </div>
+                                        
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                            </div>
+
+                    </div>
+                </div>
+            </div>
+            
+            <div class="modal fade" id="modalVerDpto" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
+               <div class="modal-dialog">
+                 <div class="modal-content" >
+                        
+                         <div >
+                         &nbsp;
+                            <div class="container-fluid">
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="panel panel-info">
+                                            <div class="panel-heading">
+                                            Datos del Deparmento
+                                         </div>
+                                        <div class="panel-body" id="cuerpoDatosDpto">
+                                            <div id="esperarD1"></div>
+                                            <div class="form-group input-group">
+                                               <span class="input-group-addon"><i class="fa fa-home"></i> Dpto</span>
+                                               <input type="text" class="form-control" id="nombre1D"/>
+                                            </div>
+                                            <div class="form-group input-group">
+                                                <span class="input-group-addon"><i class="fa fa-user"></i> Titular</span>
+                                                <input type="text" id="titular1D" class="form-control"/>
+                                            </div>
+                                            <div class="form-group input-group">
+                                                   <span class="input-group-addon">Contacto</span>
+                                                <input type="text" id="contacto1D" class="form-control"/>
+                                            </div>
+                                            <div class="form-group input-group">
+                                                <span class="input-group-addon">Condicion</span>
+                                                <input type="text" class="form-control" id="condicion1D"/>
+                                            </div>
+                                            <div class="form-group" id="verTablaDpto" align="left"></div>                                            
+                                            <div align="right">
+                                            <button data-dismiss="modal"  class="btn btn-danger">Cerrar</button>
+                                            </div>
+
+
+                                        </div>
+                                        
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                            </div>
+
+                    </div>
+                </div>
+            </div>
+            
+           <?php echo $nuevaPersona?>
+           <?php echo $rsptaOK?>  
+            
+            
+<script>
+$(document).ready(function(){
+
+
+    $("#rutV").typeahead({
+        
+        name : 'sear',
+		limit:10,
+        minLength: 4,
+        remote: {
+            url : '<?php echo $this->basePath()."/conserje/visita/rut/"?>'+'%QUERY/1',
+			filter: function (d) {
+            var datums = [];
+            for (var i = 0; i < d.length; i++){
+                datums.push({
+                    id:d[i].id,
+                    rut: d[i].rut,
+                    dv:d[i].dv,
+                    nombre: d[i].nombre,
+                    apellido: d[i].apellido,
+                    apellido2: d[i].apellido2,
+                    telefono:d[i].telefono,
+                    correo:d[i].correo,
+                    foto:d[i].foto,
+                    dni:d[i].dni
+                    
+                });
+				}
+                
+                return datums;
+			}
+            
+   
+        },
+        
+       template:'<strong>{{rut}}-{{dv}}</strong>  {{nombre}} {{apellido}} {{apellido2}}',
+        //header: '<input type="button" value="Ingresar Nueva Persona" />',
+		engine: Hogan,
+		valueKey: 'rut',
+        
+    }).on('typeahead:selected', function (e, datum) {
+    $("#id_persona_v").val(datum.id);
+    $("#apellidoV").val(datum.apellido+" "+datum.apellido2);
+	$("#nombreV").val(datum.nombre);
+    $("#contactoV").val(datum.telefono+" / "+datum.correo);
+    $("#dniV").val(datum.dni);
+    $("#fotoV").attr('src','<?php echo $this->basePath()?>/img/foto_perfil/'+datum.foto);
+    
+});
+
+
+
+
+
+//Ocultamos
+
+/*$("#vistaDatosEstacionamiento").hide();
+$("#nuevoPersona").show();
+$("#verDpto").hide();
+$("#muestra_1").hide();
+$("#muestra_2").hide();
+$("#muestra_3").hide();
+$("#muestra_4").hide();*/
+});
+
+$("#btnRegistrar").click(function(){
+    if ($("#nombreV").val()==""){
+        $("#alertaV").html('<div class="alert alert-danger alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>El nombre de la vista no esta establecido</div>');
+        return;
+    }
+    
+    var nm = $(this).val();
+   
+    $(this).val('Espere por favor...');
+    $(this).attr("disabled","disabled");
+    var parametros = {"id_unidad" : $("#id_unidad").val(),
+                      "id_persona_t":$("#id_persona_t").val(),
+                      "id_persona_v":$("#id_persona_v").val(),
+                      "id_estacionamiento":$("#id_pk_auto").val(),
+                      "id_motivo":$("#id_motivo").val(),
+                      "fecha_ingreso":$("#fechaHoraV").val(),
+                      "modelo_auto":$("#modeloAuto").val(),
+                      "patente":$("#patenteAuto").val(),
+                      "observacion":$("#observacionAuto").val(),
+                      "aplica_multa":$("#aplicaMulta").val()
+                      };
+                            
+    	$.ajax( {  
+		data : parametros,
+        url : '<?php echo $this->basePath()."/conserje/visita/regvis"?>',
+		type : 'post',
+		beforeSend : function() {
+		 
+		},
+		success : function(r) {
+            if(r.status=='ok'){
+                    $("#descrok").text("Se ha registrado la visita satisfactoriamente...");
+                    $("#respuestaOK").modal('show');
+                    setInterval(function(){
+                        $("#respuestaOK").modal('hide');
+                        $(location).attr('href','<?php echo $this->basePath()."/conserje/visita"?>'); 
+                    },1500);               
+                
+            }else{
+                $("#btnRegistrar").val(nm);
+                $("#btnRegistrar").removeAttr("disabled");
+                $("#alertaV").html('<div class="alert alert-danger alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button> Error: '+r.error+'</div>');
+            }
+		}
+    
+    
+        });
+    
+    
+});
+
+$("#id_unidad").change(function(){
+    
+    if($(this).val()=="0"){
+        $("#verDpto").hide();
+        $("#muestra_1").hide();
+        $("#muestra_2").hide();
+        $("#muestra_3").hide();
+        $("#muestra_4").hide();
+    }else{
+        $("#verDpto").fadeIn(250);
+        $("#muestra_1").fadeIn(500);
+        $("#muestra_2").fadeIn(500);
+        $("#muestra_3").fadeIn(500);
+        $("#muestra_4").fadeIn(500);
+
+    }
+    
+})
+
+$("#btnDatosAuto").click(function(){
+    
+    $("#vistaDatosEstacionamiento").show();
+    $("#modalMapa").modal('hide');
+    $("#modeloAuto").val($("#modeloAuto_w").val());
+    $("#patenteAuto").val($("#patenteAuto_w").val());
+    $("#observacionAuto").val($("#observacionAuto_w").val());
+    $("#modeloAuto_w").val("");
+    $("#patenteAuto_w").val("");
+    $("#observacionAuto_w").val("");
+    
+    $("#btnVincular").val("Estacionamiento Vinculado");
+    $("#btnVincular").attr("class","btn btn-info");
+    
+    
+    
+});
+
+$("#btnCancelarAuto").click(function(){
+    
+    $("#id_pk_auto").val(0);
+    $("#nombreEst").val("");
+    $("#modeloAuto").val("");
+    $("#patenteAuto").val("");
+    $("#observacionAuto").val("");
+    $("#modeloAuto_w").val("");
+    $("#patenteAuto_w").val("");
+    $("#observacionAuto_w").val("");    
+    
+    
+});
+
+$("#btnRegistrarNuevaPersona").click(function(){
+    
+    var vector = new Array();
+    vector = registrarPersonaNueva();
+    $("#id_persona_v").val(vector["id"]);
+    $("#rutV").val(vector["rut"]);
+    $("#nombreV").val(vector["nombre"]);
+    $("#apellidoV").val(vector["apellido1"]+" "+vector["apellido2"]);
+    $("#contactoV").val(vector["telefono"]+" / "+vector["correo"]);
+    $("#dniV").val(vector["dni"]);
+    
+});
+
+$("#verDpto").click(function(){
+    
+    var parametros = {"idUnidad" : $("#id_unidad").val()};
+
+	$.ajax( {  
+		data : parametros,
+        url : '<?php echo $this->basePath()."/conserje/visita/verdpto"?>',
+		type : 'post',
+		beforeSend : function() {
+		  $("#cuerpoDatosDpto").hide();
+          $("#esperarD1").html("Por favor espere...")
+		},
+		success : function(r) {
+            if(r.status=='ok'){
+                $("#esperarD1").html("");
+                $("#cuerpoDatosDpto").fadeIn(500);
+                $("#nombre1D").val(r.nombreD1);
+                $("#titular1D").val(r.titularD1);
+                $("#contacto1D").val(r.contactoD1);
+                $("#condicion1D").val(r.condicionD1);
+                $("#verTablaDpto").html(r.tablaD1);
+            }else{
+                $("#esperarD1").html("Error en cargar la pagina");
+            }
+		}
+    
+    
+});
+});
+
+function autoSelection(id,nombre){
+    
+    $("#id_pk_auto").val(id);
+    $("#nombreEst").val(nombre);
+    $("#modalMapa").modal('hide');
+    $("#modalIngresarAuto").modal('show');
+   
+
+    
+}
+
+function blinker() {
+    $('.blink_me').fadeOut(500);
+    $('.blink_me').fadeIn(500);
+}
+setInterval(blinker, 1000); //Runs every second
+
+</script>   
+<style>
+.MyGradiente{
+background: rgb(181,189,200); /* Old browsers */
+background: -moz-linear-gradient(top,  rgba(181,189,200,1) 0%, rgba(130,140,149,1) 59%, rgba(130,140,149,1) 99%, rgba(130,140,149,1) 99%, rgba(40,52,59,1) 100%); /* FF3.6+ */
+background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(181,189,200,1)), color-stop(59%,rgba(130,140,149,1)), color-stop(99%,rgba(130,140,149,1)), color-stop(99%,rgba(130,140,149,1)), color-stop(100%,rgba(40,52,59,1))); /* Chrome,Safari4+ */
+background: -webkit-linear-gradient(top,  rgba(181,189,200,1) 0%,rgba(130,140,149,1) 59%,rgba(130,140,149,1) 99%,rgba(130,140,149,1) 99%,rgba(40,52,59,1) 100%); /* Chrome10+,Safari5.1+ */
+background: -o-linear-gradient(top,  rgba(181,189,200,1) 0%,rgba(130,140,149,1) 59%,rgba(130,140,149,1) 99%,rgba(130,140,149,1) 99%,rgba(40,52,59,1) 100%); /* Opera 11.10+ */
+background: -ms-linear-gradient(top,  rgba(181,189,200,1) 0%,rgba(130,140,149,1) 59%,rgba(130,140,149,1) 99%,rgba(130,140,149,1) 99%,rgba(40,52,59,1) 100%); /* IE10+ */
+background: linear-gradient(to bottom,  rgba(181,189,200,1) 0%,rgba(130,140,149,1) 59%,rgba(130,140,149,1) 99%,rgba(130,140,149,1) 99%,rgba(40,52,59,1) 100%); /* W3C */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#b5bdc8', endColorstr='#28343b',GradientType=0 ); /* IE6-9 */
+}
+</style>        
+         

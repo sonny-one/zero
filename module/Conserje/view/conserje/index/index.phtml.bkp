@@ -1,0 +1,140 @@
+<h2 class="page-header">Modulo del Conserje</h2>
+<br/> <br/>
+<div class="row">
+  <a href="<?php echo $this->basePath()?>/conserje/visita">
+                <div class="col-lg-4 col-md-6">
+                    <div class="panel panel-red">
+                        <div class="panel-heading heading-conserje">
+                            <div class="row">
+                                <div class="col-xs-3">
+                                    <i class="fa fa-user-plus fa-5x"></i>
+                                </div>
+                                <div class="col-xs-9 text-right">
+                                    <div class="huge">Registro</div>
+                                    <div class="huge">Visita</div>
+                                </div>
+                            </div>
+                        </div>
+                            <div class="panel-footer footer-conserje">
+                                <span class="pull-left">Ver Detalles</span>
+                                <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                <div class="clearfix"></div>
+                            </div>
+                    </div>
+                </div>
+                </a>  
+  <a href="<?php echo $this->basePath()?>/conserje/reclamo">
+                <div class="col-lg-4 col-md-6">
+                    <div class="panel panel-red">
+                        <div class="panel-heading heading-conserje">
+                            <div class="row">
+                                <div class="col-xs-3">
+                                    <i class="fa fa-exclamation-circle fa-5x"></i>
+                                </div>
+                                <div class="col-xs-9 text-right">
+                                    <div class="huge">Libro</div>
+                                    <div class="huge">Reclamos</div>
+                                </div>
+                            </div>
+                        </div>
+                            <div class="panel-footer">
+                                <span class="pull-left">Ver Detalles</span>
+                                <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                <div class="clearfix"></div>
+                            </div>
+                    </div>
+                </div>
+                </a>  
+ <a href="<?php echo $this->basePath()?>/conserje/sugerencia">               
+                <div class="col-lg-4 col-md-6">
+                    <div class="panel panel-red">
+                        <div class="panel-heading heading-conserje">
+                            <div class="row">
+                                <div class="col-xs-3">
+                                    <i class="fa fa-hand-o-up fa-5x"></i>
+                                </div>
+                                <div class="col-xs-9 text-right">
+                                    <div class="huge">Libro</div>
+                                    <div class="huge">Sugerencias</div>
+                                </div>
+                            </div>
+                        </div>
+                            <div class="panel-footer">
+                                <span class="pull-left">Ver Detalles</span>
+                                <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                <div class="clearfix"></div>
+                            </div>
+                         
+                    </div>
+                </div>
+     </a>
+ <a href="<?php echo $this->basePath()?>/conserje/encomienda">               
+                <div class="col-lg-4 col-md-6">
+                    <div class="panel panel-red">
+                        <div class="panel-heading heading-conserje">
+                            <div class="row">
+                                <div class="col-xs-3">
+                                    <i class="fa fa-truck fa-5x"></i>
+                                </div>
+                                <div class="col-xs-9 text-right">
+                                    <div class="huge">Encomiendas</div>                                    
+                                </div>
+                            </div>
+                        </div>
+                            <div class="panel-footer">
+                                <span class="pull-left">Ver Detalles</span>
+                                <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                <div class="clearfix"></div>
+                            </div>
+                         
+                    </div>
+                </div>
+ </a>                    
+  <a href="<?php echo $this->basePath()?>/conserje/estadistica">               
+                <div class="col-lg-4 col-md-6">
+                    <div class="panel panel-red">
+                        <div class="panel-heading heading-conserje">
+                            <div class="row">
+                                <div class="col-xs-3">
+                                    <i class="fa fa-bar-chart-o fa-5x"></i>
+                                </div>
+                                <div class="col-xs-9 text-right">
+                                    <div class="huge">Estadisticas</div>
+                                </div>
+                            </div>
+                        </div>
+                            <div class="panel-footer">
+                                <span class="pull-left">Ver Detalles</span>
+                                <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                <div class="clearfix"></div>
+                            </div>
+                       
+                    </div>
+                </div>
+                 </a>
+ <a href="<?php echo $this->basePath()?>/conserje/comentario">               
+                <div class="col-lg-4 col-md-6">
+                    <div class="panel panel-red">
+                        <div class="panel-heading heading-conserje">
+                            <div class="row">
+                                <div class="col-xs-3">
+                                    <i class="fa fa-comment fa-5x"></i>
+                                </div>
+                                <div class="col-xs-9 text-right">
+                                    <div class="huge">Dejanos un</div>
+                                    <div class="huge">Comentario!</div>
+                                </div>
+                            </div>
+                        </div>
+                            <div class="panel-footer">
+                                <span class="pull-left">Ver Detalles</span>
+                                <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                <div class="clearfix"></div>
+                            </div>
+                        
+                    </div>
+                </div>
+                </a>
+                <div class="col-lg-12">
+                     <?php echo $this->content; ?>
+                </div>

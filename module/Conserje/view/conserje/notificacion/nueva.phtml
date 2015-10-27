@@ -1,0 +1,157 @@
+<div id="todoactv" class="row">
+<?php var_dump($id  )?>
+<div class="col-lg-3 col-md-3 col-sm-3">
+        <div class="col-lg-12" style="text-align: center; margin-bottom: 10px;">
+            <img src="<?php echo $this->basePath()?>/img/email.png" class="img-rounded" style="max-width: 80%;"/> <br />
+        </div>                 
+        <div class="col-lg-12">
+                    <div class="well well-sm">
+                        <h4 style="text-align: center;"><?php if($flag=="comite"){$flag="Comit&eacute;";} echo ucfirst($flag)?></h4>
+                        <p><?php echo $texto?> </p>
+                    </div>
+        </div>
+</div>      
+                                      
+<div class="col-lg-9 col-md-9 col-sm-9">
+        <div class="panel-body">
+            <ul class="nav nav-tabs">
+                <li class="active"><a href="#<?php echo $btn['tab1'];?>" data-toggle="tab"><i class="fa <?php echo $btn['faboton1']?>"></i> &nbsp;<?php echo $btn['txtboton1'];?> </a>
+                </li>                                
+                <li ><a href="#<?php echo $tab2?>" data-toggle="tab"><i class="fa <?php echo $faboton2;?>"></i> &nbsp;<?php echo $txtboton2;?></a>                                
+                </li>
+                <li ><a href="#<?php echo $tab3?>" data-toggle="tab"><i class="fa <?php echo $faboton3;?>"></i> &nbsp;<?php echo $txtboton3;?></a>
+                </li>
+            </ul>
+                 
+<div class="tab-content">
+
+</div>
+</div>
+<!-- TAB datos previsionales-->
+                            <div class="tab-pane fade" id="<?php echo $btn['tab1']?>" style="padding-top: 12px;">
+                            mdirecto
+                
+</div>
+<!-- TAB turno de trabajo-->                                
+                            <div class="tab-pane fade" id="<?php echo $tab2?>">
+
+</div>
+                          
+                            
+                            <div class="tab-pane fade" id="<?php echo $tab3?>">
+
+                            </div>
+
+                                
+    </div>                             
+</div>
+
+
+
+
+
+
+
+
+</div>
+
+<div id="nprespuestaok" class="row" style="display: none;">
+    <div class="col-lg-12 text-center" style="padding: 80px;">
+        <span>
+            <i class="fa fa-thumbs-o-up fa-5x"></i>
+        </span>
+        <h2 id="npdescrok"></h2>
+    </div>
+</div>
+<div id="nprespuestanok" class="row" style="display: none;">
+<div class="col-lg-12 text-center" style="padding: 80px;">
+        <span>
+            <i class="fa fa-close fa-5x"></i>
+        </span>
+<h2 id="npdescrnok"></h2>
+</div>
+</div>                               
+<script>
+function closeModal() {
+$("#nuevoactivo").modal('hide');
+}
+$("#formnuevoactivo").submit(function(e)
+{
+    var postData = $(this).serializeArray();
+    var formURL = $(this).attr("action");
+    $.ajax(
+    {
+        url : formURL,
+        type: "POST",
+        data : postData,
+        dataType : 'json',
+        success : function(response) {        
+          if(response.status == 'ok'){   
+           $("#todoactv").css("display","none");
+           $("#nprespuestaok").css("display","block");  
+           $("#npdescrok").text(response.descripcion); 
+           setTimeout(function(){
+                        $("#nuevoactivo").modal('hide');                        
+                      //  $(location).attr('href','<?php// echo $this->basePath()."/admin/matenciones"?>'); 
+                    },1200);                    
+          }else{            
+           $("#todoactv").css("display","none");
+           $("#nprespuestaok").css("display","block");  
+           $("#npdescrok").text("Ups!, tuvimos un problema!... favor informa esto con nuestro soporte");
+           setTimeout(function(){
+                        $("#nuevoactivo").modal('hide');                        
+                      //  $(location).attr('href','<?php// echo $this->basePath()."/admin/matenciones"?>'); 
+                    },1800);             
+          }
+        },
+        error: function(jqXHR, textStatus, errorThrown) 
+        {
+            $("#mostrarCJ").html('<div id="respuesta" class="alert alert-danger alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>Error en el env&iacute;o de datos al servidor</div>')      
+        }
+    });
+    e.preventDefault(); //STOP default action
+    e.unbind(); //unbind. to stop multiple form submit.
+});
+
+function comboResponsable(){
+    postData = {'area_responsable' : $('#area_responsable').find('option:selected').val()}
+    $.ajax(
+    {
+        url : '<?php echo $this->basePath()."/admin/mantenciones/comboresponsable"?>',
+        type: "POST",
+        data : postData,
+        dataType : 'json',
+        success : function(response) {              
+        var sel = $("#responsable");
+        sel.empty();      
+          for (var i=0; i<Object.keys(response).length; i++) {                    
+            sel.append('<option value="' +response[i] + '">' + response[i] + '</option>');
+            }                                       
+        },
+        error: function(jqXHR, textStatus, errorThrown) 
+        {            
+            alert("error"); 
+        }
+    });
+}
+$('#estado_tarea').change(function(){
+    if ($('#estado_tarea').find('option:selected').val()=="realizada"){
+        $('#avance_tarea').val("100");
+}else{
+        $('#avance_tarea').val(null);
+}
+});
+function especificaciones(){    
+   $('#div-espec').toggle("slow");    
+}
+/*
+function avance(){
+    if ($('#estado_tarea').find('option:selected').val()=="realizada"){
+        $('#avance_tarea').val("100");
+    }
+}*/
+function formatValor(){  
+    var format = $("#valor").val().replace(/\./g,'').replace(/\B(?=(\d{3})+(?!\d))/g, ".")
+    $("#monto").val(format);
+}
+</script>                                                                                                                                                                                  

@@ -1,0 +1,800 @@
+<h2 class="page-header"><a href="<?php echo $this->basePath()?>/usuario"><i class="fa fa-arrow-circle-left fa-1x"></i></a> <?php echo $this->titulo?> </h2>
+    
+<div class="row">    
+<div class="col-lg-4 col-md-4 col-xs-5" style="text-align: right;">
+<img src="<?php echo $this->basePath()?>/img/gcomun.png"  class="img-thumbnail">
+</div>
+                <div class="col-lg-6 col-md-6 col-xs-6" >
+                    <div class="panel panel-success">
+                        <div class="panel-body">
+                            <p>En esta sección Ud. podrá ver en <b>detalle</b> los <b>gastos realizados</b> dentro de su comunidad, 
+                            ordenandolos por periodos, por sus montos como tambien por su tipo, 
+                            esto ayudará considerablemente a su análisis de forma que pueda...                         </p>
+                        </div>
+                    
+                    <div class="panel-footer">
+                    Seleccione el filtro de búsqueda :
+                    </div>
+                    </div>
+                </div>
+                <!-- /.col-lg-4 -->
+            </div>
+  <div class="col-lg-8 col-lg-offset-2" >
+            <ul class="nav nav-pills">
+                    <li>
+                        <a href="#fecha-pills" data-toggle="tab">Periodos</a>
+                    </li>
+                    <li>
+                        <a href="#abiertos-pills" data-toggle="tab">Montos</a>
+                    </li>
+                    <li>
+                        <a href="#cerrados-pills" data-toggle="tab">Tipo de Gasto</a>
+                    </li>                   
+            </ul>                        
+                        <div class="tab-content">
+                                <div class="tab-pane fade" id="fecha-pills">
+                                    <div class="col-lg-12" >                                
+                                    <div class="row"> 
+                                    <div>
+                                        <h3 style="text-align: center;">Selecciona el mes a consultar</h3><br />
+                                    </div>
+                                <ul class="nav nav-pills">
+                    <li class="active">
+                        <a href="#enero-pills" data-toggle="tab">Enero</a>
+                    </li>
+                    <li>
+                        <a href="#febrero-pills" data-toggle="tab">Febrero</a>
+                    </li>
+                    <li>
+                        <a href="#marzo-pills" data-toggle="tab">Marzo</a>
+                    </li>
+                    <li>
+                        <a href="#marzo-pills" data-toggle="tab">Abril</a>
+                    </li>  
+                    <li>
+                        <a href="#marzo-pills" data-toggle="tab">Mayo</a>
+                    </li>  
+                    <li>
+                        <a href="#marzo-pills" data-toggle="tab">Junio</a>
+                    </li>  
+                    <li>
+                        <a href="#marzo-pills" data-toggle="tab">Julio</a>
+                    </li>  
+                    <li>
+                        <a href="#marzo-pills" data-toggle="tab">Agosto</a>
+                    </li>  
+                    <li>
+                        <a href="#marzo-pills" data-toggle="tab">Septiembre</a>
+                    </li>  
+                    <li>
+                        <a href="#marzo-pills" data-toggle="tab">Octubre</a>
+                    </li>  
+                    <li>
+                        <a href="#marzo-pills" data-toggle="tab">Noviembre</a>
+                    </li>  
+                    <li>
+                        <a href="#marzo-pills" data-toggle="tab">Diciembre</a>
+                    </li>                     
+                                     </ul>    
+                                      <div class="tab-content">
+                                <div class="tab-pane fade" id="enero-pills">
+                                    <div class="col-lg-12" >                                
+                                    <div class="row"> 
+                                    <div>
+                                        <h3 style="text-align: center;">Gastos realizados en Enero</h3><br />
+                                    </div>                        
+                                        <div class="table-responsive" style="text-align:center">
+                                            <table class="table table-striped table-bordered table-hover" id="data-table-reclamo">
+                                                <thead>
+                                                    <tr>
+                                                      <th>Id</th>
+                                                      <th>Nombre</th>                                            
+                                                      <th>Valor</th>
+                                                      <th>Detalle</th>
+                                                    </tr>
+                                                </thead>
+                                                    <tbody>
+                                                        <?php for($i=0;$i<count($this->lista);$i++){
+                                                         $urlEdit = $this->basePath()."/conserje/reclamo/responder/";
+                                                         $urlDelete = $this->basePath()."/conserje/reclamo/eliminar/".$this->lista[$i]['id']."/c"; 
+                                                         ?>
+                                                       <tr class="odd gradeX">
+                                                        <td>001</td> 
+                                                        <td>Electricidad</td>                                                                                    
+                                                        <td>2.546.820</td>
+                                                        <td>                                           
+                                                        <a href="javascript:void(0)" onclick="verDatos('001');" data-toggle="modal" data-target="#myModal"><i class="fa fa-eye fa-fw fa-2x"></i></a>
+                                                        </td>
+                                                       </tr>
+                                                        <?php }; ?>   
+                                                               
+                                                    </tbody>
+                                            </table>
+                                        </div>
+                    <!-- /.panel -->
+                                    </div>
+                <!-- /.col-lg-12 -->
+                                </div>
+                            </div>
+                            <div class="tab-pane fade" id="febrero-pills">
+                                    <div class="col-lg-12" >                                
+                                    <div class="row"> 
+                                    <div>
+                                        <h3 style="text-align: center;">Gastos realizados en Febrero</h3><br />
+                                    </div>                        
+                                        <div class="table-responsive" style="text-align:center">
+                                            <table class="table table-striped table-bordered table-hover" id="data-table-reclamo">
+                                                <thead>
+                                                    <tr>
+                                                      <th>2</th>
+                                                      <th>Dpto</th>                                            
+                                                      <th>Estado</th>
+                                                      <th>Detalle</th>
+                                                    </tr>
+                                                </thead>
+                                                    <tbody>
+                                                        <?php for($i=0;$i<count($this->lista);$i++){
+                                                         $urlEdit = $this->basePath()."/conserje/reclamo/responder/";
+                                                         $urlDelete = $this->basePath()."/conserje/reclamo/eliminar/".$this->lista[$i]['id']."/c"; 
+                                                         ?>
+                                                       <tr class="odd gradeX">
+                                                        <td><?php echo $this->lista[$i]['date_corta']?></td> 
+                                                        <td><?php echo $this->lista[$i]['dpto']?></td>                                                                                    
+                                                        <td><?php echo $this->lista[$i]['estado']?></td>
+                                                        <td>                                           
+                                                        <a href="javascript:void(0)" onclick="verDatos('<?php echo $this->lista[$i]['id']?>');" data-toggle="modal" data-target="#myModal"><i class="fa fa-eye fa-fw fa-2x"></i></a>
+                                                        </td>
+                                                       </tr>
+                                                        <?php }; ?>   
+                                                               
+                                                    </tbody>
+                                            </table>
+                                        </div>
+                    <!-- /.panel -->
+                                    </div>
+                <!-- /.col-lg-12 -->
+                                </div>
+                            </div>
+                            <div class="tab-pane fade" id="marzo-pills">
+                                    <div class="col-lg-12" >                                
+                                    <div class="row"> 
+                                    <div>
+                                        <h3 style="text-align: center;">Gastos realizados en Marzo</h3><br />
+                                    </div>                        
+                                        <div class="table-responsive" style="text-align:center">
+                                            <table class="table table-striped table-bordered table-hover" id="data-table-reclamo">
+                                                <thead>
+                                                    <tr>
+                                                      <th>3</th>
+                                                      <th>Dpto</th>                                            
+                                                      <th>Estado</th>
+                                                      <th>Detalle</th>
+                                                    </tr>
+                                                </thead>
+                                                    <tbody>
+                                                        <?php for($i=0;$i<count($this->lista);$i++){
+                                                         $urlEdit = $this->basePath()."/conserje/reclamo/responder/";
+                                                         $urlDelete = $this->basePath()."/conserje/reclamo/eliminar/".$this->lista[$i]['id']."/c"; 
+                                                         ?>
+                                                       <tr class="odd gradeX">
+                                                        <td><?php echo $this->lista[$i]['date_corta']?></td> 
+                                                        <td><?php echo $this->lista[$i]['dpto']?></td>                                                                                    
+                                                        <td><?php echo $this->lista[$i]['estado']?></td>
+                                                        <td>                                           
+                                                        <a href="javascript:void(0)" onclick="verDatos('<?php echo $this->lista[$i]['id']?>');" data-toggle="modal" data-target="#myModal"><i class="fa fa-eye fa-fw fa-2x"></i></a>
+                                                        </td>
+                                                       </tr>
+                                                        <?php }; ?>   
+                                                               
+                                                    </tbody>
+                                            </table>
+                                        </div>
+                    <!-- /.panel -->
+                                    </div>
+                <!-- /.col-lg-12 -->
+                                </div>
+                            </div>
+                <div class="tab-pane fade" id="abril-pills">
+                                    <div class="col-lg-12" >                                
+                                    <div class="row"> 
+                                    <div>
+                                        <h3 style="text-align: center;">Gastos realizados en Abril</h3><br />
+                                    </div>                        
+                                        <div class="table-responsive" style="text-align:center">
+                                            <table class="table table-striped table-bordered table-hover" id="data-table-reclamo">
+                                                <thead>
+                                                    <tr>
+                                                      <th>4</th>
+                                                      <th>Dpto</th>                                            
+                                                      <th>Estado</th>
+                                                      <th>Detalle</th>
+                                                    </tr>
+                                                </thead>
+                                                    <tbody>
+                                                        <?php for($i=0;$i<count($this->lista);$i++){
+                                                         $urlEdit = $this->basePath()."/conserje/reclamo/responder/";
+                                                         $urlDelete = $this->basePath()."/conserje/reclamo/eliminar/".$this->lista[$i]['id']."/c"; 
+                                                         ?>
+                                                       <tr class="odd gradeX">
+                                                        <td><?php echo $this->lista[$i]['date_corta']?></td> 
+                                                        <td><?php echo $this->lista[$i]['dpto']?></td>                                                                                    
+                                                        <td><?php echo $this->lista[$i]['estado']?></td>
+                                                        <td>                                           
+                                                        <a href="javascript:void(0)" onclick="verDatos('<?php echo $this->lista[$i]['id']?>');" data-toggle="modal" data-target="#myModal"><i class="fa fa-eye fa-fw fa-2x"></i></a>
+                                                        </td>
+                                                       </tr>
+                                                        <?php }; ?>   
+                                                               
+                                                    </tbody>
+                                            </table>
+                                        </div>
+                    <!-- /.panel -->
+                                    </div>
+                <!-- /.col-lg-12 -->
+                                </div>
+                            </div>
+                            <div class="tab-pane fade" id="mayo-pills">
+                                    <div class="col-lg-12" >                                
+                                    <div class="row"> 
+                                    <div>
+                                        <h3 style="text-align: center;">Gastos realizados en Mayo</h3><br />
+                                    </div>                        
+                                        <div class="table-responsive" style="text-align:center">
+                                            <table class="table table-striped table-bordered table-hover" id="data-table-reclamo">
+                                                <thead>
+                                                    <tr>
+                                                      <th>5</th>
+                                                      <th>Dpto</th>                                            
+                                                      <th>Estado</th>
+                                                      <th>Detalle</th>
+                                                    </tr>
+                                                </thead>
+                                                    <tbody>
+                                                        <?php for($i=0;$i<count($this->lista);$i++){
+                                                         $urlEdit = $this->basePath()."/conserje/reclamo/responder/";
+                                                         $urlDelete = $this->basePath()."/conserje/reclamo/eliminar/".$this->lista[$i]['id']."/c"; 
+                                                         ?>
+                                                       <tr class="odd gradeX">
+                                                        <td><?php echo $this->lista[$i]['date_corta']?></td> 
+                                                        <td><?php echo $this->lista[$i]['dpto']?></td>                                                                                    
+                                                        <td><?php echo $this->lista[$i]['estado']?></td>
+                                                        <td>                                           
+                                                        <a href="javascript:void(0)" onclick="verDatos('<?php echo $this->lista[$i]['id']?>');" data-toggle="modal" data-target="#myModal"><i class="fa fa-eye fa-fw fa-2x"></i></a>
+                                                        </td>
+                                                       </tr>
+                                                        <?php }; ?>   
+                                                               
+                                                    </tbody>
+                                            </table>
+                                        </div>
+                    <!-- /.panel -->
+                                    </div>
+                <!-- /.col-lg-12 -->
+                                </div>
+                            </div>
+                            <div class="tab-pane fade" id="junio-pills">
+                                    <div class="col-lg-12" >                                
+                                    <div class="row"> 
+                                    <div>
+                                        <h3 style="text-align: center;">Gastos realizados en Junio</h3><br />
+                                    </div>                        
+                                        <div class="table-responsive" style="text-align:center">
+                                            <table class="table table-striped table-bordered table-hover" id="data-table-reclamo">
+                                                <thead>
+                                                    <tr>
+                                                      <th>6</th>
+                                                      <th>Dpto</th>                                            
+                                                      <th>Estado</th>
+                                                      <th>Detalle</th>
+                                                    </tr>
+                                                </thead>
+                                                    <tbody>
+                                                        <?php for($i=0;$i<count($this->lista);$i++){
+                                                         $urlEdit = $this->basePath()."/conserje/reclamo/responder/";
+                                                         $urlDelete = $this->basePath()."/conserje/reclamo/eliminar/".$this->lista[$i]['id']."/c"; 
+                                                         ?>
+                                                       <tr class="odd gradeX">
+                                                        <td><?php echo $this->lista[$i]['date_corta']?></td> 
+                                                        <td><?php echo $this->lista[$i]['dpto']?></td>                                                                                    
+                                                        <td><?php echo $this->lista[$i]['estado']?></td>
+                                                        <td>                                           
+                                                        <a href="javascript:void(0)" onclick="verDatos('<?php echo $this->lista[$i]['id']?>');" data-toggle="modal" data-target="#myModal"><i class="fa fa-eye fa-fw fa-2x"></i></a>
+                                                        </td>
+                                                       </tr>
+                                                        <?php }; ?>   
+                                                               
+                                                    </tbody>
+                                            </table>
+                                        </div>
+                    <!-- /.panel -->
+                                    </div>
+                <!-- /.col-lg-12 -->
+                                </div>
+                            </div>
+                            <div class="tab-pane fade" id="julio-pills">
+                                    <div class="col-lg-12" >                                
+                                    <div class="row"> 
+                                    <div>
+                                        <h3 style="text-align: center;">Gastos realizados en Julio</h3><br />
+                                    </div>                        
+                                        <div class="table-responsive" style="text-align:center">
+                                            <table class="table table-striped table-bordered table-hover" id="data-table-reclamo">
+                                                <thead>
+                                                    <tr>
+                                                      <th>7</th>
+                                                      <th>Dpto</th>                                            
+                                                      <th>Estado</th>
+                                                      <th>Detalle</th>
+                                                    </tr>
+                                                </thead>
+                                                    <tbody>
+                                                        <?php for($i=0;$i<count($this->lista);$i++){
+                                                         $urlEdit = $this->basePath()."/conserje/reclamo/responder/";
+                                                         $urlDelete = $this->basePath()."/conserje/reclamo/eliminar/".$this->lista[$i]['id']."/c"; 
+                                                         ?>
+                                                       <tr class="odd gradeX">
+                                                        <td><?php echo $this->lista[$i]['date_corta']?></td> 
+                                                        <td><?php echo $this->lista[$i]['dpto']?></td>                                                                                    
+                                                        <td><?php echo $this->lista[$i]['estado']?></td>
+                                                        <td>                                           
+                                                        <a href="javascript:void(0)" onclick="verDatos('<?php echo $this->lista[$i]['id']?>');" data-toggle="modal" data-target="#myModal"><i class="fa fa-eye fa-fw fa-2x"></i></a>
+                                                        </td>
+                                                       </tr>
+                                                        <?php }; ?>   
+                                                               
+                                                    </tbody>
+                                            </table>
+                                        </div>
+                    <!-- /.panel -->
+                                    </div>
+                <!-- /.col-lg-12 -->
+                                </div>
+                            </div>
+                            <div class="tab-pane fade" id="agosto-pills">
+                                    <div class="col-lg-12" >                                
+                                    <div class="row"> 
+                                    <div>
+                                        <h3 style="text-align: center;">Gastos comunes ordenados por periodos</h3><br />
+                                    </div>                        
+                                        <div class="table-responsive" style="text-align:center">
+                                            <table class="table table-striped table-bordered table-hover" id="data-table-reclamo">
+                                                <thead>
+                                                    <tr>
+                                                      <th>8</th>
+                                                      <th>Dpto</th>                                            
+                                                      <th>Estado</th>
+                                                      <th>Detalle</th>
+                                                    </tr>
+                                                </thead>
+                                                    <tbody>
+                                                        <?php for($i=0;$i<count($this->lista);$i++){
+                                                         $urlEdit = $this->basePath()."/conserje/reclamo/responder/";
+                                                         $urlDelete = $this->basePath()."/conserje/reclamo/eliminar/".$this->lista[$i]['id']."/c"; 
+                                                         ?>
+                                                       <tr class="odd gradeX">
+                                                        <td><?php echo $this->lista[$i]['date_corta']?></td> 
+                                                        <td><?php echo $this->lista[$i]['dpto']?></td>                                                                                    
+                                                        <td><?php echo $this->lista[$i]['estado']?></td>
+                                                        <td>                                           
+                                                        <a href="javascript:void(0)" onclick="verDatos('<?php echo $this->lista[$i]['id']?>');" data-toggle="modal" data-target="#myModal"><i class="fa fa-eye fa-fw fa-2x"></i></a>
+                                                        </td>
+                                                       </tr>
+                                                        <?php }; ?>   
+                                                               
+                                                    </tbody>
+                                            </table>
+                                        </div>
+                    <!-- /.panel -->
+                                    </div>
+                <!-- /.col-lg-12 -->
+                                </div>
+                            </div>
+                            <div class="tab-pane fade" id="septiembre-pills">
+                                    <div class="col-lg-12" >                                
+                                    <div class="row"> 
+                                    <div>
+                                        <h3 style="text-align: center;">Gastos comunes ordenados por periodos</h3><br />
+                                    </div>                        
+                                        <div class="table-responsive" style="text-align:center">
+                                            <table class="table table-striped table-bordered table-hover" id="data-table-reclamo">
+                                                <thead>
+                                                    <tr>
+                                                      <th>9</th>
+                                                      <th>Dpto</th>                                            
+                                                      <th>Estado</th>
+                                                      <th>Detalle</th>
+                                                    </tr>
+                                                </thead>
+                                                    <tbody>
+                                                        <?php for($i=0;$i<count($this->lista);$i++){
+                                                         $urlEdit = $this->basePath()."/conserje/reclamo/responder/";
+                                                         $urlDelete = $this->basePath()."/conserje/reclamo/eliminar/".$this->lista[$i]['id']."/c"; 
+                                                         ?>
+                                                       <tr class="odd gradeX">
+                                                        <td><?php echo $this->lista[$i]['date_corta']?></td> 
+                                                        <td><?php echo $this->lista[$i]['dpto']?></td>                                                                                    
+                                                        <td><?php echo $this->lista[$i]['estado']?></td>
+                                                        <td>                                           
+                                                        <a href="javascript:void(0)" onclick="verDatos('<?php echo $this->lista[$i]['id']?>');" data-toggle="modal" data-target="#myModal"><i class="fa fa-eye fa-fw fa-2x"></i></a>
+                                                        </td>
+                                                       </tr>
+                                                        <?php }; ?>   
+                                                               
+                                                    </tbody>
+                                            </table>
+                                        </div>
+                    <!-- /.panel -->
+                                    </div>
+                <!-- /.col-lg-12 -->
+                                </div>
+                            </div>
+                            <div class="tab-pane fade" id="octubre-pills">
+                                    <div class="col-lg-12" >                                
+                                    <div class="row"> 
+                                    <div>
+                                        <h3 style="text-align: center;">Gastos comunes ordenados por periodos</h3><br />
+                                    </div>                        
+                                        <div class="table-responsive" style="text-align:center">
+                                            <table class="table table-striped table-bordered table-hover" id="data-table-reclamo">
+                                                <thead>
+                                                    <tr>
+                                                      <th>10</th>
+                                                      <th>Dpto</th>                                            
+                                                      <th>Estado</th>
+                                                      <th>Detalle</th>
+                                                    </tr>
+                                                </thead>
+                                                    <tbody>
+                                                        <?php for($i=0;$i<count($this->lista);$i++){
+                                                         $urlEdit = $this->basePath()."/conserje/reclamo/responder/";
+                                                         $urlDelete = $this->basePath()."/conserje/reclamo/eliminar/".$this->lista[$i]['id']."/c"; 
+                                                         ?>
+                                                       <tr class="odd gradeX">
+                                                        <td><?php echo $this->lista[$i]['date_corta']?></td> 
+                                                        <td><?php echo $this->lista[$i]['dpto']?></td>                                                                                    
+                                                        <td><?php echo $this->lista[$i]['estado']?></td>
+                                                        <td>                                           
+                                                        <a href="javascript:void(0)" onclick="verDatos('<?php echo $this->lista[$i]['id']?>');" data-toggle="modal" data-target="#myModal"><i class="fa fa-eye fa-fw fa-2x"></i></a>
+                                                        </td>
+                                                       </tr>
+                                                        <?php }; ?>   
+                                                               
+                                                    </tbody>
+                                            </table>
+                                        </div>
+                    <!-- /.panel -->
+                                    </div>
+                <!-- /.col-lg-12 -->
+                                </div>
+                            </div>
+                            <div class="tab-pane fade" id="noviembre-pills">
+                                    <div class="col-lg-12" >                                
+                                    <div class="row"> 
+                                    <div>
+                                        <h3 style="text-align: center;">Gastos comunes ordenados por periodos</h3><br />
+                                    </div>                        
+                                        <div class="table-responsive" style="text-align:center">
+                                            <table class="table table-striped table-bordered table-hover" id="data-table-reclamo">
+                                                <thead>
+                                                    <tr>
+                                                      <th>11</th>
+                                                      <th>Dpto</th>                                            
+                                                      <th>Estado</th>
+                                                      <th>Detalle</th>
+                                                    </tr>
+                                                </thead>
+                                                    <tbody>
+                                                        <?php for($i=0;$i<count($this->lista);$i++){
+                                                         $urlEdit = $this->basePath()."/conserje/reclamo/responder/";
+                                                         $urlDelete = $this->basePath()."/conserje/reclamo/eliminar/".$this->lista[$i]['id']."/c"; 
+                                                         ?>
+                                                       <tr class="odd gradeX">
+                                                        <td><?php echo $this->lista[$i]['date_corta']?></td> 
+                                                        <td><?php echo $this->lista[$i]['dpto']?></td>                                                                                    
+                                                        <td><?php echo $this->lista[$i]['estado']?></td>
+                                                        <td>                                           
+                                                        <a href="javascript:void(0)" onclick="verDatos('<?php echo $this->lista[$i]['id']?>');" data-toggle="modal" data-target="#myModal"><i class="fa fa-eye fa-fw fa-2x"></i></a>
+                                                        </td>
+                                                       </tr>
+                                                        <?php }; ?>   
+                                                               
+                                                    </tbody>
+                                            </table>
+                                        </div>
+                    <!-- /.panel -->
+                                    </div>
+                <!-- /.col-lg-12 -->
+                                </div>
+                            </div>
+                            <div class="tab-pane fade" id="diciembre-pills">
+                                    <div class="col-lg-12" >                                
+                                    <div class="row"> 
+                                    <div>
+                                        <h3 style="text-align: center;">Gastos comunes ordenados por periodos</h3><br />
+                                    </div>                        
+                                        <div class="table-responsive" style="text-align:center">
+                                            <table class="table table-striped table-bordered table-hover" id="data-table-reclamo">
+                                                <thead>
+                                                    <tr>
+                                                      <th>12</th>
+                                                      <th>Dpto</th>                                            
+                                                      <th>Estado</th>
+                                                      <th>Detalle</th>
+                                                    </tr>
+                                                </thead>
+                                                    <tbody>
+                                                        <?php for($i=0;$i<count($this->lista);$i++){
+                                                         $urlEdit = $this->basePath()."/conserje/reclamo/responder/";
+                                                         $urlDelete = $this->basePath()."/conserje/reclamo/eliminar/".$this->lista[$i]['id']."/c"; 
+                                                         ?>
+                                                       <tr class="odd gradeX">
+                                                        <td><?php echo $this->lista[$i]['date_corta']?></td> 
+                                                        <td><?php echo $this->lista[$i]['dpto']?></td>                                                                                    
+                                                        <td><?php echo $this->lista[$i]['estado']?></td>
+                                                        <td>                                           
+                                                        <a href="javascript:void(0)" onclick="verDatos('<?php echo $this->lista[$i]['id']?>');" data-toggle="modal" data-target="#myModal"><i class="fa fa-eye fa-fw fa-2x"></i></a>
+                                                        </td>
+                                                       </tr>
+                                                        <?php }; ?>   
+                                                               
+                                                    </tbody>
+                                            </table>
+                                        </div>
+                    <!-- /.panel -->
+                                    </div>
+                <!-- /.col-lg-12 -->
+                                </div>
+                            </div>
+                            </div>
+                                     </div>
+                            </div>
+                            </div>
+                            
+                                          
+                                          
+                                          
+                                                                                                                                                                                                                                                                                                                                  
+                                <div class="tab-pane fade" id="abiertos-pills">
+                                <div class="col-lg-12" >                                
+                                    <div class="row"> 
+                                    <div>
+                                        <h3 style="text-align: center;">Valor del Gasto Comun</h3><br />
+                                    </div>                       
+                                        <div class="table-responsive" style="text-align:center">
+                                            <table class="table table-striped table-bordered table-hover" id="data-table-reclamo">
+                                                <thead>
+                                                    <tr>
+                                                      <th>Fecha</th>
+                                                      <th>Dpto</th>                                            
+                                                      <th>Asunto</th>
+                                                      <th>Detalle</th>
+                                                    </tr>
+                                                </thead>
+                                                    <tbody>
+                                                        <?php for($i=0;$i<count($this->lista);$i++){
+                                                         $urlEdit = $this->basePath()."/conserje/reclamo/responder/";
+                                                         $urlDelete = $this->basePath()."/conserje/reclamo/eliminar/".$this->lista[$i]['id']."/c"; 
+                                                         ?>
+                                                       <tr class="odd gradeX">
+                                                        <td><?php echo $this->lista[$i]['date_corta']?></td> 
+                                                        <td><?php echo $this->lista[$i]['dpto']?></td>                                                                                    
+                                                        <td><?php echo $this->lista[$i]['asunto']?></td>
+                                                        <td>                                           
+                                                        <a href="javascript:void(0)" onclick="verDatos('<?php echo $this->lista[$i]['id']?>');" data-toggle="modal" data-target="#myModal"><i class="fa fa-eye fa-fw fa-2x"></i></a>
+                                                        </td>
+                                                       </tr>
+                                                        <?php }; ?>   
+                                                               
+                                                    </tbody>
+                                            </table>
+                                        </div>
+                    <!-- /.panel -->
+                                    </div>
+                <!-- /.col-lg-12 -->
+                                </div>
+                            </div>                                
+                                <div class="tab-pane fade" id="cerrados-pills">
+                                    <div class="col-lg-12" >                                
+                                    <div class="row"> 
+                                    <div>
+                                        <h3 style="text-align: center;">Tipo de Gasto Comun</h3><br />
+                                    </div>                       
+                                        <div class="table-responsive" style="text-align:center">
+                                            <table class="table table-striped table-bordered table-hover" id="data-table-reclamo">
+                                                <thead>
+                                                    <tr>
+                                                      <th>Fecha</th>
+                                                      <th>Dpto</th>                                            
+                                                      <th>Asunto</th>
+                                                      <th>Detalle</th>
+                                                    </tr>
+                                                </thead>
+                                                    <tbody>
+                                                        <?php for($i=0;$i<count($this->lista);$i++){
+                                                         $urlEdit = $this->basePath()."/conserje/reclamo/responder/";
+                                                         $urlDelete = $this->basePath()."/conserje/reclamo/eliminar/".$this->lista[$i]['id']."/c"; 
+                                                         ?>
+                                                       <tr class="odd gradeX">
+                                                        <td><?php echo $this->lista[$i]['date_corta']?></td> 
+                                                        <td><?php echo $this->lista[$i]['dpto']?></td>                                                                                    
+                                                        <td><?php echo $this->lista[$i]['asunto']?></td>
+                                                        <td>                                           
+                                                        <a href="javascript:void(0)" onclick="verDatos('<?php echo $this->lista[$i]['id']?>');" data-toggle="modal" data-target="#myModal"><i class="fa fa-eye fa-fw fa-2x"></i></a>
+                                                        </td>
+                                                       </tr>
+                                                        <?php }; ?>   
+                                                               
+                                                    </tbody>
+                                            </table>
+                                        </div>
+                    <!-- /.panel -->
+                                    </div>
+                <!-- /.col-lg-12 -->
+                                </div>
+                            </div>                                 
+                                <div class="tab-pane fade" id="gastos-pills">
+                                    <div class="col-lg-12" >                                
+                                    <div class="row"> 
+                                    <div>
+                                        <h3 style="text-align: center;">Reclamos sobre Gastos Comunes</h3><br />
+                                    </div>                       
+                                        <div class="table-responsive" style="text-align:center">
+                                            <table class="table table-striped table-bordered table-hover" id="data-table-reclamo">
+                                                <thead>
+                                                    <tr>
+                                                      <th>Fecha</th>
+                                                      <th>Dpto</th>                                            
+                                                      <th>Estado</th>
+                                                      <th>Detalle</th>
+                                                    </tr>
+                                                </thead>
+                                                    <tbody>
+                                                        <?php for($i=0;$i<count($this->lista);$i++){
+                                                         $urlEdit = $this->basePath()."/conserje/reclamo/responder/";
+                                                         $urlDelete = $this->basePath()."/conserje/reclamo/eliminar/".$this->lista[$i]['id']."/c"; 
+                                                         ?>
+                                                       <tr class="odd gradeX">
+                                                        <td><?php echo $this->lista[$i]['date_corta']?></td> 
+                                                        <td><?php echo $this->lista[$i]['dpto']?></td>                                                                                    
+                                                        <td><?php echo $this->lista[$i]['estado']?></td>
+                                                        <td>                                           
+                                                        <a href="javascript:void(0)" onclick="verDatos('<?php echo $this->lista[$i]['id']?>');" data-toggle="modal" data-target="#myModal"><i class="fa fa-eye fa-fw fa-2x"></i></a>
+                                                        </td>
+                                                       </tr>
+                                                        <?php }; ?>   
+                                                               
+                                                    </tbody>
+                                            </table>
+                                        </div>
+                    <!-- /.panel -->
+                                    </div>
+                <!-- /.col-lg-12 -->
+                                </div>
+                                </div>
+                                <div class="tab-pane fade" id="ruidos-pills">
+                                    <div class="col-lg-12" >                                
+                                    <div class="row"> 
+                                    <div>
+                                        <h3 style="text-align: center;">Reclamos de Ruidos Molestos</h3><br />
+                                    </div>                       
+                                        <div class="table-responsive" style="text-align:center">
+                                            <table class="table table-striped table-bordered table-hover" id="data-table-reclamo">
+                                                <thead>
+                                                    <tr>
+                                                      <th>Fecha</th>
+                                                      <th>Dpto</th>                                            
+                                                      <th>Estado</th>
+                                                      <th>Detalle</th>
+                                                    </tr>
+                                                </thead>
+                                                    <tbody>
+                                                        <?php for($i=0;$i<count($this->lista);$i++){
+                                                         $urlEdit = $this->basePath()."/conserje/reclamo/responder/";
+                                                         $urlDelete = $this->basePath()."/conserje/reclamo/eliminar/".$this->lista[$i]['id']."/c"; 
+                                                         ?>
+                                                       <tr class="odd gradeX">
+                                                        <td><?php echo $this->lista[$i]['date_corta']?></td> 
+                                                        <td><?php echo $this->lista[$i]['dpto']?></td>                                                                                    
+                                                        <td><?php echo $this->lista[$i]['estado']?></td>
+                                                        <td>                                           
+                                                        <a href="javascript:void(0)" onclick="verDatos('<?php echo $this->lista[$i]['id']?>');" data-toggle="modal" data-target="#myModal"><i class="fa fa-eye fa-fw fa-2x"></i></a>
+                                                        </td>
+                                                       </tr>
+                                                        <?php }; ?>   
+                                                               
+                                                    </tbody>
+                                            </table>
+                                        </div>
+                    <!-- /.panel -->
+                                    </div>
+                <!-- /.col-lg-12 -->
+                                </div>
+                                </div>
+                                <div class="tab-pane fade" id="instalaciones-pills">
+                                    <div class="col-lg-12" >                                
+                                    <div class="row"> 
+                                    <div>
+                                        <h3 style="text-align: center;">Reclamos de Instalaciones de su Comunidad</h3><br />
+                                    </div>                       
+                                        <div class="table-responsive" style="text-align:center">
+                                            <table class="table table-striped table-bordered table-hover" id="data-table-reclamo">
+                                                <thead>
+                                                    <tr>
+                                                      <th>Fecha</th>
+                                                      <th>Dpto</th>                                            
+                                                      <th>Estado</th>
+                                                      <th>Detalle</th>
+                                                    </tr>
+                                                </thead>
+                                                    <tbody>
+                                                        <?php for($i=0;$i<count($this->lista);$i++){
+                                                         $urlEdit = $this->basePath()."/conserje/reclamo/responder/";
+                                                         $urlDelete = $this->basePath()."/conserje/reclamo/eliminar/".$this->lista[$i]['id']."/c"; 
+                                                         ?>
+                                                       <tr class="odd gradeX">
+                                                        <td><?php echo $this->lista[$i]['date_corta']?></td> 
+                                                        <td><?php echo $this->lista[$i]['dpto']?></td>                                                                                    
+                                                        <td><?php echo $this->lista[$i]['estado']?></td>
+                                                        <td>                                           
+                                                        <a href="javascript:void(0)" onclick="verDatos('<?php echo $this->lista[$i]['id']?>');" data-toggle="modal" data-target="#myModal"><i class="fa fa-eye fa-fw fa-2x"></i></a>
+                                                        </td>
+                                                       </tr>
+                                                        <?php }; ?>   
+                                                               
+                                                    </tbody>
+                                            </table>
+                                        </div>
+                    <!-- /.panel -->
+                                    </div>
+                <!-- /.col-lg-12 -->
+                                </div>
+                                </div>
+                </div>
+</div>
+            <div class="modal fade" id="myModal" tabindex="-2" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+               <div class="modal-dialog">
+                 <div class="modal-content">
+                     <div class="modal-header">
+                          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                          <h4 class="modal-title" id="myModalLabel">Detalle del Reclamo</h4>
+                           </div>
+                           <div id="mostrarDatos" class="modal-body">Hello</div>
+                 </div>
+                 <!-- /.modal-content -->
+                </div>
+               <!-- /.modal-dialog -->
+            </div>
+
+<script>
+ $(document).ready(function() {
+        $('#data-table-reclamo').dataTable();
+    });
+
+
+function verDatos(reclamoId)
+{
+    
+	
+	var parametros = {
+		"reclamoId" : reclamoId,
+	};
+	$.ajax( {
+		data : parametros,
+        url : '<?php echo $this->basePath()."/admin/reclamo/detalle"?>',
+		type : 'post',
+		beforeSend : function() {
+			
+			$("#mostrarDatos").html("<img src='<?php echo $this->basePath()?>/img/loading.gif'/>");
+		},
+		success : function(response) {
+			
+			$("#mostrarDatos").html(response);
+		}
+	});
+	
+    
+}
+</script>
+
+
+            

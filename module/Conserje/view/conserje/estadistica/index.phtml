@@ -1,0 +1,126 @@
+<h2 class="page-header"><a href="<?php echo $this->basePath()?>/admin/reclamo"><i class="fa fa-arrow-circle-left fa-1x"></i></a> <?php echo $this->titulo?> </h2>	
+    
+    <div class="row">
+                        
+                            <div class="panel-group col-lg-2" id="accordion">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <h4 class="panel-title">
+                                            <i class="fa fa-flash"></i><a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">  Resumen</a>
+                                        </h4>
+                                    </div>
+                                    <div id="collapseOne" class="panel-collapse collapse">
+                                        <div class="panel-body">
+                                            <table class="table table-striped table-bordered table-hover" id="dataTables-example">
+                                    <tbody>                                         
+                                         <tr class="odd gradeX">
+                                            <td>Reclamos Abiertos</td>
+                                            <td><label></label></td>
+                                        </tr>
+                                        <tr class="odd gradeX">
+                                            <td>Reclamos Cerrados</td>
+                                            <td><label></label></td>
+                                        </tr>                       
+                                        <tr class="odd gradeX">
+                                            <td>Total de Reclamos Ingresados</td>
+                                            <td><label><?php  ($this->estados['total'])?></label></td>
+                                        </tr>                           
+                                    </tbody>
+                                </table> 
+                                <div class="panel-body">
+                            <div id="morris-donut-chart"></div>
+                        </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <h4 class="panel-title">
+                                            <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo"><i class="fa fa-bullhorn"></i>   Ranking</a>
+                                        </h4>
+                                    </div>
+                                    <div id="collapseTwo" class="panel-collapse collapse">
+                                        <div class="panel-body">
+                                            <table class="table table-striped table-bordered table-hover" id="dataTables-example">
+                                    <tbody>                                         
+                                         <tr class="odd gradeX">
+                                            <td>Ruidos Molestos</td>
+                                            <td><label></label></td>
+                                        </tr>
+                                        <tr class="odd gradeX">
+                                            <td>Mascotas</td>
+                                            <td><label></label></td>
+                                        </tr>                       
+                                        <tr class="odd gradeX">
+                                            <td>Gastos Comunes</td>
+                                            <td><label><?php  ($this->estados['total'])?></label></td>
+                                        </tr>                           
+                                    </tbody>
+                                </table> 
+                                <div class="panel-body">
+                            <div id="morris-bar-chart"></div>
+                        </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <h4 class="panel-title">
+                                            <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree">Collapsible Group Item #3</a>
+                                        </h4>
+                                    </div>
+                                    <div id="collapseThree" class="panel-collapse collapse">
+                                        <div class="panel-body">
+                                            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        
+</div>
+
+
+<script>
+    Morris.Donut({
+        element: 'morris-donut-chart',
+        data: [{
+            label: "Abiertos",
+            value: 10
+        }, {
+            label: "Cerrados",
+            value: 30
+        }, 
+        ],
+        resize: true
+    });
+        Morris.Bar({
+        element: 'morris-bar-chart',
+        data: [{
+            y: 'Ruidos',
+            Abiertos: 100,
+            Cerrados: 90
+        }, {
+            y: 'Comunes',
+            Abiertos: 75,
+            Cerrados: 65
+        }, {
+            y: 'Mascotas',
+            Abiertos: 50,
+            Cerrados: 40
+        }, {
+            y: 'Ol',
+            Abiertos: 75,
+            Cerrados: 65
+        }, {
+            y: 'Instalaciones',
+            Abiertos: 50,
+            Cerrados: 40
+        }, 
+        ],
+        xkey: 'y',
+        ykeys: ['Abiertos', 'Cerrados'],
+        labels: ['Abiertos', 'Cerrados'],
+        hideHover: 'auto',
+        resize: true
+    });
+</script>

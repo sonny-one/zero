@@ -1,0 +1,502 @@
+<link href="<?php echo $this->basePath()?>/sb2/css/zabuto_calendar.css" rel="stylesheet" media="screen" type="text/css"/>
+<script src="<?php echo $this->basePath()?>/sb2/js/zabuto_calendar.js"></script>
+
+<h2 class="page-header"><a href="<?php echo $this->basePath()?>/conserje">
+<i class="fa fa-arrow-circle-left fa-1x"></i></a>  Reservar Quincho</h2>
+<br />
+
+  <div class="row">
+                <div class="col-lg-8 col-lg-offset-2">
+                    <div class="panel panel-info">
+                     <div class="panel-heading">
+                        </div>
+                        <div class="panel-body">
+                        <div class="row">
+                            <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+                            <div class="input-group custom-search-form">
+                            <input type="text" class="form-control" placeholder="Buscar por Departamento..." id="dptoB"/>
+                                        <span class="input-group-btn">
+                                            <button class="btn btn-primary" type="button" id="btnBuscar">
+                                                <i class="fa fa-search"></i>
+                                            </button>
+                                        </span>
+                             </div>
+                              
+                            </div>                       
+                            </div>
+                            <br />
+                            <div class="row">
+                            <div class="col-lg-12">
+                            <div id="my-calendar"></div>
+                            </div>                       
+                            </div>
+                             
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+          
+            
+<div class="modal fade" id="modalVerQuincho" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
+               <div class="modal-dialog">
+                 <div class="modal-content" >
+                        
+                         <div >
+                         &nbsp;
+                            <div class="container-fluid">
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="panel panel-info">
+                                        <div class="panel-body">
+                                            <div id="errorQ"></div>
+                                            <div id="bodyDiv"></div>
+                                            <div align="right">
+                                                <button id="retornar" data-dismiss="modal"  class="btn btn-danger">Salir</button>
+                                                <button id="ejecutar" class="btn btn-success">Guardar</button>
+                                            </div>
+                                            </div>
+                                           </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                            </div>
+
+                    </div>
+                </div>
+            </div> 
+
+<div class="modal fade" id="modalEditarQuincho" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
+               <div class="modal-dialog modal-lg">
+                 <div class="modal-content" >
+                         <div >
+                         &nbsp;
+                            <div class="container-fluid">
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="panel panel-info">
+                                         <div class="panel-heading">
+                                            Deparmento <label id="dptoV"></label>
+                                         </div>
+                                            <div class="panel-body">
+                                                <div id="errorEdit"></div>
+                                                <div id="editDiv"></div>
+                                                <div align="right">
+                                                <button data-dismiss="modal"  class="btn btn-danger">Salir</button>
+                                                </div>
+                                            </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                            </div>
+
+                    </div>
+                </div>
+                
+<div class="modal fade" id="modalAjusteQuincho" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
+               <div class="modal-dialog modal-lg">
+                 <div class="modal-content">
+                         <div >
+                         &nbsp;
+                            <div class="container-fluid">
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="panel panel-info">
+                                            <div class="panel-body">
+                                                <div id="ajusteError"></div>
+                                                <div id="ajusteBody"></div>
+                                                <div align="right">
+                                                <button id="ajusteCerrar"  class="btn btn-danger">Salir</button>
+                                                </div>
+                                            </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                            </div>
+
+                    </div>
+                </div>                
+            </div>        
+
+       <div class="modal fade" id="modalConfirma" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
+               <div class="modal-dialog">
+                 <div class="modal-content" >
+                        
+                         <div >
+                         &nbsp;
+                            <div class="container-fluid">
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="panel panel-info">
+                                        <div class="panel-body">
+                                        <div align="center">
+                                        <h4><label id="msjConfirma" class="text-center text-success"></label></h4>
+                                        </div>
+                                            <div align="center">
+                                            <div id="obsEdit"></div>
+                                            <div id="procesando">
+                                                <button id="confirmaCancelar" data-dismiss="modal"  class="btn btn-danger">&nbsp;&nbsp;&nbsp;Cancelar&nbsp;&nbsp;&nbsp;</button>
+                                                <button id="confirmaAceptar" class="btn btn-primary">&nbsp;&nbsp;&nbsp;Aceptar&nbsp;&nbsp;&nbsp;</button>
+                                            </div>
+                                            </div>
+                                            </div>
+                                           </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                            </div>
+
+                    </div>
+                </div>
+            </div>
+            
+       <?php echo $rsptaOK?>
+       <?php echo $imgView?>
+            
+ <script type="application/javascript">
+ 
+    
+    $(document).ready(function () {
+    $("#my-calendar").zabuto_calendar({
+        
+     cell_border: true,    
+     language: "es",
+     today: true,
+      weekstartson: 1,
+      ajax: {
+          url: '<?php echo $this->basePath()."/conserje/quincho/opera"?>',
+          modal: true,
+          
+      },
+      
+      legend: [
+        {type: "block", label: "Libre", badge: "00"},
+        {type: "block", label: "Parcial", classname: "btn-primary"},
+        {type: "block", label: "Ocupado", classname: "btn-danger"},        
+        {type: "block", label: "Historia", classname: "grade-default"},
+        
+      ]
+      
+    });
+    
+    });
+    
+    function finH()
+    {
+        alert('fin');
+    }
+    
+    function verQuincho(id,fecha)
+    {
+        $("#zabuto_calendar_"+fecha+"_modal").modal('hide');
+        $("#modalVerQuincho").modal('show');
+
+        var parametros = {"id_uso" : id,"fecha":fecha};
+        $.ajax( {  
+		data : parametros,
+        url : '<?php echo $this->basePath()."/conserje/quincho/detalle"?>',
+		type : 'post',
+		beforeSend : function() {
+		  //$("#cuerpoDatosDpto").hide();
+          $("#errorQ").html("<img src='<?php echo $this->basePath()?>/img/loading.gif'/>")
+		},
+		success : function(r) {
+            if(r.status=='ok'){
+                $("#errorQ").html("");
+                $("#bodyDiv").html(r.bodyDiv);
+            }else{
+                $("#errorQ").html(r.error);
+            }
+		},
+        error : function(e){
+            
+                $("#errorQ").html("Error interno en el sistema");
+            }
+        });
+       
+    }
+    $("#retornar").click(function(){
+        
+        
+        $("#zabuto_calendar_"+$("#fechaIn").text()+"_modal").modal('show');
+        
+    });
+    
+    $("#btnBuscar").click(function(){
+   
+        editarQuinchos();
+    });
+    $('#dptoB').keypress(function (e) {
+            if (e.which == 13) {
+            editarQuinchos();
+                }
+            });
+    
+    function editarQuinchos()
+    {
+        
+        $("#modalEditarQuincho").modal('show');
+        $("#dptoV").text($("#dptoB").val());
+         var parametros = {"dptoB" : $("#dptoB").val()};
+         	$.ajax( {  
+		data : parametros,
+        url : '<?php echo $this->basePath()."/conserje/quincho/datosq"?>',
+		type : 'post',
+		beforeSend : function() {
+		  
+          $("#editDiv").html("<img src='<?php echo $this->basePath()?>/img/loading.gif'/>")
+		},
+		success : function(r) {
+            if(r.status=='ok'){
+                $("#editDiv").html(r.editDiv);
+            }else{
+                $("#errorEdit").html("Error en cargar la pagina:"+r.error);
+            }
+		},
+        error:function(e){
+            $("#errorEdit").html("Error interno en el sistema");
+        }
+    
+    
+        });
+         
+        
+    }
+    
+    $("#ejecutar").click(function(){
+        
+            
+            var file_data = $('#seleccionaFoto').prop('files')[0];
+            if(file_data != undefined){
+                if(file_data.size > 2000000){
+                 $("#errorQ").html('<div class="alert alert-danger alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>Error : Archivo es superior a 2Mb</div>');
+                 return;
+                }
+             }
+            
+            $(this).attr('disabled','disabled');
+            var id_unidad = $("#id_unidad").val(); 
+            if(id_unidad=='0'){
+                errorMsj('Debe seleccionar departamento...');
+                $(this).removeAttr('disabled');
+                return;
+            }
+            var idUth= '';
+            $('#GroupHorario .active').each(function(){
+                idUth= $(this).attr('id'); 
+            });
+            if(idUth==''){
+                errorMsj('Debe seleccionar turno...');
+                $(this).removeAttr('disabled');
+                return;
+            }
+            var estado= '';
+            $('#GroupTipo .active').each(function(){
+                estado= $(this).attr('id'); 
+            });
+            if(estado==''){
+                errorMsj('Debe seleccionar tipo...');
+                $(this).removeAttr('disabled');
+                return;
+            }  	
+            var fecha_uso = $("#fechaIn").text();
+            var pagoReserva='0';var mg='';var tr='0';
+            if("Reserva"==estado){pagoReserva=$("#pagoRsv").val();mg='Cheque';}else{tr='43200';}
+            var obs = $("#obs").val();
+            
+             /*var parametros = {"id_uth" : idUth,"id_unidad":id_unidad,"fecha_uso":fecha_uso,
+             "estado":estado,"pago_reserva":pagoReserva,"medio_garantia":mg,
+             "tiempo_reserva":tr,"observacion_entrega":obs};*/
+             
+             var parametros = new FormData();                  
+            parametros.append('fileData', file_data);
+            parametros.append('id_uth',idUth);
+            parametros.append('id_unidad',id_unidad);
+            parametros.append('fecha_uso',fecha_uso);
+            parametros.append('estado',estado);
+            parametros.append('pago_reserva',pagoReserva);
+            parametros.append('medio_garantia',mg);
+            parametros.append('tiempo_reserva',tr);
+            parametros.append('observacion_entrega',obs);
+            
+             
+               $.ajax({
+                contentType:false,
+                processData:false,	
+                cache:false,
+        		data : parametros,
+                url : '<?php echo $this->basePath()."/conserje/quincho/newrsv"?>',
+        		type : 'post',
+        		beforeSend : function() {
+        		  
+                  $("#errorQ").html("");
+        		},
+        		success : function(r) {
+                    if(r.status=='ok'){
+                        $("#errorQ").html("");
+                        $("#ejecutar").removeAttr('disabled');
+                        $("#descrok").text("Se ha registrado el quincho satisfactoriamente...");
+                        $("#respuestaOK").modal('show');
+                        setInterval(function(){
+                            $("#respuestaOK").modal('hide');
+                         $(location).attr('href','<?php echo $this->basePath()."/conserje/quincho"?>'); 
+                        },1500); 
+                        
+                        
+                    }else{
+                        $("#errorQ").html(r.error);
+                    }
+        		},
+                error : function(e){
+                    
+                        $("#errorQ").html("Error interno en el sistema");
+                    }
+                });
+            
+           
+			
+        
+    });
+    
+    
+    function errorMsj(error)
+    {
+        $("#errorQ").html('<div class="alert alert-danger alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>Error : '+error+'</div>');
+    }
+
+    function ajusteQ(id,op,fecha)
+    {
+        
+        $("#ajusteCerrar").attr("data",op+"#"+fecha);
+        if(op=='1'){
+            $("#zabuto_calendar_"+fecha+"_modal").modal('hide');
+            
+        }
+        if(op=='0'){
+             $("#modalEditarQuincho").modal('hide');
+             
+        }
+        $("#modalAjusteQuincho").modal('show');
+        
+        
+        
+         var parametros = {"id" : id};
+         	$.ajax( {  
+		data : parametros,
+        url : '<?php echo $this->basePath()."/conserje/quincho/ajuste"?>',
+		type : 'post',
+		beforeSend : function() {
+		  
+          $("#ajusteBody").html("<img src='<?php echo $this->basePath()?>/img/loading.gif'/>")
+		},
+		success : function(r) {
+            if(r.status=='ok'){
+                
+                $("#ajusteBody").html(r.ajusteBody);
+            }else{
+                $("#ajusteBody").html("Error en cargar la pagina:"+r.error);
+            }
+		},
+        error:function(e){
+            $("#ajusteError").html("Error interno en el sistema");
+        }
+    
+    
+        });
+        
+        
+        
+    }
+   
+   
+   $("#ajusteCerrar").click(function(){
+    $("#modalAjusteQuincho").modal('hide');
+    
+    var msd = $(this).attr("data").split("#");
+    
+    if (msd[0]=='0')
+    {
+        $("#modalEditarQuincho").modal('show');
+    }
+    if(msd[0]=='1'){
+        $("#zabuto_calendar_"+msd[1]+"_modal").modal('show');
+    }
+    
+    
+    
+   
+    
+    
+   });
+   
+  $("#confirmaAceptar").click(function(){
+    
+    var obs = $("#obssend").length>0?$("#obssend").val():"";
+    var monto = $("#multa").length>0?$("#multa").val():"0";
+    
+    var parametros = {"id" : $("#idAQ").val(),"obs":obs,"monto":monto,"oper":$(this).attr("data")};
+         	$.ajax( {  
+		data : parametros,
+        url : '<?php echo $this->basePath()."/conserje/quincho/aqoper"?>',
+		type : 'post',
+		beforeSend : function() {
+		  
+          //$("#ajusteBody").html("<img src='<?php echo $this->basePath()?>/img/loading.gif'/>")
+          $("#procesando").html('<p class="text-success"><i class="fa fa-circle-o-notch fa-spin fa-3x"></i></p>');
+		},
+		success : function(r) {
+		  
+          $("#modalConfirma").modal('hide');
+            if(r.status=='ok'){
+               $("#descrok").text(r.message);
+               $("#respuestaOK").modal('show');
+               setInterval(function(){
+               $("#respuestaOK").modal('hide');
+               $(location).attr('href','<?php echo $this->basePath()."/conserje/quincho"?>'); 
+               },1500); 
+            }else{
+                alert('Error: '+r.error);
+            }
+		},
+        error:function(e){
+            $("#modalConfirma").modal('hide');
+            
+            alert("Error interno en el sistema");
+        }
+    
+    
+        });
+        
+    
+  });
+  
+  
+
+    </script>
+    <style>
+                    .fileUpload {
+                        position: relative;
+                        overflow: hidden;
+                        margin: 10px;
+                    }
+                    .fileUpload input.upload {
+                        position: absolute;
+                        top: 0;
+                        right: 0;
+                        margin: 0;
+                        padding: 0;
+                        font-size: 20px;
+                        cursor: pointer;
+                        opacity: 0;
+                        filter: alpha(opacity=0);
+                    }
+    </style>      
+

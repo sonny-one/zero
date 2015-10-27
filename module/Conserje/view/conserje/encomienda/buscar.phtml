@@ -1,0 +1,346 @@
+<script src="<?php echo $this->basePath()?>/js/typeahead.min.js"></script>
+<script src="<?php echo $this->basePath()?>/js/hogan-3.0.1.js"></script>
+
+<h2 class="page-header"><a href="<?php echo $this->basePath()?>/conserje/encomienda">
+<i class="fa fa-arrow-circle-left fa-1x"></i></a> Buscar Encomienda </h2>
+
+
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="panel panel-info">
+                     <div class="panel-heading">
+                             <div id="alertaBuscar"></div>
+                        </div>
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                                                    
+                                    <div class="input-group custom-search-form">
+                                        <input type="text" class="form-control" placeholder="Buscar por Departamento..." id="dptoB"/>
+                                        <span class="input-group-btn">
+                                            <button class="btn btn-primary" type="button" id="btnBuscar">
+                                                <i class="fa fa-search"></i>
+                                            </button>
+                                        </span>
+                                    </div>
+                                    <br />   
+                                  <div class="form-group">                                               
+                                            <label>Estados:&nbsp;&nbsp;&nbsp;&nbsp;</label>                        
+                                            <input type="checkbox" id="chkAbierto" checked="true"/> Abierto&nbsp;&nbsp;&nbsp;&nbsp;
+                                            <input type="checkbox" id="chkCerrado"/> Cerrado&nbsp;&nbsp;&nbsp;&nbsp;
+                                            <input type="checkbox" id="chkProgramado"/> Programado
+                                        </div>  
+                                </div>
+                               
+                               
+                            </div>
+                            
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                    <div class="table-responsive" style="text-align:center" id="listEnc">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /.panel-body -->
+                    </div>
+                    <!-- /.panel -->
+                </div>
+                <!-- /.col-lg-12 -->
+            </div>
+
+
+<div class="modal fade" id="modalRetirarEnc" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
+               <div class="modal-dialog">
+                 <div class="modal-content" >
+                        
+                         <div >
+                         &nbsp;
+                            <div class="container-fluid">
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="panel panel-info">
+                                            <div class="panel-heading">
+                                            Retirar Encomienda
+                                         </div>
+                                        <div class="panel-body">
+                                            <div id="errorEnc"></div>
+                                            <div class="row">
+                                            <div class="col-lg-12">
+                                            <div class="form-group">
+                                            <label>
+                                              <span id="dptoEnc"></span></label>
+                                               <input type="hidden" id="id_encomienda"/>
+                                               <input type="hidden" id="retiraPersonaId"/>
+                                               <input type="hidden" id="retirarPersonaIdAux"/>
+                                               <input type="hidden" id="retiraPersonaNombreAux"/>
+                                               <input type="hidden" id="personaRutAux"/>
+                                               
+                                            </div>
+                                            </div>
+                                            </div>
+                                            <div class="row">
+                                            <div class="col-lg-12">
+                                             <div class="form-group">
+                                             <input type="checkbox" id="id_persona_dpto"  checked=""/> Retira el titular del departamento
+                                            </div>
+                                             <div class="form-group" id="buscarPersona">
+                                            <input type="text" id= "rutE" class="form-control" placeholder="Ingrese Rut a Buscar"/>
+                                             <a id="nuevoPersona" data-toggle='modal' data-target='#modalRegistrarPersona' class="btn btn-social-icon btn-bitbucket"><i class="fa fa-user-plus"></i>Nuevo</a>
+                                               
+                                            </div>
+                                            <div class="form-group">
+                                              <label>Rut</label>
+                                              <input type="text" id="personaRut" class="form-control" readonly />
+                                            </div>
+                                            <div class="form-group">
+                                              <label>Se hace entrega a</label>
+                                              <input type="text" id="retiraPersona" class="form-control" readonly />
+                                            </div>
+                                            <div class="form-group">
+                                              <label>Observacion</label>
+                                               <textarea class="form-control" id="observacionEnc"></textarea>
+                                            </div>
+                                            </div>
+                                            </div>
+                                            <div class="row">                                          
+                                            <div align="right">
+                                            <button data-dismiss="modal"  class="btn btn-danger">Cancelar</button>
+                                            <button id="btnRetirar" class="btn btn-success">Retirar</button>
+                                            </div>
+                                            </div>
+                                        </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            </div>
+
+                    </div>
+                </div>
+            </div>
+            
+
+<div class="modal fade" id="modalDetalleEncomienda" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
+               <div class="modal-dialog">
+                 <div class="modal-content" >
+                    <div >
+                         &nbsp;
+                            <div class="container-fluid" id="detalleEncomiendaAjax">
+                               
+                            </div>
+                            </div>
+
+                    </div>
+                </div>
+            </div>
+
+            
+            <?php echo $rsptaOK?>
+            <?php echo $nuevaPersona?>
+ <script>
+ 
+listaEncomiendas('','Abierto','Ultimas Encomiendas Estado Abierto','25');
+
+$("#btnBuscar").click(function(){
+   
+    verEncomiendas();
+});
+$('#dptoB').keypress(function (e) {
+            if (e.which == 13) {
+            verEncomiendas();
+                }
+            });
+
+function verEncomiendas()
+{
+    var dpto = $("#dptoB").val();
+    var estado="";
+    if($("#chkAbierto").is(':checked')){if(estado!=""){estado=estado+",Abierto";}else{estado="Abierto";}}
+    if($("#chkCerrado").is(':checked')){if(estado!=""){estado=estado+",Cerrado";}else{estado="Cerrado";}}
+    if($("#chkProgramado").is(':checked')){if(estado!=""){estado=estado+",Programado";}else{estado="Programado";}}
+    var titulo ="Listado de Encomienda - Estado: "+estado;
+    if(dpto!=""){titulo ="Listado de Encomienda - Dpto: "+dpto+" Estado: "+estado;}
+    if(dpto=="" && estado.indexOf("Cerrado")>-1){$("#alertaBuscar").html('<div class="alert alert-danger alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>Debe ingresar un departamento para estado Cerrado</div>');return;}
+    if(dpto!="" && estado==""){$("#alertaBuscar").html('<div class="alert alert-danger alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>Debe seleccionar un estado</div>');return;}
+    if(dpto=="" && estado==""){listaEncomiendas('','Abierto','Ultimas Encomiendas Estado Abierto','25');}else{listaEncomiendas(dpto,estado,titulo,'');}}
+    
+function listaEncomiendas(dpto,estado,titulo,limite)
+{
+   var parametros = {"dpto" : dpto,"estado":estado,"titulo":titulo,"limite":limite};
+    	$.ajax({  
+		data : parametros,
+        url : '<?php echo $this->basePath()."/conserje/encomienda/lstencomienda"?>',
+		type : 'post',
+		beforeSend : function() {
+		  $("#listEnc").html("<img src='<?php echo $this->basePath()?>/img/loading.gif'/>");
+		},
+		success : function(r) {
+            if(r.status=='ok'){
+                    $("#listEnc").html(r.info);              
+            }else{
+                $("#listEnc").html("Error: "+r.error);   
+            }
+		}
+        });
+}
+
+$("#id_persona_dpto").click(function(){
+    if($(this).is(':checked')){
+        $("#personaRut").val($("#personaRutAux").val());
+        $("#retiraPersonaId").val($("#retirarPersonaIdAux").val());                                           
+        $("#retiraPersona").val($("#retiraPersonaNombreAux").val());
+        $("#buscarPersona").hide();
+    }else{
+        
+        $("#rutE").val("");
+        $("#personaRut").val("");
+        $("#retiraPersonaId").val(""); 
+        $("#retiraPersona").val("");
+        $("#buscarPersona").show();
+    }
+    
+    
+    
+});
+function retirarEncomienda(id,idtitular,titular,rut,para,remite){
+    
+    $("#buscarPersona").hide();
+    $("#id_persona_dpto").prop( "checked", true );
+    limpiarPersona();
+    $("#rutE").val("");
+    $("#dptoEnc").text(id+" - Departamento: "+para+" / Remitente: "+remite);
+    $("#id_encomienda").val(id);
+    $("#retiraPersonaId").val(idtitular);                                           
+    $("#retiraPersona").val(titular);
+    $("#personaRut").val(rut);
+    $("#observacionEnc").val("");
+    
+    //Copia
+    $("#retirarPersonaIdAux").val(idtitular);                                           
+    $("#retiraPersonaNombreAux").val(titular);
+    $("#personaRutAux").val(rut);
+    
+    
+    
+    
+}
+
+$("#btnRegistrarNuevaPersona").click(function(){
+    var vector = new Array();
+    vector = registrarPersonaNueva();
+    $("#rutE").val(vector["rut"]);
+    $("#personaRut").val(vector["rutformat"]);
+    $("#retiraPersonaId").val(vector["id"]+""); 
+    $("#retiraPersona").val(vector["nombre"]+" "+vector["apellido1"]+" "+vector["apellido2"]);
+    
+});
+
+function verDetalleEnc(id,id_unidad){
+   
+    var parametros = {"id" : id,"id_unidad":id_unidad};
+    	$.ajax( {  
+		data : parametros,
+        url : '<?php echo $this->basePath()."/conserje/encomienda/verdetenc"?>',
+		type : 'post',
+		beforeSend : function() {
+		 $("#detalleEncomiendaAjax").html("<img src='<?php echo $this->basePath()?>/img/loading.gif'/>");
+		},
+		success : function(r) {
+            if(r.status=='ok'){
+                $("#detalleEncomiendaAjax").html(r.modal);
+            }else{
+                $("#detalleEncomiendaAjax").html(r.error);
+            }
+		}
+    
+    
+        });
+}
+
+$("#btnRetirar").click(function(){
+  
+    $(this).val('Espere por favor...');
+    $(this).attr("disabled","disabled");
+    var parametros = {"id_encomienda" : $("#id_encomienda").val(),
+                      "id_persona_retira":$("#retiraPersonaId").val(),
+                      "observacion":$("#observacionEnc").val()
+                      };
+                            
+    	$.ajax( {  
+		data : parametros,
+        url : '<?php echo $this->basePath()."/conserje/encomienda/retirar"?>',
+		type : 'post',
+		beforeSend : function() {
+		 
+		},
+		success : function(r) {
+            if(r.status=='ok'){
+                    $("#modalRetirarEnc").modal('hide');
+                    $("#descrok").text("Se cierra encomienda satisfactoriamente...");
+                    $("#respuestaOK").modal('show');
+                    setTimeout(function(){
+                        $("#respuestaOK").modal('hide');
+                        verEncomiendas(); 
+                    },1500);               
+                
+            }else{
+                $("#errorEnc").html('<div class="alert alert-danger alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button> Error: '+r.error+'</div>');
+            }
+             $("#btnRetirar").val("Retirar");
+             $("#btnRetirar").removeAttr("disabled");
+		}
+    
+    
+        });
+    
+    
+    
+    
+});
+
+$("#rutE").typeahead({
+        
+        name : 'sear',
+		limit:10,
+        minLength: 4,
+        remote: {
+            url : '<?php echo $this->basePath()."/conserje/cfg/rut/"?>'+'%QUERY/1',
+			filter: function (d) {
+            var datums = [];
+            for (var i = 0; i < d.length; i++){
+                datums.push({
+                    id:d[i].id,
+                    rut: d[i].rut,
+                    dv:d[i].dv,
+                    nombre: d[i].nombre,
+                    apellido: d[i].apellido,
+                    apellido2: d[i].apellido2,
+                    rutformat:d[i].rut_format
+                    
+                });
+				}
+                
+                return datums;
+			}
+            
+   
+        },
+        
+       template:'<strong>{{rut}}-{{dv}}</strong>  {{nombre}} {{apellido}} {{apellido2}}',
+		engine: Hogan,
+		valueKey: 'rut',
+        
+    }).on('typeahead:selected', function (e, datum) {
+    $("#personaRut").val(datum.rutformat);
+    $("#retiraPersonaId").val(datum.id);
+    $("#retiraPersona").val(datum.nombre+" "+datum.apellido+" "+datum.apellido2);
+    });
+
+
+function blinker() {
+    $('.blink_me').fadeOut(500);
+    $('.blink_me').fadeIn(500);
+}
+setInterval(blinker, 1000); //Runs every second   
+</script>

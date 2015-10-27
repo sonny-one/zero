@@ -1,0 +1,239 @@
+<?php echo $this->doctype(); ?>
+<?php
+use Zend\Session\Container;
+$sid = new Container('base');
+$url = $this->basePath();
+ if ($sid->offsetExists('usuario')){
+ }else{
+    header ("Location: $url/application/login");
+    exit;
+}
+?>
+<html lang="en">
+    <head>
+        <?php echo $this->headTitle('Portal Comite')->setSeparator(' - ')->setAutoEscape(false) ?>
+
+        <?php echo $this->headMeta()
+            ->appendName('viewport', 'width=device-width, initial-scale=1.0')
+            ->appendHttpEquiv('X-UA-Compatible', 'IE=edge')
+        ?>
+
+    <link href="<?php echo $this->basePath()?>/img/check.ico" rel="shortcut icon" type="image/vnd.microsoft.icon"/>    
+    <link href='http://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>    
+    <link href="<?php echo $this->basePath()?>/sb2/css/bootstrap.css" rel="stylesheet" media="screen" type="text/css"/>
+    <link href="<?php echo $this->basePath()?>/sb2/css/plugins/metisMenu/metisMenu.min.css" rel="stylesheet" media="screen" type="text/css"/>
+    <link href="<?php echo $this->basePath()?>/sb2/css/plugins/timeline.css" rel="stylesheet" media="screen" type="text/css"/>    
+    <link href="<?php echo $this->basePath()?>/sb2/font-awesome-4.1.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" type="text/css"/>
+    <link href="<?php echo $this->basePath()?>/css/menu_usu.css" rel="stylesheet"/>        
+    <link href="<?php echo $this->basePath()?>/css/custom2.css" rel="stylesheet"/>
+    <link href="<?php echo $this->basePath()?>/sb2/css/plugins/dataTables.bootstrap.css" rel="stylesheet"/>
+    <link href="<?php echo $this->basePath()?>/sb2/css/sb-admin-2.css" rel="stylesheet" media="screen" type="text/css"/>
+    <link href="<?php echo $this->basePath()?>/sb2/css/plugins/gridster.min.css" rel="stylesheet" media="screen" type="text/css"/>
+    <link href="<?php echo $this->basePath()?>/sb2/css/backcomite.css" rel="stylesheet" media="screen" type="text/css"/>
+
+
+    <script src="<?php echo $this->basePath()?>/sb2/js/jquery-1.11.0.js"></script>    
+    <script src="<?php echo $this->basePath()?>/sb2/js/jquery-ui.min.js"></script>        
+    <script src="<?php echo $this->basePath()?>/sb2/js/bootstrap.min.js"></script>
+    <script src="<?php echo $this->basePath()?>/sb2/js/jquery.rut.js"></script>    
+    <script src="<?php echo $this->basePath()?>/sb2/js/sb-admin-2.js"></script>
+    <script src="<?php echo $this->basePath()?>/sb2/js/plugins/gridster.js/gridster.min.js"></script>       
+    <script src="<?php echo $this->basePath()?>/js/materialMenu.min.js"></script> 
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>       
+    <script src="<?php echo $this->basePath()?>/sb2/js/plugins/metisMenu/metisMenu.min.js"></script>
+    <script src="<?php echo $this->basePath()?>/sb2/js/plugins/dataTables/jquery.dataTables.js"></script>
+    <script src="<?php echo $this->basePath()?>/sb2/js/plugins/dataTables/dataTables.bootstrap.js"></script> 
+      
+
+    
+
+    
+
+    </head>
+
+    <body>
+
+  <div class="fechalayout">
+
+       <!--FECHA LG-->
+
+  <div id="fecha1" ><span><?php  setlocale(LC_TIME, '').': ';
+
+      echo iconv('ISO-8859-1', 'UTF-8', strftime('%A %d de %B de %Y', time()));?></span>
+
+  </div>
+
+        <!--FECHA MD-->
+
+  <div id="fecha2" id="md" ><span><?php setlocale(LC_ALL,"spanish"); 
+
+      echo substr(ucfirst(strftime("%A")),0,3).", ".strftime("%d de ").ucfirst(strftime("%B"));?></span>
+
+  </div>
+
+          <!--FECHA SM-->
+
+  <div id="fecha3" id="sm"><span><?php setlocale(LC_ALL,"spanish"); 
+
+      echo strftime("%d/%b/%y ");?></span>
+
+  </div>
+
+  </div>
+
+  <div id="wrapper" class="wrapper">
+
+       <div class="col-lg-12">
+
+                     <?php echo $this->content; ?>
+
+       </div>
+
+  </div><!-- /wrapper -->
+
+    
+
+  <button id="mm-menu-toggle" class="mm-menu-toggle">Toggle Menu</button>
+
+  <div id="mm-menu" class="mm-menu">
+
+   <!--   <div class="mm-menu__header">
+
+    
+
+
+
+
+
+              <div class="input-group custom-search-form" style="padding: 20px;">
+
+                    <input type="text" class="form-control" placeholder="Buscar..."/>
+
+                      <span class="input-group-btn">
+
+                     <button class="btn btn-default" type="button" onclick="alert('En Construcción...');">
+
+                         <i class="fa fa-search"></i>
+
+                      </button>
+
+                      </span>
+
+                </div>
+
+
+
+      
+
+      
+
+    </div>-->
+
+                    <div class="col-lg-12" style="text-align: center;">
+
+<img src="<?php echo $this->basePath()?>/img/logo2.png" style="max-width: 40%; margin-bottom: 20px; margin-top: 20px;"/>
+
+
+
+</div>
+
+    <ul class="mm-menu__items">
+
+      <li class="mm-menu__item">
+
+        <a class="mm-menu__link" href="<?php echo $this->basePath()?>/application/admin" style="text-decoration: none;">
+
+          <i class="fa fa-home fa-2x"></i>&nbsp;&nbsp; Inicio
+
+        </a>
+
+      </li>
+
+      <li class="mm-menu__item">
+
+        <a class="mm-menu__link" href="<?php echo $this->basePath()?>/admin/infocom" style="text-decoration: none;">
+
+          <i class="fa fa-users fa-2x"></i>&nbsp;&nbsp; Mi Condominio
+
+        </a>
+
+      </li>
+
+      <li class="mm-menu__item">
+
+        <a class="mm-menu__link" href="<?php echo $this->basePath()?>/admin/finanzas" style="text-decoration: none;">
+
+          <i class="fa fa-dollar fa-2x"></i>&nbsp;&nbsp; Finanzas
+
+        </a>
+
+      </li>
+
+      <li class="mm-menu__item">
+
+        <a class="mm-menu__link" href="<?php echo $this->basePath()?>/application/index/db" style="text-decoration: none;">
+
+          <i class="fa fa-refresh fa-2x"></i>&nbsp;&nbsp; Cambiar Comunidad
+
+        </a>
+
+      </li>
+
+      <li class="mm-menu__item">
+
+        <a class="mm-menu__link" href="<?php echo $this->basePath()?>/application/perfil" style="text-decoration: none;">
+
+          <i class="fa fa-user fa-2x"></i>&nbsp;&nbsp; Perfil
+
+        </a>
+
+      </li>
+
+      <li class="mm-menu__item">
+
+        <a class="mm-menu__link" href="<?php echo $this->basePath()?>/application/login/salir" style="text-decoration: none;">
+
+          <i class="fa fa-sign-out fa-2x"></i>&nbsp;&nbsp; Salir
+
+        </a>
+
+      </li>    
+
+      <li class="mm-menu__item">
+
+        <a class="mm-menu__link" href="#">
+
+          <i class="md md-warning"></i>&nbsp;&nbsp; Settings
+
+        </a>
+
+      </li>
+
+    </ul>
+
+  </div><!-- /nav -->
+
+  
+
+
+
+  <script>
+
+    var menu = new Menu;
+
+window.$zopim||(function(d,s){var z=$zopim=function(c){z._.push(c)},$=z.s=
+d.createElement(s),e=d.getElementsByTagName(s)[0];z.set=function(o){z.set.
+_.push(o)};z._=[];z.set._=[];$.async=!0;$.setAttribute("charset","utf-8");
+$.src="//v2.zopim.com/?367fnhOP9mA9OB2vzEM72HnbitGVWMDY";z.t=+new Date;$.
+type="text/javascript";e.parentNode.insertBefore($,e)})(document,"script");
+
+  </script>
+
+
+
+        <?php echo $this->inlineScript() ?>
+
+    </body>
+
+</html>
+

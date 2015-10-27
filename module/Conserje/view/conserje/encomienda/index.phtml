@@ -1,0 +1,336 @@
+<script src="<?php echo $this->basePath()?>/js/typeahead.min.js"></script>
+<script src="<?php echo $this->basePath()?>/js/hogan-3.0.1.js"></script>
+<h2 class="page-header"><a href="<?php echo $this->basePath()?>/conserje"><i class="fa fa-arrow-circle-left fa-1x"></i></a>   Seleccione su opci&oacute;n </h2>
+<br /><br />
+<section id="menu_conserje">
+<div class="row">
+           <a href="<?php echo $this->basePath()?>/conserje/encomienda/nuevo">
+               <div class="col-lg-3 col-md-6 col-sm-4">
+                    <div class="panel panel-red">
+                        <div class="panel-heading">
+                            <div class="row">
+                                <div class="col-xs-12 text-center">
+                                    <div>
+                                    <i class="fa fa-archive fa-3x" style="color: #fff; "></i>
+                                    </div>                                    
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel-footer">
+                                <div class="col-xs-12 text-center">
+                                        <div class="huge">Nueva encomienda</div>                                        
+                                    </div>                            
+                                <div class="clearfix"></div>
+                            </div>
+                            
+                    </div>
+                </div>
+            </a> 
+<!--a href="<?php echo $this->basePath()?>/conserje/encomienda/nuevo">
+              <div class="col-lg-3 col-md-6">
+                    <div class="panel panel-green">
+                        <div class="panel-heading">
+                            <div class="row">
+                                <div class="col-xs-9 text-left">
+                                    <div class="huge">Ingreso</div>
+                                    <div class="huge">Encomienda</div>
+                                </div>
+                            </div>
+                        </div>
+                            <div class="panel-footer">
+                                <span class="pull-left">Seleccionar</span>
+                                <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                <div class="clearfix"></div>
+                            </div>
+                    </div>
+                </div>
+      </a-->  
+      <a href="<?php echo $this->basePath()?>/conserje/encomienda/buscar">
+               <div class="col-lg-3 col-md-6 col-sm-4">
+                    <div class="panel panel-red">
+                        <div class="panel-heading">
+                            <div class="row">
+                                <div class="col-xs-12 text-center">
+                                    <div>
+                                    <i class="fa fa-search fa-3x" style="color: #fff; "></i>
+                                    </div>                                    
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel-footer">
+                                <div class="col-xs-12 text-center">
+                                        <div class="huge">Buscar encomienda</div>                                        
+                                    </div>                            
+                                <div class="clearfix"></div>
+                            </div>
+                            
+                    </div>
+                </div>
+            </a>      
+</div>
+</section>
+<div class="row">
+<div class="col-lg-9">
+                    <div class="panel panel-info">
+                        <div class="panel-heading">
+                            <i class="fa fa-history"></i> &nbsp;&nbsp;Ultimas Encomiendas Abiertas
+                        </div>
+                        <div class="panel-body">
+                             <div class="table-responsive">
+                               <?php echo $info?>
+                            </div>
+                        </div>
+                       
+                    </div>
+                </div>
+
+</div>
+
+
+
+
+<!-- Modal-->
+            <div class="modal fade" id="modalDetalle" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" >
+               <div class="modal-dialog">
+                 <div class="modal-content">
+                     <div class="modal-header">
+                          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                          <h4 class="modal-title" id="myModalLabel">Encomienda Abierto</h4>
+                        </div>
+                        <div class="modal-body">
+                             <span id="fechaText"></span><br/>
+                            <span id="paraText"></span><br/>
+                            <span id="remiteText"></span><br/>
+                            Detalle:<br/>
+                            <span id="detalleText"></span><br />
+                            Pendiente a RETIRAR
+                            <br /><br />
+                        </div>
+
+                 </div>
+                </div>
+            </div>
+
+<!--Fin Modal-->
+
+<!-- Modal -->
+<div class="modal fade" id="modalRetirarEnc" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
+               <div class="modal-dialog">
+                 <div class="modal-content" >
+                        
+                         <div >
+                         &nbsp;
+                            <div class="container-fluid">
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="panel panel-info">
+                                            <div class="panel-heading">
+                                            Retirar Encomienda
+                                         </div>
+                                        <div class="panel-body">
+                                            <div id="errorEnc"></div>
+                                            <div class="row">
+                                            <div class="col-lg-12">
+                                            <div class="form-group">
+                                            <label>
+                                              <span id="dptoEnc"></span></label>
+                                               <input type="hidden" id="id_encomienda"/>
+                                               <input type="hidden" id="retiraPersonaId"/>
+                                               <input type="hidden" id="retirarPersonaIdAux"/>
+                                               <input type="hidden" id="retiraPersonaNombreAux"/>
+                                               <input type="hidden" id="personaRutAux"/>
+                                               
+                                            </div>
+                                            </div>
+                                            </div>
+                                            <div class="row">
+                                            <div class="col-lg-12">
+                                             <div class="form-group">
+                                             <input type="checkbox" id="id_persona_dpto"  checked=""/> Retira el titular del departamento
+                                            </div>
+                                             <div class="form-group" id="buscarPersona">
+                                            <input type="text" id= "rutE" class="form-control" placeholder="Ingrese Rut a Buscar"/>
+                                             <a id="nuevoPersona" data-toggle='modal' data-target='#modalRegistrarPersona' class="btn btn-social-icon btn-bitbucket"><i class="fa fa-user-plus"></i>Nuevo</a>
+                                               
+                                            </div>
+                                            <div class="form-group">
+                                              <label>Rut</label>
+                                              <input type="text" id="personaRut" class="form-control" readonly />
+                                            </div>
+                                            <div class="form-group">
+                                              <label>Se hace entrega a</label>
+                                              <input type="text" id="retiraPersona" class="form-control" readonly />
+                                            </div>
+                                            <div class="form-group">
+                                              <label>Observacion</label>
+                                               <textarea class="form-control" id="observacionEnc"></textarea>
+                                            </div>
+                                            </div>
+                                            </div>
+                                            <div class="row">                                          
+                                            <div align="right">
+                                            <button data-dismiss="modal"  class="btn btn-danger">Cancelar</button>
+                                            <button id="btnRetirar" class="btn btn-success">Retirar</button>
+                                            </div>
+                                            </div>
+                                        </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            </div>
+
+                    </div>
+                </div>
+            </div>
+            <?php echo $rsptaOK?>
+            <?php echo $nuevaPersona?>
+<!-- Fin Modal-->
+
+<script>
+
+
+function mostrarDetalle(fecha,para,remite,detalle){
+    
+    $("#fechaText").text('Se recepciono el dia: '+fecha);
+    $("#paraText").text('Para el Departamento: '+para);
+    $("#remiteText").text('El Remitente es: '+remite);
+    $("#detalleText").text(detalle);
+  
+   
+}
+function retirarEncomienda(id,idtitular,titular,rut,para,remite){
+    
+    $("#buscarPersona").hide();
+    $("#id_persona_dpto").prop( "checked", true );
+    limpiarPersona();
+    $("#rutE").val("");
+    $("#dptoEnc").text(id+" - Departamento: "+para+" / Remitente: "+remite);
+    $("#id_encomienda").val(id);
+    $("#retiraPersonaId").val(idtitular);                                           
+    $("#retiraPersona").val(titular);
+    $("#personaRut").val(rut);
+    $("#observacionEnc").val("");
+    
+    //Copia
+    $("#retirarPersonaIdAux").val(idtitular);                                           
+    $("#retiraPersonaNombreAux").val(titular);
+    $("#personaRutAux").val(rut);
+    
+    
+    
+    
+}
+
+$("#id_persona_dpto").click(function(){
+    if($(this).is(':checked')){
+        $("#personaRut").val($("#personaRutAux").val());
+        $("#retiraPersonaId").val($("#retirarPersonaIdAux").val());                                           
+        $("#retiraPersona").val($("#retiraPersonaNombreAux").val());
+        $("#buscarPersona").hide();
+    }else{
+        
+        $("#rutE").val("");
+        $("#personaRut").val("");
+        $("#retiraPersonaId").val(""); 
+        $("#retiraPersona").val("");
+        $("#buscarPersona").show();
+    }
+    
+    
+    
+});
+
+
+$("#btnRetirar").click(function(){
+  
+    $(this).val('Espere por favor...');
+    $(this).attr("disabled","disabled");
+    var parametros = {"id_encomienda" : $("#id_encomienda").val(),
+                      "id_persona_retira":$("#retiraPersonaId").val(),
+                      "observacion":$("#observacionEnc").val()
+                      };
+                            
+    	$.ajax( {  
+		data : parametros,
+        url : '<?php echo $this->basePath()."/conserje/encomienda/retirar"?>',
+		type : 'post',
+		beforeSend : function() {
+		 
+		},
+		success : function(r) {
+            if(r.status=='ok'){
+                    $("#modalRetirarEnc").modal('hide');
+                    $("#descrok").text("Se cierra encomienda satisfactoriamente...");
+                    $("#respuestaOK").modal('show');
+                    setTimeout(function(){
+                        $("#respuestaOK").modal('hide');
+                        $(location).attr('href','<?php echo $this->basePath()."/conserje/encomienda"?>'); 
+                    },1500);               
+                
+            }else{
+               
+                $("#errorEnc").html('<div class="alert alert-danger alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button> Error: '+r.error+'</div>');
+            }
+             $("#btnRetirar").val("Retirar");
+             $("#btnRetirar").removeAttr("disabled");
+		}
+    
+    
+        });
+    
+    
+    
+    
+});
+
+
+
+$("#btnRegistrarNuevaPersona").click(function(){
+    var vector = new Array();
+    vector = registrarPersonaNueva();
+    $("#rutE").val(vector["rut"]);
+    $("#personaRut").val(vector["rutformat"]);
+    $("#retiraPersonaId").val(vector["id"]+""); 
+    $("#retiraPersona").val(vector["nombre"]+" "+vector["apellido1"]+" "+vector["apellido2"]);
+    
+});
+
+$("#rutE").typeahead({
+        
+        name : 'sear',
+		limit:10,
+        minLength: 4,
+        remote: {
+            url : '<?php echo $this->basePath()."/conserje/cfg/rut/"?>'+'%QUERY/1',
+			filter: function (d) {
+            var datums = [];
+            for (var i = 0; i < d.length; i++){
+                datums.push({
+                    id:d[i].id,
+                    rut: d[i].rut,
+                    dv:d[i].dv,
+                    nombre: d[i].nombre,
+                    apellido: d[i].apellido,
+                    apellido2: d[i].apellido2,
+                    rutformat:d[i].rut_format
+                    
+                });
+				}
+                
+                return datums;
+			}
+            
+   
+        },
+        
+       template:'<strong>{{rut}}-{{dv}}</strong>  {{nombre}} {{apellido}} {{apellido2}}',
+		engine: Hogan,
+		valueKey: 'rut',
+        
+    }).on('typeahead:selected', function (e, datum) {
+    $("#personaRut").val(datum.rutformat);
+    $("#retiraPersonaId").val(datum.id);
+    $("#retiraPersona").val(datum.nombre+" "+datum.apellido+" "+datum.apellido2);
+    });
+</script>

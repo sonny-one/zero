@@ -1,0 +1,378 @@
+<h2 class="page-header"><a href="<?php echo $this->basePath()?>/conserje/visita">
+<i class="fa fa-arrow-circle-left fa-1x"></i></a> Mapa de Estacionamiento </h2>
+<div class="row">
+                <div class="col-lg-12">
+                <div class="panel panel-info">
+                     <div class="panel-heading">
+                     
+                            
+                        </div>
+                        <div class="panel-body MyGradiente">
+                            <div class="row">
+                
+                        <?php for($i=0;$i<count($mapa);$i++){
+                                    
+                                $idEst = $mapa[$i]['pk'];
+                                $idDptoEst = isset($mapa[$i]['id_unidad'])?$mapa[$i]['id_unidad']:"";
+                                $idVisitaEst = isset($mapa[$i]['id_visita'])?$mapa[$i]['id_visita']:"";
+                                $idestvisitaEst = isset($mapa[$i]['id_est_visita'])?$mapa[$i]['id_est_visita']:"";
+                                $dptoEst = isset($mapa[$i]['nombre_unidad'])?$mapa[$i]['nombre_unidad']:"-";
+                                $nombreEst = $mapa[$i]['nombre'];
+                                $aplicaEst = isset($mapa[$i]['aplica'])?$mapa[$i]['aplica']:"";
+                                $fechaEst = isset($mapa[$i]['fecha'])?$mapa[$i]['fecha']:"";
+                                $ffEst = $fechaEst<>""?substr($fechaEst,0,10):"-";
+                                $fhEst =$fechaEst<>""?substr($fechaEst,10,9):"-";
+                                $estadoEst = isset($mapa[$i]['estado'])?$mapa[$i]['estado']:"";
+                                $horaEst = isset($mapa[$i]['horas'])?$mapa[$i]['horas']:"";
+                                $patenteEst = isset($mapa[$i]['patente'])?$mapa[$i]['patente']:"";
+                                $classBtn ="";
+                                $condicionEst="";
+                                $marcarHora='-';
+                                if($aplicaEst==""){
+                                     if($estadoEst=="1"){
+                                        $patenteEst="Disponible";
+                                        $fhEst="Click";
+                                        $classBtn="btn-success";
+                                        $condicionEst="Libre";
+                                        $autoEst =$this->basePath()."/img/auto/auto_disponible.png";
+                                    }else{
+                                        $classBtn="";
+                                        $condicionEst="Bloqueado";
+                                        $autoEst =$this->basePath()."/img/auto/auto_ocupado_obs.png";
+                                        
+                                    }
+                                    
+                                }else{
+                                    $condicionEst="Ocupado";
+                                    $marcarHora = '<i class="fa fa-clock-o">'.$horaEst.'Hrs</i>';
+                                    $classBtn="btn-info";
+                                    $autoEst =$this->basePath()."/img/auto/auto_ocupado_normal.png";                                    
+                                    
+                                    if($aplicaEst=="1"){
+                                        if((double)$horaEst > 5.00){
+                                            $marcarHora='<span class="blink_me"><i class="fa fa-clock-o">'.$horaEst.'Hrs</i></span>';
+                                            $classBtn="btn-danger";
+                                            $alertaEst="1";
+                                            $autoEst =$this->basePath()."/img/auto/auto_ocupado_alerta.png";
+                                        }
+                                }
+                                }
+                                ?>
+                                <a href="javascript:void(0)" onclick="verEstacionamiento('<?php echo $idestvisitaEst?>','<?php echo $idEst?>','<?php echo $idVisitaEst?>','<?php echo $nombreEst?>','<?php echo $idDptoEst?>','<?php echo $condicionEst?>','<?php echo $aplicaEst?>','<?php echo $horaEst?>')" >
+                                <div class="col-lg-3 col-md-4 col-sm-4 col-xs-5">
+                                        <div style="border: 2.5px solid #dede60; text-align: center; 	border-top: none; border-bottom:none;">
+                                        <table class="table <?php echo $classBtn?>">
+                                            <thead>
+                                            <tr>
+                                                <th><?php echo $nombreEst?></th>
+                                                <th><?php echo $dptoEst?></th>
+                                            </tr>                                                
+                                            </thead>
+                                            <tbody>
+                                                <tr><td><img src="<?php echo $autoEst?>"/></td>
+                                                    <td><?php echo $condicionEst?><br/>
+                                                    <?php echo $patenteEst?><br/>
+                                                    <?php echo $fhEst?><br/>
+                                                    <?php echo $marcarHora?>
+                                                    </td>
+                                                </tr>
+                                                
+                                            </tbody>
+                                           
+                                         </table>       
+                                        </div>
+                                    </div>
+                                    </a> 
+                                    <?php }?>                
+                
+                </div>
+                </div>
+                </div>
+                </div>
+
+</div>
+
+
+<div class="modal fade" id="modalVerEstac" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
+               <div class="modal-dialog">
+                 <div class="modal-content" >
+                        
+                         <div >
+                         &nbsp;
+                            <div class="container-fluid">
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="panel panel-info">
+                                            <div class="panel-heading">
+                                            Que deseas hacer
+                                         </div>
+                                        <div class="panel-body">
+                                            <div id="alertaV"></div>
+                                            <div class="row">
+                                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                            <div class="form-group">
+                                              <label>Nro Visita</label>
+                                               <input type="text" class="form-control" id="visitaEst"/>
+                                               <input type="hidden" id="idestvisita"/>
+                                               <input type="hidden" id="idest"/>
+                                            </div>
+                                            <div class="form-group">
+                                              <label>Aplica Multa</label>
+                                               <input type="text" class="form-control" id="aplicaEst"/>
+                                            </div>
+                                            
+                                            </div>
+                                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                             <div class="form-group">
+                                              <label>Nro de Estacionamiento</label>
+                                               <input type="text" class="form-control" id="nombreEst"/>
+                                            </div>
+                                             <div class="form-group">
+                                              <label>Horas</label>
+                                               <input type="text" class="form-control" id="horasEst"/>
+                                            </div>
+                                            
+                                           
+                                            </div>
+                                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                           <div class="form-group">
+                                              <label>Condicion</label>
+                                               <input type="text" class="form-control" id="condicionEst"/>
+                                            </div>
+                                            <div class="form-group input-group">
+                                              <br /> 
+                                            </div>
+                                            </div>
+                                            </div>
+                                            <div class="row">                                          
+                                            <div align="right">
+                                            <button data-dismiss="modal"  class="btn btn-danger">Cerrar</button>
+                                            <button id="btnVerInfo" class="btn btn-success">Ver Detalle</button>
+                                            <button id="btnDesbloquearEst" class="btn btn-success">Desbloquear Estacionamiento</button>
+                                            <button id="btnBloquearEst" class="btn btn-success">Bloquear Estacionamiento</button>
+                                            <button id="btnLiberarEst" class="btn btn-success">Liberar Estacionamiento</button>
+                                            </div>
+                                            </div>
+                                            
+
+
+                                        </div>
+                                        
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                            </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal fade" id="respuestaOK" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
+               <div class="modal-dialog">
+                 <div class="modal-content" >
+                         <div >
+                         &nbsp;
+                            <div class="container-fluid">
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="col-lg-12 text-center" style="padding: 80px;">
+                                            <span><i class="fa fa-thumbs-o-up fa-5x"></i></span>
+                                            <h2 id="descrok"></h2>
+                                            </div>
+                                    </div>
+                                </div>
+                            </div>
+                            </div>
+
+                    </div>
+                </div>
+            </div>
+             
+<script>
+
+function verEstacionamiento(id,idest,visita,nombre,id_dpto,condicion,aplica,horas){
+   $("#nombreEst").val(nombre);
+   $("#visitaEst").val(visita);
+   $("#condicionEst").val(condicion);
+
+   $("#aplicaEst").val(aplica);
+   $("#horasEst").val(horas);
+   $("#idestvisita").val(id);
+   $("#idest").val(idest);
+   
+   $("#btnDesbloquearEst").hide();
+   $("#btnBloquearEst").hide(); 
+   $("#btnLiberarEst").hide();
+                
+   if (condicion=="Bloqueado"){
+    $("#btnDesbloquearEst").show();
+   }
+   if (condicion=="Libre"){
+    $("#btnBloquearEst").show();
+   }
+   if (condicion=="Ocupado"){
+    $("#btnLiberarEst").show();
+   }   
+   $("#modalVerEstac").modal('show');
+}
+
+$("#btnBloquearEst").click(function(){
+    
+     var nm = $(this).val();
+   
+    $(this).val('Espere por favor...');
+    $(this).attr("disabled","disabled");
+    
+
+    
+    var parametros = {"id": $("#idest").val()};
+                            
+    	$.ajax( {  
+		data : parametros,
+        url : '<?php echo $this->basePath()."/conserje/visita/cfgestbloqueo"?>',
+		type : 'post',
+		beforeSend : function() {
+		 
+		},
+		success : function(r) {
+            if(r.status=='ok'){
+                    limpiar();
+                    $("#modalVerEstac").modal('hide');
+                    $("#descrok").text("La operacion se ejecuto satisfactoriamente...");
+                    $("#respuestaOK").modal('show');
+                    setInterval(function(){
+                        $("#respuestaOK").modal('hide');
+                        $(location).attr('href','<?php echo $this->basePath()."/conserje/visita/verestac"?>'); 
+                    },1500);               
+                
+            }else{
+                $("#btnBloquearEst").val(nm);
+                $("#btnBloquearEst").removeAttr("disabled");
+                $("#alertaV").html('<div class="alert alert-danger alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button> Error: '+r.error+'</div>');
+            }
+		}
+    
+    
+        });
+    
+    
+});
+
+$("#btnDesbloquearEst").click(function(){
+    
+     var nm = $(this).val();
+   
+    $(this).val('Espere por favor...');
+    $(this).attr("disabled","disabled");
+    
+
+    
+    var parametros = {"id": $("#idest").val()};
+                            
+    	$.ajax( {  
+		data : parametros,
+        url : '<?php echo $this->basePath()."/conserje/visita/cfgestdesbloqueo"?>',
+		type : 'post',
+		beforeSend : function() {
+		 
+		},
+		success : function(r) {
+            if(r.status=='ok'){
+                    limpiar();
+                    $("#modalVerEstac").modal('hide');
+                    $("#descrok").text("La operacion se ejecuto satisfactoriamente...");
+                    $("#respuestaOK").modal('show');
+                    setInterval(function(){
+                        $("#respuestaOK").modal('hide');
+                        $(location).attr('href','<?php echo $this->basePath()."/conserje/visita/verestac"?>'); 
+                    },1500);               
+                
+            }else{
+                $("#btnBloquearEst").val(nm);
+                $("#btnBloquearEst").removeAttr("disabled");
+                $("#alertaV").html('<div class="alert alert-danger alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button> Error: '+r.error+'</div>');
+            }
+		}
+    
+    
+        });
+    
+    
+});
+
+$("#btnLiberarEst").click(function(){
+    
+    var nm = $(this).val();
+   
+    $(this).val('Espere por favor...');
+    $(this).attr("disabled","disabled");
+    
+
+    
+    var parametros = {"id_est_visita": $("#idestvisita").val(),
+                      "id_visita" : $("#visitaEst").val(),
+                      "aplica_multa":$("#aplicaEst").val(),
+                      "hora_diferencia":$("#horasEst").val()
+                      };
+                            
+    	$.ajax( {  
+		data : parametros,
+        url : '<?php echo $this->basePath()."/conserje/visita/cfgest"?>',
+		type : 'post',
+		beforeSend : function() {
+		 
+		},
+		success : function(r) {
+            if(r.status=='ok'){
+                    limpiar();
+                    $("#modalVerEstac").modal('hide');
+                    $("#descrok").text("La operacion se ejecuto satisfactoriamente...");
+                    $("#respuestaOK").modal('show');
+                    setInterval(function(){
+                        $("#respuestaOK").modal('hide');
+                        $(location).attr('href','<?php echo $this->basePath()."/conserje/visita/verestac"?>'); 
+                    },1500);               
+                
+            }else{
+                $("#btnLiberarEst").val(nm);
+                $("#btnLiberarEst").removeAttr("disabled");
+                $("#alertaV").html('<div class="alert alert-danger alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button> Error: '+r.error+'</div>');
+            }
+		}
+    
+    
+        });
+    
+
+    
+});
+ function limpiar(){
+  
+    $("#nombreEst").val("");
+    $("#visitaEst").val("");
+    $("#condicionEst").val("");
+    $("#aplicaEst").val("");
+    $("#horasEst").val("");
+    $("#idestvisita").val("");
+    $("#idest").val("");
+ }
+ function blinker() {
+    $('.blink_me').fadeOut(500);
+    $('.blink_me').fadeIn(500);
+}
+setInterval(blinker, 1000); //Runs every second   
+</script>
+<style>
+.MyGradiente{
+background: rgb(181,189,200); /* Old browsers */
+background: -moz-linear-gradient(top,  rgba(181,189,200,1) 0%, rgba(130,140,149,1) 59%, rgba(130,140,149,1) 99%, rgba(130,140,149,1) 99%, rgba(40,52,59,1) 100%); /* FF3.6+ */
+background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(181,189,200,1)), color-stop(59%,rgba(130,140,149,1)), color-stop(99%,rgba(130,140,149,1)), color-stop(99%,rgba(130,140,149,1)), color-stop(100%,rgba(40,52,59,1))); /* Chrome,Safari4+ */
+background: -webkit-linear-gradient(top,  rgba(181,189,200,1) 0%,rgba(130,140,149,1) 59%,rgba(130,140,149,1) 99%,rgba(130,140,149,1) 99%,rgba(40,52,59,1) 100%); /* Chrome10+,Safari5.1+ */
+background: -o-linear-gradient(top,  rgba(181,189,200,1) 0%,rgba(130,140,149,1) 59%,rgba(130,140,149,1) 99%,rgba(130,140,149,1) 99%,rgba(40,52,59,1) 100%); /* Opera 11.10+ */
+background: -ms-linear-gradient(top,  rgba(181,189,200,1) 0%,rgba(130,140,149,1) 59%,rgba(130,140,149,1) 99%,rgba(130,140,149,1) 99%,rgba(40,52,59,1) 100%); /* IE10+ */
+background: linear-gradient(to bottom,  rgba(181,189,200,1) 0%,rgba(130,140,149,1) 59%,rgba(130,140,149,1) 99%,rgba(130,140,149,1) 99%,rgba(40,52,59,1) 100%); /* W3C */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#b5bdc8', endColorstr='#28343b',GradientType=0 ); /* IE6-9 */
+}
+</style> 
