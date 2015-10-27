@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ZendSkeletonApplication
 =======================
 
@@ -116,3 +117,6 @@ it should look something like below:
     }
 
 Restart the nginx, now you should be ready to go!
+=======
+# test
+>>>>>>> 3e261918c06b9c65827353c553eba5f92c3652fb
