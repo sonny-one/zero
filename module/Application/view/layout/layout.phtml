@@ -1,4 +1,17 @@
+<?php echo $this->doctype(); ?>
+<?php
 
+use Zend\Session\Container;
+$sid = new Container('base');
+$url = $this->basePath();
+ if ($sid->offsetExists('usuario')){
+ }else{
+    header ("Location: $url/application/login");
+    exit;
+ }
+
+
+?>
 <!DOCTYPE html>
 <!-- 
 Template Name: Metronic - Responsive Admin Dashboard Template build with Twitter Bootstrap 3.3.5

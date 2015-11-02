@@ -1,0 +1,14 @@
+@import url(https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300);
+
+#menu {
+    font-family: 'Open Sans Condensed', sans-serif;
+    font-size: 20px;
+}
+#menu .fa {        
+    text-shadow: 2px 2px 2px #ccc;
+    font-size: 1.5em;        
+}
+.panel-footer {
+ padding: 10px 5px;   
+   
+}

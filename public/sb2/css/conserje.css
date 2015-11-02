@@ -1,0 +1,24 @@
+@import url(https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300);
+
+#menu_conserje {
+    font-family: 'Open Sans Condensed', sans-serif;
+    font-size: 20px;
+}
+
+#menu_conserje .fa {    
+       color: #428bca;
+    text-shadow: 2px 2px 2px #ccc;
+    font-size: 2.5em; 
+}
+#menu_conserje .fa::before {    
+    color: #57A0FE;     
+}
+
+#menu_conserje .panel {
+    
+    border-radius: 0;
+}
+.page-header {
+    margin: 15px;
+    
+}

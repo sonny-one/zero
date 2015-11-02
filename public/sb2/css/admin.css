@@ -1,0 +1,27 @@
+@media all and (min-width: 690px) {
+  nav li {
+    background: #E0E530;
+    margin: 0;
+    -webkit-transform: skewX(-10deg);
+    -moz-transform: skewX(-10deg);
+    -ms-transform: skewX(-10deg);
+    -o-transform: skewX(-10deg);
+    transform: skewX(-10deg);
+  }
+  nav a {
+    padding: 10px 20px;
+    color: rgba(247,237,247,1);
+    background-color: #2ACA2A;
+  }
+  nav a:hover {
+    color: #fff;
+    background-color: #006700;
+  }
+  nav span {
+    -webkit-transform: skewX(10deg);
+    -moz-transform: skewX(10deg);
+    -ms-transform: skewX(10deg);
+    -o-transform: skewX(10deg);
+    transform: skewX(10deg);
+  }
+}
