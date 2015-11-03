@@ -25,9 +25,9 @@ class NotificacionController extends AbstractActionController
     public function indexAction()
     {
         $this->layout('layout/conserje');
-        $this->layout()->sugerencia = "active";
-        $this->layout()->sugerenciaprincipal = "active";
-        return new ViewModel();
+        $result = new ViewModel();
+         //$result->setTerminal(true);
+         return $result;
     }
     
     

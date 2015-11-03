@@ -59,34 +59,6 @@ $perfil = $sid->offsetGet('perfil');
 
     </head>
     <body>
-
-<!--div class="fechalayout">
-
-
-
-  <div id="fecha1" ><span><?php  setlocale(LC_TIME, '').': ';
-
-   //   echo iconv('ISO-8859-1', 'UTF-8', strftime('%A %d de %B de %Y', time()));?></span>
-
-  </div>
-
- 
-
-  <div id="fecha2" id="md" ><span><?php setlocale(LC_ALL,"spanish"); 
-
-   //   echo substr(ucfirst(strftime("%A")),0,3).", ".strftime("%d de ").ucfirst(strftime("%B"));?></span>
-
-  </div>
-
-       
-  <div id="fecha3" id="sm"><span><?php setlocale(LC_ALL,"spanish"); 
-
-     // echo strftime("%d/%b/%y ");?></span>
-
-  </div>
-
-  </div-->
-
 <header>
 <nav class="navbar navbar-default">
   <div class="container-fluid">
@@ -111,11 +83,9 @@ $perfil = $sid->offsetGet('perfil');
           <ul class="dropdown-menu">
             <li><a href="<?php echo $this->basePath()?>/conserje/visita/registrar"> <i class="fa fa-user-plus"></i> &nbsp;&nbsp;Nueva visita</a></li>
             <li><a href="<?php echo $this->basePath()?>/conserje/encomienda/nuevo"> <i class="fa fa-archive"></i> &nbsp;&nbsp;Nueva encomienda</a></li>
-            <li><a href="<?php echo $this->basePath()?>/conserje/encomienda/nuevo"> <i class="fa fa-paper-plane"></i> &nbsp;&nbsp;Notificar comunidad</a></li>
-            <li role="separator" class="divider"></li>
-            <li><a href="#">Separated link</a></li>
-            <li role="separator" class="divider"></li>
-            <li><a href="#">One more separated link</a></li>
+            <li><a href="<?php echo $this->basePath()?>/conserje/notificacion"> <i class="fa fa-paper-plane"></i> &nbsp;&nbsp;Notificar comunidad</a></li>
+            <li><a href="<?php echo $this->basePath()?>/conserje/visita/verestac"> <i class="fa fa-car"></i> &nbsp;&nbsp;Mapa Estacionamientos</a></li>
+            <!--li role="separator" class="divider"></li-->
           </ul>
         </li>
       </ul>
