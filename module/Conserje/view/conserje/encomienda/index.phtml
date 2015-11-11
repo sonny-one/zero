@@ -1,5 +1,5 @@
-<script src="<?php echo $this->basePath()?>/js/typeahead.min.js"></script>
-<script src="<?php echo $this->basePath()?>/js/hogan-3.0.1.js"></script>
+<script src="<?php echo $this->basePath()?>/sb2/js/typeahead.min.js"></script>
+<script src="<?php echo $this->basePath()?>/sb2/js/hogan-3.0.1.js"></script>
 <h2 class="page-header"><a href="<?php echo $this->basePath()?>/conserje"><i class="fa fa-arrow-circle-left fa-1x"></i></a>   Seleccione su opci&oacute;n </h2>
 <br /><br />
 <section id="menu_conserje">
@@ -185,6 +185,7 @@
             </div>
             <?php echo $rsptaOK?>
             <?php echo $nuevaPersona?>
+             <?php echo $imgView?>
 <!-- Fin Modal-->
 
 <script>
@@ -333,4 +334,31 @@ $("#rutE").typeahead({
     $("#retiraPersonaId").val(datum.id);
     $("#retiraPersona").val(datum.nombre+" "+datum.apellido+" "+datum.apellido2);
     });
+    
+    
+    //Inicio Carga foto popup
+    
+   
+
+    
+    /*$("#aviewimg").click(function(){
+        
+        $("#modalViewPhoto").modal("show");
+        $("#viewPhotoModal").html("<img class='img-responsive' src='"+$(this).attr("data")+"'>");
+        
+    });*/
+    
+    $( ".imgth" ).each(function(index) {
+                $(this).on("click", function(){
+                    $("#modalViewPhoto").modal("show");
+                    $("#viewPhotoModal").html("<img src='"+$(this).attr("data")+"' >");
+                });
+            });
+            
+
+    $("#aviewimgHide").click(function(){
+             $("#modalViewPhoto").modal("hide");
+      });
+    //Fin Carga Foto  
+    
 </script>

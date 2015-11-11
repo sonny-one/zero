@@ -410,12 +410,6 @@ class QuinchoController extends AbstractActionController
             $this->dbAdapter=$this->getServiceLocator()->get($db_name);
             $vD = new RsvQuinchoTable($this->dbAdapter);
             
-            if($prm['oper']=="reservaOK")
-            {
-                $data=array('estado'=>'Reserva','condicion'=>'Abierto','observacion_entrega'=>'Se entrega quincho OK. Pasa de Pre Reserva a Reserva','user_update'=>$id_usuario,'date_update'=>SysFnc::FechaActualYmdHms());
-                $vD->actualizarRsvQuincho($prm['id'],$data);
-                $msj="Se hizo la reserva satisfactoriamente...";
-            }
             if($prm['oper']=="finalizaOK")
             {
                 $data=array('estado_recibido'=>'OK','condicion'=>'Cerrado','user_update'=>$id_usuario,'date_update'=>SysFnc::FechaActualYmdHms());

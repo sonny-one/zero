@@ -84,8 +84,10 @@ $perfil = $sid->offsetGet('perfil');
             <li><a href="<?php echo $this->basePath()?>/conserje/visita/registrar"> <i class="fa fa-user-plus"></i> &nbsp;&nbsp;Nueva visita</a></li>
             <li><a href="<?php echo $this->basePath()?>/conserje/encomienda/nuevo"> <i class="fa fa-archive"></i> &nbsp;&nbsp;Nueva encomienda</a></li>
             <li><a href="<?php echo $this->basePath()?>/conserje/notificacion"> <i class="fa fa-paper-plane"></i> &nbsp;&nbsp;Notificar comunidad</a></li>
-            <li><a href="<?php echo $this->basePath()?>/conserje/visita/verestac"> <i class="fa fa-car"></i> &nbsp;&nbsp;Mapa Estacionamientos</a></li>
-            <!--li role="separator" class="divider"></li-->
+            <li role="separator" class="divider"></li>
+            <li><a href="#">Separated link</a></li>
+            <li role="separator" class="divider"></li>
+            <li><a href="#">One more separated link</a></li>
           </ul>
         </li>
       </ul>
@@ -207,7 +209,57 @@ type="text/javascript";e.parentNode.insertBefore($,e)})(document,"script");
   </script>
 
         <?php echo $this->inlineScript() ?>
+<div class="modal fade" id="modalVerDpto" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
+               <div class="modal-dialog">
+                 <div class="modal-content" >
+                        
+                         <div >
+                         &nbsp;
+                            <div class="container-fluid">
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="panel panel-info">
+                                            <div class="panel-heading">
+                                            Datos del Deparmento
+                                         </div>
+                                        <div class="panel-body" id="cuerpoDatosDpto">
+                                            <div id="esperarD1"></div>
+                                            <div class="form-group input-group">
+                                               <span class="input-group-addon"><i class="fa fa-home"></i> Dpto</span>
+                                               <input type="text" class="form-control" id="nombre1D"/>
+                                            </div>
+                                            <div class="form-group input-group">
+                                                <span class="input-group-addon"><i class="fa fa-user"></i> Titular</span>
+                                                <input type="text" id="titular1D" class="form-control"/>
+                                            </div>
+                                            <div class="form-group input-group">
+                                                   <span class="input-group-addon">Contacto</span>
+                                                <input type="text" id="contacto1D" class="form-control"/>
+                                            </div>
+                                            <div class="form-group input-group">
+                                                <span class="input-group-addon">Condicion</span>
+                                                <input type="text" class="form-control" id="condicion1D"/>
+                                            </div>
+                                            <div class="form-group" id="verTablaDpto" align="left"></div>                                            
+                                            <div align="right">
+                                            <button data-dismiss="modal"  class="btn btn-danger">Cerrar</button>
+                                            </div>
+
+
+                                        </div>
+                                        
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                            </div>
+
+                    </div>
+                </div>
+</div>
     </body>
+    
 </html>
 <script>
 function getDpto()

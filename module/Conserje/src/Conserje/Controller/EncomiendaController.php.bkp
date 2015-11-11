@@ -59,20 +59,21 @@ class EncomiendaController extends AbstractActionController
                               <td>".$lst[$i]['nombres']."</td>
                               <td>".$lst[$i]['fecha_ingreso']."</td>
                               <td><a href='javascript:void()' onclick='mostrarDetalle(&apos;".$lst[$i]['fecha_ingreso']."&apos;,&apos;".$lst[$i]['dpto']."&apos;,&apos;".$lst[$i]['nombres']."&apos;,&apos;".$lst[$i]['detalle']."&apos;)' data-toggle='modal' data-target='#modalDetalle'>".$lst[$i]['detalle_corto']."</a></td>
-                              <td><a href='#' class='imgth' data='".$fichero."'>".$lst[$i]['foto_corto']."</a></td>
+                              <td><a href='".$fichero."' target='_blank'>".$lst[$i]['foto_corto']."</a></td>
                               <td><a href='javascript:void()' onclick='retirarEncomienda(&apos;".$lst[$i]['id']."&apos;,&apos;".$lst[$i]['id_persona']."&apos;,&apos;".$lst[$i]['nombre_titular']."&apos;,&apos;".$rut_format."&apos;,&apos;".$lst[$i]['dpto']."&apos;,&apos;".$lst[$i]['nombres']."&apos;)' data-toggle='modal' data-target='#modalRetirarEnc'><i class='fa fa-check-square fa-fw fa-1x'></i></a></td></tr>";
         }
           
                                       
         $info=$info.'</tbody></table>';
            
-        return new ViewModel(array('info'=>$info,'rsptaOK'=>SysFnc::rspOK(),'nuevaPersona'=>SysFnc::nuevaPersona(),'imgView'=>SysFnc::cargarVistaImagen()));
+        return new ViewModel(array('info'=>$info,'rsptaOK'=>SysFnc::rspOK(),'nuevaPersona'=>SysFnc::nuevaPersona()));
     }
 
     public function nuevoAction()
     {
         $sid = new Container('base');
         $db_name = $sid->offsetGet('dbNombre');
+        $id_db = $sid->offsetGet('id_db');
         $this->dbAdapter=$this->getServiceLocator()->get($db_name);
         
         $id = (int) $this->params()->fromRoute('id', 0);

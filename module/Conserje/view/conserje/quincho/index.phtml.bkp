@@ -142,8 +142,8 @@
                                             <div align="center">
                                             <div id="obsEdit"></div>
                                             <div id="procesando">
-                                                <button id="confirmaCancelar" data-dismiss="modal"  class="btn btn-danger">&nbsp;&nbsp;&nbsp;No&nbsp;&nbsp;&nbsp;</button>
-                                                <button id="confirmaAceptar" class="btn btn-primary">&nbsp;&nbsp;&nbsp;Si&nbsp;&nbsp;&nbsp;</button>
+                                                <button id="confirmaCancelar" data-dismiss="modal"  class="btn btn-danger">&nbsp;&nbsp;&nbsp;Cancelar&nbsp;&nbsp;&nbsp;</button>
+                                                <button id="confirmaAceptar" class="btn btn-primary">&nbsp;&nbsp;&nbsp;Aceptar&nbsp;&nbsp;&nbsp;</button>
                                             </div>
                                             </div>
                                             </div>
@@ -224,7 +224,10 @@
        
     }
     $("#retornar").click(function(){
-        //$("#zabuto_calendar_"+$("#fechaIn").text()+"_modal").modal('show');
+        
+        
+        $("#zabuto_calendar_"+$("#fechaIn").text()+"_modal").modal('show');
+        
     });
     
     $("#btnBuscar").click(function(){

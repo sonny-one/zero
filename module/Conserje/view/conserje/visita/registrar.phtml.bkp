@@ -594,12 +594,6 @@ function autoSelection(id,nombre){
     
 }
 
-$("#nuevoPersona").click(function(){
-    
-    $("#rutP1").val($("#rutV").val());
-    
-});
-
 function blinker() {
     $('.blink_me').fadeOut(500);
     $('.blink_me').fadeIn(500);
