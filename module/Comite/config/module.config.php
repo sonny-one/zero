@@ -75,6 +75,8 @@ return array(
     'controllers' => array(
         'invokables' => array(
             'Comite\Controller\Index' => 'Comite\Controller\IndexController',
+            'Comite\Controller\Comunicacion' => 'Comite\Controller\ComunicacionController',
+            'Comite\Controller\Biblioteca' => 'Comite\Controller\BibliotecaController',
         ),
     ),
  'view_manager' => array(

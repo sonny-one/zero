@@ -1,0 +1,399 @@
+<div class="row">
+				<div class="col-md-12 ">
+					<!-- BEGIN SAMPLE FORM PORTLET-->
+					<div class="portlet box green">
+						<div class="portlet-title">
+							<div class="caption">
+								<i class="fa fa-home"></i>  Unidades  
+							</div>                            
+						</div>
+                       
+                        
+                     
+						<div class="portlet-body form">                 
+                        <div class="form-body">
+
+                        
+                            <div class="panel-group row" id="accordion2">
+<div id="todotabla" style="display: <?php echo $this->displaytablauni;?>;">                        
+
+
+<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+    
+        <div class="portlet portlet-body">
+<div class="col-lg-12 col-md-12">
+<h3 class="page-header text-center" style="margin-top: 0px;">Unidades activas en la Comunidad</h3>
+<div  style="float: right;"> 
+                        <a>
+                            <button id="ayuda-unidad" class="fa fa-info-circle" style="cursor: pointer; color: #fff;" tabindex="-1" data-container="body" data-toggle="popover" data-placement="left" ></button>
+                        </a>
+                     </div> 
+</div>
+
+            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                  <p><i class="fa fa-home"></i>&nbsp;&nbsp;<strong> Departamentos:</strong><span style="font-size: 17px;"> 336</span> </p><br />
+                  <p><i class="fa fa-archive"></i>&nbsp;&nbsp;<strong> Bodegas:</strong><span style="font-size: 17px;"> 336</span></p><br />
+                  <p><i class="fa fa-car"></i>&nbsp;&nbsp;<strong> Est. Particulares:</strong><span style="font-size: 17px;"> 280</span></p><br />                   
+            </div>
+            
+            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                  <p><i class="fa fa-car"></i>&nbsp;&nbsp;<strong> Est. Visita:</strong><span style="font-size: 17px;"> 21</span></p><br />
+                  <p><i class="fa fa-plus-square"></i>&nbsp;&nbsp;<strong> Total Mts<sup>2</sup>:</strong><span style="font-size: 17px;"> 80</span></p><br />                  
+                  <p><span style="font-size: 16px;"><strong>%</strong></span>&nbsp;&nbsp;<strong> Ocupaci&oacute;n:</strong><span style="font-size: 17px;"> 80</span></p><br />                   
+            </div>
+            
+            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 text-left">            
+             <?php echo $this->chart?>             
+            </div>   
+      
+        </div>
+</div>
+<div class="col-lg-12 col-md-12">
+<h4 class="text-center" style="margin-top: 0px;">Seleccione una opci&oacute;n</h4>
+</div>
+<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" >
+   <div class="col-lg-8 col-lg-offset-2">
+   
+    <div class="col-lg-4 col-md-3 col-sm-4 col-xs-12 text-center" style="padding: 4px;">
+            <i class="fa fa-home fa-3x"></i>
+            <p> <strong>Unidades</strong></p>            
+            <select id="combo1" class="form-control" onchange="seleccionCombo('u');"  >
+                <option value="0"> Cargando...</option>
+            </select>            
+    </div>
+    
+    <div class="col-lg-4 col-md-3 col-sm-4 col-xs-12 text-center" style="padding: 4px;">
+            <i class="fa fa-car fa-3x"></i>
+            <p> <strong>Estacionamientos</strong></p>            
+            <select id="combo2" class="form-control" onchange="seleccionCombo('e');">
+                <option value="0"> Cargando...</option>
+            </select>            
+    </div>
+    
+     <div class="col-lg-4 col-md-3 col-sm-4 col-xs-12 text-center" style="padding: 4px;">
+            <i class="fa fa-archive fa-3x"></i>
+            <p> <strong>Bodegas</strong></p>            
+            <select id="combo3" class="form-control" onchange="seleccionCombo('b');">
+                <option value="0"> Cargando...</option>
+            </select>            
+    </div>
+    
+    </div> 
+
+</div>
+
+
+
+</div>                        
+                        
+<div style="display: <?php echo $this->displayunidades;?>;">                                            
+                <div class="col-lg-12">
+<!--Importar Unidades--><h4 class="page-header"> <i class="fa fa-download"></i>  &nbsp; &nbsp;<a data-toggle="collapse" data-parent="#accordion2" href="#importaruni">Importar Unidades</a></h4>
+                </div>
+<div id="importaruni" class="panel-collapse collapse">                    
+                  
+        <div class="btn-group btn-group-justified" role="group">
+            <div class="btn-group" role="group">
+                 <a href="/files/Unidades.xlsx" >
+                        <button class="btn btn-success btn-circle btn-lg">
+                            <p>1. Descargar <strong>Unidades.xlsx</strong></p></button>
+                 </a>
+            </div>
+            
+            <div class="btn-group" role="group">
+                <a>
+                    <input required="true" id="fileunidades" onchange="selecciona('unidades')" type="file"/>
+                    <button class="btn btn-success btn-circle btn-lg">
+                        <p>2. Subir <strong>Unidades.xls</strong></p>
+                    </button>
+                </a>
+            </div>
+            
+            <div class="btn-group" role="group">            
+                <a onclick="importame(0,'unidades')" type="button" data-toggle="modal fade" data-target="#importarconfirm">
+                    <button class="btn btn-info btn-circle btn-lg">
+                        <p>3. Importar unidades</p>
+                    </button>
+                </a>
+            </div>
+        </div>
+                
+                <div class="text-center"> <span id="mostrarnombreunidades"></span></div>
+                
+</div>
+</div>
+
+
+<div style="display: <?php echo $this->displaybodegas;?>;">                
+                <div class="col-lg-12">
+<!--Importar bodegas--><h4 class="page-header"> <i class="fa fa-download"></i>  &nbsp; &nbsp;<a data-toggle="collapse" data-parent="#accordion2" href="#importarunibod">Importar Bodegas</a></h4>
+                </div>
+<div id="importarunibod" class="panel-collapse collapse">    
+    
+        <div class="btn-group btn-group-justified" role="group">
+            <div class="btn-group" role="group">
+                <a href="/files/Bodegas.xlsx">
+                    <button class="btn btn-success btn-circle btn-lg">
+                        <p>1. Descargar <strong>Bodegas.xlsx</strong></p>
+                    </button>
+                </a>
+            </div>
+            
+        <div class="btn-group" role="group">
+            <a>
+                <input required="true" id="filebodegas"  onchange="selecciona('bodegas')" type="file"/>
+                <span class="btn btn-success btn-circle btn-lg">
+                    <p style="display: block;">2. Subir <strong>Bodegas.xls</strong></p>
+                    <i style="display: none; text-align: center;" class="fa fa-check fa-2x"></i>
+                </span>
+            </a>
+        </div>
+    
+        <div class="btn-group" role="group">
+            <a id="importarbodegas" onclick="importame(0,'bodegas')">
+                <span class="btn btn-info btn-circle btn-lg">
+                    <p>3. Importar Bodegas</p>
+                </span>
+            </a>
+        </div>
+        
+        </div>
+       <div class="text-center"> <span id="mostrarnombrebodegas"></span></div>
+</div>
+</div>
+
+<div style="display: <?php echo $this->displayestacionamientos;?>;"> 
+                <div class="col-lg-12">
+<!--Importar Estacionamientos--><h4 class="page-header"> <i class="fa fa-download"></i>  &nbsp; &nbsp;<a data-toggle="collapse" data-parent="#accordion2" href="#importarest">Importar Estacionamientos</a></h4>
+                </div>
+<div id="importarest" class="panel-collapse collapse">
+                
+        <div class="btn-group btn-group-justified" role="group">
+        
+            <div class="btn-group" role="group">
+                <a href="/files/Estacionamientos.xlsx">
+                    <button class="btn btn-success btn-circle btn-lg">
+                        <p>1. Descargar <strong>Estacionamientos.xlsx</strong></p>
+                    </button>
+                </a>
+            </div>
+            
+            <div class="btn-group" role="group">
+                <a>
+                    <input  id="fileestacionamientos" onchange="selecciona('estacionamientos')" type="file"/>
+                        <button class="btn btn-success btn-circle btn-lg">
+                            <p>2. Subir <strong>Estacionamientos.xls</strong></p>
+                        </button>
+                </a>
+            </div>
+            
+            <div class="btn-group" role="group">
+                <a onclick="importame(0,'estacionamientos')">
+                    <button id="impest" class="btn btn-info btn-circle btn-lg">
+                        <p>3. Importar Estacionamientos</p>
+                    </button>
+                </a>
+            </div>
+        </div>
+            
+            <div class="text-center"> <span id="mostrarnombreestacionamientos"></span></div>
+</div>
+</div>
+
+
+                </div>
+                                                               
+                                                              
+                </div>
+         </div>
+    </div>
+</div>                                                         
+
+
+<!-- MODAL Importar -->
+
+<div class="modal fade" id="importarconfirm"  tabindex="-1" role="dialog"  aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+        <div  class="modal-content">
+        <div class="modal-body text-center" >
+        <div>
+            <div class="col-lg-12" style="text-align: center;">
+                <div class="col-lg-12" style="padding: 20px;"><i id="iconmodal" class="fa fa-warning fa-3x"></i></div>
+                    <h4 id="text">Esta acci&oacute;n no tiene reversa, est&aacute; seguro que los datos estan correctos ? </h4><br />
+            </div>
+            
+                    <button id="cancelarmodal" class="btn btn-danger" data-dismiss="modal" > Cancelar</button>&nbsp;&nbsp;&nbsp;&nbsp;
+                    <button id="aceptaimportar" class="btn btn-success"> Aceptar</button>           
+        </div>
+        <div class="row" id="rsptaelim" style="display: none;">
+            <div class="col-lg-12" style="text-align: center;">
+                <div class="col-lg-12" style="padding: 20px;"><i class="fa fa-check fa-3x"></i></div>
+                    <h4 id="descrpelim"></h4><br />
+            </div>
+        </div>
+         </div> 
+        </div>                 
+    </div>              
+</div>
+
+<!-- FIN MODAL Importar -->
+
+<!-- MODAL Detalle Unidad -->
+
+<div class="modal fade" id="detalleunidad"  tabindex="-1" role="dialog"  aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div  class="modal-content">
+        <div id="bodydetalleunidad" class="modal-body" >
+        Cargando...
+         </div> 
+        </div>                 
+    </div>              
+</div>
+
+<!-- FIN MODAL Detalle Unidad -->
+
+<!-- Ayuda -->
+<div id="cont-ayuda-unidad" class='col-lg-12 col-md-12 col-sm-12 col-xs-12 hide'>
+    <div id="popover-head" >
+        <h4 style="text-align: center;">Ayuda del sistema</h4>
+        </div>
+    <div>
+        <p style='font-size: 16px;'> &nbsp;&nbsp;Luego de cargar todas las unidades de la comunidad, desde ac&aacute; podr&aacute; vizualizar todo el detalle de las unidades. La integridad de esta informaci&oacute;n garantiza un correcto funcionamiento del sistema.  </p>
+        <div class='text-right'> <i class='fa fa-check fa-2x'></i></div>
+    </div>                                                                                                                                                        
+</div>
+</div>
+<!-- FIN Ayuda-->
+                    
+<script>
+$(function () {
+  $('[data-toggle="popover"]').popover()
+})         
+$('#ayuda-unidad').popover({ 
+    html : true,
+    content: function() {
+      return $("#cont-ayuda-unidad").html();
+    }
+});    
+var test = $("#todotabla").css("display");
+if (test == "block"){
+$.ajax(
+    {
+        url : '<?php echo $this->basePath()."/admin/infocom/combounidad"?>',
+        type: "POST",        
+        dataType : 'json',
+        success : function(response) {            
+        var combo1 = $("#combo1");
+        var combo2 = $("#combo2");
+        var combo3 = $("#combo3");
+        combo1.empty();
+        combo2.empty();
+        combo3.empty();
+         $.each(response.combo1, function(k,v){            
+            $("#combo1").append("<option value=\""+k+"\">"+v+"</option>");
+         }); 
+         $.each(response.combo2, function(k,v){            
+            $("#combo2").append("<option value=\""+k+"\">"+v+"</option>");
+         });
+         $.each(response.combo3, function(k,v){            
+            $("#combo3").append("<option value=\""+k+"\">"+v+"</option>");
+         });                                           
+        },
+        error: function(jqXHR, textStatus, errorThrown) 
+        {            
+            alert("error"); 
+        }
+    });
+}
+else{
+    $("#todouni").css('display','block');
+}
+$("div#tablaunidades table").delegate('tr', 'click', function() {
+         alert("Click! :D");
+        //get <td> element values here!!??
+    });        
+function importame(n,from){    
+if (n==1){    
+var data = new FormData();
+    jQuery.each(jQuery('#file'+from)[0].files, function(i, file) {
+    data.append('file-'+i, file);
+    });    
+    data.append('flag', from);
+	$.ajax( {
+	    url : '<?php echo $this->basePath()."/admin/infocom/importar"?>',
+		data : data,
+        cache: false,
+        contentType: false,
+        processData: false,
+        type: 'POST',   
+		success : function(response) {					                     
+          if(response.status = 'ok'){
+            $("#text").text(response.descripcion);
+            $("#iconmodal").attr('class',"fa fa-check fa-3x");             
+            $("#aceptaimportar").css('display',"none");
+            $("#cancelarmodal").css('display',"none");                                       
+            setTimeout(function(){             
+             $('#importarconfirm').modal('hide');             
+            }, 3000); 	 
+          }else
+          {
+            $("#text").text(response.descripcion);
+            $("#iconmodal").attr('class',"fa fa-close fa-3x"); 
+          }
+		}
+	}); 
+}else{  
+$('#aceptaimportar').click(function(){importame(1,from);});
+$('#importarconfirm').modal('show');       
+} 
+} 
+function selecciona(nombre){
+    if(document.getElementById('file'+nombre).files[0].size<2000000){
+  	 document.getElementById("mostrarnombre"+nombre).innerHTML="Archivo seleccionado: [<strong>"+document.getElementById('file'+nombre).files[0].name+"</strong>] OK";
+    }else{
+     document.getElementById("mostrarnombre"+nombre).innerHTML="<font color='red'>Error Ha superado el limite permitido (2Mb): [<strong>"+document.getElementById('fileupload').files[0].name+"</strong>] NOK</font>";
+    }
+    
+    
+  }
+function seleccionCombo(flag){     
+if(flag =="u"){postData = {'id' : $('#combo1').find('option:selected').val(),'flag':flag}}
+if(flag =="e"){postData = {'id' : $('#combo2').find('option:selected').val(),'flag':flag}}
+if(flag =="b"){postData = {'id' : $('#combo3').find('option:selected').val(),'flag':flag}}          
+$.ajax(
+    {
+        url : '<?php echo $this->basePath()."/admin/infocom/detalleunidad"?>',
+        type: "POST",
+        data : postData,        
+		success : function(response) {
+		  $('#detalleunidad').modal('show');
+		  $("#bodydetalleunidad").html(response);
+		},
+        error: function(jqXHR, textStatus, errorThrown) 
+        {            
+            alert("error"); 
+        }
+    });
+}
+// Validamos file si es XLS CSV XLSX
+/*function validaFile(e){
+    if (!e.value.match(/(?:xls|xlsx|csv)$/)) {                
+        $('#impest').attr("disabled","disabled");
+        alert("Archivo de tipo invalido!");
+    }else{
+        $('#impest').removeAttr("disabled");
+    }   
+}*/
+/*$("#creaexcel").click(function(e){
+    var data = "tesxt";
+	$.ajax( {
+	    url : '<?php echo $this->basePath()."/admin/infocom/creaexcel"?>',
+		data : data,
+        type: 'POST',   
+		success : function(response) {			
+		  console.log(response);
+			//$("#cargarResidente").html(response);?
+		}
+	}); 
+}); */ 
+</script>                                                   

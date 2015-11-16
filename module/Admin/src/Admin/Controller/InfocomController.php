@@ -112,9 +112,8 @@ class InfocomController extends AbstractActionController
         $form2->get('acceso')->setAttribute('value' ,$edificacion['0']['acceso']);
         $form2->get('lavanderia')->setAttribute('value' ,$edificacion['0']['lavanderia']);                 
         
-        $this->layout('layout/admin');              
-        $result = new ViewModel(array('form'=>$form,'form2'=>$form2,'url'=>$this->getRequest()->getBaseurl()));
-               
+        $this->layout('layout/admin');                     
+        $result = new ViewModel(array('form'=>$form,'form2'=>$form2,'url'=>$this->getRequest()->getBaseurl()));                    
         return $result;
         
         }
@@ -352,7 +351,7 @@ class InfocomController extends AbstractActionController
             if (count($estacionamientos)>0){$displayestacionamientos = "none";}else{$displayestacionamientos = "block";}
             if (count($unidades)>0){$displayunidades = "none";}else{$displayunidades = "block";}            
         
-        
+        $this->layout('layout/admin'); 
         $result = new ViewModel(array('valores'=>$valores,
                                       'displaytablauni'=>$displaytablauni,
                                       'displaybodegas'=>$displaybodegas,
@@ -361,7 +360,6 @@ class InfocomController extends AbstractActionController
                                       'chart'=>$chart,
                                       
                                       ));
-        $result->setTerminal(true);
         
         return $result;
     }

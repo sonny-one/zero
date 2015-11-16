@@ -81,7 +81,7 @@
             <!-- /.row -->
             <?php echo $nuevaPersona?>
            <?php echo $rsptaOK?>          
-            
+           
             <style>
                     .fileUpload {
                         position: relative;
@@ -187,6 +187,12 @@ $("#btnRegistrarNuevaPersona").click(function(){
     $("#remitenteE").val(vector["nombre"]+" "+vector["apellido1"]+" "+vector["apellido2"]);
     
 
+    
+});
+
+$("#nuevoPersona").click(function(){
+    
+    $("#rutP1").val($("#rutE").val());
     
 });
 

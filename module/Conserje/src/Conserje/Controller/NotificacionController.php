@@ -81,9 +81,7 @@ class NotificacionController extends AbstractActionController
 
     }*/
     
-    public function 
-    
-    enviarAction()
+    public function enviarAction()
     {   
         //Obtenemos datos POST
         $post = $this->request->getPost();

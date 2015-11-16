@@ -13,9 +13,12 @@ if (php_sapi_name() === 'cli-server') {
     }
     unset($path);
 }
-
+$root = realpath($_SERVER["DOCUMENT_ROOT"]);
 // Setup autoloading
 require 'init_autoloader.php';
+require_once $root.'/pmv/vendor/Classes/PHPExcel.php';
+require_once $root.'/pmv/vendor/Classes/HtmlCorreo/HtmlCorreo.php';
+require_once $root.'/pmv/vendor/Classes/GoogChart/GoogChart.class.php';
 
 // Run the application!
 Zend\Mvc\Application::init(require 'config/application.config.php')->run();
