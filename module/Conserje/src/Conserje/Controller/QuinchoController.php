@@ -3,15 +3,19 @@ namespace Conserje\Controller;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use Zend\View\Model\JsonModel;
-use Zend\Db\ResultSet\ResultSet;
-use Zend\Db\Adapter\Adapter;
-use Zend\Db\Sql\Sql;
 use Sistema\Model\Entity\UnidadTable;
 use Sistema\Model\Entity\RsvQuinchoTable;
 use Sistema\Util\SysFnc;
 use Sistema\Util\UsoFnc;
 
 use Zend\Session\Container;
+
+use Zend\Mail\Message;
+use Zend\Mail\Transport\Sendmail as SendmailTransport;
+use Zend\Mail\Transport\Smtp as SmtpTransport;
+use Zend\Mail\Transport\SmtpOptions;
+use Zend\Mime\Message as MimeMessage;
+use Zend\Mime\Part as MimePart;
 
 
 class QuinchoController extends AbstractActionController
@@ -311,7 +315,8 @@ class QuinchoController extends AbstractActionController
             $this->dbAdapter=$this->getServiceLocator()->get($db_name);
             $rsvQ = new RsvQuinchoTable($this->dbAdapter);
             $usoQ = $rsvQ->nuevaRsvQuincho($datos);
-            
+            //enviamos correo
+            self::sendMailConfirmacion($id_unidad,$id_uth,$fecha_uso,$estado);
             
             
             $status="ok";
@@ -454,6 +459,49 @@ class QuinchoController extends AbstractActionController
         $result = new JsonModel($datos); 
         
         return $result;         
+    }
+    
+    private function sendMailConfirmacion($id_unidad,$id_uth,$dia,$estado){
+        $sid = new Container('base');                                      
+        $db_name = $sid->offsetGet('dbNombre');
+        $this->dbAdapter=$this->getServiceLocator()->get($db_name);
+        $dptoMail = new UnidadTable($this->dbAdapter);
+        $lista = $dptoMail->getVerResidentesActivos($this->dbAdapter,$id_unidad);
+        $rsvQuincho = new RsvQuinchoTable($this->dbAdapter);
+        $valoresRsv = $rsvQuincho->mostrarHorarioNombreQuincho($this->dbAdapter, $id_uth);
+        
+        for($i=0;$i<count($lista);$i++)
+        {
+          if(isset($lista[$i]['correo'])){
+             $pos = strpos($lista[$i]['correo'], "@");
+             if($pos==false){}else
+             {
+                $nombre = $lista[$i]['nombre'];
+                $dpto = $lista[$i]['dpto'];
+                  //  $htmlMarkup=\HtmlCorreo::htmlEncomienda($nombre,$remitente,$filepath);
+                    $htmlMarkup=\HtmlCorreo::htmlconfreserva($nombre,$dpto,$valoresRsv[0]['nombre'],$dia,$valoresRsv[0]['inicio'].' a '.$valoresRsv[0]['fin'],$estado) ;
+                    $html = new MimePart($htmlMarkup);
+                    $html->type = "text/html";
+                    $body = new MimeMessage();
+                    $body->setParts(array($html));
+                    $message = new Message();
+                    $message->addTo($lista[$i]['correo'])
+                    ->addFrom('soporte@becheck.cl', 'Sistema be check')
+                    ->setSubject('Aviso de Reserva de Quincho')
+                    ->setBody($body);
+                      $transport = new SendmailTransport();
+                      $transport->send($message);
+
+
+                sleep(2);
+                //enviamos correo
+            }
+
+            }
+        }
+
+
+        
     }
     
 

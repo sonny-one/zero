@@ -14,3 +14,6 @@ RewriteRule ^.*$ - [NC,L]
 RewriteCond %{REQUEST_URI}::$1 ^(/.+)(.+)::\2$
 RewriteRule ^(.*) - [E=BASE:%1]
 RewriteRule ^(.*)$ %{ENV:BASE}index.php [NC,L]
+# Redireccion canonica
+RewriteCond %{HTTP_HOST} ^www.becheck.cl [NC]
+RewriteRule ^(.*)$ http://becheck.cl/$1 [R=301,L]

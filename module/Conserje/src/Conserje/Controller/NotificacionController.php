@@ -87,36 +87,52 @@ class NotificacionController extends AbstractActionController
         $post = $this->request->getPost();
         //Conectamos a BBDD
         $sid = new Container('base');
+        $remitente = "Conserje";
         $db_name = $sid->offsetGet('dbNombre');
         $this->dbAdapter=$this->getServiceLocator()->get($db_name);
         //Tablas
-        $dpto = new UnidadTable($this->dbAdapter);
-         $lista = $dpto->getVerResidentesActivos($this->dbAdapter,$post['id_unidad']);
+        $dptoMail = new UnidadTable($this->dbAdapter);
         //Validamos destinatario
         if(isset($post['dpto'])){                
-        $lista = $dpto->getVerResidentesActivos($this->dbAdapter,$post['id_unidad']);                                
-            
-            $html = new MimePart($post['textbody']);
-            $html->type = "text/html";
-            $body = new MimeMessage();
-            $body->setParts(array($html));
-            $message = new Message();
-            $message->addTo($lista[0]['correo'])
-            ->addFrom('contacto@becheck.cl', 'Sistema be check')
-            ->setSubject('Notificacion Conserjeria en Linea')
-            ->setBody($body);
-            $transport = new SendmailTransport();
-            $transport->send($message);
-            
-        }else{
-            
-            
-        }
-        
-        
-        $result = new JsonModel(array('status'=>'ok'));
-         //$result->setTerminal(true);
-         return $result;
+                //Consultamos datos del dpto
+                $lista = $dptoMail->getVerResidentesActivos($this->dbAdapter,$post['id_unidad']);
+        }else{                
+                //Consultamos datos del dpto
+                $lista = $dptoMail->getVerResidentesActivos($this->dbAdapter,$post['id_unidad']);
+        }                
+                //Armamos EMAIL
+                $htmlMarkup=\HtmlCorreo::htmlMensajeDirecto($lista[0]['nombre'],$remitente,$post['textbody']);
+                $html = new MimePart($htmlMarkup);
+                $html->type = "text/html";
+                $body = new MimeMessage();
+                $body->setParts(array($html));
+                $message = new Message();
+                $message->addTo($lista[0]['correo'])
+                ->addFrom('sistema@becheck.cl', 'Notificación becheck')
+                ->setSubject($post['asunto'])
+                ->setBody($body);
+                $transport = new SmtpTransport();
+                $options   = new SmtpOptions(array(
+                    'name'              => 'smtp.gmail.com',
+                    'host'              => 'smtp.gmail.com',
+                    'port' => '587',                    
+                    'connection_class'  => 'login',
+                    'connection_config' => array(
+                        'username' => 'sistema.becheck@gmail.com',
+                        'password' => 'xofita123',
+                        'ssl'      => 'tls',
+                        ),
+                    ));                     
+                $transport->setOptions($options);
+                $transport->send($message);
+                //Retornamos a la vista
+                $result = new JsonModel(array(
+                //Devolvemos a la Vista
+                                    'status'=>'ok',
+                                    'descripcion'=>'Se ha enviado correctamente un correo',                    
+                    ));   
+                //$result->setTerminal(true);                             
+                return $result; 
     }
 
 }

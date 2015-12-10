@@ -4,7 +4,6 @@ namespace Sistema\Model\Entity;
 
 use Zend\Db\TableGateway\TableGateway;
 use Zend\Db\Adapter\Adapter;
-use Zend\Db\Sql\Sql;
 use Zend\Db\ResultSet\ResultSet;
 
 class UnidadTable extends TableGateway
@@ -162,7 +161,36 @@ class UnidadTable extends TableGateway
                return $id;
         }
 
-
+    public function getListarDptoByNombre(Adapter $dbAdapter,$unidad){
+        $this->dbAdapter = $dbAdapter;
+        $query = "SELECT 
+                pd.titular,
+                pd.condicion,
+                (select nombre from sis_m_unidad u where u.id=pd.id_unidad) as dpto,
+                (select concat(nombre,' ',apellido, ' ',apellido_2) 
+                from thouseap_general.sis_m_persona p where p.id=pd.id_persona)  as nombre,
+                (select correo 
+                from thouseap_general.sis_m_persona p where p.id=pd.id_persona)  as correo,
+                (select telefono 
+                from thouseap_general.sis_m_persona p where p.id=pd.id_persona)  as contacto 
+                FROM sis_w_perdet pd 
+                where id_unidad=(select id from sis_m_unidad where nombre='".$unidad."' and activo = 1 limit 1) and activo=1
+                union
+                SELECT pd.titular,
+                pd.condicion,
+                (select nombre from sis_m_unidad u where u.id=pd.id_unidad) as dpto,
+                (select concat(nombre,' ',apellido, ' ',apellido_2) 
+                from thouseap_general.sis_m_persona p where p.id=pd.id_persona)  as nombre,
+                (select correo 
+                from thouseap_general.sis_m_persona p where p.id=pd.id_persona)  as correo,
+                (select telefono 
+                from thouseap_general.sis_m_persona p where p.id=pd.id_persona)  as contacto 
+                FROM sis_w_perdet pd  where id_unidad=(select id from sis_m_unidad where nombre='".$unidad."' and activo = 1 limit 1) and condicion='C' and activo in (0,1)";
+                
+        $result=$this->dbAdapter->query($query,Adapter::QUERY_MODE_EXECUTE);
+        return $result->toArray(); 
+        
+    }
     
 
 }

@@ -1,0 +1,312 @@
+<div class="row">                   
+                <div class="col-lg-12">
+                    <div class="panel panel-green">
+                        <div class="panel-body">
+                    <div class="col-lg-12">
+                        <h2 class="page-header text-center">Confecci&oacute;n Gasto Com&uacute;n <?php setlocale(LC_ALL,”es_ES”);echo ucfirst($mes);?> 2015</h2>
+                    </div> 
+                        <div class="panel-group" id="accordionf">
+<!--Funcionarios-->                        
+                            <div class="col-lg-12" style="margin-bottom: 1em;">
+                            <a id="btn_gcomun" class="btn" data-toggle="collapse" data-parent="#accordionf" href="#funcionarios">
+                                <p style="color: #000;text-align: left; font-size: 18px;"><i class="fa fa-users">
+                                </i>&nbsp; &nbsp;Remuneraciones del personal <span style="float: right;">Total: $ <span class="personal_total"></span></span></p> 
+                            </a>
+                            <div id="funcionarios" class="table-responsive panel-collapse collapse">
+                            <input type="hidden" value="0" id="personal_input_hi" />
+                                <table id="personal_tabla" class="table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>N&deg; Empleado</th>
+                                            <th>Nombre</th>
+                                            <th>Cargo</th>                                            
+                                            <th>Estado Pago</th>
+                                            <th>Monto</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody style="text-align: center;">
+                                    <?php for ($i=0;$i<(count($this->funcionarios));$i++){?>
+                                        <tr >
+                                            <td><?php echo (1000+$this->funcionarios[$i]['id']); ?></td>
+                                            <td><?php echo $this->funcionarios[$i]['persona'][0]['nombre']." ".$this->funcionarios[$i]['persona'][0]['apellido']; ?></td>
+                                            <td><?php echo $this->funcionarios[$i]['cargo'];?></td>
+                                            <td><span class="bag-<?php echo $this->funcionarios[$i]['bag'];?>" id="spanbag"><?php echo ucfirst($this->funcionarios[$i]['estado_pago']);?></span></td>
+                                            <td ><span class="personal_suma"><?php echo number_format($this->funcionarios[$i]['monto'],"0",".",".");?></span></td>
+                                        </tr>
+                                        <?php };?>                                                                      
+                                    </tbody>
+                                </table>
+                            </div>
+                            </div> 
+                            
+<!--Mantenciones-->
+
+                           <div class="col-lg-12" style="margin-bottom: 1em;">
+                            <a id="btn_gcomun" class="btn" data-toggle="collapse" data-parent="#accordionf" href="#mantenciones">
+                                <p style="color: #000;text-align: left; font-size: 18px;"><i class="fa fa-wrench">
+                                </i>&nbsp; &nbsp;Tareas de Mantenci&oacute;n<span style="float: right;">Total: $3.131.136</span></p> </a>
+                            <div id="mantenciones" class="table-responsive panel-collapse collapse">
+                                <table class="table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Nombre</th>
+                                            <th>Estado de Pago</th>
+                                            <th>Avance</th>
+                                            <th>Valor</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody style="text-align: center;">
+                                    <?php for ($i=0;$i<(count($this->tareas));$i++){?>
+                                        <tr>
+                                            <td><?php echo $this->tareas[$i]['id']; ?></td>
+                                            <td><?php echo $this->tareas[$i]['nombre']; ?></td>
+                                            <td><span class="bag-red" id="spanbag"><?php echo ucfirst($this->tareas[$i]['estado_pago']);?></span></td>
+                                            <td style="padding:3px;">                                                
+                                                    <div class="progress progress-bar progress-bar-success" role="progressbar" aria-valuenow="<?php echo $this->tareas[$i]['avance']?>" aria-valuemin="0" aria-valuemax="100" style="width:<?php echo $this->tareas[$i]['avance']?>%">
+                                                    <?php echo $this->tareas[$i]['avance']?>% 
+                                                    </div>                                              
+                                            </td>                                        
+                                            <td><?php echo $this->tareas[$i]['valor'];?></td>                                          
+                                        </tr>
+                                        <?php };?>                                       
+                                    </tbody>
+                                </table>
+                            </div>
+                            </div>
+                            
+<!--Gastos e Insumos-->                  
+
+<div class="col-lg-12" style="margin-bottom: 1em;">
+                            <a id="btn_gcomun" class="btn" data-toggle="collapse" data-parent="#accordionf" href="#gastos">
+                                <p style="color: #000;text-align: left; font-size: 18px;"><i class="fa fa-users">
+                                </i>&nbsp; &nbsp;Gastos e Insumos<span style="float: right;">Total: $2.231.136</span></p> 
+                                </a>
+                            <div id="gastos" class="table-responsive panel-collapse collapse">
+                                <table class="table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Nombre</th>
+                                            <th>Cargo</th>
+                                            <th>Accion</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody style="text-align: center;">
+                                        <tr>
+                                            <td>1</td>
+                                            <td>Larry Parraguez F.</td>
+                                            <td>Mayordomo</td>
+                                            <td><i class="fa fa-dollar"></i> | <i class="fa fa-eye"></i> | <i class="fa fa-edit"></i> | <i class="fa fa-close"></i></td>
+                                        </tr>
+                                        <tr>
+                                            <td>2</td>
+                                            <td>Juan Carlos Soto P.</td>
+                                            <td>Conserje</td>
+                                            <td><i class="fa fa-dollar"></i> | <i class="fa fa-eye"></i> | <i class="fa fa-edit"></i> | <i class="fa fa-close"></i></td>
+                                        </tr>
+                                        <tr>
+                                            <td>3</td>
+                                            <td>Genoveva Arlequina S.</td>
+                                            <td>Conserje</td>
+                                            <td><i class="fa fa-dollar"></i> | <i class="fa fa-eye"></i> | <i class="fa fa-edit"></i> | <i class="fa fa-close"></i></td>
+                                        </tr>
+                                        <tr>
+                                            <td>4</td>
+                                            <td>Jacob Perez S.</td>
+                                            <td>Conserje</td>
+                                            <td><i class="fa fa-dollar"></i> | <i class="fa fa-eye"></i> | <i class="fa fa-edit"></i> | <i class="fa fa-close"></i></td>
+                                        </tr>                                        
+                                    </tbody>
+                                </table>
+                            </div>
+                            </div> 
+                            
+<!--Seguros y Otros-->                  
+
+<div class="col-lg-12" style="margin-bottom: 1em;">
+                            <a id="btn_gcomun" class="btn" data-toggle="collapse" data-parent="#accordionf" href="#segyotros"><p style="color: #000;text-align: left; font-size: 18px;"><i class="fa fa-users"></i>&nbsp; &nbsp;Seguros y Otros</p> </a>
+                            <div id="segyotros" class="table-responsive panel-collapse collapse">
+                                <table class="table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Nombre</th>
+                                            <th>Cargo</th>
+                                            <th>Accion</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody style="text-align: center;">
+                                        <tr>
+                                            <td>1</td>
+                                            <td>Larry Parraguez F.</td>
+                                            <td>Mayordomo</td>
+                                            <td><i class="fa fa-dollar"></i> | <i class="fa fa-eye"></i> | <i class="fa fa-edit"></i> | <i class="fa fa-close"></i></td>
+                                        </tr>
+                                        <tr>
+                                            <td>2</td>
+                                            <td>Juan Carlos Soto P.</td>
+                                            <td>Conserje</td>
+                                            <td><i class="fa fa-dollar"></i> | <i class="fa fa-eye"></i> | <i class="fa fa-edit"></i> | <i class="fa fa-close"></i></td>
+                                        </tr>
+                                        <tr>
+                                            <td>3</td>
+                                            <td>Genoveva Arlequina S.</td>
+                                            <td>Conserje</td>
+                                            <td><i class="fa fa-dollar"></i> | <i class="fa fa-eye"></i> | <i class="fa fa-edit"></i> | <i class="fa fa-close"></i></td>
+                                        </tr>
+                                        <tr>
+                                            <td>4</td>
+                                            <td>Jacob Perez S.</td>
+                                            <td>Conserje</td>
+                                            <td><i class="fa fa-dollar"></i> | <i class="fa fa-eye"></i> | <i class="fa fa-edit"></i> | <i class="fa fa-close"></i></td>
+                                        </tr>                                        
+                                    </tbody>
+                                </table>
+                            </div>
+                            </div> 
+
+<!----> 
+          <h1 class="page header">&nbsp;</h1>
+          <div class="col-lg-12" style="text-align: center;">          
+                    <button type="button" class="btn btn-info btn-xl" style="margin-right: 2em;"><i class="fa fa-clipboard"></i> &nbsp;Vizualizar Gasto Com&uacute;n</button>   
+                     
+                    <button type="button" class="btn btn-success btn-xl"><i class="fa fa-spinner"></i> &nbsp;Generar Gasto Com&uacute;n 
+                    
+          </div>
+          
+                              
+                            </div>                                                                                                                                                                                                                                                                                              
+                        </div>
+                      </div>
+                </div>   
+</div>  
+
+<!--Modal Pago-->
+
+
+<div class="modal fade" id="ModalPago" tabindex="-2" data-backdrop="static" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+               <div class="modal-dialog">
+                 <div class="modal-content">
+                     <div class="modal-header">
+                          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                          <h4 class="modal-title" id="myModalLabel">Realizar Pago</h4>
+                           </div>
+                           <div id="mostarpagof" class="modal-body">Hello</div>
+                 </div>
+                 <!-- /.modal-content -->
+                </div>
+               <!-- /.modal-dialog -->
+</div>
+
+<!-- MODAL -->
+<div class="modal fade" id="myModal" tabindex="-2" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel">Funcionarios</h4>
+            </div>
+                <div id="mostrarDatos" class="modal-body">Hello</div>
+        </div>
+    </div>
+</div>
+<script>
+/*Totales*/    
+$('#personal_tabla .personal_suma').each(function () {     
+    var suma = $("#personal_input_hi").val();
+    var monto= $(this).text().replace(".","");
+    total = parseInt(monto)+parseInt(suma); //numero de la celda 3
+    $("#personal_input_hi").val(total);    
+        var text = total.toFixed(1).replace(/\d(?=(\d{3})+\.)/g, '$&.');
+        text = text.substring(0,text.length-2)       
+        $(".personal_total").text(text);        
+        
+});
+
+
+function pagoFuncionario(nombre,apellido,cargo)
+{    
+	var parametros = {
+		"nombre" : nombre,
+        "apellido" : apellido,
+        "cargo" :   cargo,
+	};
+	$.ajax( {
+		data : parametros,
+        url : '<?php echo $this->basePath()."/admin/finanzas/pagofuncionario"?>',
+		type : 'post',
+		beforeSend : function() {
+			
+			$("#mostarpagof").html("<img src='<?php echo $this->basePath()?>/img/loading.gif'/>");
+		},
+		success : function(response) {			
+			$("#mostarpagof").html(response);
+		}
+	});
+}
+function verFuncionario(nempleado)
+{    
+	var parametros = {
+		"nempleado" : nempleado,
+	};
+	$.ajax( {
+		data : parametros,
+        url : '<?php echo $this->basePath()."/admin/finanzas/verfuncionario"?>',
+		type : 'post',
+		beforeSend : function() {
+			
+			$("#mostrarDatos").html("<img src='<?php echo $this->basePath()?>/img/loading.gif'/>");
+		},
+		success : function(response) {			
+			$("#mostrarDatos").html(response);
+		}
+	});
+     } 
+function editarFuncionario(nempleado)
+{    
+	var parametros = {
+		"nempleado" : nempleado,
+	};
+	$.ajax( {
+		data : parametros,
+        url : '<?php echo $this->basePath()."/admin/finanzas/editarfuncionario"?>',
+		type : 'post',
+		beforeSend : function() {
+			
+			$("#mostrarDatos").html("<img src='<?php echo $this->basePath()?>/img/loading.gif'/>");
+		},
+		success : function(response) {			
+			$("#mostrarDatos").html(response);
+		}
+	});
+     }
+function quitarFuncionario(nempleado)
+{    
+	var parametros = {
+		"nempleado" : nempleado,
+	};
+	$.ajax( {
+		data : parametros,
+        url : '<?php echo $this->basePath()."/admin/finanzas/quitarfuncionario"?>',
+		type : 'post',
+		beforeSend : function() {
+			
+			$("#mostrarDatos").html("<img src='<?php echo $this->basePath()?>/img/loading.gif'/>");
+		},
+		success : function(response) {			
+			$("#mostrarDatos").html(response);
+		}
+	});
+     }
+$(function() {
+			$(".meter > span").each(function() {
+				$(this)
+					.data("origWidth", $(this).width())
+					.width(0)
+					.animate({
+						width: $(this).data("origWidth")
+					}, 1200);
+			});
+});              
+</script>

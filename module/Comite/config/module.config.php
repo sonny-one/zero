@@ -77,6 +77,8 @@ return array(
             'Comite\Controller\Index' => 'Comite\Controller\IndexController',
             'Comite\Controller\Comunicacion' => 'Comite\Controller\ComunicacionController',
             'Comite\Controller\Biblioteca' => 'Comite\Controller\BibliotecaController',
+            'Comite\Controller\Mantenciones' => 'Comite\Controller\MantencionesController',
+            'Comite\Controller\Finanzas' => 'Comite\Controller\FinanzasController',
         ),
     ),
  'view_manager' => array(

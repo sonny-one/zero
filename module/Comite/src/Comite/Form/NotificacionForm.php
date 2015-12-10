@@ -22,8 +22,8 @@ class NotificacionForm extends Form
             'label' => 'Selecciona un Destinatario',
             'value_options' => array(
                array(
-                   'value' => 'comite',
-                   'label' => ' Comite',
+                   'value' => 'conserje',
+                   'label' => ' Conserjes',
                    'selected' => false,
                    'disabled' => false,
                    'attributes' => array(
@@ -95,34 +95,26 @@ class NotificacionForm extends Form
 
         ));  
         
-        // Radio ///////////////////////////////// Prioridad (Urgente)  
+        // Radio ///////////////////////////////// Prioridad (Radio)  
         $this->add(array(
             'type' => 'Zend\Form\Element\Radio',
             'name' => 'prioridad',             
             'options' => array(            
                 'value_options' => array(                   
-                    array(                         
-                        'value' => 'urgente',                                                             
-                        'attributes' => array(                            
-                            'name' => 'prioridad',                                                       
+                    array(      
+                        'value' => 'urgente',   
+                        'label' => ' Urgente',                                                                                                 
+                        'attributes' => array(  
+                            'id'=>'urgente',                                                                                                                                         
                         ),
-                    ),                
-                ),
-            ),
-        ));
-        
-        // Radio ///////////////////////////////// Prioridad (Normal)  
-        $this->add(array(
-            'type' => 'Zend\Form\Element\Radio',
-            'name' => 'prioridad',             
-            'options' => array(            
-                'value_options' => array(                   
-                    array(                        
-                        'value' => 'normal',                                                             
-                        'attributes' => array(                            
-                            'name' => 'prioridad',                                                       
+                    ),
+                    array(      
+                        'value' => 'normal',
+                        'label' => ' Normal',                                                                                                    
+                        'attributes' => array(  
+                            'id'=>'normal',                                                                                                                                         
                         ),
-                    ),                
+                    ),               
                 ),
             ),
         ));

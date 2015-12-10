@@ -1,0 +1,255 @@
+<script type="text/javascript" src="<?php echo $this->basePath()?>/metronic/global/plugins/datatables/media/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="<?php echo $this->basePath()?>/metronic/global/plugins/datatables/extensions/TableTools/js/dataTables.tableTools.min.js"></script>
+<script type="text/javascript" src="<?php echo $this->basePath()?>/metronic/global/plugins/datatables/plugins/bootstrap/dataTables.bootstrap.js"></script>
+<script type="text/javascript" src="<?php echo $this->basePath()?>/metronic/admin/pages/scripts/table-advanced.js"></script>
+<div class="row">       
+                    <div class="col-lg-12">
+                        <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            <i class="fa fa-send" style="color: #fff;"></i> &nbsp;&nbsp;Circulares
+                        </div>                            
+                        <div class="panel-body text-center">   
+     <!--1 2 3-->                                  
+            <div class="row udt">
+            <!--Titulo-->
+                  <div class="col-lg-12" style="margin-bottom: 20px;" >
+                  <h3>En 3 simples pasos informe a todo su condominio</h3>
+                  </div>
+            <!--Fin Titulo-->                
+            <!--1-->
+                 <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                    <br /><br />
+                        <div class="col-lg-12">                        
+                            <i class="fa fa-file-pdf-o" style="color: #585DA0; font-size: 42px;"></i><br /><br />
+                        </div>
+                    
+                        <div class="col-lg-12"> 
+                                <a>
+                                 <input type="file" id="archivoCircularAdmin" required="true"  />
+                            <button class="btn btn-success" id="btnArchivoCircular">
+                                <i id="iconoBtnArchivoCircular" class="fa fa-upload"></i> <span id="nombreArchivoCircular">&nbsp;&nbsp;Seleccionar archivo</span>
+                            </button>
+                                </a> 
+                            
+                        </div>                    
+                  </div>
+             <!--Fin 1-->                  
+             <!--Flecha 1-->     
+                  <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1" style="display: table; height:122px;">                 
+                    <i class="fa fa-arrow-circle-o-right" style="display: table-cell; vertical-align: middle; font-size: 28px;"></i>                    
+                  </div>
+             <!--Fin Flecha 1--> 
+             <!--2-->      
+                  <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                    <br /><br />
+                        <div class="col-lg-12">                        
+                            <i class="fa fa-users" style="color: #585DA0; font-size: 42px;"></i><br /><br />
+                        </div>
+                        
+                        <div class="col-lg-12">                            
+                                <div class="col-lg-4">                            
+                                             <input type="checkbox" disabled/> &nbsp; Conserjes             
+                                </div>
+                                <div class="col-lg-4">                            
+                                              <input type="checkbox" disabled/> &nbsp; Comité            
+                                </div> 
+                                <div class="col-lg-4">                            
+                                              <input type="checkbox" id="chkcomunidad" checked/> &nbsp; Comunidad            
+                                </div>                             
+                        </div>                    
+                  </div>    
+             <!--Fin 2-->                  
+             <!--Flecha 2-->                                 
+                  <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1" style="display: table; height:122px;">                 
+                    <i class="fa fa-arrow-circle-o-right" style="display: table-cell; vertical-align: middle; font-size: 28px;"></i>                    
+                  </div>
+             <!--Fin Flecha 2--> 
+             <!--3-->    
+                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                    <br /><br />
+                        <div class="col-lg-12">                        
+                            <i class="fa fa-paper-plane" style="color: #585DA0; font-size: 42px;"></i><br /><br />
+                        </div>
+                    
+                        <div class="col-lg-12">
+                            <a class="btn btn-success" id="btnEnviarCirular"><i id="iconoBtnEnviarCircular" class="fa fa-spinner"></i><span id="nombreBtnEnviarCircular">&nbsp;&nbsp;Enviar circular</span></a>
+                        </div>                    
+                  </div>           
+             <!--Fin 3-->                                                
+            </div>
+     <!--FIN 1 2 3--> 
+                    <br /><br />
+                <div class="row">
+                                <h3 class="page-header" ><i class="fa fa-list-alt" style="font-size: 20px;"></i> &nbsp;&nbsp;Ultimas circulares </h3>    
+                </div>
+                     
+     	<div class="row">
+				<div class="col-md-12">
+					<!-- BEGIN EXAMPLE TABLE PORTLET-->
+					<div class="portlet box blue-hoki">
+						<div class="portlet-title">
+							<div class="caption">
+								<i class="fa fa-globe"></i>Ultimas 25 circulares emitidas
+							</div>
+							<div class="tools">
+							</div>
+						</div>
+						<div class="portlet-body">
+                                                    <div class="table-scrollable" id="tablaCirculares"></div>
+						</div>
+					</div>
+            </div>           
+        </div>           
+     </div>            
+</div>           
+
+<script>
+    //inicializamos el boton enviar a disable
+    $("#btnEnviarCirular").addClass('disabled');
+    verCirculares();
+    
+    //Subir el archivo en el input
+     $("#archivoCircularAdmin").change(function(){
+          if(this.files[0].size<2000000){
+              $("#nombreArchivoCircular").text($(this).val().replace("C:\\fakepath\\", "  "));
+              $("#btnArchivoCircular").attr("class","btn btn-primary");
+              $("#iconoBtnArchivoCircular").attr("class","fa fa-check");
+              $("#btnEnviarCirular").removeClass('disabled');
+          }else{
+              $("#nombreArchivoCircular").text("Error: Mayor a 2Mb");
+              $("#btnArchivoCircular").attr("class","btn btn-danger");
+              $("#iconoBtnArchivoCircular").attr("class","fa fa-times");
+              $("#btnEnviarCirular").addClass('disabled');
+          }
+         
+              
+     });
+     //Enviar a Registrar la informacion
+     $("#btnEnviarCirular").click(function(){
+        
+        if(!$("#chkcomunidad").is(':checked')) {  
+             messageRspta('warning','Debe seleccionar un destinatario. Conserje, Comite o Comunidad','Información');
+            return;
+            
+        }
+          
+        bootbox.confirm("<strong>Estas seguro que deseas enviar circular?</strong>", function(result) {
+                   
+                   if(result){
+                       
+                       var file_data = $('#archivoCircularAdmin').prop('files')[0];
+                       var parametros = new FormData();                  
+                           parametros.append('fileData', file_data);
+                           $.ajax( {
+                                    contentType:false,
+                                    processData:false,	
+                                    cache:false,
+                                    data : parametros,
+                                    url : '<?php echo $this->basePath()."/admin/comunicacion/nuevocircular"?>',
+                                    type : 'post',
+                                    beforeSend : function() {
+                                        cec(0);
+                                    },
+                                    success : function(r) {
+                                        if(r.status=='ok'){
+                                            messageRspta('success',r.mensaje,'Aviso');
+                                            verCirculares();
+                                            sendCirculares(r.id);
+                                        }else{
+                                             messageRspta('error',r.mensaje,'Aviso');
+                                        }
+                                        cec(1);
+                                    },
+                                    error:function(e){
+                                        messageRspta('error','Error Tecnico','Aplicacion');
+                                        cec(1);
+                                    }        
+                            });
+                       
+                       
+                   }else{
+                       messageRspta('warning','Env&iacute;o cancelado','Aviso');
+                   }
+                   
+                   
+                }); 
+         
+     });
+     function messageRspta(tipo,msg,titulo)
+     {
+       toastr.options.closeButton=true;
+       toastr.options.positionClass='toast-top-center';
+       toastr.options.onclick=null;
+       toastr.options.showDuration = 1000;
+       toastr.options.hideDuration = 1000;
+       toastr.options.timeOut = 7000;
+       toastr.options.extendedTimeOut = 1000;
+       toastr.options.showEasing = 'swing';
+       toastr.options.hideEasing = 'linear';
+       toastr.options.showMethod = 'fadeIn';
+       toastr.options.hideMethod = 'fadeOut';
+       toastr[tipo](msg, titulo);
+    }
+    //clase enviar circular : cec
+    function cec(id){
+        if(id==0){
+            $("#nombreBtnEnviarCircular").text("  Enviando Circular");
+            $("#iconoBtnEnviarCircular").attr("class","fa fa-spinner fa-spin");
+            $("#btnEnviarCirular").addClass('disabled');
+            
+        }else{
+            $("#nombreBtnEnviarCircular").text("  Enviar Circular");
+            $("#iconoBtnEnviarCircular").attr("class","fa fa-spinner");
+            $("#btnEnviarCirular").removeClass('disabled');
+        }
+    }
+    function verCirculares(){
+        //se deja esa opcion si vamos a filtrar
+        var parametros = {"id_circular" : ""};
+    	$.ajax( {  
+		data : parametros,
+                url : '<?php echo $this->basePath()."/admin/comunicacion/lstcircular"?>',
+		type : 'post',
+		beforeSend : function() {
+		  $("#tablaCirculares").html("<i class='fa fa-spinner fa-spin'></i> Cargando...");
+		},
+		success : function(r) {
+                    if(r.status=='ok'){
+                        $("#tablaCirculares").html(r.tabla);
+                    }else{
+                        messageRspta('error',r.mensaje,'Aviso');
+                        $("#tablaCirculares").html("Error inesperado");
+                    }
+		},
+                error:function(e){
+                    messageRspta('error','Error Tecnico en la consulta','Aplicacion');
+               }
+        });
+        
+        
+        
+    }
+    function sendCirculares(id){
+        //se deja esa opcion si vamos a filtrar
+        var parametros = {"id_circular" : id};
+    	$.ajax( {  
+		data : parametros,
+                url : '<?php echo $this->basePath()."/admin/comunicacion/sendmailcircular"?>',
+		type : 'post',
+		beforeSend : function() {
+		  
+		},
+		success : function(r) {
+                    if(r.status=='ok'){
+                       messageRspta('success',r.mensaje,'Aviso');
+                    }else{
+                       messageRspta('error',r.mensaje,'Error');
+                    }
+		},
+                error:function(e){
+                    messageRspta('error','Error Tecnico en el envio','Aplicacion');
+               }
+        });
+        
+    }    
+</script>

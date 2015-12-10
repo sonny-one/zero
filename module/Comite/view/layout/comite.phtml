@@ -1,4 +1,13 @@
-
+<?php use Zend\Session\Container;
+$sid = new Container('base');
+$url = $this->basePath();
+$perfil = $sid->offsetGet('perfil');
+ if ($sid->offsetExists('usuario')){
+ }else{
+    header ("Location: $url/application/login");
+    exit;
+ }
+ ?>
 <!DOCTYPE html>
 <!-- 
 Template Name: Metronic - Responsive Admin Dashboard Template build with Twitter Bootstrap 3.3.5
@@ -19,12 +28,13 @@ License: You must have a valid license purchased only from themeforest(the above
 <!-- BEGIN HEAD -->
 <head>
 <meta charset="utf-8"/>
-<title>Metronic | Admin Dashboard Template</title>
+<title>Becheck | Comite</title>
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta content="width=device-width, initial-scale=1" name="viewport"/>
 <meta content="" name="description"/>
 <meta content="" name="author"/>
 <!-- BEGIN GLOBAL MANDATORY STYLES -->
+<link href="<?php echo $this->basePath()?>/img/check.ico" rel="shortcut icon" type="image/vnd.microsoft.icon"/>
 <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&subset=all" rel="stylesheet" type="text/css"/>
 <link href="<?php echo $this->basePath()?>/metronic/global/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
 <link href="<?php echo $this->basePath()?>/metronic/global/plugins/simple-line-icons/simple-line-icons.min.css" rel="stylesheet" type="text/css"/>
@@ -49,6 +59,8 @@ License: You must have a valid license purchased only from themeforest(the above
 <link href="<?php echo $this->basePath()?>/metronic/admin/layout4/css/themes/light.css" rel="stylesheet" type="text/css" id="style_color"/>
 <link href="<?php echo $this->basePath()?>/metronic/admin/layout4/css/custom.css" rel="stylesheet" type="text/css"/>
 <link href="<?php echo $this->basePath()?>/metronic/global/plugins/bootstrap-toastr/toastr.min.css"/ rel="stylesheet" type="text/css" >
+<link href="<?php echo $this->basePath()?>/metronic/admin.css" rel="stylesheet" type="text/css" >
+<link href="<?php echo $this->basePath()?>/metronic/global/plugins/datatables/plugins/bootstrap/dataTables.bootstrap.css" rel="stylesheet" type="text/css"/>
 
 <!-- END THEME STYLES -->
 <link rel="shortcut icon" href="favicon.ico"/>
@@ -180,7 +192,7 @@ jQuery(document).ready(function() {
 					<li class="dropdown dropdown-user dropdown-dark">
 						<a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
 						<span class="username username-hide-on-mobile">
-						Tom&aacute;s Cornejo </span>
+						Julio Villanueva </span>
 						<!-- DOC: Do not remove below empty space(&nbsp;) as its purposely used -->
 						<img alt="" class="img-circle" src="<?php echo $this->basePath()?>/metronic/admin/layout4/img/avatar9.jpg"/>
 						</a>
@@ -203,10 +215,10 @@ jQuery(document).ready(function() {
 					</li>
 					<!-- END USER LOGIN DROPDOWN -->
 					<!-- BEGIN USER LOGIN DROPDOWN -->
-					<li class="dropdown dropdown-extended quick-sidebar-toggler">
+					<!--li class="dropdown dropdown-extended quick-sidebar-toggler">
 	                    <span class="sr-only">Toggle Quick Sidebar</span>
 	                    <i class="icon-logout"></i>
-	                </li>
+	                </li-->
 					<!-- END USER LOGIN DROPDOWN -->
 				</ul>
 			</div>
@@ -281,12 +293,12 @@ jQuery(document).ready(function() {
 					</a>
 					<ul class="sub-menu">
 						<li>
-							<a href="ecommerce_index.html">
+							<a href="<?php echo $this->basePath()."/comite/mantenciones/relojes"?>">
 							<i class="fa fa-clock-o"></i>
 							Relojes de mantenci&oacute;n</a>
 						</li>
 						<li>
-							<a href="ecommerce_orders.html">
+							<a href="<?php echo $this->basePath()."/comite/mantenciones/calendario"?>">
 							<i class="fa fa-calendar"></i>
 							Calendario mant.</a>
 						</li>
@@ -313,7 +325,7 @@ jQuery(document).ready(function() {
 					</a>
 					<ul class="sub-menu">
 						<li>
-							<a href="ecommerce_index.html">
+							<a href="<?php echo $this->basePath()."/comite/finanzas/balance"?>">
 							<i class="fa fa-line-chart"></i>
 							Balance financiero</a>
 						</li>
@@ -408,3 +420,11 @@ jQuery(document).ready(function() {
 </body>
 <!-- END BODY -->
 </html>
+    <script>
+    
+window.$zopim||(function(d,s){var z=$zopim=function(c){z._.push(c)},$=z.s=
+d.createElement(s),e=d.getElementsByTagName(s)[0];z.set=function(o){z.set.
+_.push(o)};z._=[];z.set._=[];$.async=!0;$.setAttribute("charset","utf-8");
+$.src="//v2.zopim.com/?367fnhOP9mA9OB2vzEM72HnbitGVWMDY";z.t=+new Date;$.
+type="text/javascript";e.parentNode.insertBefore($,e)})(document,"script");
+  </script>

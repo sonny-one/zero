@@ -5,7 +5,7 @@
 <section id="menu_conserje">
 <div class="row">
            <a href="<?php echo $this->basePath()?>/conserje/encomienda/nuevo">
-               <div class="col-lg-3 col-md-6 col-sm-4">
+               <div class="col-lg-3 col-md-6 col-sm-6">
                     <div class="panel panel-red">
                         <div class="panel-heading">
                             <div class="row">
@@ -46,7 +46,7 @@
                 </div>
       </a-->  
       <a href="<?php echo $this->basePath()?>/conserje/encomienda/buscar">
-               <div class="col-lg-3 col-md-6 col-sm-4">
+               <div class="col-lg-3 col-md-6 col-sm-6">
                     <div class="panel panel-red">
                         <div class="panel-heading">
                             <div class="row">
@@ -83,12 +83,7 @@
                        
                     </div>
                 </div>
-
 </div>
-
-
-
-
 <!-- Modal-->
             <div class="modal fade" id="modalDetalle" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" >
                <div class="modal-dialog">
@@ -110,14 +105,12 @@
                  </div>
                 </div>
             </div>
-
 <!--Fin Modal-->
 
 <!-- Modal -->
 <div class="modal fade" id="modalRetirarEnc" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
                <div class="modal-dialog">
-                 <div class="modal-content" >
-                        
+                 <div class="modal-content" >                        
                          <div >
                          &nbsp;
                             <div class="container-fluid">
@@ -138,8 +131,7 @@
                                                <input type="hidden" id="retiraPersonaId"/>
                                                <input type="hidden" id="retirarPersonaIdAux"/>
                                                <input type="hidden" id="retiraPersonaNombreAux"/>
-                                               <input type="hidden" id="personaRutAux"/>
-                                               
+                                               <input type="hidden" id="personaRutAux"/>                                               
                                             </div>
                                             </div>
                                             </div>
@@ -178,8 +170,7 @@
                                     </div>
                                 </div>
                             </div>
-                            </div>
-
+                         </div>
                     </div>
                 </div>
             </div>
@@ -351,7 +342,7 @@ $("#rutE").typeahead({
     $( ".imgth" ).each(function(index) {
                 $(this).on("click", function(){
                     $("#modalViewPhoto").modal("show");
-                    $("#viewPhotoModal").html("<img src='"+$(this).attr("data")+"' >");
+                    $("#viewPhotoModal").html("<img src='"+$(this).attr("data")+"' style='max-width: 800px;' >");
                 });
             });
             

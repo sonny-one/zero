@@ -1,0 +1,102 @@
+<?php echo $this->doctype(); ?>
+<?php
+
+use Zend\Session\Container;
+$sid = new Container('base');
+$url = $this->basePath();
+ if ($sid->offsetExists('usuario')){
+ }else{
+   header ("Location: $url/application/login");
+    exit;
+ }
+
+
+?>
+<html lang="es">
+<head>
+  <?php echo $this->headTitle('Portal Usuario')->setSeparator(' - ')->setAutoEscape(false) ?>
+
+        <?php echo $this->headMeta()
+            ->appendName('viewport', 'width=device-width, initial-scale=1.0')
+            ->appendHttpEquiv('X-UA-Compatible', 'IE=edge')
+        ?>    
+  
+  <link href='http://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" href="<?php echo $this->basePath()?>/sb2/css/bootstrap.css">
+  <link rel="stylesheet" href="<?php echo $this->basePath()?>/css/menu_usu.css">
+  <link rel="stylesheet" href="<?php echo $this->basePath()?>/sb2/css/sb-admin-2.css">  
+  <link href="<?php echo $this->basePath()?>/sb2/font-awesome-4.1.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
+  <link href="<?php echo $this->basePath()?>/sb2/css/backmodulos.css" rel="stylesheet" media="screen" type="text/css"/>  
+  <link rel="stylesheet" href="<?php echo $this->basePath()?>/sb2/css/usuario.css">
+  
+  <script src="<?php echo $this->basePath()?>/sb2/js/jquery-1.11.0.js"></script>
+  <script src="<?php echo $this->basePath()?>/sb2/js/bootstrap.min.js"></script>
+  <script src="<?php echo $this->basePath()?>/sb2/js/sb-admin-2.js"></script>
+  <script src="<?php echo $this->basePath()?>/js/materialMenu.min.js"></script>
+  
+</head>
+<body>
+  
+  <div id="wrapper" class="wrapper">
+       <div class="col-lg-12">
+                     <?php echo $this->content; ?>
+       </div>
+  </div><!-- /wrapper -->
+
+  <button id="mm-menu-toggle" class="mm-menu-toggle">Toggle Menu</button>
+  <nav id="mm-menu" class="mm-menu">
+    <div class="mm-menu__header">
+    
+                <div class="col-lg-12" style="text-align: center;">
+<img src="<?php echo $this->basePath()?>/img/logo2.png" style="max-width: 80%; margin-bottom: 20px; margin-top: 20px;"/>
+
+</div>
+
+                <div class="input-group custom-search-form" style="padding: 20px;">
+                    <input type="text" class="form-control" placeholder="Buscar..."/>
+                      <span class="input-group-btn">
+                     <button class="btn btn-default" type="button" onclick="alert('En Construcción...');">
+                         <i class="fa fa-search"></i>
+                      </button>
+                      </span>
+                </div>
+
+      
+      
+    </div>
+    <ul class="mm-menu__items">
+      <li class="mm-menu__item">
+        <a class="mm-menu__link" href="#">
+          <i class="fa fa-home"></i> Inicio</span>
+        </a>
+      </li>
+      <li class="mm-menu__item">
+        <a class="mm-menu__link" href="#">
+          <span class="mm-menu__link-text"><i class="md md-person"></i> Profile</span>
+        </a>
+      </li>
+      <li class="mm-menu__item">
+        <a class="mm-menu__link" href="#">
+          <span class="mm-menu__link-text"><i class="md md-inbox"></i> Inbox</span>
+        </a>
+      </li>
+      <li class="mm-menu__item">
+        <a class="mm-menu__link" href="#">
+          <span class="mm-menu__link-text"><i class="md md-favorite"></i> Favourites</span>
+        </a>
+      </li>
+      <li class="mm-menu__item">
+        <a class="mm-menu__link" href="#">
+          <span class="mm-menu__link-text"><i class="md md-settings"></i> Settings</span>
+        </a>
+      </li>
+    </ul>
+  </nav><!-- /nav -->
+  
+
+  <script>
+    var menu = new Menu;
+  </script>
+
+</body>
+</html>

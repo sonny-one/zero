@@ -1,0 +1,23 @@
+.udt input[type="file"] {
+    height: 100%;
+    opacity: 0;
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1;
+}
+.flecha123{
+    display: table-cell;
+    vertical-align: middle; 
+    font-size: 28px;
+}
+.divflecha123{
+    display: table; 
+    height:122px;    
+}
+.icon123 div{
+    color: #585DA0; 
+    font-size: 42px;
+}

@@ -1,0 +1,1685 @@
+<div class="row">         
+                <div class="col-lg-12">
+                    <div class="panel panel-green">
+                        <div class="panel-body">
+                        <div class="panel-group" id="accordions">
+                        <div class="col-lg-12">
+                                <h4> <i class="fa fa-building"></i>  &nbsp; &nbsp;<a id="ascensor" onclick="mostrarAsc()" data-toggle="collapse" data-parent="#accordions" href="#ascensor2">Ascensores</a></h4>
+                            </div>
+                            <div class="col-lg-12" id="mostrarAsc"></div>
+                            <div id="ascensor2" class="panel-collapse collapse">
+
+                            <?php 
+                                        $form3 = $this->form3;
+                                        $form3->prepare();
+                                        $form3->setAttributes(array(
+                                        'action' => $this->url."/admin/infocom/guardarasc",
+                                        'method' => 'post',
+                                        'id' => 'form3',                                    
+                                        ));
+                                        echo $this->form()->openTag($form3);
+                                        echo $this->formRow($this->form3->get('id_pk'));
+                                        ?> 
+                            
+                            <div class="col-lg-12">
+                            <div class="panel-body">
+                            <div class="table-responsive">
+                                <table id="tabla1" class="table table-hover" style="text-align: center;">
+                                    <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Fabricante</th>
+                                            <th>Modelo</th>
+                                            <th>A&ntilde;o Fabricaci&oacute;n</th>
+                                            <th>Capacidad</th>
+                                            <th>Estado</th>
+                                            <th>Mas</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="asctable">                                     
+                                    </tbody>
+                                </table>
+                            </div>
+                            <!-- /.table-responsive -->
+                        </div>
+                        </div>
+
+                        <a id="btnnuevoasc">
+                        <div  class="row" style="margin-left: 1em; margin-bottom: 2em;">
+                        <div class="col-lg-1 col-md-2 text-right">
+                             <button class="btn btn-success blocktext" onclick="return false;" style="vertical-align: middle;"><i class="fa fa-plus"></i></button>
+                        </div>                        
+                        <div class="col-lg-6 col-md-6">
+                        <p><font size="4"> Nuevo Ascensor</font></p>
+                       </div>                      
+                   </div>
+                       </a>
+                           <div  id="formnuevoasc" class="row" style="display: none;">
+                               <div class="col-lg-6 col-md-6 col-xs-12">
+                                   <div class="form-group">
+                                       <label>Fabricante</label>
+                                       <div class="form-group input-group">
+                                           <span class="input-group-addon"><i class="fa fa-tag"></i>
+                                           </span>
+                                           <?php                                             
+                                             echo $this->formRow($this->form3->get('fabricante'));
+                                           ?>                                                                                    
+                                       </div>
+                                       </div>
+                                       <div class="form-group">
+                                       <label>Modelo</label>
+                                       <div class="form-group input-group">
+                                           <span class="input-group-addon"><i class="fa fa-tag"></i>
+                                           </span>
+                                           <?php                                             
+                                             echo $this->formRow($this->form3->get('modelo'));
+                                           ?>                                            
+                                       </div>
+                                       </div>
+                                </div>
+                                <div class="col-lg-6 col-md-3 col-xs-6">
+                                        <div class="form-group">
+                                        <label>Capacidad</label>
+                                        <div class="form-group input-group">
+                                            <span class="input-group-addon"> <i class="fa fa-users"></i></span>
+                                            <?php                                             
+                                              echo $this->formRow($this->form3->get('capacidad'));
+                                            ?>
+                                                                                       
+                                        </div>
+                                        </div>
+                                </div>
+                                <div class="col-lg-6 col-md-3 col-xs-6">
+                                        <div class="form-group">
+                                        <label>A&ntilde;o Fabricacion</label>
+                                        <div class="form-group input-group">
+                                            <span class="input-group-addon"><i class="fa fa-calendar"></i>
+                                            </span>
+                                            <?php                                             
+                                              echo $this->formRow($this->form3->get('anio'));
+                                            ?>                                            
+                                        </div>
+                                        </div>
+                                </div>  
+                                <div class="col-lg-12 col-md-3 col-xs-6">
+                                        <div class="form-group">
+                                        <label>Detalles</label>
+                                        <div class="form-group">                                            
+                                            <?php                                             
+                                              echo $this->formRow($this->form3->get('detalle'));
+                                            ?>                                            
+                                        </div>
+                                        </div>
+                                </div>                                                                                                                                                                                
+                               <div class="row" style="text-align: center;">   
+                                        <div class="col-lg-12">                                          
+                                                 <?php                                             
+                                              echo $this->formRow($this->form3->get('sendasc'));
+                                            ?>
+                                        </div>                                              
+                               </div>
+                                </div>  
+                               </div>
+                               <?php echo $this->form()->closeTag()?>
+                               <div class="col-lg-12">              
+<!-- Salones -->               <h4> <i class="fa fa-group"></i>  &nbsp; &nbsp;<a id="salon" data-toggle="collapse" data-parent="#accordions" href="#salones">Salones</a></h4>
+
+                                            
+
+                                        
+
+                                    </div>
+
+                                    
+
+                                    <div class="col-lg-12" id="mostrarSalon"></div> 
+
+                                    <div id="salones" class="panel-collapse collapse">
+
+                                     <?php 
+
+                                        $form4 = $this->form4;
+
+                                        $form4->prepare();
+
+                                        $form4->setAttributes(array(
+
+                                        'action' => $this->url."/admin/infocom/guardarsalon",
+
+                                        'method' => 'post',
+
+                                        'id' => 'form4',                                    
+
+                                        ));
+
+                                        echo $this->form()->openTag($form4);
+
+                                        echo $this->formRow($this->form4->get('id_pk'));
+
+                                        ?>                                                                         
+
+                                    <div class="col-lg-12">                                                                                                 
+
+                                    <div class="panel-body">
+
+                            <div class="table-responsive">
+
+                                <table id="tabla2" class="table table-hover" style="text-align: center;">
+
+                                    <thead>
+
+                                        <tr>
+
+                                            <th>N&deg;</th>
+
+                                            <th>Nombre</th>
+
+                                            <th>Capacidad</th>
+
+                                            <th>Valor</th>
+
+                                            <th>Horario 1</th>
+
+                                            <th>Horario 2</th>
+
+                                            <th>Estado</th>
+
+                                            <th>Mas</th>
+
+                                        </tr>
+
+                                    </thead>
+
+                                    <tbody id="salontable">
+
+                                    </tbody>
+
+                                </table>
+
+                            </div>
+
+                            <!-- /.table-responsive -->
+
+                        </div>
+
+                                            
+
+                                        
+
+                                    </div>
+
+                      
+
+                    <a id="btnnuevosalon"><div  class="row" style="margin-left: 1em; margin-bottom: 2em;">
+
+                        <div class="col-lg-1 text-right">
+
+                             <button class="btn btn-success blocktext" onclick="return false;" style="vertical-align: middle;"><i class="fa fa-plus"></i></button>
+
+                        </div>                        
+
+                        <div class="col-lg-6">
+
+                        <p><font size="4"> Nuevo Salon</font></p>
+
+                        </div>                      
+
+                        </div></a>
+
+                        <div id="divnuevosalon" style="display: none;" >
+
+                                 <div class="col-lg-12  ">
+
+                                <div class="col-lg-4 col-md-6">
+
+                                    <div class="form-group">
+
+                                        <label>Agregar Salon</label>
+
+                                        <div class="form-group input-group">
+
+                                            <span class="input-group-addon"><i class="fa fa-building"></i>
+
+                                            </span>
+
+                                            <?php                                             
+
+                                              echo $this->formRow($this->form4->get('nombre'));
+
+                                            ?>                                                                                       
+
+                                        </div>
+
+                                        </div>                                  
+
+                                </div>
+
+                                <div class="col-lg-2 col-md-3 col-xs-6">
+
+                                        <div class="form-group">
+
+                                        <label>Capacidad</label>
+
+                                        <div class="form-group input-group">
+
+                                            <span class="input-group-addon"><i class="fa fa-users"></i>
+
+                                            </span>
+
+                                            <?php                                             
+
+                                              echo $this->formRow($this->form4->get('capacidad'));
+
+                                            ?>                                            
+
+                                        </div>
+
+                                        </div>
+
+                                </div>                                                               
+
+                                <div class="col-lg-3 col-md-3 col-xs-6">
+
+                                        <div class="form-group">
+
+                                        <label>Valor Reserva</label>
+
+                                        <div class="form-group input-group">
+
+                                            <span class="input-group-addon"><i class="fa fa-dollar"></i>
+
+                                            </span>
+
+                                            <?php                                             
+
+                                              echo $this->formRow($this->form4->get('valor'));
+
+                                            ?>                                            
+
+                                        </div>
+
+                                        </div>
+
+                                </div>
+
+                                <div class="col-lg-3 col-md-3 col-xs-6">
+
+                                        <div class="form-group">
+
+                                        <label>Garant&iacute;a</label>
+
+                                        <div class="form-group input-group">
+
+                                            <span class="input-group-addon"><i class="fa fa-dollar"></i>
+
+                                            </span>
+
+                                            <?php                                             
+
+                                              echo $this->formRow($this->form4->get('garantia'));
+
+                                            ?>                                            
+
+                                        </div>
+
+                                        </div>
+
+                                </div>
+
+                                    </div>                            
+
+                                        <div class="row">
+
+                                        <div class="col-lg-6 col-md-6">
+
+                                        <div class="col-lg-12 col-md-12 col-xs-12" style="text-align: center;">
+
+                                     
+
+                                        <div class="form-group">
+
+                                            <button class="btn btn-info disabled">Horario 1</button>
+
+                                        </div>
+
+                                        
+
+                                        </div>
+
+                                        <div class="col-lg-6 col-md-6 col-xs-6">                                         
+
+                                        <div class="form-group">
+
+                                        <label>Desde:</label>
+
+                                        <div class="form-group input-group">
+
+                                            <span class="input-group-addon"><i class="fa fa-clock-o"></i>
+
+                                            </span>
+
+                                            <?php                                             
+
+                                              echo $this->formRow($this->form4->get('horario1'));
+
+                                            ?>                                            
+
+                                        </div>
+
+                                        </div>
+
+                                        </div> 
+
+                                        <div class="col-lg-6 col-md-6 col-xs-6"> 
+
+                                        <div class="form-group">
+
+                                        <label>Hasta:</label>
+
+                                        <div class="form-group input-group">
+
+                                            <span class="input-group-addon"><i class="fa fa-clock-o"></i>
+
+                                            </span>
+
+                                            <?php                                             
+
+                                              echo $this->formRow($this->form4->get('horario1fin'));
+
+                                            ?>                                            
+
+                                        </div>
+
+                                        </div>
+
+                                        </div>                                                                                                                        
+
+                                        </div>
+
+                                        
+
+                                        
+
+                                        <div class="col-lg-6 col-md-6">
+
+                                        <div class="col-lg-12 col-md-12 col-xs-12" style="text-align: center;">
+
+                                 
+
+                                        <div class="form-group">
+
+                                            <button class="btn btn-info disabled">Horario 2</button>
+
+                                        </div> 
+
+                                        </div>
+
+                                        <div class="col-lg-6 col-md-6 col-xs-6"> 
+
+                                        <div class="form-group">
+
+                                        <label>Desde:</label>
+
+                                        <div class="form-group input-group">
+
+                                            <span class="input-group-addon"><i class="fa fa-clock-o"></i>
+
+                                            </span>
+
+                                            <?php                                             
+
+                                              echo $this->formRow($this->form4->get('horario2'));
+
+                                            ?>                                            
+
+                                        </div>
+
+                                        </div>
+
+                                        </div> 
+
+                                        <div class="col-lg-6 col-md-6 col-xs-6"> 
+
+                                        <div class="form-group">
+
+                                        <label>Hasta:</label>
+
+                                        <div class="form-group input-group">
+
+                                            <span class="input-group-addon"><i class="fa fa-clock-o"></i>
+
+                                            </span>
+
+                                            <?php                                             
+
+                                              echo $this->formRow($this->form4->get('horario2fin'));
+
+                                            ?>                                            
+
+                                        </div>
+
+                                        </div>
+
+                                        </div>
+
+                                        
+
+                                        
+
+                                        
+
+                                        </div>                                                                                                                                                                                                                                                                                                                                                                                                                                                                      
+
+                                        </div>  
+
+                                        <div class="col-lg-12 col-md-6">
+
+                                        
+
+                                        <div class="form-group">
+
+                                            <label>Reglas y/o Comentarios</label>
+
+                                            <?php                                             
+
+                                              echo $this->formRow($this->form4->get('reglas'));
+
+                                            ?>
+
+                                        </div>
+
+                                        
+
+                                        </div>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  
+
+                                        <div class="row" style="text-align: center;">   
+
+                                        <div class="col-lg-12">                                          
+
+                                                 <?php                                             
+
+                                              echo $this->formRow($this->form4->get('sendsalon'));
+
+                                                ?>
+
+                                                 </div>                                              
+
+                                        </div>
+
+                                        
+
+                                    </div>                                        
+
+                                  </div> 
+
+                                  <?php echo $this->form()->closeTag()?>
+
+                                     <div class="col-lg-12">        
+
+<!-- Quinchos -->                              <h4> <i class="fa fa-glass"></i>  &nbsp; &nbsp;<a data-toggle="collapse" id="quincho" data-parent="#accordions" href="#quinchos">Quinchos</a></h4>
+
+                                    </div>
+
+                                    <div class="col-lg-12" id="mostrarQuincho"></div>   
+
+                                        <div id="quinchos" class="panel-collapse collapse"> 
+
+                                        <?php 
+
+                                        $form5 = $this->form5;
+
+                                        $form5->prepare();
+
+                                        $form5->setAttributes(array(
+
+                                        'action' => $this->url."/admin/infocom/guardarquincho",
+
+                                        'method' => 'post',
+
+                                        'id' => 'form5',                                    
+
+                                        ));
+
+                                        echo $this->form()->openTag($form5);
+
+                                        echo $this->formRow($this->form5->get('id_pk'));
+
+                                        ?> 
+
+                                        <div class="col-lg-12" id="mostrarQuincho"></div>
+
+                                        <div class="col-lg-12">                                                                                                 
+
+                                    <div class="panel-body">
+
+                            <div class="table-responsive">
+
+                                <table id="tabla3" class="table table-hover" style="text-align: center;">
+
+                                    <thead>
+
+                                        <tr>
+
+                                            <th>N&deg;</th>                                            
+
+                                            <th>Nombre</th>
+
+                                            <th>Capacidad</th>
+
+                                            <th>Valor</th>
+
+                                            <th>Horario Semana</th>
+
+                                            <th>Horario Findes</th>
+
+                                            <th>Estado</th>
+
+                                            <th>Mas</th>
+
+                                        </tr>
+
+                                    </thead>
+
+                                    <tbody id="quinchotable">
+
+                                    </tbody>
+
+                                </table>
+
+                            </div>                         
+
+                        </div>                                                                                    
+
+                                    </div> 
+
+                                    
+
+                                    
+
+                                    <a id="btnnuevoquincho"><div  class="row" style="margin-left: 1em; margin-bottom: 2em;">
+
+                        <div class="col-lg-1 text-right">
+
+                             <button class="btn btn-success blocktext" onclick="return false;" style="vertical-align: middle;"><i class="fa fa-plus"></i></button>
+
+                        </div>                        
+
+                        <div class="col-lg-6">
+
+                        <p><font size="4"> Nuevo Quincho</font></p>
+
+                        </div>                      
+
+                        </div></a>
+
+                                    
+
+                                    
+
+                                <div id="divnuevoquincho" style="display: none;" >                                                                                                      
+
+                                    <div class="row">
+
+                                <div class="col-lg-4 col-md-4 col-xs-12">
+
+                                        <div class="form-group">
+
+                                        <label>Nombre</label>
+
+                                        <div class="form-group input-group">
+
+                                            <span class="input-group-addon"><i class="fa fa-users"></i>
+
+                                            </span>
+
+                                            <?php                                             
+
+                                              echo $this->formRow($this->form5->get('nombre'));
+
+                                                ?>                                                                                         
+
+                                        </div>
+
+                                        </div>
+
+                                </div>
+
+                                <div class="col-lg-2 col-md-4 col-xs-6">
+
+                                        <div class="form-group">
+
+                                        <label>Capacidad</label>
+
+                                        <div class="form-group input-group">
+
+                                            <span class="input-group-addon"><i class="fa fa-users"></i>
+
+                                            </span>
+
+                                            <?php                                             
+
+                                              echo $this->formRow($this->form5->get('capacidad'));
+
+                                                ?>                                             
+
+                                        </div>
+
+                                        </div>
+
+                                </div>
+
+                                <div class="col-lg-3 col-md-4 col-xs-6">
+
+                                        <div class="form-group">
+
+                                        <label>Valor Reserva</label>
+
+                                        <div class="form-group input-group">
+
+                                            <span class="input-group-addon"><i class="fa fa-dollar"></i>
+
+                                            </span>
+
+                                            <?php                                             
+
+                                              echo $this->formRow($this->form5->get('valor'));
+
+                                                ?>                                            
+
+                                        </div>
+
+                                        </div>
+
+                                </div>
+
+                                <div class="col-lg-3 col-md-4 col-xs-6 ">
+
+                                        <div class="form-group">
+
+                                        <label>Valor Garant&iacute;a</label>
+
+                                        <div class="form-group input-group">
+
+                                            <span class="input-group-addon"><i class="fa fa-dollar"></i>
+
+                                            </span>
+
+                                            <?php                                             
+
+                                              echo $this->formRow($this->form5->get('garantia'));
+
+                                                ?>                                            
+
+                                        </div>
+
+                                        </div>
+
+                                </div>
+
+                                </div>   
+
+
+
+
+
+
+
+                        <div role="tabpanel">
+
+                            <ul class="nav nav-tabs nav-justified" role="tablist">
+
+                                <li role="presentation" class="active"><a href="#semana" aria-controls="semana" role="tab" data-toggle="tab"><strong>Domingo a Jueves</strong></a></li>
+
+                                <li role="presentation"><a href="#finde" aria-controls="finde" role="tab" data-toggle="tab"><strong>Viernes, Sabados y Festivos</strong></a></li>
+
+                            </ul>  
+
+                                <div class="tab-content">
+
+                                        <div role="tabpanel" class="tab-pane fade in active" id="semana" class="row" style="margin-top: 10px;">
+
+                                        <div class="col-lg-6 col-md-6 col-xs-6" style="text-align: center;">
+
+                                 
+
+                                        <div class="form-group">
+
+                                            <button class="btn btn-info disabled" >Horario 1</button>
+
+                                        </div> 
+
+                                        </div>
+
+                                        <div class="col-lg-6 col-md-6 col-xs-6" style="text-align: center;">
+
+                                 
+
+                                        <div class="form-group">
+
+                                            <button class="btn btn-info disabled">Horario 2</button>
+
+                                        </div> 
+
+                                        </div>
+
+                                        
+
+                                        
+
+                                        
+
+                                        <div class="col-lg-3 col-md-3 col-xs-6">                                         
+
+                                        <div class="form-group">
+
+                                        <label>Desde:</label>
+
+                                        <div class="form-group input-group">
+
+                                            <span class="input-group-addon"><i class="fa fa-clock-o"></i>
+
+                                            </span>
+
+                                            <?php                                             
+
+                                              echo $this->formRow($this->form5->get('horario1'));
+
+                                                ?>                                            
+
+                                        </div>
+
+                                        </div>
+
+                                        </div> 
+
+                                        <div class="col-lg-3 col-md-3 col-xs-6"> 
+
+                                        <div class="form-group">
+
+                                        <label>Hasta:</label>
+
+                                        <div class="form-group input-group">
+
+                                            <span class="input-group-addon"><i class="fa fa-clock-o"></i>
+
+                                            </span>
+
+                                            <?php                                             
+
+                                              echo $this->formRow($this->form5->get('horario1fin'));
+
+                                                ?>                                            
+
+                                        </div>
+
+                                        </div>
+
+                                        </div>
+
+                                        <div class="col-lg-3 col-md-3 col-xs-3">                                         
+
+                                        <div class="form-group">
+
+                                        <label>Desde:</label>
+
+                                        <div class="form-group input-group">
+
+                                            <span class="input-group-addon"><i class="fa fa-clock-o"></i>
+
+                                            </span>
+
+                                            <?php                                             
+
+                                              echo $this->formRow($this->form5->get('horario2'));
+
+                                                ?>                                            
+
+                                        </div>
+
+                                        </div>
+
+                                        </div> 
+
+                                        <div class="col-lg-3 col-md-3 col-xs-3"> 
+
+                                        <div class="form-group">
+
+                                        <label>Hasta:</label>
+
+                                        <div class="form-group input-group">
+
+                                            <span class="input-group-addon"><i class="fa fa-clock-o"></i>
+
+                                            </span>
+
+                                            <?php                                             
+
+                                              echo $this->formRow($this->form5->get('horario2fin'));
+
+                                                ?>                                            
+
+                                        </div>
+
+                                         </div>
+
+                                        </div>
+
+                                        </div>
+
+                                            
+
+                                        <div role="tabpanel" class="tab-pane fade" id="finde" class="row" style="margin-top: 10px;">
+
+                                        <div class="col-lg-6 col-md-6 col-xs-6" style="text-align: center;">
+
+                                 
+
+                                        <div class="form-group">
+
+                                            <button class="btn btn-warning disabled" >Horario 1</button>
+
+                                        </div> 
+
+                                        </div>
+
+                                        <div class="col-lg-6 col-md-6 col-xs-6" style="text-align: center;">
+
+                                 
+
+                                        <div class="form-group">
+
+                                            <button class="btn btn-warning disabled">Horario 2</button>
+
+                                        </div> 
+
+                                        </div>
+
+                                        
+
+                                        
+
+                                        
+
+                                        <div class="col-lg-3 col-md-3 col-xs-3">                                         
+
+                                        <div class="form-group">
+
+                                        <label>Desde:</label>
+
+                                        <div class="form-group input-group">
+
+                                            <span class="input-group-addon"><i class="fa fa-clock-o"></i>
+
+                                            </span>
+
+                                            <?php                                             
+
+                                              echo $this->formRow($this->form5->get('fhorario1'));
+
+                                                ?>                                            
+
+                                        </div>
+
+                                        </div>
+
+                                        </div> 
+
+                                        <div class="col-lg-3 col-md-3 col-xs-3"> 
+
+                                        <div class="form-group">
+
+                                        <label>Hasta:</label>
+
+                                        <div class="form-group input-group">
+
+                                            <span class="input-group-addon"><i class="fa fa-clock-o"></i>
+
+                                            </span>
+
+                                            <?php                                             
+
+                                              echo $this->formRow($this->form5->get('fhorario1fin'));
+
+                                                ?>                                            
+
+                                        </div>
+
+                                        </div>
+
+                                        </div>
+
+                                        <div class="col-lg-3 col-md-3 col-xs-3">                                         
+
+                                        <div class="form-group">
+
+                                        <label>Desde:</label>
+
+                                        <div class="form-group input-group">
+
+                                            <span class="input-group-addon"><i class="fa fa-clock-o"></i>
+
+                                            </span>
+
+                                            <?php                                             
+
+                                              echo $this->formRow($this->form5->get('fhorario2'));
+
+                                                ?>                                            
+
+                                        </div>
+
+                                        </div>
+
+                                        </div> 
+
+                                        <div class="col-lg-3 col-md-3 col-xs-3"> 
+
+                                        <div class="form-group">
+
+                                        <label>Hasta:</label>
+
+                                        <div class="form-group input-group">
+
+                                            <span class="input-group-addon"><i class="fa fa-clock-o"></i>
+
+                                            </span>
+
+                                            <?php                                             
+
+                                              echo $this->formRow($this->form5->get('fhorario2fin'));
+
+                                                ?>                                            
+
+                                        </div>
+
+                                         </div>
+
+                                        </div>
+
+                                        </div>
+
+                                        </div>
+
+                                </div>
+
+                                         <div class="col-lg-12 col-md-6">
+
+                                        
+
+                                        <div class="form-group">
+
+                                            <label>Reglas y/o Comentarios</label>
+
+                                            <?php                                             
+
+                                              echo $this->formRow($this->form5->get('reglas'));
+
+                                                ?>
+
+                                        </div>
+
+                                        
+
+                                        </div> 
+
+                                        <div class="row" style="text-align: center;">   
+
+                                        <div class="col-lg-12">                                          
+
+                                                 <?php                                             
+
+                                              echo $this->formRow($this->form5->get('sendquincho'));
+
+                                                ?>
+
+                                                 </div>                                              
+
+                                        </div>
+
+                                       </div>
+
+                                        </div>                                                                                                            
+
+                                  <?php echo $this->form()->closeTag()?>
+
+                                    <div class="col-lg-12">                                                  
+<!-- LAVANDERIA -->      <h4> <i class="fa fa-instagram"></i>  &nbsp; &nbsp;<a data-toggle="collapse" id="lavanderia" data-parent="#accordion1" href="#lavanderias">Lavanderia</a></h4>                                           
+                                    </div>  
+                                    <div class="col-lg-12" id="mostrarLav"></div>
+                                    <div id="lavanderias" class="panel-collapse collapse">
+                                    <?php 
+                                        $form6 = $this->form6;
+                                        $form6->prepare();
+                                        $form6->setAttributes(array(
+                                        'action' => $this->url."/admin/infocom/guardarlavanderia",
+                                        'method' => 'post',
+                                        'id' => 'form6',                                    
+                                        ));
+                                        echo $this->form()->openTag($form6);
+                                        echo $this->formRow($this->form6->get('id_pk'));
+                                        ?> 
+                                    <div class="col-lg-12 col-md-12 col-xs-12">
+                                    <div class="form-group">
+                                            <label>Habilitada:&nbsp;&nbsp;  </label>
+                                            <label class="radio-inline">
+                                                <?php                                             
+                                              echo $this->formRow($this->form6->get('estadolav1'));
+                                                ?>
+                                            </label>
+                                           <label class="radio-inline">
+                                                <?php                                             
+                                              echo $this->formRow($this->form6->get('estadolav2'));
+                                                ?>
+                                            </label>                                               
+                                        </div>  
+                                        </div>
+                                    <div class="col-lg-3 col-md-3 col-xs-6">                                    
+                                        <div class="form-group">
+                                        <label>Lavadoras:</label>
+                                        <div class="form-group input-group">
+                                            <span class="input-group-addon"><i class="fa fa-instagram"></i>
+                                            </span>
+                                            <?php                                             
+                                              echo $this->formRow($this->form6->get('lavadoras'));
+                                            ?>                                             
+                                        </div>
+                                         </div>
+                                        </div>
+                                        <div class="col-lg-3 col-md-3 col-xs-6">
+                                        <div class="form-group">
+                                        <label>Secadoras:</label>
+                                        <div class="form-group input-group">
+                                            <span class="input-group-addon"><i class="fa fa-instagram"></i>
+                                            </span>
+                                            <?php                                             
+                                              echo $this->formRow($this->form6->get('secadoras'));
+                                            ?>                                             
+                                        </div>
+                                        </div>
+                                        </div>  
+                                        <div class="col-lg-3 col-md-6 col-xs-6">
+                                            <div class="form-group">
+                                                <label>Valor:</label>
+                                                <div class="form-group input-group">
+                                            <span class="input-group-addon"><i class="fa fa-dollar"></i>
+                                            </span>
+                                               <?php                                             
+                                              echo $this->formRow($this->form6->get('valor'));
+                                                ?>                                              
+                                            </div>
+                                             </div>
+                                        </div>
+                                        <div class="col-lg-12 col-md-12 ">
+                                        <div class="form-group">
+                                            <label>Horario: &nbsp;</label>
+                                        </div> 
+                                        </div>
+                                        <div class="col-lg-3 col-md-3 col-xs-6">                                         
+                                        <div class="form-group">
+                                        <label>Desde:</label>
+                                        <div class="form-group input-group">
+                                            <span class="input-group-addon"><i class="fa fa-clock-o"></i>
+                                            </span>
+                                            <?php                                             
+                                              echo $this->formRow($this->form6->get('horario'));
+                                                ?>                                             
+                                        </div>
+                                         </div>
+                                        </div> 
+                                        <div class="col-lg-3 col-md-3 col-xs-6"> 
+                                        <div class="form-group">
+                                        <label>Hasta:</label>
+                                        <div class="form-group input-group">
+                                            <span class="input-group-addon"><i class="fa fa-clock-o"></i>
+                                            </span>
+                                            <?php                                             
+                                              echo $this->formRow($this->form6->get('horariofin'));
+                                            ?>                                            
+                                        </div>
+                                         </div>
+                                        </div>  
+                                        <div class="col-lg-6 col-md-6">
+                                        <div class="form-group">
+                                            <label>Reglas y/o Comentarios</label>
+                                            <?php                                             
+                                              echo $this->formRow($this->form6->get('reglas'));
+                                            ?>
+                                        </div>
+                                        </div>                                                                                                                                                                                                                                                                                                                                                                                                                                         
+                                        <div class="row" style="text-align: center;">   
+                                        <div class="col-lg-12 col-md-12">                                          
+                                                 <?php                                             
+                                              echo $this->formRow($this->form6->get('sendlav'));
+                                                ?>
+                                                 </div>                                              
+                                        </div>
+                                    </div>
+                            <?php echo $this->form()->closeTag()?>   
+                                        
+                                        <div class="col-lg-12">              
+                                        
+                                            
+<!-- GIMNASIO -->     <h4> <i class="fa fa-cog"></i>  &nbsp; &nbsp;<a id="gimnasio"data-toggle="collapse" data-parent="#accordion1" href="#gimnasios">Gimnasio</a></h4>
+                                           
+                                    </div>  
+                                        <div class="col-lg-12" id="mostrarGim"></div>
+                                        <div id="gimnasios" class="panel-collapse collapse">
+                                        <?php 
+                                        $form7 = $this->form7;
+                                        $form7->prepare();
+                                        $form7->setAttributes(array(
+                                        'action' => $this->url."/admin/infocom/guardargimnasio",
+                                        'method' => 'post',
+                                        'id' => 'form7',                                    
+                                        ));
+                                        echo $this->form()->openTag($form7);
+                                        echo $this->formRow($this->form7->get('id_pk'));
+                                        ?>
+                                    <div class="col-lg-3 col-md-3 col-xs-12">
+                                    <div class="form-group">
+                                            <label>Habilitado: &nbsp;</label>
+                                            <label class="radio-inline">
+                                                <?php                                             
+                                              echo $this->formRow($this->form7->get('estadogim'));
+                                                ?>
+                                            </label>
+                                            <label class="radio-inline">
+                                                <?php                                             
+                                              echo $this->formRow($this->form7->get('estadogim2'));
+                                                ?>
+                                            </label>
+                                        </div>  
+                                        </div>
+                                        <div class="col-lg-9 col-md-9 col-xs-12">
+                                    <div class="form-group">
+                                            <label>Musica: &nbsp;</label>
+                                            <label class="radio-inline">
+                                                <?php                                             
+                                              echo $this->formRow($this->form7->get('musica'));
+                                                ?>
+                                            </label>
+                                            <label class="radio-inline">
+                                                <?php                                             
+                                              echo $this->formRow($this->form7->get('musica2'));
+                                                ?>
+                                            </label>
+                                        </div>                                         
+                                        </div>
+                                    <div class="col-lg-3 col-md-3 col-xs-6">                                    
+                                        <div class="form-group">
+                                        <label>Trotadoras:</label>
+                                        <div class="form-group input-group">
+                                            <span class="input-group-addon"><i class="fa fa-instagram"></i>
+                                            </span>
+                                            <?php                                             
+                                              echo $this->formRow($this->form7->get('trotadoras'));
+                                                ?>                                            
+                                        </div>
+                                         </div>
+                                        </div>                                        
+                                        <div class="col-lg-3 col-md-3 col-xs-6">
+                                        <div class="form-group">
+                                        <label>Bicicletas:</label>
+                                        <div class="form-group input-group">
+                                            <span class="input-group-addon"><i class="fa fa-instagram"></i>
+                                            </span>
+                                            <?php                                             
+                                              echo $this->formRow($this->form7->get('bicicletas'));
+                                                ?>                                            
+                                        </div>
+                                        </div>
+                                        </div>  
+                                        <div class="col-lg-3 col-md-3 col-xs-6">                                    
+                                        <div class="form-group">
+                                        <label>Pesas:</label>
+                                        <div class="form-group input-group">
+                                            <span class="input-group-addon"><i class="fa fa-instagram"></i>
+                                            </span>
+                                            <?php                                             
+                                              echo $this->formRow($this->form7->get('pesas'));
+                                                ?>                                            
+                                        </div>
+                                         </div>
+                                        </div>
+                                        <div class="col-lg-3 col-md-6 col-xs-6">
+                                            <div class="form-group">
+                                                <label>Valor:</label>
+                                                <div class="form-group input-group">
+                                            <span class="input-group-addon"><i class="fa fa-dollar"></i>
+                                            </span>
+                                                <?php                                             
+                                              echo $this->formRow($this->form7->get('valor'));
+                                                ?>                                            
+                                            </div>
+                                             </div>
+                                            </div>                                        
+                                        
+                                        <div class="col-lg-12 col-md-12 ">
+                                 <div class="form-group">
+                                            <label>Horario: &nbsp;</label>
+                                        </div>
+                                         
+                                        </div>
+                                        <div class="col-lg-3 col-md-3 col-xs-6">                                         
+                                        <div class="form-group">
+                                        <label>Desde:</label>
+                                        <div class="form-group input-group">
+                                            <span class="input-group-addon"><i class="fa fa-clock-o"></i>
+                                            </span>
+                                            <?php                                             
+                                              echo $this->formRow($this->form7->get('horario'));
+                                                ?>                                            
+                                        </div>
+                                         </div>
+                                        </div> 
+                                        <div class="col-lg-3 col-md-3 col-xs-6"> 
+                                        <div class="form-group">
+                                        <label>Hasta:</label>
+                                        <div class="form-group input-group">
+                                            <span class="input-group-addon"><i class="fa fa-clock-o"></i>
+                                            </span>
+                                            <?php                                             
+                                              echo $this->formRow($this->form7->get('horariofin'));
+                                                ?>                                            
+                                        </div>
+                                         </div>
+                                         
+                                        </div> 
+                                        <div class="col-lg-6 col-md-6">
+                                        
+                                        <div class="form-group">
+                                            <label>Reglas y/o Comentarios</label>
+                                            <?php                                             
+                                              echo $this->formRow($this->form7->get('reglas'));
+                                                ?>
+                                        </div>
+                                        </div>                                                                                                                                                                                                                                                                                                                                                                                                                                          
+
+                                        <div class="row" style="text-align: center;">   
+                                        <div class="col-lg-12 col-md-12 col-xs-12">                                          
+                                                 <?php                                             
+                                              echo $this->formRow($this->form7->get('sendgim'));
+                                                ?>
+                                                 </div>                                              
+                                        </div>
+                                    </div>                                                                                                                
+                                         <?php echo $this->form()->closeTag()?>                                                                                                                                                                                                                                                                                                                               
+                                        </div>
+                                        </div>
+                             </div>   
+                             </div>  
+                              </div>
+                              </div>
+    <div class="modal fade" id="myModal" tabindex="-2" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+               <div class="modal-dialog">
+                 <div class="modal-content">
+                     <div class="modal-header">
+                          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                          <h4 class="modal-title" id="myModalLabel">Seleccione una accion</h4>
+                           </div>
+                           <div id="mostrarDatos" class="modal-body">Hello</div>
+                 </div>
+                 <!-- /.modal-content -->
+                </div>
+               <!-- /.modal-dialog -->
+            </div>
+<script>
+$('#hora1iniciosalon').datepicker({
+                });              
+$("#btnnuevoasc").click(function(){  
+  $("#formnuevoasc").fadeIn(800);
+  $("#btnnuevoasc").fadeOut(800); 
+})
+$("#btnnuevosalon").click(function(){
+  $("#divnuevosalon").fadeIn(800);
+  $("#btnnuevosalon").fadeOut(800);    
+});       
+$("#btnnuevoquincho").click(function(){  
+  $("#divnuevoquincho").fadeIn(800);
+  $("#btnnuevoquincho").fadeOut(200); 
+});        
+function mostrarAsc(){
+	$.ajax( {  
+        url : '<?php echo $this->basePath()."/admin/infocom/ascensor"?>',
+		type : 'post',
+        beforeSend : function() {
+            var table = document.getElementById("tabla1");
+            for(var i = table.rows.length - 1; i > 0; i--)
+            {
+            table.deleteRow(i);
+            }
+            $("#sendasc").removeAttr('disabled');
+            },        
+		success : function(response) { 		  
+		  for (i=0; i<=response.ascensor.length; i++) {
+          if(response.ascensor[i].estado=='0'){var estado="<i class='fa fa-check fa-2x'></i></a>";}else{var estado="<i class='fa fa-close fa-2x'></i>";}
+          $("#asctable").append("<tr><td>"+(i+1)+"</td><td>"+response.ascensor[i].fabricante+"</td><td>"+response.ascensor[i].modelo+"</td><td>"+response.ascensor[i].anio+"</td><td>"+response.ascensor[i].capacidad+"</td><td>"+estado+"</td><td><div class='actions'><a onclick='verDatosasc("+response.ascensor[i].id+","+response.ascensor[i].estado+")' class='btn btn-circle btn-default'><i class='fa fa-edit'></i></a><a class='btn btn-circle btn-default'><i class='fa fa-trash green'></i></a></div></td></tr>");
+          
+          }          
+		}
+	});   
+}
+function verDatosasc(ascensorId,estado)
+{    	
+	var parametros = {
+		"ascensorId" : ascensorId,
+        "estado" :   estado,
+	};
+	$.ajax( {
+		data : parametros,
+        url : '<?php echo $this->basePath()."/admin/infocom/detalleasc"?>',
+		type : 'post',
+		beforeSend : function() {
+			
+			$("#mostrarDatos").html("<img src='<?php echo $this->basePath()?>/img/loading.gif'/>");
+		},
+		success : function(response) {			
+			$("#mostrarDatos").html(response);
+		}
+	});
+     }
+$("#form3").submit(function(e)
+{
+    var postData = $(this).serializeArray();
+    var formURL = $(this).attr("action");
+    $.ajax(
+    {
+        url : formURL,
+        type: "POST",
+        data : postData,
+        dataType : 'json',
+        success : function(response) {        
+          $("#mostrarAsc").html('<div id="respuesta" class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>'+response.descripcion+'</div>');  
+          $("#asctable").append("<tr><td>"+(response.ascensor.length)+"</td><td>"+response.ascensor[response.ascensor.length-1].fabricante+"</td><td>"+response.ascensor[response.ascensor.length-1].modelo+"</td><td>"+response.ascensor[response.ascensor.length-1].anio+"</td><td>"+response.ascensor[response.ascensor.length-1].capacidad+"</td><td><i class='fa fa-check fa-2x'></i></td><td><div class='actions'><a class='btn btn-circle btn-default'><i class='fa fa-edit'></i></a><a class='btn btn-circle btn-default'><i class='fa fa-trash'></i></a></div></td></tr>");                    
+          $("#sendasc").attr('disabled', 'disabled');  
+        },
+        error: function(jqXHR, textStatus, errorThrown) 
+        {
+            $("#mostrarAsc").html('<div id="respuesta" class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>Error en el env&iacute:o de datos al servidor</div>')      
+        }
+    });
+    e.preventDefault(); //STOP default action
+    e.unbind(); //unbind. to stop multiple form submit.
+});
+$("#salon").click(function(){
+	$.ajax( {  
+        url : '<?php echo $this->basePath()."/admin/infocom/salon"?>',
+		type : 'post',
+        beforeSend : function() {
+            var table = document.getElementById("tabla2");
+            for(var i = table.rows.length - 1; i > 0; i--)
+            {
+            table.deleteRow(i);
+            }
+            },        
+		success : function(response) { 
+		  
+          for (i=0; i<=response.salon.length; i++) {
+          if(response.salon[i].estado=='0'){var estado="<i class='fa fa-check fa-2x'></i>";}else{var estado="<i class='fa fa-close fa-2x'></i>";}
+          $("#salontable").append("<tr><td>"+(i+1)+"</td><td>"+response.salon[i].nombre+"</td><td>"+response.salon[i].capacidad+" Personas</td><td>$ "+response.salon[i].valor+"</td><td>"+response.salon[i].horario1.substring(0,5)+" a "+response.salon[i].horario1fin.substring(0,5)+"</td><td>"+response.salon[i].horario2.substring(0,5)+" a "+response.salon[i].horario2fin.substring(0,5)+"</td><td>"+estado+"</td><td> <a href='javascript:void(0)' onclick='verDatossalon("+response.salon[i].id+","+response.salon[i].estado+");' data-toggle='modal' data-target='#myModal'><i class='fa fa-eye fa-2x'></i></a></td></tr>");
+          
+          }        
+		}
+	});   
+}
+);
+function verDatossalon(salonId,estado)
+{    	
+	var parametros = {
+		"salonId" : salonId,
+        "estado" :   estado,
+	};
+	$.ajax( {
+		data : parametros,
+        url : '<?php echo $this->basePath()."/admin/infocom/detallesalon"?>',
+		type : 'post',
+		beforeSend : function() {
+			
+			$("#mostrarDatos").html("<img src='<?php echo $this->basePath()?>/img/loading.gif'/>");
+		},
+		success : function(response) {			
+			$("#mostrarDatos").html(response);
+		}
+	});
+     }
+$("#form4").submit(function(e)
+{
+    var postData = $(this).serializeArray();
+    var formURL = $(this).attr("action");
+    $.ajax(
+    {
+        url : formURL,
+        type: "POST",
+        data : postData,
+        dataType : 'json',
+        success : function(response) {        
+          $("#mostrarSalon").html('<div id="respuesta" class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>'+response.descripcion+'</div>');  
+          $("#salontable").append("<tr><td>"+(response.salon.length)+"</td><td>"+response.salon[response.salon.length-1].nombre+"</td><td>"+response.salon[response.salon.length-1].capacidad+" Personas</td><td>$ "+response.salon[response.salon.length-1].valor+"</td><td>"+response.salon[response.salon.length-1].horario1.substring(0,5)+" a "+response.salon[response.salon.length-1].horario1fin.substring(0,5)+"</td><td>"+response.salon[response.salon.length-1].horario2.substring(0,5)+" a "+response.salon[response.salon.length-1].horario2fin.substring(0,5)+"</td><td><i class='fa fa-check fa-2x'></i></td><td> <a href='javascript:void(0)' onclick='verDatosasc("+response.salon[response.salon.length-1].id+",0);' data-toggle='modal' data-target='#myModal'><i class='fa fa-eye fa-2x'></i></a></td></tr>");
+          $("#sendsalon").attr('disabled', 'disabled');  
+        },
+        error: function(jqXHR, textStatus, errorThrown) 
+        {
+            $("#mostrarSalon").html('<div id="respuesta" class="alert alert-danger alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>Error en el env&iacute;o de datos al servidor</div>')      
+        }
+    });
+    e.preventDefault(); //STOP default action
+    e.unbind(); //unbind. to stop multiple form submit.
+});
+$("#quincho").click(function(){
+	$.ajax( {  
+        url : '<?php echo $this->basePath()."/admin/infocom/quincho"?>',
+		type : 'post',
+        beforeSend : function() {
+            var table = document.getElementById("tabla3");
+            for(var i = table.rows.length - 1; i > 0; i--)
+            {
+            table.deleteRow(i);
+            }
+            },        
+		success : function(response) { 
+		  
+          for (i=0; i<=response.quincho.length; i++) {
+          if(response.quincho[i].estado=='0'){var estado="<i class='fa fa-check fa-2x'></i>";}else{var estado="<i class='fa fa-close fa-2x'></i>";}
+          $("#quinchotable").append("<tr><td>"+(i+1)+"</td><td>"+response.quincho[i].nombre+"</td><td>"+response.quincho[i].capacidad+" Personas</td><td>$ "+response.quincho[i].valor+"</td><td>"+response.quincho[i].horario1.substring(0,5)+" a "+response.quincho[i].horario1fin.substring(0,5)+"</td><td>"+response.quincho[i].horario2.substring(0,5)+" a "+response.quincho[i].horario2fin.substring(0,5)+"</td><td>"+estado+"</td><td> <a href='javascript:void(0)' onclick='verDatosquincho("+response.quincho[i].id+","+response.quincho[i].estado+");' data-toggle='modal' data-target='#myModal'><i class='fa fa-eye fa-2x'></i></a></td></tr>");
+          
+          }        
+		}
+	});   
+}
+);
+function verDatosquincho(quinchoId,estado)
+{    	
+	var parametros = {
+		"quinchoId" : quinchoId,
+        "estado" :   estado,
+	};
+	$.ajax( {
+		data : parametros,
+        url : '<?php echo $this->basePath()."/admin/infocom/detallequincho"?>',
+		type : 'post',
+		beforeSend : function() {
+			
+			$("#mostrarDatos").html("<img src='<?php echo $this->basePath()?>/img/loading.gif'/>");
+		},
+		success : function(response) {			
+			$("#mostrarDatos").html(response);
+		}
+	});
+     }
+$("#form5").submit(function(e)
+{
+    var postData = $(this).serializeArray();
+    var formURL = $(this).attr("action");
+    $.ajax(
+    {
+        url : formURL,
+        type: "POST",
+        data : postData,
+        dataType : 'json',
+        success : function(response) {        
+          $("#mostrarQuincho").html('<div id="respuesta" class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>'+response.descripcion+'</div>');  
+          $("#quinchotable").append("<tr><td>"+(response.quincho.length)+"</td><td>"+response.quincho[response.quincho.length-1].nombre+"</td><td>"+response.quincho[response.quincho.length-1].capacidad+" Personas</td><td>$ "+response.quincho[response.quincho.length-1].valor+"</td><td>"+response.quincho[response.quincho.length-1].horario2.substring(0,5)+" a "+response.quincho[response.quincho.length-1].horario2fin.substring(0,5)+"</td><td>"+response.quincho[response.quincho.length-1].fhorario2.substring(0,5)+" a "+response.quincho[response.quincho.length-1].fhorario2fin.substring(0,5)+"</td><td><i class='fa fa-check fa-2x'></i></td><td> <a href='javascript:void(0)' onclick='verDatosquincho("+response.quincho[response.quincho.length-1].id+",0);' data-toggle='modal' data-target='#myModal'><i class='fa fa-eye fa-2x'></i></a></td></tr>");
+          $("#sendquincho").attr('disabled', 'disabled'); 
+          
+        },
+        error: function(jqXHR, textStatus, errorThrown) 
+        {
+            $("#mostrarQuincho").html('<div id="respuesta" class="alert alert-danger alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>Error en el env&iacute;o de datos al servidor</div>')      
+        }
+    });
+    e.preventDefault(); //STOP default action
+    e.unbind(); //unbind. to stop multiple form submit.
+});
+$("#lavanderia").click(function(){
+	$.ajax( {  
+        url : '<?php echo $this->basePath()."/admin/infocom/lavanderia"?>',
+		type : 'post',    
+		success : function(response) { 
+             $("#id_pk_lav").val(response.lav[0].id);
+             $("#lavadoras").val(response.lav[0].lavadoras);             
+             $("#secadoras").val(response.lav[0].secadoras);
+             $("#horario").val(response.lav[0].horario);
+             $("#valorlav").val(response.lav[0].valor);
+             $("#horariofin").val(response.lav[0].horariofin);
+             $("#reglaslav").val(response.lav[0].reglas);
+             if (response.lav[0].estado=='0'){$("#lavsi").attr("checked","checked");}else{$("#lavno").attr("checked","checked")}             
+    }  
+		});
+});   
+$("#form6").submit(function(e)
+{
+    var postData = $(this).serializeArray();
+    var formURL = $(this).attr("action");
+    $.ajax(
+    {
+        url : formURL,
+        type: "POST",
+        data : postData,
+        dataType : 'json',
+        success : function(response) {
+                    
+          $("#mostrarLav").html('<div id="respuesta" class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>'+response.descripcion+'</div>');                                
+          $('.panel-collapse.in').collapse('toggle');
+        },
+        error: function(jqXHR, textStatus, errorThrown) 
+        {
+            $("#mostrarLav").html('<div id="respuesta" class="alert alert-danger alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>Error en el env&iacute;o de datos al servidor</div>')      
+        }
+    });
+    e.preventDefault(); //STOP default action
+    e.unbind(); //unbind. to stop multiple form submit.
+});
+$("#gimnasio").click(function(){
+	$.ajax( {  
+        url : '<?php echo $this->basePath()."/admin/infocom/gimnasio"?>',
+		type : 'post',    
+		success : function(response) { 
+             $("#id_pk_gim").val(response.gim[0].id);
+             $("#trotadoras").val(response.gim[0].trotadoras);             
+             $("#bicicletas").val(response.gim[0].bicicletas);
+             $("#horariogim").val(response.gim[0].horario);
+             $("#valorgim").val(response.gim[0].valor);
+             $("#pesas").val(response.gim[0].pesas);
+             $("#horariogimfin").val(response.gim[0].horariofin);
+             $("#reglasgim").val(response.gim[0].reglas);
+             if (response.gim[0].estado=='0'){$("#gimsi").attr("checked","checked");}else{$("#gimno").attr("checked","checked")}
+             if (response.gim[0].musica=='0'){$("#musicasi").attr("checked","checked");}else{$("#musicano").attr("checked","checked")}             
+    }  
+		});
+});   
+$("#form7").submit(function(e)
+{
+    var postData = $(this).serializeArray();
+    var formURL = $(this).attr("action");
+    $.ajax(
+    {
+        url : formURL,
+        type: "POST",
+        data : postData,
+        dataType : 'json',
+        success : function(response) {
+                    
+          $("#mostrarGim").html('<div id="respuesta" class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>'+response.descripcion+'</div>');                                
+          $('.panel-collapse.in').collapse('toggle'); 
+        },
+        error: function(jqXHR, textStatus, errorThrown) 
+        {
+            $("#mostrarGim").html('<div id="respuesta" class="alert alert-danger alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>Error en el env&iacute;o de datos al servidor</div>')      
+        }
+    });
+    e.preventDefault(); //STOP default action
+    e.unbind(); //unbind. to stop multiple form submit.
+});
+/*$("#guardarsalon").click(function(){  
+var id_pk =      $('#id_pk_tabla_salon').length?$('#id_pk_tabla_salon').val():"";    
+var nombre =     $('#nombresalon').length?$('#nombresalon').val():"";
+var capacidad =  $('#capacidadsalon').length?$('#capacidadsalon').val():"";
+var valor =      $('#valorsalon').length?$('#valorsalon').val():"";
+var horario1 =   $('#hora1iniciosalon').length?$('#hora1iniciosalon').val():"";
+var horario1fin =$('#hora1finsalon').length?$('#hora1finsalon').val():""; 
+var horario2 =   $('#hora2iniciosalon').length?$('#hora2iniciosalon').val():"";
+var horario2fin =$('#hora2finsalon').val()+" a "+$('#hora2finsalon').val();
+var estado =     $('#estadosalon').length?$('#estadosalon').val():"";
+var reglas =     $('#reglassalon').length?$('#reglassalon').val():"";
+var garantia =     $('#garantiasalon').length?$('#garantiasalon').val():"";
+var parametros = {	
+"id_pk"      :id_pk,    
+"nombre"     :nombre,
+"capacidad"  :capacidad,	
+"valor"      :valor,
+"garantia"      :garantia,
+"horario1"	 :horario1,
+"horario1fin":horario1fin,
+"horario2"   :horario2,
+"horario2fin":horario2fin,
+"estado"	 :estado,
+"reglas"	 :reglas
+ };                                                
+	$.ajax( {
+		data : parametros,
+        dataType : 'json',
+        url : '<?php echo $this->basePath()."/admin/infocom/guardarsalon"?>',
+		type : 'post',
+         encode : true
+         
+         })
+         
+         .done(function(response) {
+            if(response.status=='ok'){
+                $("#mostrarSalon").html('<div id="respuesta" class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>'+response.descripcion+'</div>')
+                //setTimeout('location.reload()',3000);
+                $("#salontable").append("<tr><td>"+response.lastid+"</td><td>"+response.salon[0].nombre+"</td><td>"+response.salon[0].capacidad+" Personas</td><td>"+response.salon[0].valor+"</td><td>"+response.salon[0].horario1+" a "+response.salon[0].horario1fin+"</td><td>"+response.salon[0].horario2+" a "+response.salon[0].horario2fin+"</td><td>"+response.salon[0].estado+"</td><td> <a href='javascript:void(0)' onclick='verDatossalon("+response.salon[0].id+");' data-toggle='modal' data-target='#myModal'><i class='fa fa-eye fa-2x'></i></a></td></tr>");
+                $("#mostrarSalon").fadeOut(4000);
+                
+                
+            }else{
+                $("#mostrarSalon").html('<div id="respuesta" class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>'+response.descripcion+'</div>')
+            }
+			
+		});
+    }); */
+/*$("#guardarquincho").click(function () {
+if (document.getElementById('formquincho').checkValidity()){
+var parametros = $('formquincho').serialize();  
+$.ajax( {  
+		data : parametros,
+        url : '<?php echo $this->basePath()."/admin/infocom/guardarquincho"?>',
+		type : 'post',
+		beforeSend : function() {						
+		},
+		success : function(response) {
+		  if(response.status=='ok')
+            {
+                $("#mostrarQuincho").html('<div id="respuesta" class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>'+response.descripcion+'</div>')
+                setTimeout('location.reload()',3000);
+                $("#mostrarQuincho").fadeOut(4000);                                
+            }else{
+                $("#mostrarQuincho").html('<div id="respuesta" class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>'+response.descripcion+'</div>')
+                 }
+        }
+});
+}else{
+    alert("Debe Llenar los campos obligatorios");
+}
+});*/
+</script>

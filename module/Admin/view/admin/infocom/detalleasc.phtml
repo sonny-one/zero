@@ -1,0 +1,231 @@
+<div class="row">
+    <div class="text-center">
+        <div class="col-lg-3">
+                    <a id="editarasc" href="#">
+                    <div class="panel panel-green text-center">
+                        
+                            <div>
+                            <i class="fa fa-pencil fa-4x"></i>                                                        
+                            <p>Editar</p>
+                            </div>
+                        
+                    </div>
+                    </a>
+                    
+                    </div>
+                    <div class="col-lg-3">
+                    <a id="borrarasc" href="javascript:void(0)" onclick="confirmar();">
+                    <div class="panel panel-green text-center">
+                        
+                            <div>
+                            <i class="fa fa-close fa-4x"></i>                                                        
+                            <p>Eliminar</p>
+                            </div>
+                        
+                    </div>
+                    </a>
+                    </div>
+                    <div class="col-lg-3">
+                    <a id="estadoasc" href="#">
+                    <div class="panel panel-green text-center">
+                        
+                            <div>
+                            <i class="fa fa-refresh fa-4x"></i>                                                        
+                            <p>Estado</p>
+                            </div>
+                        
+                    </div>
+                    </a>
+                    
+                    </div>
+                    </div>
+                    </div>
+                            <div id="mostrareditasc" class="row" style="display: none; margin-top: 25px;">
+                                <div class="col-lg-6 col-md-6 col-xs-12">
+                                    <div class="form-group">
+                                        <label>Fabricante</label>
+                                        <div class="form-group input-group">
+                                            <span class="input-group-addon"><i class="fa fa-tag"></i>
+                                            </span>
+                                            <input id="fabricante2" value="<?php echo $lista[0]['fabricante'];?>" class="form-control" required="true" style="max-width: 80%;"/>
+                                            <input type="hidden" id="id_pk_tabla2" value="<?php echo $lista[0]['id'];?>"/>                                            
+                                        </div>
+                                        </div>
+                                        <div class="form-group">
+                                        <label>Modelo</label>
+                                        <div class="form-group input-group">
+                                            <span class="input-group-addon"><i class="fa fa-tag"></i>
+                                            </span>
+                                            <input id="modelo2" value="<?php echo $lista[0]['modelo'];?>" class="form-control" required="true" style="max-width: 80%;"/>                                            
+                                        </div>
+                                        </div>
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-xs-12">
+                                        <div class="form-group">
+                                        <label>Capacidad</label>
+                                        <div class="form-group input-group">
+                                            <span class="input-group-addon"> <i class="fa fa-users"></i></span>
+                                            <input id="capacidad2" value="<?php echo $lista[0]['capacidad'];?>" class="form-control" required="true" placeholder="Personas" style="max-width: 80%;"/>
+                                                                                       
+                                        </div>
+                                        </div>
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-xs-12">
+                                        <div class="form-group">
+                                        <label>A&ntilde;o Fabricacion</label>
+                                        <div class="form-group input-group">
+                                            <span class="input-group-addon"><i class="fa fa-calendar"></i>
+                                            </span>
+                                            <input id="anio2" class="form-control" value="<?php echo $lista[0]['anio'];?>" required="true"  style="max-width: 80%;"/>                                            
+                                        </div>
+                                        </div>
+                                </div>
+                                <div class="col-lg-12 col-md-12 col-xs-12 text-center">
+                                        <button id="guardarasc2" class="btn btn-success" style="margin-top: 15px;">Guardar</button>                                                                        
+                                        
+                                </div>                                                                 
+                               </div>                
+                    
+<!--ESTADO ASCENSOR  -->     
+              
+                    <div  id="mostrarestadoasc" class="row" style="display: none;">  
+                    <div class="col-lg-12 text-center">
+                    <h3 class="page-header"><?php echo $this->titulo?></h3>
+                    </div>
+                                
+                                <div class="col-lg-12 col-md-3 col-xs-6">
+                                        <div class="form-group">
+                                        <label>Detalle</label>
+                                        <div class="form-group">                                            
+                                            <textarea id="detalleestadoasc" class="form-control" required="true" style="width: max;" placeholder="Escriba aqui..." rows="3"><?php echo $this->detalle;?></textarea>                                            
+                                        </div>
+                                        </div>
+                                </div>                                                              
+                              
+                               
+                                                     
+                               <div class="row" style="text-align: center;">   
+                                        <div class="col-lg-12">                                          
+                                                <a id="cambiarestadoasc"><button onclick="return false;" class="btn btn-success">Cambiar Estado</button></a>
+                                        </div>                                              
+                               </div>
+                    </div>
+                
+                    
+                    
+<script>
+$("#editarasc").click(function(){
+  $("#mostrareditasc").fadeIn(1000);    
+})
+$("#estadoasc").click(function(){   
+  $("#mostrarestadoasc").fadeIn(1000);
+})
+$("#guardarasc2").click(function(){ 
+var id_pk =      $('#id_pk_tabla2').length?$('#id_pk_tabla2').val():"";    
+var fabricante = $('#fabricante2').length?$('#fabricante2').val():"";
+var modelo =     $('#modelo2').length?$('#modelo2').val():"";
+var anio =       $('#anio2').length?$('#anio2').val():"";
+var capacidad =  $('#capacidad2').length?$('#capacidad2').val():"";
+
+var parametros = {	
+"id_pk"      :id_pk,    
+"fabricante" :fabricante,		
+"modelo"	 :modelo,
+"anio"       :anio,
+"capacidad"	 :capacidad
+ };                                                
+	$.ajax( {
+		data : parametros,
+        url : '<?php echo $this->basePath()."/admin/infocom/guardarasc"?>',
+		type : 'post',
+		beforeSend : function() {
+			
+			
+		},
+		success : function(response) {
+            if(response.status=='ok'){
+                $("#mostrarAsc").html('<div id="respuesta" class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>'+response.descripcion+'</div>')
+                /*setTimeout('location.reload()',3000);*/
+                $("#mostrarAsc").fadeOut(4000);                
+                $('#myModal').modal('hide');
+                setTimeout('location.reload()',1500);
+                /*var nuevoid = response.ascensor.length;
+                $("#asctable").append("<tr><td>"+response.ascensor[nuevoid].id+"</td><td>"+response.ascensor[nuevoid].fabricante+"</td><td>"+response.ascensor[nuevoid].modelo+"</td><td>"+response.ascensor[nuevoid].anio+"</td><td>"+response.ascensor[nuevoid].capacidad+"</td><td>"+response.ascensor[nuevoid].estado+"</td><td><i class='fa fa-eye fa-2x'></i></td></tr>");*/
+                
+            }else{
+                $("#mostrarAsc2").html('<div id="respuesta" class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>'+response.descripcion+'</div>')
+            }
+			
+		}
+	});
+});   
+function confirmar(){
+    var status = confirm("Se borrar\u00e1 el Ascensor");
+     if (status == true) {
+var id_pk =      $('#id_pk_tabla2').length?$('#id_pk_tabla2').val():"";    
+var parametros = {	
+"id_pk"      :id_pk,    
+ };                                                
+	$.ajax( {
+		data : parametros,
+        url : '<?php echo $this->basePath()."/admin/infocom/borrarasc"?>',
+		type : 'post',
+		beforeSend : function() {
+			
+			
+		},
+		success : function(response) {
+            if(response.status=='ok'){
+                $("#mostrarAsc").html('<div id="respuesta" class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>'+response.descripcion+'</div>')
+                /*setTimeout('location.reload()',3000);*/
+                $("#mostrarAsc").fadeOut(4000);                
+                $('#myModal').modal('hide');  
+                $("#ascensor").trigger('click');              
+                //setTimeout('location.reload()',1500);
+                /*var nuevoid = response.ascensor.length;
+                $("#asctable").append("<tr><td>"+response.ascensor[nuevoid].id+"</td><td>"+response.ascensor[nuevoid].fabricante+"</td><td>"+response.ascensor[nuevoid].modelo+"</td><td>"+response.ascensor[nuevoid].anio+"</td><td>"+response.ascensor[nuevoid].capacidad+"</td><td>"+response.ascensor[nuevoid].estado+"</td><td><i class='fa fa-eye fa-2x'></i></td></tr>");*/
+                
+            }else{
+                $("#mostrarAsc").html('<div id="respuesta" class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>'+response.descripcion+'</div>')
+            }
+			
+		}
+	});
+}else{
+return false;
+} 
+
+} 
+$("#cambiarestadoasc").click(function(){ 
+var id_pk =      $('#id_pk_tabla2').length?$('#id_pk_tabla2').val():"";
+var detalle =      $('#detalleestadoasc').length?$('#detalleestadoasc').val():"";
+var estado = '<?php echo $this->estado?>';    
+var parametros = {	
+"id_pk"      :id_pk,
+"detalle"      :detalle,
+"estado"      :estado,    
+ };                                                
+	$.ajax( {
+		data : parametros,
+        url : '<?php echo $this->basePath()."/admin/infocom/cambiarestadoasc"?>',
+		type : 'post',
+		beforeSend : function() {					
+		},
+		success : function(response) {
+            if(response.status=='ok'){
+                $("#mostrarAsc").html('<div id="respuesta" class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>'+response.descripcion+'</div>')
+                /*setTimeout('location.reload()',3000);*/
+                $("#mostrarAsc").fadeOut(4000);                
+                $('#myModal').modal('hide');
+                setTimeout('location.reload()',1500);
+                /*var nuevoid = response.ascensor.length;
+                $("#asctable").append("<tr><td>"+response.ascensor[nuevoid].id+"</td><td>"+response.ascensor[nuevoid].fabricante+"</td><td>"+response.ascensor[nuevoid].modelo+"</td><td>"+response.ascensor[nuevoid].anio+"</td><td>"+response.ascensor[nuevoid].capacidad+"</td><td>"+response.ascensor[nuevoid].estado+"</td><td><i class='fa fa-eye fa-2x'></i></td></tr>");*/
+                
+            }else{
+                $("#mostrarAsc").html('<div id="respuesta" class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>'+response.descripcion+'</div>')
+            }
+			
+		}
+	});
+});
+</script>                                                                                                                                                                                    

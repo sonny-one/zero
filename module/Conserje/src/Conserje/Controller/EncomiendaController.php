@@ -208,7 +208,8 @@ class EncomiendaController extends AbstractActionController
                                     $filepath = 'http://becheck.cl/files/db/'.$id_db.'/conserje/encomienda/'.$nombreArchivoEnc;    
                                 }
                                 
-                                    $htmlMarkup=\HtmlCorreo::htmlEncomienda($nombre,$remitente,$filepath);
+                                  //  $htmlMarkup=\HtmlCorreo::htmlEncomienda($nombre,$remitente,$filepath);
+                                    $htmlMarkup=\HtmlCorreo::htmlconfreserva();
                                     $html = new MimePart($htmlMarkup);
                                     $html->type = "text/html";
                                     $body = new MimeMessage();

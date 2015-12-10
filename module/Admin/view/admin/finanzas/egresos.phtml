@@ -1,0 +1,156 @@
+<div class="row">       
+                    <div class="col-lg-12">
+                        <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            <i class="fa fa-send" style="color: #fff;"></i> &nbsp;&nbsp;Residentes del condominio
+                        </div>                            
+                        <div class="panel-body text-center">                     
+
+                 <!--1 2 3-->                                  
+            <div class="row udt">
+            <!--Titulo-->
+                  <div class="col-lg-12" style="margin-bottom: 20px;" >
+                  <h3>En 3 pasos simples registre egresos del condominio</h3>
+                  </div>
+            <!--Fin Titulo-->                
+            <!--1-->
+                 <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                    <br /><br />
+                        <div class="col-lg-12">                        
+                            <i class="fa fa-external-link-square" style="color: #585DA0; font-size: 42px;"></i> <br /><br />
+                        </div>
+                    
+                        <div class="col-lg-12">
+                            <select id="ingcombodptos" class="form-control"> 
+                                <option value="0">Selecciona un tipo </option>                       
+                                <option value="1">Remuneraciones </option>
+                                <option value="2">Gastos e Insumos </option>
+                                <option value="3">Mantenciones </option>
+                                <option value="3">Seguros y Otros </option>
+                            </select>
+                        </div>                    
+                  </div>
+             <!--Fin 1-->                  
+             <!--Flecha 1-->     
+                  <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1" style="display: table; height:122px;">                 
+                    <i class="fa fa-arrow-circle-o-right" style="display: table-cell; vertical-align: middle; font-size: 28px;"></i>                    
+                  </div>
+             <!--Fin Flecha 1--> 
+             <!--2-->      
+                  <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3" style="display: none;">
+                    <br /><br />
+                        <div class="col-lg-12">                        
+                            <i class="fa fa-truck" style="color: #585DA0; font-size: 42px;"></i><br /><br />
+                        </div>                        
+                        <div class="col-lg-12">                            
+                            <select id="ingcombodptos" class="form-control"> 
+                                <option value="0">Proveedores </option>                       
+                                <option value="1">Remuneraciones </option>
+                                <option value="2">Gastos e Insumos </option>
+                                <option value="3">Mantenciones </option>
+                                <option value="3">Seguros y Otros </option>
+                            </select>                          
+                        </div>                    
+                  </div>
+                  <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3" style="display: block;">
+                    <br /><br />
+                        <div class="col-lg-12">                        
+                            <i class="fa fa-users" style="color: #585DA0; font-size: 42px;"></i><br /><br />
+                        </div>                        
+                        <div class="col-lg-12">  
+                        <?php  
+                                        $form = $this->form;
+                                        $form->prepare();
+                                        echo $this->form()->openTag($form);                                                                                                                     
+                                        echo $this->formRow($this->form->get('proveedores'));
+                                        echo $this->form()->closeTag($form);
+                        ?>                         
+                        </div>                    
+                  </div>    
+             <!--Fin 2-->                  
+             <!--Flecha 2-->                                 
+                  <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1" style="display: table; height:122px;">                 
+                    <i class="fa fa-arrow-circle-o-right" style="display: table-cell; vertical-align: middle; font-size: 28px;"></i>                    
+                  </div>
+             <!--Fin Flecha 2--> 
+             <!--3-->    
+                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                    <br /><br />
+                        <div class="col-lg-12">                        
+                            <i class="fa fa-dollar" style="color: #585DA0; font-size: 42px;"></i><br /><br />
+                        </div>
+                    
+                        <div class="col-lg-12">
+                            <a onclick="modalPago()" data-toggle='modal' data-target='#pagoprov'  class="btn btn-success"><i class="fa fa-check"></i> &nbsp;&nbsp;Ir a pagar</a>
+                        </div>                    
+                  </div>           
+             <!--Fin 3-->                                                
+            </div>
+     <!--FIN 1 2 3-->                 
+
+            </div>
+          </div>
+        </div>    
+     </div>               
+     
+<!-- MODAL Pago Proveedor -->
+
+<div class="modal fade bs-example-modal-lg" id="pagoprov" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>                    
+                    <h4 class="modal-title" id="myModalLabel" style="text-align: center;">Pago Proveedores</h4>
+            </div>
+                <div id="modalpago" class="modal-body">Cargando...</div>
+        </div>
+    </div>             
+</div>
+<!-- FIN MODAL Pago Proveedor -->         
+
+<script>
+$(function () {
+  $('[data-toggle="tooltip"]').tooltip()
+})
+$("#cproveedores").change(function(){
+    var parametros = {"nombre_prov" : $("#cproveedores option:selected").text()};
+    $.ajax( {  
+        url  : '<?php echo $this->basePath()."/admin/finanzas/servicioprov"?>',
+        data : parametros,
+		type : 'post',      
+		success : function(response) {
+            if(response.flag=='si'){                    
+                $("#cservicios").fadeIn(400);
+                $("#irpagarprov").fadeOut(1);  
+                var sel = $("#cservicios :input");
+                sel.empty();
+                    for (var i=0; i<response.cantidad; i++) {                    
+                        sel.append('<option value="' + response.servicio[i][0]['id'] + '">' + response.servicio[i][0]['nombre'] + '</option>');
+                        }
+                  $("#irpagarprov").fadeIn(800);                    
+            }else{
+                $("#cservicios").fadeOut(400);
+                $("#irpagarprov").fadeIn(400);                
+            }                                
+       }   
+});     
+});
+function modalPago(){ 
+    var parametros =  {
+        "nombre_prov" : $("#cproveedores option:selected").text(),
+        "servicio"    : $("#cservicios option:selected").val(),
+                      };
+	$.ajax( {  
+        url  : '<?php echo $this->basePath()."/admin/finanzas/pagoprov"?>',
+        data : parametros,
+		type : 'post',      
+		success : function(response) {
+		  $("#modalpago").html(response)
+          /*  if(response.flag=='si'){
+                $("#pagoprov").modal('hide');
+                
+            }else{$("#modalpago").html(response);} */                                
+       }   
+});    
+}
+</script>                                                         

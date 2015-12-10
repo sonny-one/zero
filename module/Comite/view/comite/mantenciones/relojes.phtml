@@ -1,0 +1,107 @@
+<script src="<?php echo $this->basePath()?>/metronic/global/plugins/kkcountdown/kkcountdown.js"></script>    
+<div class="row">
+    <div class="col-lg-12">
+        <div class="panel panel-primary">
+                      <div class="panel-heading" style="font-size: 18px;">
+                      <i class="fa fa-calendar"></i> 
+                      &nbsp;&nbsp;Relojes de Mantenci&oacute;n
+                      </div>
+                <div class="panel-body">                                                  
+                <ul class="nav nav-tabs" style="margin-bottom: 10px;">
+                                <li class="active"><a href="#relojmensual" data-toggle="tab">Relojes Mes <?php echo date('F');?></a>
+                                </li>
+                                <li><a href="#relojprox" data-toggle="tab">Relojes Mes <?php echo date('F',strtotime('+1 month',strtotime(date('F'))));?></a>
+                                </li>
+                                <li><a href="#relojprox2" data-toggle="tab">Relojes Mes <?php echo date('F',strtotime('+2 month',strtotime(date('F'))));?></a>
+                                </li>
+                </ul>     
+                <div class="tab-content">
+                 <div class="tab-pane fade in active" id="relojmensual">                                                                     
+                <?php for($i=0;$i<count($this->partidas);++$i){
+                   echo "                    
+                    <div class='col-lg-4'>
+                    <div class='well' style='background: #;'>
+                        <h4 id='nombrepartida' class='text-center' style='max-height: 15px;'><strong>".$this->partidas[$i]['nombre']."</strong></h4><br/>
+                        <h5 id='accionpartida' class='text-center' style='max-height: 15px;'>".$this->partidas[$i]['accion']."</h5>
+                        <br/>                                               
+                        <div class='text-center'><i class='fa fa-clock-o fa-2x'></i>&nbsp;&nbsp; <span style='font-size: 20px;' class='kkcountdown' data-seconds='".$this->segundos."'></span></div>
+                        <br />                                            
+                    </div>
+                </div>"; }?>
+            </div>
+            <div class="tab-pane fade" id="relojprox">
+            <?php for($i=0;$i<count($this->partidas2);++$i){
+                    echo "                    
+                    <div class='col-lg-4'>
+                    <div class='well' style='background: #BABABA;'>
+                        <h4 class='text-center' style='max-height: 15px;'>".$this->partidas2[$i]['nombre']."</h4>
+                        <br/>                                               
+                        <div class='text-center'><i class='fa fa-clock-o fa-2x'></i>&nbsp;&nbsp; <span style='font-size: 20px;' class='kkcountdown' data-seconds='".$this->segundos2."'></span></div>
+                        <br />
+                       <div class='text-center'> <button class='btn btn-success'><i class='fa fa-plus'></i> Nueva Tarea</button></div>                     
+                    </div>
+                </div>"; }?>
+            </div>
+            
+            <div class="tab-pane fade" id="relojprox2">
+            <?php for($i=0;$i<count($this->partidas3);++$i){
+                    echo "                    
+                    <div class='col-lg-4'>
+                    <div class='well' style='background: #A6A6A6;'>
+                        <h4 class='text-center' style='max-height: 15px;'>".$this->partidas3[$i]['nombre']."</h4>
+                        <br/>                                               
+                        <div class='text-center'><i class='fa fa-clock-o fa-2x'></i>&nbsp;&nbsp; <span style='font-size: 20px;' class='kkcountdown' data-seconds='".$this->segundos3."'></span></div>
+                        <br />
+                       <div class='text-center'> <button class='btn btn-success'><i class='fa fa-plus'></i> Nueva Tarea</button></div>                     
+                    </div>
+                </div>"; }?>
+            </div>
+                    
+                                
+        </div>
+    </div>
+</div>
+</div>                
+</div>      
+
+<!-- MODAL Nueva Tarea -->
+
+<div class="modal fade bs-example-modal-lg" id="modalnuevatareareloj" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel2" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>                    
+                    <h4 class="modal-title" id="myModalLabel2" style="text-align: center;">Ingresar nueva tarea al sistema</h4>
+            </div>
+                <div id="bodynuevatareareloj" class="modal-body" style="text-align: center;">Cargando...</div>
+        </div>                 
+    </div>              
+</div>
+
+<!-- FIN MODAL Nueva Tarea -->                                                                                                                                                                                                                             
+<script>
+function closeModal(){
+$("#modalnuevatareareloj").modal('hide');
+}
+$(".kkcountdown").kkcountdown(); 
+function nuevaTareaReloj(){
+    var parametros = {
+      'nombre_partida': $("#nombrepartida").text(),
+      'nombre_accion': $("#accionpartida").text()
+    }
+	$.ajax( {
+        url : '<?php echo $this->basePath()."/admin/mantenciones/nuevatarea"?>',
+        data: parametros,
+		type : 'post',
+		beforeSend : function() {
+		//	$("#loading").modal('show');
+		//	$("#loading").html("<img src='<?php echo $this->basePath()?>/img/loading.gif'/>");
+		},
+		success : function(response) {
+		//	$("#loading").modal('hide');
+         //   $("#loading").html("");
+			$("#bodynuevatareareloj").html(response);
+		}
+	});
+}
+</script>

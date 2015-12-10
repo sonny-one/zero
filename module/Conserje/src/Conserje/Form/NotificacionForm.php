@@ -95,38 +95,29 @@ class NotificacionForm extends Form
 
         ));  
         
-        // Radio ///////////////////////////////// Prioridad (Urgente)  
+        // Radio ///////////////////////////////// Prioridad (Radio)  
         $this->add(array(
             'type' => 'Zend\Form\Element\Radio',
             'name' => 'prioridad',             
             'options' => array(            
                 'value_options' => array(                   
-                    array(                         
-                        'value' => 'urgente',                                                             
-                        'attributes' => array(                            
-                            'name' => 'prioridad',                                                       
+                    array(      
+                        'value' => 'urgente',   
+                        'label' => ' Urgente ',                                                                                                 
+                        'attributes' => array(  
+                            'id'=>'urgente',                                                                                                                                         
                         ),
-                    ),                
+                    ),
+                    array(      
+                        'value' => 'normal',
+                        'label' => ' Normal',                                                                                                    
+                        'attributes' => array(  
+                            'id'=>'normal',                                                                                                                                         
+                        ),
+                    ),               
                 ),
             ),
         ));
-        
-        // Radio ///////////////////////////////// Prioridad (Normal)  
-        $this->add(array(
-            'type' => 'Zend\Form\Element\Radio',
-            'name' => 'prioridad',             
-            'options' => array(            
-                'value_options' => array(                   
-                    array(                        
-                        'value' => 'normal',                                                             
-                        'attributes' => array(                            
-                            'name' => 'prioridad',                                                       
-                        ),
-                    ),                
-                ),
-            ),
-        ));
-        
        /* //Boton Enviar
         $this->add(array(
             'name' => 'send',

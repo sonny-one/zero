@@ -270,7 +270,20 @@ class RsvQuinchoTable extends TableGateway
         
     }    
     
-
+    public function mostrarHorarioNombreQuincho(Adapter $dbAdapter,$id)
+    {
+        
+         $this->dbAdapter=$dbAdapter;
+         $query="select u.nombre,h.inicio,h.fin from sis_m_horario h , 
+             sis_m_uso u, sis_m_turno t,sis_m_uth uth 
+               where uth.id_horario=h.id and uth.id_uso=u.id and uth.id_turno=t.id and uth.id=".$id;
+         $result=$this->dbAdapter->query($query,Adapter::QUERY_MODE_EXECUTE);
+         return $result->toArray();  
+        
+        
+    } 
+    
+    
     
 
 }

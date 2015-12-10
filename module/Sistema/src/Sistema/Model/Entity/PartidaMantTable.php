@@ -69,18 +69,18 @@ class PartidaMantTable extends TableGateway
     {             
              $array=array
              (
-                'ene'=>$data['ene'],
-                'feb'=>$data['feb'],
-                'mar'=>$data['mar'],
-                'abr'=>$data['abr'],
-                'may'=>$data['may'],
-                'jun'=>$data['jun'],
-                'jul'=>$data['jul'],
-                'ago'=>$data['ago'],            
-                'sep'=>$data['sep'],
-                'oct'=>$data['oct'],
-                'nov'=>$data['nov'],             
-                'dic'=>$data['dic'],                                  
+                'ene'=>$data['Jan'],
+                'feb'=>$data['Feb'],
+                'mar'=>$data['Mar'],
+                'abr'=>$data['Apr'],
+                'may'=>$data['May'],
+                'jun'=>$data['Jun'],
+                'jul'=>$data['Jul'],
+                'ago'=>$data['Aug'],            
+                'sep'=>$data['Sep'],
+                'oct'=>$data['Oct'],
+                'nov'=>$data['Nov'],             
+                'dic'=>$data['Dec'],                                  
              );
                $this->update($array,array('id'=>$data['id_pk']));
     }

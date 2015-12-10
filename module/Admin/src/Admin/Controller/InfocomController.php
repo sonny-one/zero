@@ -257,11 +257,10 @@ class InfocomController extends AbstractActionController
                                     'ruta'=>$ruta,
                                     'warning'=>$warning,
                                 ));
-        $result->setTerminal(true);
-        
+        $this->layout('layout/admin');                
         return $result; 
             
-        }
+    }
         
         public function excelpropietarioAction()
     {                        
@@ -620,10 +619,10 @@ class InfocomController extends AbstractActionController
                          'form6'=>$form6,
                          'form7'=>$form7,
                          'url'=>$this->getRequest()->getBaseurl());
-
+        $this->layout('layout/admin'); 
         $result = new ViewModel($valores);
 
-        $result->setTerminal(true);        
+        //$result->setTerminal(true);        
         return $result;
 
     }
@@ -632,25 +631,16 @@ class InfocomController extends AbstractActionController
 
      public function ascensorAction()
     {     
-
            //Obtenemos Datos de BBDD
-
            $sid = new Container('base');
-
            $db_name = $sid->offsetGet('dbNombre');
-
-           $this->dbAdapter=$this->getServiceLocator()->get($db_name);           
-
+           $this->dbAdapter=$this->getServiceLocator()->get($db_name);
+           //Instancias           
            $asc = new AscensorTable($this->dbAdapter);
-
            $lista = $asc->getDatos();   
-
            //Respuesta JSON a la vista                                                   
-
            $result = new JsonModel(array('ascensor'=>$lista));        
-
            return $result;            
-
     }
 
     public function guardarascAction()       
@@ -658,53 +648,30 @@ class InfocomController extends AbstractActionController
     {
 
             //Obtenemos datos post                                              
-
             $lista = $this->request->getPost();
-
+            //Conectamos a BBDD
             $sid = new Container('base');            
-
             $db_name = $sid->offsetGet('dbNombre');
-
             $this->dbAdapter=$this->getServiceLocator()->get($db_name);
-
-            
-
+            //Instanciamos tabla
             $asc = new AscensorTable($this->dbAdapter);
-
             // Validamos si es Insert o Update                      
-
             $id_pk = $lista['id_pk'];
-
-            if($id_pk > 0){ 
-
-            $asc->actualizarAscensor($id_pk, $lista);   
-
-            $descripcion ="Edici&oacute;n de Ascensor exitosa";                    
-
-            }else{                                     
-
-            $asc->nuevoAscensor($lista);  
-
-            $descripcion ="Ascensor ingresado exitosamente al sistema";        
-
-            }                      
-
+                if($id_pk > 0){ 
+                    $asc->actualizarAscensor($id_pk, $lista);   
+                    $descripcion ="Edici&oacute;n de Ascensor exitosa";                    
+                }else{                                     
+                    $asc->nuevoAscensor($lista);  
+                    $descripcion ="Ascensor ingresado exitosamente al sistema";        
+                }                      
             $lista = $asc->getDatos();                                           
-
             $result = new JsonModel(array(
-
                                     'status'=>'ok',
-
                                     'descripcion'=>$descripcion,
-
                                     'ascensor'=>$lista,                    
-
                     ));                                
 
-
-
              return $result;                               
-
     }    
 
     
@@ -712,45 +679,30 @@ class InfocomController extends AbstractActionController
     public function detalleascAction()
 
     {            
-
-        $id = $_POST['ascensorId'];
-
+        //Obtenemos datos post                                              
+        $data = $this->request->getPost();
+        //Conectamos con BBDD
         $sid = new Container('base');
-
         $db_name = $sid->offsetGet('dbNombre');
-
         $this->dbAdapter=$this->getServiceLocator()->get($db_name);
-
+        //Instanciamos la tabla y obtenemos datos
         $asc = new AscensorTable($this->dbAdapter);
+        $lista = $asc->getDatosid($data['ascensorId']);
+            if($data['estado']=='0'){
+                $titulo = "Deshabilitar Ascensor, indique detalle";    
+            }else{
+                $titulo = "Habilitar Ascensor, indique detalle";
+            }        
 
-        $lista = $asc->getDatosid($id);
-
-        $estado = $_POST['estado'];
-
-        $detalle = $lista[0]['detalle'];
-
-        
-
-        if($estado=='0'){
-
-        $titulo = "Deshabilitar Ascensor, indique detalle";    
-
-        }else{
-
-        $titulo = "Habilitar Ascensor, indique detalle";
-
-        }        
-
-        
-
-        $result = new ViewModel(array('lista'=>$lista,'titulo'=>$titulo,'estado'=>$estado,'detalle'=>$detalle));
-
+        $result = new ViewModel(array(
+                                'lista'=>$lista,
+                                'titulo'=>$titulo,
+                                'estado'=>$data['estado'],
+                                'detalle'=>$lista[0]['detalle'])
+                                );
         $result->setTerminal(true);
-
        
-
         return $result;        
-
     }
 
     public function cambiarestadoascAction()
@@ -803,36 +755,21 @@ class InfocomController extends AbstractActionController
 
      public function borrarascAction()
 
-    {            
-
+    {           
         $id = $_POST['id_pk'];
-
         $sid = new Container('base');
-
         $db_name = $sid->offsetGet('dbNombre');
-
         $this->dbAdapter=$this->getServiceLocator()->get($db_name);
-
         $asc = new AscensorTable($this->dbAdapter);
-
         $asc->borrarAscensor($id);
-
-        
 
         $descripcion ="Ascensor eliminado del sistema";
 
-        
-
         $result = new JsonModel(array(
-
                                     'status'=>'ok',
-
                                     'descripcion'=>$descripcion,
-
        ));
-
         return $result;        
-
     }
 
     
@@ -1442,47 +1379,24 @@ class InfocomController extends AbstractActionController
 
 
              return $result;                               
-
     }
 
 //                                                          *****************SEGURIDAD************                        
-
     public function seguridadAction()
-
     {      
-
         $form = new SeguroForm("form");
-
         $form2 = new CamarasForm("form");
-
         
-
         $valores = array('form'=>$form,
-
                          'form2'=>$form2,
-
                        /* 'form5'=>$form5,
-
                          'form6'=>$form6,
-
                          'form7'=>$form7,*/
-
                          'url'=>$this->getRequest()->getBaseurl());
-
-                
-
-        $result = new ViewModel($valores);
-
+        $this->layout('layout/admin');        
+        $result = new ViewModel($valores);        
         
-
-        $result->setTerminal(true);        
-
-        
-
         return $result;
-
-    
-
     }
 
 //////////////////////////////////////////////////////////////////////////////SEGUROS

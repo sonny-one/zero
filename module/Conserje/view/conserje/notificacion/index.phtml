@@ -25,10 +25,8 @@ jQuery(document).ready(function() {
                                         ));
                                         echo $this->form()->openTag($form);                                        
                         ?>  
-                            <div class="row">   
-                             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                             <div id="alertaV" class="col-lg-8"></div>
-                             </div>                         
+                            <div class="row">  
+                             <div id="alertaV" class="col-md-12"></div>                       
                                 <div class="col-md-4">                                   
                                     <div class="form-group">                                      
                                       
@@ -54,15 +52,10 @@ jQuery(document).ready(function() {
                                     <br />                                    
                                     <div class="form-group">
                                     <fieldset>
-                                      <legend>Prioridad del mensaje</legend>
-                                      
+                                      <legend>Prioridad del mensaje</legend>                                      
                                                     <?php                                             
                                                         echo $this->formRow($this->form->get('prioridad'));
-                                                    ?>  Urgente &nbsp;&nbsp;&nbsp;
-                                                    <?php                                             
-                                                        echo $this->formRow($this->form->get('prioridad'));
-                                                    ?>  Normal &nbsp;&nbsp;&nbsp;
-                                          
+                                                    ?>                                              
                                     </fieldset>   
                                     </div>                                    
                                     <br /><br /><br />
@@ -71,7 +64,7 @@ jQuery(document).ready(function() {
                                         <i class="fa fa-reply"></i> &nbsp;Volver atrás
                                         </a>
                                         &nbsp;&nbsp;
-                                        <button type="submit" class="btn btn-success">
+                                        <button type="submit" id="sendnot" class="btn btn-success">
                                         <i class="fa fa-paper-plane"></i> &nbsp;Enviar Notificaci&oacute;n
                                         </button>                                         
 
@@ -109,7 +102,7 @@ $("#combo_dpto").removeAttr('disabled',false);
 function checkChk(){
    $("#radio_dpto").attr('checked', false); 
    $("#combo_dpto").addClass('hidden'); 
-   $("#combo_dpto").addAttr('disabled','disabled');
+   $("#combo_dpto").attr('disabled','disabled');
 }
 $("#form_notificacion").submit(function(e)
 {   $('.note-codable').val($('.note-editable').html());
@@ -122,6 +115,9 @@ $("#form_notificacion").submit(function(e)
         type: "POST",
         data : postData,
         dataType : 'json',
+        beforeSend: function(){
+            $("#sendnot").html('<i class="fa fa-spinner"></i> &nbsp;Enviando...');
+        },        
         success : function(response) {        
           if(response.status == 'ok'){
             $("#descrok").text("Mensaje enviado correctamente...");

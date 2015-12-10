@@ -1,0 +1,309 @@
+<script type="text/javascript" src="<?php echo $this->basePath()?>/metronic/global/plugins/datatables/media/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="<?php echo $this->basePath()?>/metronic/global/plugins/datatables/extensions/TableTools/js/dataTables.tableTools.min.js"></script>
+<script type="text/javascript" src="<?php echo $this->basePath()?>/metronic/global/plugins/datatables/plugins/bootstrap/dataTables.bootstrap.js"></script>
+<script src="<?php echo $this->basePath()?>/metronic/admin/pages/scripts/table-advanced.js"></script>
+
+<div class="row"> 
+    <div class="col-lg-12">
+        <div class="panel panel-green">                           
+            <div class="panel-body">                                                                                          
+                <div class="row">                                                       
+                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">                                                  
+                                        <!--BOTON 1-->
+                                        <div class="col-lg-3 col-md-3  col-sm-6 col-xs-6" >
+                                            <a class="btn btn-success"  style="color : #fff;"onclick="modalProv()" data-toggle='modal' data-target='#modalprov'><i class="fa fa-plus"></i> Nuevo Proveedor</a>
+                                        </div>
+                                        <!--BOTON 2-->                            
+                                        <div class="col-lg-3 col-md-3  col-sm-6 col-xs-6">
+                                            <a class="btn btn-success"  style="color : #fff;"onclick="modalServ()" data-toggle='modal' data-target='#modalprov2'><i class="fa fa-plus"></i> Nuevo Servicio</a>
+                                        </div>
+                            </div>                                                                                         
+                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                <h2 class="page-header" style=""><i class="fa fa-search"></i> &nbsp;&nbsp;Proveedores Activos </h2>    
+                            </div>                     
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                           <div class="dataTable_wrapper">
+     							<table class="table table-bordered table-hover text-center" id="tablaprov">
+							     <thead>
+                                    <tr>
+                                            <th>Nombre</th>
+                                            <th>Servicio</th>
+                                            <th>Telefono</th>
+                                            <th>Ultimo Pago</th>
+                                            <th>Mas</th>
+                                            
+                                    </tr>
+							     </thead>
+							      <tbody id="tablaprov2">
+                                    </tbody>
+							    </table>
+                            </div>                                                    
+                    </div>
+                </div>                     
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- MODAL Nuevo Proveedor -->
+
+<div class="modal fade bs-example-modal-lg" id="modalprov" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>                    
+                    <h4 class="modal-title" id="myModalLabel" style="text-align: center;">Ingresar nuevo proveedor</h4>
+            </div>
+                <div id="modalnuevoprov" class="modal-body">Hello</div>
+        </div>
+    </div>             
+</div>
+<!-- FIN MODAL Nuevo Proveedor -->
+
+<!-- MODAL Nuevo Servicio Proveedor -->
+
+<div class="modal fade bs-example-modal-lg" id="modalprov2" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel2" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>                    
+                    <h4 class="modal-title" id="myModalLabel2" style="text-align: center;">Agregar Servicio a un proveedor</h4>
+            </div>
+                <div id="modalnuevoserv" class="modal-body">Hello</div>
+        </div>                 
+    </div>              
+</div>
+
+<!-- FIN MODAL Nuevo Servicio Proveedor -->
+
+<!-- MODAL Eliminar Proveedor -->
+
+<div class="modal fade bs-example-modal-sm" id="elimninarprov" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel2" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+        <div  class="modal-content">
+        <div class="modal-body text-center" >
+        <div id="todoelimina">
+            <div class="col-lg-12" style="text-align: center;">
+                <div class="col-lg-12" style="padding: 20px;"><i class="fa fa-warning fa-3x"></i></div>
+                    <h4>Se eliminar&aacute; el proveedor del sistema</h4><br />
+            </div>
+            
+                    <button id="xxxx" class="btn btn-danger" data-dismiss="modal" > Cancelar</button>&nbsp;&nbsp;&nbsp;&nbsp;
+                    <button id="btneliminarprov" class="btn btn-success"> Eliminar</button>           
+        </div>
+        <div class="row" id="rsptaelim" style="display: none;">
+            <div class="col-lg-12" style="text-align: center;">
+                <div class="col-lg-12" style="padding: 20px;"><i class="fa fa-check fa-3x"></i></div>
+                    <h4 id="descrpelim"></h4><br />
+            </div>
+        </div>
+         </div> 
+        </div>                 
+    </div>              
+</div>
+
+<!-- FIN MODAL Eliminar Proveedor -->
+
+<!-- MODAL Detalle Proveedor -->
+
+<div class="modal fade bs-example-modal-lg" id="detalleprov" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel2" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div  class="modal-content">
+            <div class="modal-body">        
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h3 class="page-header" style="margin-top: 0;"><i class="fa fa-truck"></i> &nbsp;&nbsp;Datos Proveedor</h3>           
+                    </div>
+                    <div class="col-lg-5 col-md-5 col-sm-6 col-xs-6">
+                        <div class="form-group">                                                                                                                    
+                            <div class="form-group input-group"> 
+                            <span class="input-group-addon"><i class="fa fa-user" ></i>&nbsp; Nombre</span>                                           
+                                <input id="detpnombre" class="form-control" type="text" disabled/>                                            
+                                        </div>                                            
+                                        </div> 
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-6">
+                        <div class="form-group">                                                                                                                    
+                            <div class="form-group input-group"> 
+                            <span class="input-group-addon"><i class="fa fa-info" ></i>&nbsp; Rut</span>                                           
+                                <input id="detprut" class="form-control" type="text" disabled/>                                            
+                                        </div>                                            
+                                        </div> 
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-6 col-xs-6">
+                        <div class="form-group">                                                                                                                    
+                            <div class="form-group input-group"> 
+                            <span class="input-group-addon"><i class="fa fa-phone"></i>&nbsp; Telefono</span>                                           
+                                <input id="detptelef" class="form-control" type="text" disabled/>                                            
+                                        </div>                                            
+                                        </div> 
+                    </div> 
+                    <div class="col-lg-5 col-md-4 col-sm-6 col-xs-6">
+                        <div class="form-group">                                                                                                                    
+                            <div class="form-group input-group"> 
+                            <span class="input-group-addon"><i class="fa fa-map-marker"></i>&nbsp; Direcci&oacute;n</span>                                           
+                                <input id="detpdirec" class="form-control" type="text" disabled/>                                            
+                                        </div>                                            
+                                        </div> 
+                    </div>
+                    <div class="col-lg-3 col-md-4 col-sm-6 col-xs-6">
+                        <div class="form-group">                                                                                                                    
+                            <div class="form-group input-group"> 
+                            <span class="input-group-addon"><i class="fa fa-map-marker"></i>&nbsp; Ciudad</span>                                           
+                                <input id="detpciudad" class="form-control" type="text"disabled/>                                            
+                                        </div>                                            
+                                        </div> 
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-6 col-xs-6">
+                        <div class="form-group">                                                                                                                    
+                            <div class="form-group input-group"> 
+                            <span class="input-group-addon"><i class="fa fa-at"></i>&nbsp; Correo</span>                                           
+                                <input id="detpcorreo" class="form-control" type="text"disabled/>                                            
+                                        </div>                                            
+                                        </div> 
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                        <div class="form-group">                                                                                                                    
+                            <div class="form-group input-group"> 
+                            <span class="input-group-addon"><i class="fa fa-gear"></i>&nbsp; Categoria</span>                                           
+                                <input id="detpcategoria" class="form-control" type="text" disabled/>                                            
+                                        </div>                                            
+                                        </div> 
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                        <div class="form-group">                                                                                                                    
+                            <div class="form-group input-group"> 
+                            <span class="input-group-addon"><i class="fa fa-gear"></i>&nbsp; Servicio</span>                                           
+                                <input id="detpservicio" class="form-control" type="text" disabled/>                                            
+                                        </div>                                            
+                                        </div> 
+                    </div>  <br />                                                                                                
+                    
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <h3  style="margin-top: 0;" class="page-header"><i class="fa fa-dollar"></i> &nbsp;&nbsp;Ultimo Pago</h3>
+                    <p style="font-size: 20px;">Fecha : <span id="detpfecha"></span></p>
+                    <p style="font-size: 20px;">Monto : $ <span id="detpmonto"></span></p>            
+            </div>
+        </div>
+        <div class="text-right">
+                <button class="btn btn-info" data-dismiss="modal" ><i class="fa fa-reply"></i>&nbsp;&nbsp; Atras</button>&nbsp;&nbsp;&nbsp;&nbsp;                           
+            </div>                
+        </div>
+            
+                <!--*-->
+                
+                
+         </div> 
+        </div>                 
+    </div>              
+</div>
+
+<!-- FIN MODAL Detalle Proveedor -->
+<script>
+$('#tablaprov').DataTable({
+                responsive: true
+        });            
+$.ajax( {  
+        url : '<?php echo $this->basePath()."/admin/finanzas/getproveedores"?>',
+		type : 'post',
+        beforeSend : function() {
+           $('#tablaprov').DataTable().clear();          
+            },        
+		success : function(response) {
+        var t = $('#tablaprov').DataTable();    
+        var nok = 0;  
+        for (i=0; i<=response.prov.length; i++) {        
+         t.row.add( [                        
+            response.prov[i].nombre,
+            response.prov[i].servicio,
+            response.prov[i].telefono,
+            response.prov[i].ultimopago,
+            '<div class=""><a onclick="detalleProv('+response.prov[i].id+')" style="cursor:pointer;"><i class="fa fa-eye "></i></a> | <i class="fa fa-edit"></i>  | <a onclick="eliminarProv('+response.prov[i].id+','+nok+')" style="cursor:pointer;"><i class="fa fa-trash"></i></a></div>',                              
+        ] ).draw();
+         $('#tablaprov2 tr:last').attr('id',response.prov[i].id);                      
+      }                
+  }   
+});  
+function closeModal(){
+    $('#modalprov2').modal('hide');
+}                                     
+function modalProv()
+{   
+	$.ajax( {  
+        url : '<?php echo $this->basePath()."/admin/finanzas/nuevoproveedor"?>',
+		type : 'get',
+        beforeSend : function() {
+        $("#modalnuevoprov").html("<img src='<?php echo $this->basePath()?>/img/loading.gif'/>");          
+            },        
+		success : function(response) {
+        $("#modalnuevoprov").html(response);
+             
+                  
+       }   
+});
+} 
+function modalServ()
+{   
+	$.ajax( {  
+        url : '<?php echo $this->basePath()."/admin/finanzas/nuevoservicio"?>',
+		type : 'get',
+        beforeSend : function() {
+        $("#modalnuevoserv").html("<img src='<?php echo $this->basePath()?>/img/loading.gif'/>");          
+            },        
+		success : function(response) {
+        $("#modalnuevoserv").html(response);
+             
+                  
+       }   
+});
+}    
+function detalleProv(x){
+var parametros = {"id" : x}  
+$.ajax( {     
+        data : parametros,
+        url : '<?php echo $this->basePath()."/admin/finanzas/detalleproveedor"?>',
+		type : 'post',  
+		success : function(response) {                                         
+            $("#detprut").val(response[0].rut);
+            $("#detpnombre").val(response[0].nombre);
+            $("#detpciudad").val(response[0].ciudad);
+            $("#detpcorreo").val(response[0].correo);
+            $("#detptelef").val(response[0].telefono);
+            $("#detpdirec").val(response[0].direccion);
+            $("#detpservicio").val(response[0].servicio);
+            $("#detpcategoria").val(response[0].categoria);
+            $("#detpfecha").text(response[0].fecha);
+            $("#detpmonto").text(response[0].monto);
+            
+  }   
+}); 
+$("#detalleprov").modal('show');    
+    
+}
+function eliminarProv(x,t){    
+    if (t>0){
+var parametros = {"id" : x}
+ $.ajax( {     
+        data : parametros,
+        url : '<?php echo $this->basePath()."/admin/finanzas/eliminarproveedor"?>',
+		type : 'post',  
+		success : function(response) { 
+	    $('#todoelimina').css("display","none");
+        $('#rsptaelim').css("display","block");
+        $('#descrpelim').text(response.descripcion);
+        setTimeout(function(){
+        $("#elimninarprov").modal('hide');        
+        },2000); 
+        var row = document.getElementById(x);
+        row.parentNode.removeChild(row);                        
+                           
+  }   
+}); 
+    }else{
+$('#elimninarprov').modal('show'); 
+$('#btneliminarprov').click(function(){eliminarProv(x,1)});
+}         
+}
+</script>  

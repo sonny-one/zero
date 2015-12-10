@@ -1,0 +1,265 @@
+<div id="todonvoprov" class="row">
+<div class="col-lg-12"><div class="alert alert-danger alert-dismissable" id="alerta" style="display: none;"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button></div></div>
+<?php  
+                                        $form = $this->form;
+                                        $form->prepare();
+                                        $form->setAttributes(array(
+                                        'action' => $this->basePath()."/admin/finanzas/nuevoproveedor",
+                                        'method' => 'post', 
+                                        'id' => 'nuevoproveedor'                                   
+                                        ));
+                                        echo $this->form()->openTag($form);                                                                                                                   
+                                        ?> 
+
+<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+<div class="col-lg-4 col-md-4 col-sm-5 col-xs-5">
+    <div class="form-group">
+        <label>Nombre</label>
+            <div class="form-group input-group">
+            <span class="input-group-addon"><i class="fa fa-user"></i>
+            </span>
+                 <?php                                             
+                    echo $this->formRow($this->form->get('nombre'));
+                 ?>                                            
+            </div>
+    </div>
+</div>  
+<div class="col-lg-3 col-md-3 col-sm-5 col-xs-5">
+    <div class="form-group">
+        <label>Rut</label>
+            <div class="form-group input-group"> 
+            <span class="input-group-addon"><i class="fa fa-info"></i>
+            </span>
+                 <?php                                             
+                    echo $this->formRow($this->form->get('rut'));
+                 ?>                                                           
+            </div>
+    </div>
+</div>
+<div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
+    <div class="form-group">
+        <label>Direccion</label>
+            <div class="form-group input-group">
+            <span class="input-group-addon"><i class="fa fa-map-marker"></i>
+            </span>
+                 <?php                                             
+                    echo $this->formRow($this->form->get('direccion'));
+                 ?>                                            
+            </div>
+    </div>
+</div>
+<div class="col-lg-4 col-md-4 col-sm-5 col-xs-5">
+    <div class="form-group">
+        <label>Ciudad</label>
+            <div class="form-group input-group">
+            <span class="input-group-addon"><i class="fa fa-map-marker"></i>
+            </span>
+                 <?php                                             
+                    echo $this->formRow($this->form->get('ciudad'));
+                 ?>                                            
+            </div>
+    </div>
+</div>
+<div class="col-lg-3 col-md-3 col-sm-5 col-xs-5">
+    <div class="form-group">
+        <label>Telefono</label>
+            <div class="form-group input-group">
+            <span class="input-group-addon"><i class="fa fa-phone"></i>
+            </span>
+                 <?php                                             
+                    echo $this->formRow($this->form->get('telefono'));
+                 ?>                                            
+            </div>
+    </div>
+</div>
+<div class="col-lg-4 col-md-4 col-sm-5 col-xs-5">
+    <div class="form-group">
+        <label>Mail</label>
+            <div class="form-group input-group">
+            <span class="input-group-addon"><i class="fa fa-at"></i>
+            </span>
+                 <?php                                             
+                    echo $this->formRow($this->form->get('correo'));
+                 ?>                                            
+            </div>
+    </div>
+</div>
+<div class="col-lg-6 col-md-6 col-sm-5 col-xs-5">
+    <div class="form-group">
+        <label>Categoria</label>
+            <div class="form-group input-group">
+            <span class="input-group-addon"><i class="fa fa-truck"></i>
+            </span>
+                 <?php                                             
+                    echo $this->formRow($this->form->get('categoria'));
+                 ?>                                            
+            </div>
+    </div>
+</div>
+<div class="col-lg-6 col-md-6 col-sm-5 col-xs-5">
+    <div class="form-group">
+        <label>Servicio</label>
+            <div class="form-group input-group">
+            <span class="input-group-addon"><i class="fa fa-truck"></i>
+            </span>
+                 <?php                                             
+                    echo $this->formRow($this->form->get('servicio'));
+                 ?>                                            
+            </div>
+    </div>
+</div>
+</div>
+<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+<h4 class="page-header"><i class="fa fa-dollar"></i>&nbsp;&nbsp;&nbsp; Informaci&oacute;n de pago</h4>
+</div>
+<div class="col-lg-3 col-md-3 col-sm-5 col-xs-5">
+    <div class="form-group">
+        <label>N&deg; Cliente</label>
+            <div class="form-group input-group">
+            <span class="input-group-addon"><i class="fa fa-home"></i>
+            </span>
+                 <?php                                             
+                    echo $this->formRow($this->form->get('nmro_cliente'));
+                 ?>                                            
+            </div>
+    </div>
+</div>
+<div class="col-lg-3 col-md-3 col-sm-5 col-xs-5">
+    <div class="form-group">
+        <label>Banco</label>
+            <div class="form-group input-group">
+            <span class="input-group-addon"><i class="fa fa-home"></i>
+            </span>
+                 <?php                                             
+                    echo $this->formRow($this->form->get('id_banco'));
+                 ?>                                            
+            </div>
+    </div>
+</div>
+<div class="col-lg-3 col-md-3 col-sm-5 col-xs-5" style="margin-top: 23px;">
+    <div class="form-group">
+        <div class="checkbox">
+            <label>
+            <?php                                             
+        echo $this->formRow($this->form->get('fijo'));
+            ?><strong>Proveedor Mensual</strong>
+        </label>
+        </div> 
+    </div>
+</div>
+<div class="col-lg-3 col-md-3 col-sm-5 col-xs-5">
+    <div class="form-group">
+        <label>Observaci&oacute;n</label>
+            <div class="form-group">
+                 <?php                                             
+                    echo $this->formRow($this->form->get('observacion'));
+                 ?>                                            
+            </div>
+    </div>
+</div>
+  
+                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-right">                                          
+                                            <?php                                             
+                                              echo $this->formRow($this->form->get('cancel'));
+                                            ?>
+                                            &nbsp;&nbsp;&nbsp;&nbsp;                                           
+                                             <?php                                             
+                                              echo $this->formRow($this->form->get('sendprov'));
+                                            ?>
+                                        </div>                                              
+        <?php echo $this->form()->closeTag()?>                    
+</div>
+<div id="nprespuestaok" class="row" style="display: none;">
+    <div class="col-lg-12 text-center" style="padding: 80px;">
+        <span>
+            <i class="fa fa-thumbs-o-up fa-5x"></i>
+        </span>
+        <h2 id="npdescrok"></h2>
+    </div>
+</div>
+<div id="nprespuestanok" class="row" style="display: none;">
+<div class="col-lg-12 text-center" style="padding: 80px;">
+        <span>
+            <i class="fa fa-close fa-5x"></i>
+        </span>
+<h2 id="npdescrnok"></h2>
+</div>
+</div>
+<script>
+$(function () {
+  $('[data-toggle="popover"]').popover()
+})
+$("input#rut_prov").rut({validateOn: 'change'}).on('rutInvalido', function(){ 
+   $('#send_prov').attr("disabled","disabled"); 
+   $("input#rut_prov").attr('data-content','Rut Incorrecto').css("background","#FD8C92").popover('show');    
+});
+$("input#rut_prov").rut({validateOn: 'blur'}).on('rutValido', function(){
+    $('#send_prov').removeAttr("disabled");
+   $("input#rut_prov").popover('destroy').css("background","#fff");   
+});         
+function closeModal(){
+    $('#modalprov').modal('hide');
+}
+function comboServicio(){
+    postData = {'categoria' : $('#categoria').find('option:selected').text()}
+    $.ajax(
+    {
+        url : '<?php echo $this->basePath()."/admin/finanzas/comboservicio"?>',
+        type: "POST",
+        data : postData,
+        dataType : 'json',
+        success : function(response) {              
+        var sel = $("#servicio");
+        sel.empty();
+          for (var i=0; i<Object.keys(response).length; i++) {                    
+            sel.append('<option value="' + Object.keys(response)[i] + '">' + response[Object.keys(response)[i]] + '</option>');
+            }                                        
+        },
+        error: function(jqXHR, textStatus, errorThrown) 
+        {            
+            alert("error"); 
+        }
+    });
+}          
+$("#nuevoproveedor").submit(function(e){
+    var postData = $(this).serializeArray();
+    var formURL = $(this).attr("action");
+    $.ajax(
+    {
+        url : formURL,
+        type: "POST",
+        data : postData,
+        dataType : 'json',
+        success : function(response) {
+            if (response.status=='ok'){
+           $("#todonvoprov").css("display","none");
+           $("#nprespuestaok").css("display","block");
+           $("#npdescrok").text(response.descripcion); 
+          //  console.log (response.prov[0]['nombre']);
+            var t = $('#tablaprov').DataTable();  
+            t.row.add([            
+            response.prov[0]['nombre'],
+            response.prov[0]['servicio'],
+            response.prov[0]['telefono'],
+            response.prov[0]['direccion'],
+            response.prov[0]['ciudad'],                        
+        ]).draw();              
+           setTimeout(function(){             
+             $("#modalprov").modal('hide');             
+            }, 3000);
+           
+            }else{
+            $("#alerta").text(response.descripcion).show();                
+            $("#alerta").delay(3000).hide(600);    
+            }                                        
+        },
+        error: function(jqXHR, textStatus, errorThrown) 
+        {            
+            $("#todonvoprov").css("display","none");
+            $("#nprespuestanok").css("display","block");
+            $("#npdescrnok").text("Ups! Ocurrio un problema, favor intenta nuevamente");      
+        }
+    });
+    e.preventDefault(); //STOP default action        
+});
+</script>

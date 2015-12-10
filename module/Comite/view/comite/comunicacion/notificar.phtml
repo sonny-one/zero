@@ -15,7 +15,7 @@ jQuery(document).ready(function() {
                                         $form = $this->form;
                                         $form->prepare();
                                         $form->setAttributes(array(
-                                        'action' => $this->basePath()."/comite/comunicacion/notificacion",
+                                        'action' => $this->basePath()."/comite/comunicacion/notificar",
                                         'method' => 'post',
                                         'id' => 'form_notificacion',   
                                         'name' => 'form_notificacion',                                 
@@ -32,9 +32,9 @@ jQuery(document).ready(function() {
                                                     <?php                                             
                                                         echo $this->formRow($this->form->get('destino'));
                                                     ?> 
-                                                               
+                                                         
                                                      <?php   echo $this->formRow($this->form->get('dpto'));
-                                                    ?>   Departamento 
+                                                    ?>   Departamento
                                            <br /> <br />                                                                                  
                                                    <?php                                             
                                                         echo $this->formRow($this->form->get('id_unidad'));
@@ -51,15 +51,10 @@ jQuery(document).ready(function() {
                                     <br />                                    
                                     <div class="form-group">
                                     <fieldset>
-                                      <legend>Prioridad del mensaje</legend>
-                                      
+                                      <legend>Prioridad del mensaje</legend>                                      
                                                     <?php                                             
                                                         echo $this->formRow($this->form->get('prioridad'));
-                                                    ?>  Urgente &nbsp;&nbsp;&nbsp;
-                                                    <?php                                             
-                                                        echo $this->formRow($this->form->get('prioridad'));
-                                                    ?>  Normal &nbsp;&nbsp;&nbsp;
-                                          
+                                                    ?>                                                                                                
                                     </fieldset>   
                                     </div>                                    
                                     <br /><br /><br />
@@ -95,14 +90,13 @@ jQuery(document).ready(function() {
 <?php echo $rsptaOK?>        
 <script>
 function checkDpto(){
-$("#chk_comite").attr('checked', false);
-$("#chk_admin").attr('checked', false);
-$("#chk_comuni").attr('checked', false);
+$(".checker span").removeClass('checked');
 $("#combo_dpto").removeClass('hidden');
 $("#combo_dpto").removeAttr('disabled',false);     
 }
 function checkChk(){
-   $("#radio_dpto").attr('checked', false); 
+   $(".radio span").removeClass('checked');
+   $(".checker").addClass('hover focus');
    $("#combo_dpto").addClass('hidden'); 
    $("#combo_dpto").attr('disabled','disabled');
 }
@@ -118,7 +112,7 @@ $("#form_notificacion").submit(function(e)
         data : postData,
         dataType : 'json',
         success : function(response) {        
-          if(response.status == 'ok'){
+          /*if(response.status == 'ok'){
             $("#descrok").text("Mensaje enviado correctamente...");
            $("#respuestaOK").modal('show');
            setTimeout(function(){
@@ -127,7 +121,7 @@ $("#form_notificacion").submit(function(e)
                     },1200);                   
           }else{            
             $("#alertaV").html('<div id="respuesta" class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>'+response.descripcion+'</div>');            
-          }
+          }*/
         },
         error: function(jqXHR, textStatus, errorThrown) 
         {

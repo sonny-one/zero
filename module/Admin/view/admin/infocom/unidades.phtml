@@ -88,122 +88,218 @@
                         
 <div style="display: <?php echo $this->displayunidades;?>;">                                            
                 <div class="col-lg-12">
-<!--Importar Unidades--><h4 class="page-header"> <i class="fa fa-download"></i>  &nbsp; &nbsp;<a data-toggle="collapse" data-parent="#accordion2" href="#importaruni">Importar Unidades</a></h4>
+<!--Importar Unidades--><h4> <i class="fa fa-angle-right"></i>  &nbsp; &nbsp;<a data-toggle="collapse" data-parent="#accordion2" href="#importaruni">Importar Departamentos y/o Casas</a></h4>
                 </div>
+                
 <div id="importaruni" class="panel-collapse collapse">                    
                   
-        <div class="btn-group btn-group-justified" role="group">
-            <div class="btn-group" role="group">
-                 <a href="/files/Unidades.xlsx" >
-                        <button class="btn btn-success btn-circle btn-lg">
-                            <p>1. Descargar <strong>Unidades.xlsx</strong></p></button>
-                 </a>
-            </div>
-            
-            <div class="btn-group" role="group">
-                <a>
-                    <input required="true" id="fileunidades" onchange="selecciona('unidades')" type="file"/>
-                    <button class="btn btn-success btn-circle btn-lg">
-                        <p>2. Subir <strong>Unidades.xls</strong></p>
-                    </button>
-                </a>
-            </div>
-            
-            <div class="btn-group" role="group">            
-                <a onclick="importame(0,'unidades')" type="button" data-toggle="modal fade" data-target="#importarconfirm">
-                    <button class="btn btn-info btn-circle btn-lg">
-                        <p>3. Importar unidades</p>
-                    </button>
-                </a>
-            </div>
-        </div>
-                
-                <div class="text-center"> <span id="mostrarnombreunidades"></span></div>
-                
+ <!--1 2 3-->                                  
+            <div class="row udt text-center">     
+            <!--Titulo-->
+                  <div class="col-lg-12" style="margin-bottom: 20px;" >
+                  <h3>En 3 simples pasos importe departamentos y/o casas</h3>
+                  </div>
+            <!--Fin Titulo-->       
+            <!--1-->
+                 <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                    <br /><br />
+                        <div class="col-lg-12">                        
+                            <i class="fa fa-file-excel-o" style="color: #585DA0; font-size: 42px;"></i><br /><br />
+                        </div>
+                    
+                        <div class="col-lg-12">
+                            <a href="/files/Unidades.xlsx" class="btn btn-success">Descargue planilla excel</a>
+                        </div>                    
+                  </div>
+             <!--Fin 1-->                  
+             <!--Flecha 1-->     
+                  <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1" style="display: table; height:122px;">                 
+                    <i class="fa fa-arrow-circle-o-right" style="display: table-cell; vertical-align: middle; font-size: 28px;"></i>                    
+                  </div>
+             <!--Fin Flecha 1--> 
+             <!--2-->      
+                  <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                    <br /><br />
+                        <div class="col-lg-12">                        
+                            <i class="fa fa-search" style="color: #585DA0; font-size: 42px;"></i><br /><br />
+                        </div>
+                        
+                        <div class="col-lg-12">                            
+                                <a>
+                                 <input required="true" id="fileunidades" onchange="selecciona('unidades')" type="file"/>
+                            <a class="btn btn-success">
+                                Seleccionar planilla excel<br /> con la informaci&oacute;n
+                            </a>
+                                </a>                            
+                        </div>                    
+                  </div>    
+             <!--Fin 2-->                  
+             <!--Flecha 2-->                                 
+                  <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1" style="display: table; height:122px;">                 
+                    <i class="fa fa-arrow-circle-o-right" style="display: table-cell; vertical-align: middle; font-size: 28px;"></i>                    
+                  </div>
+             <!--Fin Flecha 2--> 
+                          <!--3-->    
+                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                    <br /><br />
+                        <div class="col-lg-12">                        
+                            <i class="fa fa-home" style="color: #585DA0; font-size: 42px;"></i><br /><br />
+                        </div>
+                    
+                        <div class="col-lg-12">
+                            <a onclick="importame(0,'unidades')" data-toggle="modal fade" data-target="#importarconfirm" class="btn btn-success">
+                                Importar unidades al sistema
+                            </a>
+                        </div>                    
+                  </div>           
+             <!--Fin 3-->                           
+</div>
+ <div class="text-center"> <span id="mostrarnombreunidades"></span></div>
 </div>
 </div>
 
 
 <div style="display: <?php echo $this->displaybodegas;?>;">                
                 <div class="col-lg-12">
-<!--Importar bodegas--><h4 class="page-header"> <i class="fa fa-download"></i>  &nbsp; &nbsp;<a data-toggle="collapse" data-parent="#accordion2" href="#importarunibod">Importar Bodegas</a></h4>
+<!--Importar bodegas--><h4> <i class="fa fa-angle-right"></i>  &nbsp; &nbsp;<a data-toggle="collapse" data-parent="#accordion2" href="#importarunibod">Importar Bodegas</a></h4>
                 </div>
 <div id="importarunibod" class="panel-collapse collapse">    
     
-        <div class="btn-group btn-group-justified" role="group">
-            <div class="btn-group" role="group">
-                <a href="/files/Bodegas.xlsx">
-                    <button class="btn btn-success btn-circle btn-lg">
-                        <p>1. Descargar <strong>Bodegas.xlsx</strong></p>
-                    </button>
-                </a>
+<!--1 2 3-->                                  
+            <div class="row udt text-center">     
+            <!--Titulo-->
+                  <div class="col-lg-12" style="margin-bottom: 20px;" >
+                  <h3>En 3 simples pasos importe las bodegas del condominio</h3>
+                  </div>
+            <!--Fin Titulo-->       
+            <!--1-->
+                 <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                    <br /><br />
+                        <div class="col-lg-12">                        
+                            <i class="fa fa-file-excel-o" style="color: #585DA0; font-size: 42px;"></i><br /><br />
+                        </div>
+                    
+                        <div class="col-lg-12">
+                            <a href="/files/Bodegas.xlsx" class="btn btn-success">1. Descargar planilla excel</a>
+                        </div>                    
+                  </div>
+             <!--Fin 1-->                  
+             <!--Flecha 1-->     
+                  <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1" style="display: table; height:122px;">                 
+                    <i class="fa fa-arrow-circle-o-right" style="display: table-cell; vertical-align: middle; font-size: 28px;"></i>                    
+                  </div>
+             <!--Fin Flecha 1--> 
+             <!--2-->      
+                  <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                    <br /><br />
+                        <div class="col-lg-12">                        
+                            <i class="fa fa-search" style="color: #585DA0; font-size: 42px;"></i><br /><br />
+                        </div>
+                        
+                        <div class="col-lg-12">                            
+                                <a>
+                                 <input required="true" id="filebodegas" onchange="selecciona('bodegas')" type="file"/>
+                            <a onclick="importame(0,'bodegas')" class="btn btn-success">
+                                2. Seleccionar planilla excel<br /> con la informaci&oacute;n
+                            </a>
+                                </a>                            
+                        </div>                    
+                  </div>    
+             <!--Fin 2-->                  
+             <!--Flecha 2-->                                 
+                  <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1" style="display: table; height:122px;">                 
+                    <i class="fa fa-arrow-circle-o-right" style="display: table-cell; vertical-align: middle; font-size: 28px;"></i>                    
+                  </div>
+             <!--Fin Flecha 2--> 
+             <!--3-->    
+                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                    <br /><br />
+                        <div class="col-lg-12">                        
+                            <i class="fa fa-archive" style="color: #585DA0; font-size: 42px;"></i><br /><br />
+                        </div>
+                    
+                        <div class="col-lg-12">
+                            <a onclick="importame(0,'bodegas')" data-toggle="modal fade" data-target="#importarconfirm" class="btn btn-success">
+                                3. Importar bodegas al sistema
+                            </a>
+                        </div>                    
+                  </div>    
+             <!--Fin 3-->                          
             </div>
-            
-        <div class="btn-group" role="group">
-            <a>
-                <input required="true" id="filebodegas"  onchange="selecciona('bodegas')" type="file"/>
-                <span class="btn btn-success btn-circle btn-lg">
-                    <p style="display: block;">2. Subir <strong>Bodegas.xls</strong></p>
-                    <i style="display: none; text-align: center;" class="fa fa-check fa-2x"></i>
-                </span>
-            </a>
-        </div>
-    
-        <div class="btn-group" role="group">
-            <a id="importarbodegas" onclick="importame(0,'bodegas')">
-                <span class="btn btn-info btn-circle btn-lg">
-                    <p>3. Importar Bodegas</p>
-                </span>
-            </a>
-        </div>
-        
-        </div>
-       <div class="text-center"> <span id="mostrarnombrebodegas"></span></div>
+<!--Fin 1 2 3-->
+ <div class="text-center"> <span id="mostrarnombrebodegas"></span></div>
 </div>
 </div>
 
 <div style="display: <?php echo $this->displayestacionamientos;?>;"> 
                 <div class="col-lg-12">
-<!--Importar Estacionamientos--><h4 class="page-header"> <i class="fa fa-download"></i>  &nbsp; &nbsp;<a data-toggle="collapse" data-parent="#accordion2" href="#importarest">Importar Estacionamientos</a></h4>
+<!--Importar Estacionamientos--><h4> <i class="fa fa-angle-right"></i>  &nbsp; &nbsp;<a data-toggle="collapse" data-parent="#accordion2" href="#importarest">Importar Estacionamientos</a></h4>
                 </div>
 <div id="importarest" class="panel-collapse collapse">
-                
-        <div class="btn-group btn-group-justified" role="group">
-        
-            <div class="btn-group" role="group">
-                <a href="/files/Estacionamientos.xlsx">
-                    <button class="btn btn-success btn-circle btn-lg">
-                        <p>1. Descargar <strong>Estacionamientos.xlsx</strong></p>
-                    </button>
-                </a>
+<!--1 2 3-->                                  
+            <div class="row udt text-center">     
+            <!--Titulo-->
+                  <div class="col-lg-12" style="margin-bottom: 20px;" >
+                  <h3>En 3 simples pasos importe estacionamientos del condominio</h3>
+                  </div>
+            <!--Fin Titulo-->       
+            <!--1-->
+                 <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                    <br /><br />
+                        <div class="col-lg-12">                        
+                            <i class="fa fa-file-excel-o" style="color: #585DA0; font-size: 42px;"></i><br /><br />
+                        </div>
+                    
+                        <div class="col-lg-12">
+                            <a href="/files/Estacionamientos.xlsx" class="btn btn-success">1. Descargar planilla excel</a>
+                        </div>                    
+                  </div>
+             <!--Fin 1-->                  
+             <!--Flecha 1-->     
+                  <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1" style="display: table; height:122px;">                 
+                    <i class="fa fa-arrow-circle-o-right" style="display: table-cell; vertical-align: middle; font-size: 28px;"></i>                    
+                  </div>
+             <!--Fin Flecha 1--> 
+             <!--2-->      
+                  <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                    <br /><br />
+                        <div class="col-lg-12">                        
+                            <i class="fa fa-search" style="color: #585DA0; font-size: 42px;"></i><br /><br />
+                        </div>
+                        
+                        <div class="col-lg-12">                            
+                                <a>
+                                 <input required="true" id="fileestacionamientos" onchange="selecciona('estacionamientos')" type="file"/>
+                            <a class="btn btn-success">
+                                2. Seleccionar planilla excel<br /> con la informaci&oacute;n
+                            </a>
+                                </a>                            
+                        </div>                    
+                  </div>    
+             <!--Fin 2-->                  
+             <!--Flecha 2-->                                 
+                  <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1" style="display: table; height:122px;">                 
+                    <i class="fa fa-arrow-circle-o-right" style="display: table-cell; vertical-align: middle; font-size: 28px;"></i>                    
+                  </div>
+             <!--Fin Flecha 2--> 
+             <!--3-->    
+                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                    <br /><br />
+                        <div class="col-lg-12">                        
+                            <i class="fa fa-car" style="color: #585DA0; font-size: 42px;"></i><br /><br />
+                        </div>
+                    
+                        <div class="col-lg-12">
+                            <a onclick="importame(0,'estacionamientos')" class="btn btn-success">3. Importar Estacionamientos<br /> al sistema</a>
+                        </div>                    
+                  </div>    
+             <!--Fin 3-->                          
             </div>
-            
-            <div class="btn-group" role="group">
-                <a>
-                    <input  id="fileestacionamientos" onchange="selecciona('estacionamientos')" type="file"/>
-                        <button class="btn btn-success btn-circle btn-lg">
-                            <p>2. Subir <strong>Estacionamientos.xls</strong></p>
-                        </button>
-                </a>
-            </div>
-            
-            <div class="btn-group" role="group">
-                <a onclick="importame(0,'estacionamientos')">
-                    <button id="impest" class="btn btn-info btn-circle btn-lg">
-                        <p>3. Importar Estacionamientos</p>
-                    </button>
-                </a>
-            </div>
-        </div>
-            
+<!--Fin 1 2 3-->
             <div class="text-center"> <span id="mostrarnombreestacionamientos"></span></div>
 </div>
 </div>
-
-
-                </div>
-                                                               
-                                                              
+                </div>                                                                                                                             
                 </div>
          </div>
     </div>
@@ -218,8 +314,8 @@
         <div class="modal-body text-center" >
         <div>
             <div class="col-lg-12" style="text-align: center;">
-                <div class="col-lg-12" style="padding: 20px;"><i id="iconmodal" class="fa fa-warning fa-3x"></i></div>
-                    <h4 id="text">Esta acci&oacute;n no tiene reversa, est&aacute; seguro que los datos estan correctos ? </h4><br />
+                <div class="col-lg-12" style="padding: 20px;"><i id="iconmodal" class="fa fa-warning" style="font-size: 30px;"></i></div>
+                    <h4 id="text">Est&aacute; seguro que los datos estan correctos ? </h4><br />
             </div>
             
                     <button id="cancelarmodal" class="btn btn-danger" data-dismiss="modal" > Cancelar</button>&nbsp;&nbsp;&nbsp;&nbsp;
@@ -266,6 +362,9 @@
 <!-- FIN Ayuda-->
                     
 <script>
+toastr.options = {
+  "positionClass": "toast-top-center",
+}
 $(function () {
   $('[data-toggle="popover"]').popover()
 })         
@@ -328,13 +427,11 @@ var data = new FormData();
         type: 'POST',   
 		success : function(response) {					                     
           if(response.status = 'ok'){
-            $("#text").text(response.descripcion);
-            $("#iconmodal").attr('class',"fa fa-check fa-3x");             
-            $("#aceptaimportar").css('display',"none");
-            $("#cancelarmodal").css('display',"none");                                       
+            toastr.success(response.descripcion);                                  
+            $('#importarconfirm').modal('hide');                                        
             setTimeout(function(){             
-             $('#importarconfirm').modal('hide');             
-            }, 3000); 	 
+                    location.reload();    
+            }, 1000); 	 
           }else
           {
             $("#text").text(response.descripcion);
