@@ -1,17 +1,30 @@
-<div id="pagoprov" class="row">
+<div class="row">
 
 <?php  
                                         $form = $this->form;
                                         $form->prepare();
                                         $form->setAttributes(array(
-                                        'action' => $this->basePath()."/admin/finanzas/pagoprov",
+                                        'action' => $this->basePath()."/admin/finanzas/pagoegreso",
                                         'method' => 'post', 
-                                        'id' => 'formpagoprov'                                   
+                                        'id' => 'form_pago_egreso'                                   
                                         ));
                                         echo $this->form()->openTag($form);
-                                        echo $this->formRow($this->form->get('tipo_egreso'));
+                                        echo $this->formRow($this->form->get('id_tipo_egreso'));
                                         echo $this->formRow($this->form->get('id_prov')); 
-                                        echo $this->formRow($this->form->get('concepto'));                                                                           
+                                        echo $this->formRow($this->form->get('concepto'));
+                                        echo $this->formRow($this->form->get('foto'));
+                                        echo $this->formRow($this->form->get('cuota1'));                                                                           
+                                        echo $this->formRow($this->form->get('cuota2'));
+                                        echo $this->formRow($this->form->get('cuota3'));
+                                        echo $this->formRow($this->form->get('cuota4'));
+                                        echo $this->formRow($this->form->get('cuota5'));
+                                        echo $this->formRow($this->form->get('cuota6'));
+                                        echo $this->formRow($this->form->get('cuota7'));
+                                        echo $this->formRow($this->form->get('cuota8'));
+                                        echo $this->formRow($this->form->get('cuota9'));
+                                        echo $this->formRow($this->form->get('cuota10'));
+                                        echo $this->formRow($this->form->get('cuota11'));
+                                        echo $this->formRow($this->form->get('cuota12'));                                        
                                         ?> 
 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5" style="text-align: center;">
@@ -96,7 +109,7 @@
             <span class="input-group-addon"><i class="fa fa-sort-numeric-asc"></i>
             </span>
                  <?php                                             
-                    echo $this->formRow($this->form->get('cuotas'));
+                    echo $this->formRow($this->form->get('nmro_cuotas'));
                  ?>                                            
             </div>
     </div>
@@ -296,9 +309,7 @@
             <div class="form-group">
 
                  <?php                                             
-
                     echo $this->formRow($this->form->get('observacion'));
-
                  ?>                                            
 
             </div>
@@ -308,29 +319,17 @@
 </div>
 
 <div class="col-lg-6">
-<div class="form-group">
-    <div class="drag-drop" style="margin-right: 100px;">
+<div class="col-lg-4  udt">
+<br />
+<a>
+  <a id="mostrarnombre" class="btn btn-success"><i id="icnAdjuntarEgreso" class="fa fa-file"></i> Adjuntar Boleta</a>      
         <?php 
             echo $this->formRow($this->form->get('nombrefile'));
-        ?> 
-                                             <span class="fa-stack fa-2x">
-                                                <i class="fa fa-cloud fa-stack-2x bottom pulsating"></i>
-                                                <i class="fa fa-circle fa-stack-1x top medium"></i>
-                                                <i class="fa fa-arrow-circle-up fa-stack-1x top"></i>
-                                            </span>
-                                        <span class="desc">Adjuntar Boleta</span>                                    
-                                       
-                                    </div>
-                                    <span id="mostrarnombre"></span>
-                                            
-                                        </div>
+        ?>                                                                                                                                                                                                                                                                              
+</a> 
 </div>
-
-
+</div>
 <!--BOTONES-->
-
-
-
 <div class="col-lg-12 col-md-12 col-xs-12 text-right">
 
     <?php                                             
@@ -343,26 +342,10 @@
 
 </div> 
 </div>
-<!--Respuesta OK-->
-<div id="respuestaok" class="row" style="display: none;">
-    <div class="col-lg-12 text-center" style="padding: 80px;">
-
-        <span><i class="fa fa-thumbs-o-up fa-5x"></i></span>
-        <h2 id="descrok"></h2>
-    </div>
-</div>
-<!--Respuesta NOK-->
-<div id="respuestanok" class="row" style="display: none;">
-    <div class="col-lg-12 text-center" style="padding: 80px;">
-
-        <span><i class="fa fa-close fa-5x"></i></span>
-        <h2 id="descrnok"></h2>
-
-    </div>
-</div>
-
-<div id="loading" style="padding: 200px; display: none;"></div>
 <script>
+toastr.options = {
+  "positionClass": "toast-top-center",
+}
 function isNumber(e) {
 k = (document.all) ? e.keyCode : e.which;
 if (k==8 || k==0) return true;
@@ -371,14 +354,53 @@ n = String.fromCharCode(k);
 return patron.test(n);
 }
 function selecciona(){
-    if(document.getElementById('fileupload').files[0].size<2000000){
-  	 document.getElementById("mostrarnombre").innerHTML="Archivo seleccionado: [<strong>"+document.getElementById('fileupload').files[0].name+"</strong>] OK";
+    if(document.getElementById('egreso_file').files[0].size<2000000){  	                        
+            var file_data = $('#egreso_file').prop('files')[0];
+            var parametros = new FormData();                  
+                           parametros.append('fileData', file_data);
+                           $.ajax( {
+                                    contentType:false,
+                                    processData:false,	
+                                    cache:false,
+                                    data : parametros,
+                                    url : '<?php echo $this->basePath()."/admin/finanzas/egresofile"?>',
+                                    type : 'post',
+                                    beforeSend : function() {
+                                        loadImg();
+                                    },
+                                    success : function(response) {
+                                        if(response.status == "nok"){
+                                            toastr.warning(response.desc);
+                                            unloadImg()
+                                        }else{
+                                            toastr.success(response.desc);       
+                                            $("#sendpago").removeAttr('disabled');                                                                                                                            
+                                            $("#sendpago").val('Ingresar Pago al sistema');                                        
+                                            document.getElementById("mostrarnombre").innerHTML="Archivo subido OK: [<strong>"+document.getElementById('egreso_file').files[0].name+"</strong>]";
+                                            $("#foto").val(response.name);   
+                                        }
+                                                                                                              
+                                    },      
+                            });
+        
     }else{
-     document.getElementById("mostrarnombre").innerHTML="<font color='red'>Error Ha superado el limite permitido (2Mb): [<strong>"+document.getElementById('fileupload').files[0].name+"</strong>] NOK</font>";
+     document.getElementById("mostrarnombre").innerHTML="<font color='red'>Error Ha superado el limite permitido (2Mb): [<strong>"+document.getElementById('egreso_file').files[0].name+"</strong>] NOK</font>";
     }
-    
-    
-  }
+}    
+function loadImg(){
+    $("#sendpago").attr('disabled','disabled');
+    $("#egreso_file").add('class','btn-warning');                                        
+    $("#sendpago").val('Subiendo imagen...');
+    $("#icnAdjuntarEgreso").attr("class","fa fa-spinner fa-spin");    
+}  
+function unloadImg(){
+    $("#sendpago").removeAttr('disabled');
+    $("#egreso_file").add('class','btn-success');                                        
+    $("#sendpago").val('Adjuntar Boleta');
+    $("#icnAdjuntarEgreso").attr("class","fa fa-file"); 
+    $("#sendpago").val('Ingresar Pago al sistema');      
+}   
+
 function closeModal(){
     $('#pagoprov').modal('hide');
 }
@@ -403,7 +425,6 @@ function validaDestino(){
 function mostrarCuotas(){    
     $('#divpagototal').css("display","none");
     $('#montocuota').removeAttr("disabled");    
-
     $('#montototal').val("");
     $('#total').attr("disabled","disabled");
     $('#monto').attr("disabled","disabled"); 
@@ -418,6 +439,7 @@ function calculaCuota(){
    var resto = Math.round((valor%1)*cuotas);
         for (i=0;i<cuotas;i++){
         $("#listacuota").append('<tr><td  style="text-align: center;">Cuota '+(i+1)+'</td><td  id="f'+i+'"style="text-align: center;">$ '+(Math.floor(valor)+"").replace(/\B(?=(\d{3})+(?!\d))/g, ".")+'</td></tr>')
+        $("input[name=cuota"+(i+1)+"]").val((Math.floor(valor)));
         }
    var cuota1 = parseInt($("#f0").text().replace("$ ","").replace(/\./g,''))+resto
    var cuota1 = (cuota1+"").replace(/\B(?=(\d{3})+(?!\d))/g, ".")
@@ -435,9 +457,7 @@ function formatMonto2(){
     $("#montototal").val(format);
     if ($("#montocuota").val().replace(/\./g,'')>0){$("#cuotas").removeAttr("disabled")}
 }
-
 function mostrarEfectivo(){    
-
     $('#divtransferencia').css("display","none");
     $('#divdebito').css("display","none");
     $('#divcheque').css("display","none");     
@@ -447,24 +467,18 @@ function mostrarEfectivo(){
     
     $('#divefectivo :input').removeAttr("disabled");
     $('#divefectivo').css("display","block");  
-
 }
 function mostrarTrans(){       
-
     $('#divefectivo').css("display","none");
     $('#divdebito').css("display","none");
     $('#divcheque').css("display","none");       
     $('#divcheque :input').attr("disabled","disabled");   
     $('#divdebito :input').attr("disabled","disabled");
     $('#divefectivo :input').attr("disabled","disabled");
-
     $('#divtransferencia :input').removeAttr("disabled");
     $('#divtransferencia').css("display","block");     
-
 }
-
 function mostrarCheque(){   
-
     $('#divefectivo').css("display","none");  
     $('#divtransferencia').css("display","none");
     $('#divdebito').css("display","none");
@@ -472,24 +486,18 @@ function mostrarCheque(){
     $('#divtransferencia :input').attr("disabled","disabled");    
     $('#divefectivo :input').attr("disabled","disabled");
     
-
     $('#divcheque :input').removeAttr("disabled");
     $('#divcheque').css("display","block");         
-
 }
-
 function mostrarDebito(){       
-
     $('#divefectivo').css("display","none");  
     $('#divtransferencia').css("display","none");
     $('#divcheque').css("display","none"); 
     $('#divcheque :input').attr("disabled","disabled");
     $('#divtransferencia :input').attr("disabled","disabled");    
     $('#divefectivo :input').attr("disabled","disabled");
-
     $('#divdebito :input').removeAttr("disabled");
     $('#divdebito').css("display","block");     
-
 }
 /*function validaMonto(){
     var select = $('#divdetalle2').find('input:checkbox:checked').length;
@@ -515,16 +523,11 @@ function mostrarDebito(){
         
     }
 }*/
-
 /*
 $("#monto").keyup(function () {
-
       var value = $(this).val();
-
       $("monto").text(value);
-
     }).keyup();
-
 */
 /*
 function sumar(){
@@ -552,7 +555,7 @@ $("#divformapago input[type='radio']").change(function () {
 }});*/
 $("#radiototal").trigger('click'); 
 $("#radioefectivo").trigger('click');        
-$("#formpagoprov").submit(function(e){
+$("#form_pago_egreso").submit(function(e){
     $("#destino").prop("disabled", false);
     $("#montototal").prop("disabled", false); 
     var postData = $(this).serializeArray();
@@ -564,12 +567,10 @@ $("#formpagoprov").submit(function(e){
         data : postData,
         dataType : 'json',
         success : function(response) {
-            /*$("#todo").css("display","none");
-            $("#respuestaok").css("display","block");
-            $("#descrok").text(response.descripcion);
-            setTimeout(function(){
-             $("#modal3").modal('hide');
-            }, 2000);    */                                               
+            if(response.status == 'ok'){
+             $("#pagoprov").modal('hide');  
+             toastr.success(response.desc)
+            }                                           
         },
         error: function(jqXHR, textStatus, errorThrown) 
         {   alert("error");         

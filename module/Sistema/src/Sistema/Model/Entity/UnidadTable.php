@@ -192,5 +192,18 @@ class UnidadTable extends TableGateway
         
     }
     
+    public function getIdUIdBIdEIdPActivos(Adapter $dbAdapter,$datos){
+        $this->dbAdapter = $dbAdapter;
+        $query = 
+        "select id as id_unidad,
+         COALESCE((select id from sis_m_bodega where nombre='".$datos['bodega']."' and activo=1 limit 1),0) as id_bodega,
+         COALESCE((select id from sis_m_estacionamiento where nombre='".$datos['estacionamiento']."' and activo=1 limit 1),0) as id_estacionamiento,
+         COALESCE((select id from thouseap_general.sis_m_persona where rut='".$datos['rut']."'  limit 1),0) as id_persona
+         from sis_m_unidad where nombre ='".$datos['dpto']."' and activo=1";
+        
+        $result=$this->dbAdapter->query($query,Adapter::QUERY_MODE_EXECUTE);
+        return $result->toArray();
+    }
+    
 
 }

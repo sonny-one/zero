@@ -8,7 +8,7 @@ use Zend\Form\Form;
 use Zend\Captcha;
 use Zend\Form\Factory;
 
-class PagoProvForm extends Form
+class PagoEgresoForm extends Form
 {
      
      public function __construct($name = null)
@@ -20,10 +20,9 @@ class PagoProvForm extends Form
         //Input ///// /////////////////////////// Tipo_ingreso (TEXT)
         $this->add(array(
             'type' => 'hidden',
-            'name' => 'tipo_egreso',            
+            'name' => 'id_tipo_egreso',            
             'attributes' => array(                                                   
-                'required' => 'true',
-                'value' => 'Pago Proveedor'                
+                'required' => 'true',                             
             )
         ));
         
@@ -42,6 +41,16 @@ class PagoProvForm extends Form
             'name' => 'concepto',            
             'attributes' => array(                                                   
                 'required' => 'true'               
+            )
+        ));
+        
+        //Input ///// /////////////////////////// Foto (input)
+        $this->add(array(
+            'type' => 'hidden',
+            'name' => 'foto',            
+            'attributes' => array(                                                   
+                'required' => 'true',
+                'id' => 'foto',                             
             )
         ));
         
@@ -87,6 +96,7 @@ class PagoProvForm extends Form
             'name' => 'montocuota',            
             'attributes' => array(
                 'class' => 'form-control',
+                'placeholder' => 'Ingrese valor...',
                 'id' => 'montocuota',                              
                 'onkeyup' => 'formatMonto2()',
                 'onkeypress'=>'return isNumber(event);', 
@@ -98,7 +108,7 @@ class PagoProvForm extends Form
         //Input //////////////////////////////// Cantidad Cuotas (COMBO)
         $this->add(array(
             'type' => 'Zend\Form\Element\Select',
-            'name' => 'cuotas',            
+            'name' => 'nmro_cuotas',            
             'attributes' => array(                
                 'class' => 'form-control',
                 'id' => 'cuotas',
@@ -106,17 +116,17 @@ class PagoProvForm extends Form
                 'onchange' => 'calculaCuota()',            
                 'required' => 'true',
                 'options' => array(
-                    '0'=>'2',
-                    '1'=>'3',
-                    '2'=>'4',
-                    '3'=>'5',
-                    '4'=>'6',
-                    '5'=>'7',
-                    '6'=>'8',
-                    '7'=>'9',
-                    '8'=>'10',
-                    '9'=>'11',
-                    '10'=>'12',                                        
+                    '2'=>'2',
+                    '3'=>'3',
+                    '4'=>'4',
+                    '5'=>'5',
+                    '6'=>'6',
+                    '7'=>'7',
+                    '8'=>'8',
+                    '9'=>'9',
+                    '10'=>'10',
+                    '11'=>'11',
+                    '12'=>'12',                                        
                 )                
             )
         ));
@@ -128,10 +138,10 @@ class PagoProvForm extends Form
                 'value_options' => array(                   
                     array(
                         'label' => 'Total', 
-                        'value' => 'total',                                                             
+                        'value' => 'no',                                                             
                         'attributes' => array(
                             'id' => 'radiototal',
-                            'name' => 'tipo_pago',                                                       
+                            'name' => 'cuotas',                                                       
                             'onclick' => 'mostrarTotal()'
                         ),
                     ),                
@@ -146,10 +156,10 @@ class PagoProvForm extends Form
                 'value_options' => array(
                     array(                                     
                         'label' => 'Cuotas',
-                        'value' => 'cuotas',
+                        'value' => 'si',
                         'attributes' => array(
                             'id' => 'radioparcial',                            
-                            'name' => 'tipo_pago',                                                      
+                            'name' => 'cuotas',                                                      
                             'onclick' => 'mostrarCuotas()',                            
                         ),
                     ),                
@@ -263,8 +273,7 @@ class PagoProvForm extends Form
             'name' => 'nmrooperacion',            
             'attributes' => array(
                 'class' => 'form-control',
-                'id' => 'nmrooperacion',
-                'onblur' => 'checkMonto()',                
+                'id' => 'nmrooperacion',                                
                 'required' => 'true'                
             )
         ));
@@ -298,7 +307,7 @@ class PagoProvForm extends Form
             'attributes' => array(
                 'type' => 'file',
                 'class' => 'form-control',
-                'id' => 'fileupload',                                                              
+                'id' => 'egreso_file',                                                              
                 'required' => 'true',
                 'onchange' =>'selecciona()',               
             )
@@ -337,7 +346,22 @@ class PagoProvForm extends Form
                 'title' => 'Cancelar',
                 'class' => 'btn btn-danger'
             ),
-        ));        
+        ));  
+        
+        
+        //Input ///// /////////////////////////// Cuota1 (TEXT)
+        $this->add(array('type' => 'hidden','name' => 'cuota1'));
+        $this->add(array('type' => 'hidden','name' => 'cuota2'));
+        $this->add(array('type' => 'hidden','name' => 'cuota3'));
+        $this->add(array('type' => 'hidden','name' => 'cuota4'));
+        $this->add(array('type' => 'hidden','name' => 'cuota5'));
+        $this->add(array('type' => 'hidden','name' => 'cuota6'));
+        $this->add(array('type' => 'hidden','name' => 'cuota7'));
+        $this->add(array('type' => 'hidden','name' => 'cuota8'));
+        $this->add(array('type' => 'hidden','name' => 'cuota9'));
+        $this->add(array('type' => 'hidden','name' => 'cuota10'));
+        $this->add(array('type' => 'hidden','name' => 'cuota11'));
+        $this->add(array('type' => 'hidden','name' => 'cuota12'));      
      
      }
 

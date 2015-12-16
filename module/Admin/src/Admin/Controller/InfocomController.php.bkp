@@ -238,242 +238,30 @@ class InfocomController extends AbstractActionController
     
         //Conectamos a BBDD Condominio                                    
         $sid = new Container('base');
+        $id_db = $sid->offsetGet('id_db');
         $db_name = $sid->offsetGet('dbNombre');        
         $this->dbAdapter=$this->getServiceLocator()->get($db_name);
+        //Instanticas
         $perd = new PersonaDetTable($this->dbAdapter);     
-        $listado = $perd->getListadoResidentes($this->dbAdapter);
-         $tabla="";   
-         for($i=0;$i<count($listado);$i++){
-             $tabla=$tabla."<tr>
-                            <td align='left'>".$listado[$i]['unidad']."</td>
-                            <td align='left'>".$listado[$i]['bodega']."</td>
-                            <td align='left'>".$listado[$i]['estacionamiento']."</td>
-                            <td align='left'>".$listado[$i]['nombres']."</td>
-                            <td align='left'>".$listado[$i]['rutc']."</td>
-                            <td align='left'>".$listado[$i]['telefono']."</td>
-                            <td align='left'>".$listado[$i]['correo']."</td>
-                            <td align='left'>".$listado[$i]['condicion']."</td>
-                            </tr>";
-         }
-
-         $result = new ViewModel(array(
-                                    'tabla'=>$tabla
-                                    
+        $unid = new UnidadTable($this->dbAdapter);  
+        //Consultamos tablas
+        $residentes = $perd->getDatos();
+        $unidades   = $unid->getUnidades();
+            //Validamos si existen unidades
+                if(count($unidades)<1){$warning="Se deben importar unidades al sistema antes de cargar propietarios!";}
+        //Mostramos segun corresponda
+            if (count($residentes)>0){$displaytablares = "none";}else{$displaytablares = "none";}        
+        $ruta = '/files/db/'.$id_db.'/admin/copropietarios/Copropietarios.xlsx';
+        $result = new ViewModel(array(
+                                    'displaytablares'=>$displaytablares,
+                                    'ruta'=>$ruta,
+                                    'warning'=>$warning,
                                 ));
         $this->layout('layout/admin');                
         return $result; 
             
     }
-    public function vfresidentesAction(){
-        //validar fichero residentes
-        $sid = new Container('base');
-        $id_db = $sid->offsetGet('id_db');
-        $id_usuario = $sid->offsetGet('id_usuario');
-        $status="";$mensaje="";$url="";
-        if(isset($id_usuario)){
-            if (file_exists($_SERVER['DOCUMENT_ROOT']."/files/db/".$id_db."/admin/copropietarios/Copropietarios.xlsx")){
-                    $status="ok";
-                    $url="/files/db/".$id_db."/admin/copropietarios/Copropietarios.xlsx";
-            }else{
-                    $status="nok";
-                    $mensaje="El archivo Copropietarios no existe, debes generar las unidades del condominio";
-            }
-        }else{
-            $status="nok";
-            $mensaje="Sesion expirada...";
-        }
         
-        return new JsonModel(
-                        array(
-                        'status'=>$status,
-                        'mensaje'=>$mensaje,
-                            'url'=>$url
-                        )
-        );
-    }
-    
-    public function cargarresidentesAction()
-    {
-        $sid = new Container('base');
-        $id_usuario = $sid->offsetGet('id_usuario');
-        $status="";$mensaje="";
-        if(isset($id_usuario)){
-            $id_db = $sid->offsetGet('id_db');
-            
-            //Primero hay que cargar el archivo es decir reemplazamos el archivo
-            $File    = $this->params()->fromFiles('fileData');
-            $adapterFile = new \Zend\File\Transfer\Adapter\Http();
-            $adapterFile->setDestination($_SERVER['DOCUMENT_ROOT'].'/files/db/'.$id_db.'/admin/copropietarios');
-            $adapterFile->receive($File['name']);
-           
-            //Llamamos Clase PHPExcel
-            $objReader = \PHPExcel_IOFactory::createReader('Excel2007');
-            $objReader->setReadDataOnly(TRUE);
-            //seleccionamos el archivo que ha sido reemplazado con el mimso nombre
-            $archivo = $_SERVER['DOCUMENT_ROOT'].'/files/db/'.$id_db.'/admin/copropietarios/'.$File['name'];
-            //cargamos el archivo
-            $objPHPExcel = $objReader->load($archivo);
-            //Obtenemos Hoja de trabajo
-            $objWorksheet = $objPHPExcel->getActiveSheet();
-            
-            //validamos RUT debe contener el caracter guion y mayor a 3
-            //validamos nombre apellido y apellido2 no vacios y correo consistente y no vacio
-            //preparamos la query
-            
-            $recorre = true;
-            $fila = 3;
-            $status="ok";
-            while($recorre){
-                $dpto = $objWorksheet->getCell('A'.$fila)->getValue();
-                if(trim($dpto)==""){
-                    $recorre=false;
-                    if($fila==3){
-                        $status="nok";
-                        $mensaje="no hay datos";
-                        
-                    }
-                    break;
-                }
-                $bodega = $objWorksheet->getCell('B'.$fila)->getValue();
-                $estacionamiento = $objWorksheet->getCell('C'.$fila)->getValue();
-                $nombre = $objWorksheet->getCell('D'.$fila)->getValue();
-                $apellido = $objWorksheet->getCell('E'.$fila)->getValue();
-                $apellido_2 = $objWorksheet->getCell('F'.$fila)->getValue();
-                $rut = $objWorksheet->getCell('G'.$fila)->getValue();
-                $telefono = $objWorksheet->getCell('H'.$fila)->getValue();
-                $correo = $objWorksheet->getCell('I'.$fila)->getValue();
-                $pais = $objWorksheet->getCell('J'.$fila)->getValue();
-                $descripcion = $objWorksheet->getCell('K'.$fila)->getValue();
-                if(strpos(trim($rut), "-") === FALSE){
-                    $recorre=false;
-                    $status="nok";
-                    $mensaje="Formato de RUT no es valido: ".$rut;
-                    break;
-                }
-                if(strpos($correo, "@") === FALSE){
-                    $recorre=false;
-                    $status="nok";
-                    $mensaje="Formato de Correo no es valido";
-                    break;
-                }
-                if(trim($nombre)=="" || trim($apellido)=="" || trim($apellido_2)==""){
-                    $recorre=false;
-                    $status="nok";
-                    $mensaje="Valores vacios, Nombre o Apellidos nulos";
-                    break;
-                }
-                
-                //almacenamos en un array desde indice 0
-                //primero obtenemos rut y su dv
-                //obtenemos rut sin espacios
-                $rutSE = trim($rut);
-                //tamaño del rut
-                $rutLen = strlen($rutSE);
-                //cortamos hacia la izquierda
-                $dv = substr($rutSE,-1,1);
-                $rutSinDv = substr($rutSE,0,$rutLen -2);
-                $myDatos[$fila-3]=array(
-                        "dpto"=>trim($dpto),"bodega"=>trim($bodega),"estacionamiento"=>trim($estacionamiento),
-                         "nombre"=>trim($nombre),"apellido"=>trim($apellido),"apellido_2"=>trim($apellido_2),
-                         "rut"=>$rutSinDv,"dv"=>$dv,"telefono"=>trim($telefono),"correo"=>trim($correo),"pais"=>trim($pais),
-                         "descripcion"=>trim($descripcion)
-                     );
-
-                                
-                $fila++;
-            }
-            
-            if($status=="ok"){
-                 
-                 $db_name = $sid->offsetGet('dbNombre');
-                 $this->dbAdapter=$this->getServiceLocator()->get($db_name);
-                 $this->dbAdapter2=$this->getServiceLocator()->get('Zend\Db\Adapter');
-                 $unidad = new UnidadTable($this->dbAdapter);  
-                 $persona = new PersonaTable($this->dbAdapter2);  
-                 $personaDet = new PersonaDetTable($this->dbAdapter);  
-                //Filtramos los datos
-                 
-                 $contadorPersona=0;
-                 $contadorDetalle=0;
-                for($i=0;$i<count($myDatos);$i++){
-                    //Recuperamos el id_unidad
-                    $datosId = $unidad->getIdUIdBIdEIdPActivos( $this->dbAdapter, $myDatos[$i]);
-                    
-                    if(count($datosId)>0){
-                        //verificamos si existe la persona
-                        if($datosId[0]['id_persona']>0){
-                            $id_persona=$datosId[0]['id_persona'];
-                        }else{
-                            //insertamos nueva persona
-                            $dataPersona = array(
-                                'rut'=>$myDatos[$i]['rut'],
-                                'dv'=>$myDatos[$i]['dv'],
-                                'nombre'=>$myDatos[$i]['nombre'],
-                                'apellido'=>$myDatos[$i]['apellido'],
-                                'apellido2'=>$myDatos[$i]['apellido_2'],
-                                'telefono'=>$myDatos[$i]['telefono'],
-                                'correo'=>$myDatos[$i]['correo'],
-                                'pais'=>$myDatos[$i]['pais'],
-                                'observacion'=>$myDatos[$i]['descripcion'],
-                                'user_create'=>$id_usuario
-                                );
-                            $id_persona=$persona->nuevaPersona($dataPersona);
-                            $contadorPersona++;
-                        }
-                        //insertamos perdet siempre y cuando no exista la relacion id_unidad con id_persona
-                        //si existe no hacemos nada
-                        
-                        $detallePersona = $personaDet->getDatosPersonaDetalle($datosId[0]['id_unidad'], $id_persona);
-                        if(count($detallePersona)==0){
-                            //insertamos la tabla perdet, porque no existe    
-                            $myDatosPerDet=array(
-                                'id_unidad'=>$datosId[0]['id_unidad'],
-                                'id_bodega'=>$datosId[0]['id_bodega'],
-                                'id_estacionamiento'=>$datosId[0]['id_estacionamiento'],
-                                'id_persona'=>$id_persona,
-                                'activo'=>'1',
-                                'user_create'=>$id_usuario,
-                                'date_update'=>  \Sistema\Util\SysFnc::FechaActualYmdHms(),
-                                'condicion'=>'C',
-                                'titular'=>'1',
-                                'representa'=>'s',
-                                'gastocomun'=>'1'
-                                );
-                            $personaDet->nuevaPersonaDetalle($myDatosPerDet);
-                            $contadorDetalle++;
-                        }
-                    }
-                    
-                }
-                
-                if($contadorDetalle==0 && $contadorPersona==0){
-                     $mensaje="Se analiza y se verifica que el contenido del fichero ya se encuentra en la base de datos por lo tanto no se inserta datos";  
-                }else{
-                    $mensaje="Operacion Exitosa: Se inserto ".$contadorPersona." nuevas personas y se inserto ".$contadorDetalle." Detalles Personas. Si no coincide la cantidad significa que ya existen en la base de datos";
-                }
-                
-                
-                
-            }
-            
-            
-            
-        }else{
-            $status="nok";
-            $mensaje="Sesion expirada...";
-        }
-        
-        return new JsonModel(
-                        array(
-                        'status'=>$status,
-                        'mensaje'=>$mensaje
-                            
-                        )
-        );
-    }
-    
-
-    
     public function excelpropietarioAction()
     {                        
         //Conectamos a BBDD Condominio                                    

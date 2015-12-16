@@ -34,6 +34,8 @@ use Sistema\Model\Entity\MultaTable;
 use Sistema\Model\Entity\ProveedorTable;
 use Sistema\Model\Entity\TipoServicioTable;
 use Sistema\Model\Entity\EgresoTable;
+use Sistema\Model\Entity\CobroTable;
+use Sistema\Model\Entity\TipoEgresoTable;
 use Sistema\Model\Entity\VProveedorTable;
 use Sistema\Model\Entity\CicloAdminTable;
 use Sistema\Model\Entity\TareaTable;
@@ -48,8 +50,8 @@ use Admin\Form\CajachicaForm;
 use Admin\Form\MultasForm;
 use Admin\Form\IngresoPagoForm;
 use Admin\Form\ProveedorForm;
-use Admin\Form\CombosProvForm;
-use Admin\Form\PagoProvForm;
+use Admin\Form\EgresoForm;
+use Admin\Form\PagoEgresoForm;
 use Admin\Form\CicloForm;
 
 
@@ -269,24 +271,55 @@ class FinanzasController extends AbstractActionController
         //Conectamos con BBDD  
         $sid = new Container('base');
         $db_name = $sid->offsetGet('dbNombre');
+        $id_db = $sid->offsetGet('id_db');
         $this->dbAdapter=$this->getServiceLocator()->get($db_name);
         //Instancias
-        $pro  = new ProveedorTable($this->dbAdapter);
-        $form = new CombosProvForm("form");
+        $prov  = new ProveedorTable($this->dbAdapter);
+        $egr   = new EgresoTable($this->dbAdapter);
+        $tegr  = new TipoEgresoTable($this->dbAdapter);
+        $fon   = new FondosTable($this->dbAdapter);
+        $ruta = '/files/db/'.$id_db.'/admin/finanzas/egreso/';
+        
+        $form = new EgresoForm("form");
         
         //Datos
-        $proveedores = $pro->getProveedoresCombo($this->dbAdapter);
+        $proveedores = $prov->getProveedoresCombo($this->dbAdapter);
+        $tipo_egreso = $tegr->getTipoEgreso($this->dbAdapter);
+        $egresos     = $egr->getDatos();            
         
+        //Tabla HTML de Egresos 
+        $tabla="";   
+         for($i=0;$i<count($egresos);$i++){
+             $fondo = $fon->getFondoId($egresos[$i]['id_fondo']);
+             if($egresos[$i]['cuotas']=="si"){
+                $td_cuota = "<a onclick='modalCuotas(".$egresos[$i]['id'].")' data-toggle='modal' data-target='#modalCuotas'>".ucfirst($egresos[$i]['cuotas']);
+             }else{
+                $td_cuota = ucfirst($egresos[$i]['cuotas']);
+             }        
+            $pf = strtotime($egresos[$i]['fecha_pago']);
+            $mostrarF = date("d-M-Y", $pf);                  
+             $tabla=$tabla."<tr>
+                            <td align='left'>".$egresos[$i]['id']."</td>
+                            <td align='left'>".$mostrarF."</td>
+                            <td align='left'>".$fondo[0]['nombre']."</td>
+                            <td align='left'>".$egresos[$i]['destino']."</td>
+                            <td align='left'><strong>$ ". number_format($egresos[$i]['monto'],"0",".",".")."</strong></td>
+                            <td align='left'><a target='_blank': style='cursor: pointer' href='".$ruta.$egresos[$i]['foto']."'><i class='fa fa-file'></i></a></td>
+                            <td align='left'>".$td_cuota."</td>
+                            <td align='left'><i class='fa fa-plus'></i> | <i class='fa fa-trash'></i> </td>
+                            </tr>";
+         }
         $form->get('proveedores')->setAttribute('options' ,$proveedores);
+        $form->get('tipo_egreso')->setAttribute('options' ,$tipo_egreso);
 
 
-        $result = new ViewModel(array('form'=>$form));
+        $result = new ViewModel(array('form'=>$form,'tabla'=>$tabla));
         $this->layout('layout/admin');        
         
         return $result;
     } 
     
-    public function pagoprovAction()
+    public function pagoegresoAction()
     {                  
         //Conectamos con BBDD  
         $sid = new Container('base');
@@ -302,58 +335,61 @@ class FinanzasController extends AbstractActionController
         $gcu = new GCunidadTable($this->dbAdapter);
         $uni = new UnidadTable($this->dbAdapter);
         $egr = new EgresoTable($this->dbAdapter);    
-        $tsr = new TipoServicioTable($this->dbAdapter);                
+        $tsr = new TipoServicioTable($this->dbAdapter);
+        $cob = new CobroTable($this->dbAdapter);                  
         //Validamos POST
-        if($data['tipo_egreso']=="Pago Proveedor"){
+        if(isset($data['destino'])){
             //Identificamos usuario 
             $data['user_create'] = $sid->offsetGet('id_usuario');         
             //Quitamos puntos del monto
             $data['montototal'] = str_replace(".","",$data['montototal']);
-            //Calculamos Montos
-            $fondo = $fop->getFondoId($data['origen']);
-            $fondo['saldo'] = $fondo[0]['saldo'] - $data['montototal'];
             //Restamos monto de Fondo Origen
-            $fop->actualizaFondo($data['origen'],$fondo['saldo']);
+            $fop->restaFondo($this->dbAdapter,$data['origen'],$data['montototal']);           
+                                    
             //Insertamos egreso en la BBDD            
-            $egr->nuevoEgreso($data); 
-            //Guardamos Registro en Servidor
-            $File    = $this->params()->fromFiles('nombrefile');                 
-            $adapterFile = new \Zend\File\Transfer\Adapter\Http();
-            $adapterFile->setDestination($_SERVER['DOCUMENT_ROOT'].'/files/db/'.$id_db.'/admin/finanzas/egreso');
-            $adapterFile->receive($File['name']);
-            
-           /* 
-              CUOTAS !
-           */
-            
+            $id_egreso = $egr->nuevoEgreso($data);
+            $desc = 'Pago ingresado exitosamente';
+            //Si existen cuotas,las ingresamos como cobros pendientes
+             if($data['cuotas']=="si"){
+                $data['id_egreso'] = $id_egreso;    
+                $data['fecha_pago'] = "";       //Modificar al crear JOB    
+                  for ($i=1;$i<$data['nmro_cuotas'];$i++) {                     
+                     //Agregamos datos al array
+                     $cuota = 'cuota'.($i+1);
+                     $data['valor'] = $data[$cuota];
+                     $data['cuota'] = $i+1;
+                     $data['fecha_cobro'] = date("Y/m/d", strtotime($data['fecha_cobro']." +1 month"));   
+                     $data['desc'] = $data['cuota']."/".$data['nmro_cuotas'];                               
+	                 $cob->nuevoCobro($data);      
+                     $desc = 'Pago en cuotas ingresado exitosamente';
+                  }
+                
+             }
+                                            
             $result = new JsonModel(array(
                                     'status'=>'ok',
-                                    'file'=>$data,
+                                    'desc'=>$desc,
                                                                                                                          
                     ));                                
             return $result;             
-        }       
-        //Obtenemos datos
-        $proveedor = $prv->getProveedoresNombre($data['nombre_prov']);
-            //Validamos Combo de servicio y cargamos 
-            if(isset($data['servicio'])){                
-                    $servicio  = $tsr->getServicioId($data['servicio']);  
-                }else{
-                    $servicio  = $tsr->getServicioId($proveedor[0]['id_servicio']);
-            }                                                
-        $form   = new PagoProvForm("form");               
+        }          
+        //Obtenemos datos de Proveedor
+        $proveedor = $prv->getProveedoresNombre($data['nombre_prov']);        
+        $servicio  = $tsr->getServicioId($proveedor[0]['id_servicio']);
+                                          
+        $form   = new PagoEgresoForm("form");               
         //Obtenemos Datos                
         $fondos = $fop->getCombo();
         $bancos = $ban->getDatos();                     
 
         //Cargamos Formulario                                       
-        
+        $form->get('id_tipo_egreso')->setAttribute('value' ,$_POST['tipo_egreso']);       
+        $form->get('id_prov')->setAttribute('value' ,$proveedor[0]['id']);                
         $form->get('destino')->setAttribute('value',$proveedor[0]['nombre']);
         $form->get('concepto')->setAttribute('value',$servicio[0]['nombre']);
         $form->get('origen')->setAttribute('options' ,$fondos);
-        $form->get('id_banco')->setAttribute('options' ,$bancos);
-        $form->get('id_prov')->setAttribute('value' ,$proveedor[0]['id']);
-        $form->get('origen')->setAttribute('value','8');
+        $form->get('id_banco')->setAttribute('options' ,$bancos);        
+        //$form->get('origen')->setAttribute('value','8');
         $form->get('observacion')->setAttribute('value',$servicio[0]['categoria']." / ".$servicio[0]['nombre']);        
 
         $result = new ViewModel(array('form'=>$form));
@@ -361,6 +397,55 @@ class FinanzasController extends AbstractActionController
         $result->setTerminal(true);
 
         return $result;
+    }
+    
+    public function modalcuotasAction()    
+    {
+        //Variables BBDD
+        $sid = new Container('base');
+        $db_name = $sid->offsetGet('dbNombre');
+        $this->dbAdapter=$this->getServiceLocator()->get($db_name);
+        //Obtenemos ID desde POST
+        $data = $this->getRequest()->getPost();  
+        //Instancias 
+        $cob = new CobroTable($this->dbAdapter);     
+        //Obtenemos datos
+        $cobros = $cob->getCobroIdEgreso($data['id_egreso']);
+                
+        //Retornamos a la vista
+        $result = new ViewModel(array('cobros'=>$cobros));
+        $result->setTerminal(true);
+        return $result;
+        
+    }
+    
+    public function egresofileAction()
+    {         
+       //Obtenemos id bbdd  
+       $sid = new Container('base');
+       $id_db = $sid->offsetGet('id_db');
+       //Guardamos Registro en Servidor
+       $File    = $this->params()->fromFiles('nombrefile');                 
+       $adapterFile = new \Zend\File\Transfer\Adapter\Http();
+       $nombre = $adapterFile->getFileName($File,false);
+       $ruta = $_SERVER['DOCUMENT_ROOT'].'/files/db/'.$id_db.'/admin/finanzas/egreso';
+       //Validamos si existe el archivo 
+       if (file_exists($ruta."/".$nombre)){
+                    $status="nok";
+                    $desc="Nombre de Archivo ya existe en el servidor, use otro nombre";
+       }else{
+                    $status="ok";
+                    $adapterFile->setDestination($ruta);
+                    $adapterFile->receive($File['name']);
+                    $nombre = $adapterFile->getFileName($File,false);
+                    $desc="Archivo cargado Exitosamente";
+       }
+
+       
+       //Retornamos a la vista
+       $result = new JsonModel(array('status'=>$status,'desc'=>$desc,'name'=>$nombre));                                            
+       return $result;    
+        
     }
     
     

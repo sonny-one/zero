@@ -1,0 +1,199 @@
+<div class="row">       
+                    <div class="col-lg-12">
+                        <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            <i class="fa fa-send" style="color: #fff;"></i> &nbsp;&nbsp;Residentes del condominio
+                        </div>                            
+                        <div class="panel-body text-center">   
+     <!--1 2 3-->                                  
+            <div class="row udt">
+            <!--Titulo-->
+                  <div class="col-lg-12" style="margin-bottom: 20px;" >
+                  <h3>En 3 simples pasos cargue a los residentes de su condominio</h3>
+                  </div>
+            <!--Fin Titulo-->                
+            <!--1-->
+                 <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                    <br /><br />
+                        <div class="col-lg-12">                        
+                            <i class="fa fa-file-excel-o" style="color: #585DA0; font-size: 42px;"></i><br /><br />
+                        </div>
+                    
+                        <div class="col-lg-12">
+                            <a href="<?php echo $this->ruta;?>" class="btn btn-success"><i class="fa fa-download"></i> &nbsp;&nbsp;Descargar planilla excel</a>
+                        </div>                    
+                  </div>
+             <!--Fin 1-->                  
+             <!--Flecha 1-->     
+                  <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1" style="display: table; height:122px;">                 
+                    <i class="fa fa-arrow-circle-o-right" style="display: table-cell; vertical-align: middle; font-size: 28px;"></i>                    
+                  </div>
+             <!--Fin Flecha 1--> 
+             <!--2-->      
+                  <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                    <br /><br />
+                        <div class="col-lg-12">                        
+                            <i class="fa fa-users" style="color: #585DA0; font-size: 42px;"></i><br /><br />
+                        </div>
+                        
+                        <div class="col-lg-12">                            
+                                <a>
+                                 <input required="true" id="filecopropietarios" onchange="selecciona('copropietarios')" type="file"/>
+                            <button class="btn btn-success">
+                                <i class="fa fa-upload"></i> &nbsp;&nbsp;Seleccionar planilla excel
+                            </button>
+                                </a>                            
+                        </div>                    
+                  </div>    
+             <!--Fin 2-->                  
+             <!--Flecha 2-->                                 
+                  <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1" style="display: table; height:122px;">                 
+                    <i class="fa fa-arrow-circle-o-right" style="display: table-cell; vertical-align: middle; font-size: 28px;"></i>                    
+                  </div>
+             <!--Fin Flecha 2--> 
+             <!--3-->    
+                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                    <br /><br />
+                        <div class="col-lg-12">                        
+                            <i class="fa fa-cogs" style="color: #585DA0; font-size: 42px;"></i><br /><br />
+                        </div>
+                    
+                        <div class="col-lg-12">
+                            <a href="<?php echo $this->ruta;?>" class="btn btn-success"><i class="fa fa-spinner"></i> &nbsp;&nbsp;Importar Copropietarios</a>
+                        </div>                    
+                  </div>           
+             <!--Fin 3-->                                                
+            </div>
+     <!--FIN 1 2 3-->                 
+                <!--div class="row">
+                                <h4 class="page-header" ><i class="fa fa-list-alt"></i> &nbsp;&nbsp;Ultimas circulares </h4>    
+                </div>
+            <div class="col-lg-12">                                                                                        
+                <div class="dataTable_wrapper" id="tablaconserje">
+                                <table class="table table-striped table-bordered table-hover" id="tablacirculares">
+                                    <thead>
+                                        <tr>                                            
+                                            <th>N&deg;</th>
+                                            <th>Asunto</th>
+                                            <th>Destinatario</th>
+                                            <th>Fecha</th>
+                                            <th>Ver</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="body-table-tareas">   
+                                                                                                                           
+                                    </tbody>
+                                </table>
+                            </div>
+                </div-->
+            </div>           
+        </div>           
+     </div>            
+</div>           
+
+
+
+<!-- MODAL Importar -->
+
+
+<div class="modal fade bs-example-modal-sm" id="importarconfirm" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel2" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+        <div  class="modal-content">
+        <div class="modal-body text-center" >
+        <div>
+            <div class="col-lg-12" style="text-align: center;">
+                <div class="col-lg-12" style="padding: 20px;"><i id="iconmodal" class="fa fa-warning fa-3x"></i></div>
+                    <h4 id="text">&iquest; Est&aacute; seguro que los datos estan correctos ? </h4><br />
+            </div>
+            
+                    <button id="cancelarmodal" class="btn btn-danger" data-dismiss="modal" > Cancelar</button>&nbsp;&nbsp;&nbsp;&nbsp;
+                    <button id="aceptaimportar" class="btn btn-success"> Aceptar</button>           
+        </div>
+        <div class="row" id="rsptaelim" style="display: none;">
+            <div class="col-lg-12" style="text-align: center;">
+                <div class="col-lg-12" style="padding: 20px;"><i class="fa fa-check fa-3x"></i></div>
+                    <h4 id="descrpelim"></h4><br />
+            </div>
+        </div>
+         </div> 
+        </div>                 
+    </div>              
+</div>
+<!-- FIN  MODAL Importar -->
+<script>
+var test = $("#todotablares").css("display");
+if (test == "block"){
+$('#dataTables-residente').DataTable({
+                responsive: true
+});
+/*$.ajax( {  
+        url : '<?php echo $this->basePath()."/admin/infocom/getunidades"?>',
+		type : 'post',
+        beforeSend : function() {        
+           $("#loading").html("<span id='loading'><i class='fa fa-clock-o'></i> &nbsp;&nbsp;Espere unos segundos...</span>").fadeIn(1200);
+           $('#dataTable-residente').DataTable().clear();                  
+            },        
+		success : function(response) {        
+        $("#loading").fadeOut();
+        $("#todouni").fadeIn();
+        var t = $('#dataTable-unidades').DataTable();              
+        for (i=0; i<=response.uni.length; i++) {        
+         t.row.add( [                        
+            response.uni[i].nombre,
+            response.uni[i].tipo,
+            response.uni[i].piso,
+            response.uni[i].mts,
+            response.uni[i].descripcion,                                          
+        ] ).draw();                                               
+      }
+    $("#todouni").fadeIn(200);                         
+  }   
+}); */
+}else{
+    $("#todouni").css('display','block');
+}
+function selecciona(nombre){
+    if(document.getElementById('file'+nombre).files[0].size<2000000){
+  	 document.getElementById("mostrarnombre"+nombre).innerHTML="Archivo seleccionado: [<strong>"+document.getElementById('file'+nombre).files[0].name+"</strong>] OK";
+    }else{
+     document.getElementById("mostrarnombre"+nombre).innerHTML="<font color='red'>Error Ha superado el limite permitido (2Mb): [<strong>"+document.getElementById('fileupload').files[0].name+"</strong>] NOK</font>";
+    }
+    
+    
+  }
+function importame(n,from){    
+if (n==1){    
+var data = new FormData();
+    jQuery.each(jQuery('#file'+from)[0].files, function(i, file) {
+    data.append('file-'+i, file);
+    });    
+    data.append('flag', from);
+	$.ajax( {
+	    url : '<?php echo $this->basePath()."/admin/infocom/excelpropietario"?>',
+		data : data,
+        cache: false,
+        contentType: false,
+        processData: false,
+        type: 'POST',   
+		success : function(response) {					                     
+          if(response.status = 'ok'){
+            $("#text").text(response.descripcion);
+            $("#iconmodal").attr('class',"fa fa-check fa-3x");             
+            $("#aceptaimportar").css('display',"none");
+            $("#cancelarmodal").css('display',"none");                                       
+            setTimeout(function(){             
+             $('#importarconfirm').modal('hide');             
+            }, 3000); 	 
+          }else
+          {
+            $("#text").text(response.descripcion);
+            $("#iconmodal").attr('class',"fa fa-close fa-3x"); 
+          }
+		}
+	}); 
+}else{
+$('#importarconfirm').modal('show');    
+$('#aceptaimportar').click(function(){importame(1,from);});      
+} 
+}
+</script>

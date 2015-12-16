@@ -18,9 +18,10 @@ class EgresoTable extends TableGateway
     private $id_banco;
     private $foto;
     private $observacion;
-    private $tipo_egreso;
+    private $id_tipo_egreso;
     private $concepto;
     private $user_create;
+    private $cuotas;
     
     
  
@@ -37,13 +38,14 @@ class EgresoTable extends TableGateway
         $this->monto=$datos["montototal"];
         $this->forma_pago=$datos["forma_pago"];
         $this->fecha_pago=$datos["fecha"];
-        $this->nmro_operacion=$datos["nmro_operacion"];
+        $this->nmro_operacion=$datos["nmrooperacion"];
         $this->id_banco=$datos["id_banco"];
 		$this->observacion=$datos["observacion"];
-        $this->foto=$datos["imgpagoprov"];
-		$this->tipo_egreso=$datos["tipo_egreso"];
+        $this->foto=$datos["foto"];
+		$this->id_tipo_egreso=$datos["id_tipo_egreso"];
         $this->concepto=$datos["concepto"];
 		$this->user_create=$datos["user_create"];
+        $this->cuotas=$datos["cuotas"];
         
     }
     
@@ -61,9 +63,10 @@ class EgresoTable extends TableGateway
                 'id_banco'=>$this->id_banco,
                 'observacion'=>$this->observacion,
                 'foto'=>$this->foto,
-                'tipo_egreso'=>$this->tipo_egreso,
+                'id_tipo_egreso'=>$this->id_tipo_egreso,
                 'concepto'=>$this->concepto,                
-                'user_create'=>$this->user_create,                                
+                'user_create'=>$this->user_create,
+                'cuotas'=>$this->cuotas,                                
                 'activo'=> '1',
              );
                $this->insert($array);
