@@ -7,23 +7,12 @@ use Zend\View\Model\ViewModel;
 use Zend\View\Model\JsonModel;
 use Zend\Session\Container;
 
-use Sistema\Util\SysFnc;
+
 
 use Sistema\Model\Entity\ReclamoTable;
-use Sistema\Model\Entity\TipoAsuntoTable;
-use Sistema\Model\Entity\CtacteTable;
-use Sistema\Model\Entity\LavanderiaTable;
-use Sistema\Model\Entity\InfocomgralTable;
-use Sistema\Model\Entity\EdificacionTable;
-use Sistema\Model\Entity\AscensorTable;
-use Sistema\Model\Entity\FondosTable;
-use Sistema\Model\Entity\PartidaMantTable;
-use Sistema\Model\Entity\Prueba2Table;
-use Sistema\Model\Entity\NotaMantTable;
-use Sistema\Model\Entity\TareaTable;
-use Sistema\Model\Entity\TrabajadorTable;
-use Sistema\Model\Entity\ProveedorTable;
-use Sistema\Model\Entity\InventarioTable;
+
+use Usuario\Form\ReclamoForm;
+
 
 
 class ComunicacionController extends AbstractActionController
@@ -32,46 +21,62 @@ class ComunicacionController extends AbstractActionController
     public function indexAction()
     
     {                                       
-        $this->layout('layout/usuario');
-        //Conectamos con BBDD
-        $sid = new Container('base');
-        $db_name = $sid->offsetGet('dbNombre');
-        $this->dbAdapter=$this->getServiceLocator()->get($db_name);
-           
-        //$color  = "#D9EDF7";
-      //  $resultado = $prueba->getDatos('1');                                                           
-        return new ViewModel();
+            
     }
-   //////////////////////////////////////////////////////////////////////// NOTAS                                         
-    public function notasAction()
+            
+    public function reclamoAction()
     
-    {   //Conectamos con BBDD
+    {   
+        //Conectamos con BBDD
         $sid = new Container('base');
         $db_name = $sid->offsetGet('dbNombre');
         $this->dbAdapter=$this->getServiceLocator()->get($db_name); 
         //Instancias
-        $nota = new NotaMantTable($this->dbAdapter);
-        $cicl = new CicloAdminTable($this->dbAdapter);
-        //Obtenemos Notas
-        $notas = $nota->getNotas();
-        //Obtenemos dia de cierre y calculamos restantes        
-        $cierre = $cicl->getCiclo();        
-            if(date('j')>$cierre[0]['dia']){
-                $dias_mes = cal_days_in_month(CAL_GREGORIAN, date('n'), date('Y'));
-                $dif = ($dias_mes-date('j'))+$cierre[0]['dia']; 
-                $mes_cierre =  date('F', strtotime('+1 month')) ;               
-            }else{
-                 $dif = $cierre[0]['dia']-date('j');    
-                 $mes_cierre = date('F');        
-            }
-        //Fecha mes administrativo
-          $descr_cierre = "Pr\u00f3ximo fin mes administrativo :  ".$cierre[0]['dia']." de ".$mes_cierre." de ".date('Y');                            
+        $recl = new ReclamoTable($this->dbAdapter);
+                
+                          
         //Retornamos a la vista
-        $result = new ViewModel(array('notas'=>$notas,'dif'=>$dif,'cierre'=>$descr_cierre));            
-        $result->setTerminal(true);        
-        
+        $this->layout('layout/usuario');
+        $result = new ViewModel();            
+             
         return $result;
     }
+    
+        public function nuevoreclamoAction()
+    
+    {   
+        //Conectamos con BBDD
+        $sid = new Container('base');
+        $db_name = $sid->offsetGet('dbNombre');
+        $this->dbAdapter=$this->getServiceLocator()->get($db_name); 
+        //Instancias
+        $recl = new ReclamoTable($this->dbAdapter);
+        
+        //Cargamos Formulario 
+        $form = new ReclamoForm("form"); 
+        
+                          
+        //Retornamos a la vista        
+        $result = new ViewModel(array('form'=>$form));            
+        $result->setTerminal(true);    
+        return $result;
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     /*
     public function modalnotasAction()    
     {    

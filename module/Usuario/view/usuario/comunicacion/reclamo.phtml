@@ -1,0 +1,93 @@
+<div class="row">
+				<div class="col-md-12 ">
+					<!-- BEGIN SAMPLE FORM PORTLET-->
+					<div class="portlet box green">
+						<div class="portlet-title">
+							<div class="caption">
+								<i class="fa fa-bullhorn"></i>  Reclamos del condominio  
+							</div>                            
+						</div>                                                                    
+						<div class="portlet-body">                 
+                            
+                            
+                            <a onclick="modalNuevoReclamo()" data-toggle="modal" data-target="#modalNuevoReclamo" class="btn btn-success"> 
+                            <i class="fa fa-plus"></i> &nbsp;
+                                    Nuevo Reclamo                            
+                            </a>
+                            
+                            <br />
+                              <br />
+                            <table class="table">
+								<thead>
+								<tr>
+									<th>
+										 N&deg;
+									</th>
+									<th>
+										 Asunto
+									</th>
+									<th>
+										 Origen
+									</th>
+									<th>
+										 Me gusta
+									</th>
+								</tr>
+								</thead>
+								<tbody>
+								<tr>
+									<td>
+										 15
+									</td>
+									<td>
+							             Gritos
+									</td>
+									<td>
+										 Dpto 1503
+									</td>
+									<td>
+										<a class="btn btn-circle btn-default">
+								            <i class="fa fa-thumbs-up"></i> 35 
+                                        </a>	
+									</td>
+								</tr>
+								</tbody>
+								</table>
+
+                            
+                            
+                        </div>
+                    </div>
+                </div>
+</div>                                                                         
+
+
+<!-- MODAL Nuevo Reclamo -->
+
+<div class="modal fade" id="modalNuevoReclamo"  tabindex="-1" role="dialog"  aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+        <div  class="modal-content">
+        <div id="BodyNuevoReclamo" class="modal-body" >
+                Cargando...
+         </div> 
+        </div>                     
+    </div>              
+</div>
+
+<!-- FIN MODAL Nuevo Reclamo -->
+                    
+<script>
+toastr.options = {
+  "positionClass": "toast-top-center",
+}
+
+function modalNuevoReclamo(){ 
+	$.ajax( {  
+        url  : '<?php echo $this->basePath()."/usuario/comunicacion/nuevoreclamo"?>',		 
+		success : function(response) {
+		  $("#BodyNuevoReclamo").html(response);    
+       }   
+       });    
+}
+
+</script>                                                   

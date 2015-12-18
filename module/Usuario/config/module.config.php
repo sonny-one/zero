@@ -76,6 +76,7 @@ return array(
     'controllers' => array(
         'invokables' => array(
             'Usuario\Controller\Index' => 'Usuario\Controller\IndexController',
+            'Usuario\Controller\Comunicacion' => 'Usuario\Controller\ComunicacionController',
             'Usuario\Controller\Club' => 'Usuario\Controller\ClubController',
             'Usuario\Controller\Reclamo' => 'Usuario\Controller\ReclamoController',
             'Usuario\Controller\Sugerencia' => 'Usuario\Controller\SugerenciaController',
