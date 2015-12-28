@@ -167,7 +167,7 @@ class ProveedorForm extends Form
             'attributes' => array(
                 'type' => 'reset',
                 'value' => 'Cancelar',
-                'onclick' => 'closeModal();',
+                'data-dismiss' => 'modal',
                 'title' => 'Cancelar',
                 'class' => 'btn btn-danger'
             ),

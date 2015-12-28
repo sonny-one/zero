@@ -196,29 +196,10 @@ $("input#rut_prov").rut({validateOn: 'change'}).on('rutInvalido', function(){
 $("input#rut_prov").rut({validateOn: 'blur'}).on('rutValido', function(){
     $('#send_prov').removeAttr("disabled");
    $("input#rut_prov").popover('destroy').css("background","#fff");   
-});         
-function comboServicio(){
-    postData = {'categoria' : $('#categoria').find('option:selected').text()}
-    $.ajax(
-    {
-        url : '<?php echo $this->basePath()."/admin/finanzas/comboservicio"?>',
-        type: "POST",
-        data : postData,
-        dataType : 'json',
-        success : function(response) {              
-        var sel = $("#servicio");
-        sel.empty();
-          for (var i=0; i<Object.keys(response).length; i++) {                    
-            sel.append('<option value="' + Object.keys(response)[i] + '">' + response[Object.keys(response)[i]] + '</option>');
-            }                                        
-        },
-        error: function(jqXHR, textStatus, errorThrown) 
-        {            
-            alert("error"); 
-        }
-    });
-}          
+});                
 $("#nuevoproveedor").submit(function(e){
+    $("#servicio").removeAttr("disabled");
+    $("#categoria").removeAttr("disabled");
     var postData = $(this).serializeArray();
     var formURL = $(this).attr("action");
     $.ajax(
@@ -229,32 +210,18 @@ $("#nuevoproveedor").submit(function(e){
         dataType : 'json',
         success : function(response) {
             if (response.status=='ok'){
-           $("#todonvoprov").css("display","none");
-           $("#nprespuestaok").css("display","block");
-           $("#npdescrok").text(response.descripcion); 
-          //  console.log (response.prov[0]['nombre']);
-            var t = $('#tablaprov').DataTable();  
-            t.row.add([            
-            response.prov[0]['nombre'],
-            response.prov[0]['servicio'],
-            response.prov[0]['telefono'],
-            response.prov[0]['direccion'],
-            response.prov[0]['ciudad'],                        
-        ]).draw();              
-           setTimeout(function(){             
-             $("#modalprov").modal('hide');             
-            }, 3000);
-           
+           toastr.success(response.descripcion);    
+            $("#modal_proveedor").modal('hide');
+            $("#id_proveedor").append($('<option></option>').val(response.prov[0].id).html(response.prov[0].nombre));   
+            $('#id_proveedor').val(response.prov[0].id);
+            $('#id_proveedor').attr('disabled','disabled');                     
             }else{
-            $("#alerta").text(response.descripcion).show();                
-            $("#alerta").delay(3000).hide(600);    
+            toastr.info(response.descripcion);                              
             }                                        
         },
         error: function(jqXHR, textStatus, errorThrown) 
         {            
-            $("#todonvoprov").css("display","none");
-            $("#nprespuestanok").css("display","block");
-            $("#npdescrnok").text("Ups! Ocurrio un problema, favor intenta nuevamente");      
+            toastr.error("Ups, ha ocurrido un error inesperado, favor contacta con soporte");      
         }
     });
     e.preventDefault(); //STOP default action        

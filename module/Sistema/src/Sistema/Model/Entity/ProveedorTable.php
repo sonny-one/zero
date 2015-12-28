@@ -76,13 +76,27 @@ class ProveedorTable extends TableGateway
     public function getProveedoresCombo(Adapter $dbAdapter){
 
          $this->dbAdapter=$dbAdapter;
-         $query = "select distinct(nombre) from sis_w_proveedor";
+         $query = "select distinct id,nombre from sis_w_proveedor where activo = '1'";
          $result=$this->dbAdapter->query($query,Adapter::QUERY_MODE_EXECUTE);
          $recorre = $result->toArray();
          $resultado["0"]="Seleccione un Proveedor";
             for($i=1;$i<=count($recorre);$i++)
                 {
-                    $resultado[$i] = $recorre[$i-1]['nombre']; 
+                    $resultado[$recorre[$i-1]['id']] = $recorre[$i-1]['nombre']; 
+                }
+            return $resultado;
+    }
+    
+    public function getAseguradoras(Adapter $dbAdapter, $id_servicio){
+
+         $this->dbAdapter=$dbAdapter;
+         $query = "select distinct id,nombre from sis_w_proveedor where id_servicio = '$id_servicio' and activo = '1'";
+         $result=$this->dbAdapter->query($query,Adapter::QUERY_MODE_EXECUTE);
+         $recorre = $result->toArray();
+         $resultado["0"]="Seleccione una Aseguradora";
+            for($i=1;$i<=count($recorre);$i++)
+                {
+                    $resultado[$recorre[$i-1]['id']] = $recorre[$i-1]['nombre']; 
                 }
             return $resultado;
     }
@@ -118,7 +132,7 @@ class ProveedorTable extends TableGateway
     public function getProveedoresRut($rut)
     {
         
-        $datos = $this->select(array('rut'=>$rut));
+        $datos = $this->select(array('rut'=>$rut,'activo'=>'1'));
         $recorre = $datos->toArray();
                       
         return $recorre;

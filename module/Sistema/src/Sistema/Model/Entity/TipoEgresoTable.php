@@ -27,5 +27,12 @@ class TipoEgresoTable extends TableGateway
           $resultado[$recorre[$i]['id']] = $recorre[$i]['nombre']; 
         }
         return $resultado;
-    }         
+    } 
+    
+    public function getTipoNombre($nombre)
+    {
+        $datos = $this->select(array('nombre'=>$nombre));
+        $recorre = $datos->toArray();
+        return $recorre;          
+    }        
 }

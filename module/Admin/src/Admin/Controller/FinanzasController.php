@@ -514,7 +514,7 @@ class FinanzasController extends AbstractActionController
 
     }
 
-         public function nuevoproveedorAction()
+    public function nuevoproveedorAction()
     {
         //Conectamos con BBDD
         $sid = new Container('base');

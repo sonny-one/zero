@@ -18,7 +18,7 @@ use Sistema\Model\Entity\SalonTable;
 use Sistema\Model\Entity\QuinchoTable;
 use Sistema\Model\Entity\LavanderiaTable;
 use Sistema\Model\Entity\GimnasioTable;
-use Sistema\Model\Entity\FondoOperTable;
+use Sistema\Model\Entity\FondosTable;
 use Sistema\Model\Entity\SeguroTable;
 use Sistema\Model\Entity\CajachicaTable;
 use Sistema\Model\Entity\MultaTable;
@@ -27,6 +27,15 @@ use Sistema\Model\Entity\BodegaTable;
 use Sistema\Model\Entity\UnidadTable;
 use Sistema\Model\Entity\EstacionamientoTable;
 use Sistema\Model\Entity\PersonaDetTable;
+use Sistema\Model\Entity\CobroTable;
+use Sistema\Model\Entity\ProveedorTable;
+use Sistema\Model\Entity\TipoEgresoTable;
+use Sistema\Model\Entity\EgresoTable;
+use Sistema\Model\Entity\ListaBancoTable;
+use Sistema\Model\Entity\TipoServicioTable;
+use Sistema\Model\Entity\CamaraTable;
+
+
 
 use Sistema\Model\Entity\General\DbTable;
 use Sistema\Model\Entity\General\PersonaTable;
@@ -48,6 +57,7 @@ use Admin\Form\CamarasForm;
 use Admin\Form\CajachicaForm;
 use Admin\Form\MultasForm;
 use Admin\Form\ConserjeForm;
+use Admin\Form\ProveedorForm;
 
 class InfocomController extends AbstractActionController
 
@@ -112,8 +122,9 @@ class InfocomController extends AbstractActionController
         $form2->get('acceso')->setAttribute('value' ,$edificacion['0']['acceso']);
         $form2->get('lavanderia')->setAttribute('value' ,$edificacion['0']['lavanderia']);                 
         
-        $this->layout('layout/admin');                     
-        $result = new ViewModel(array('form'=>$form,'form2'=>$form2,'url'=>$this->getRequest()->getBaseurl()));                    
+        //$this->layout('layout/admin');                     
+        $result = new ViewModel(array('form'=>$form,'form2'=>$form2,'url'=>$this->getRequest()->getBaseurl()));   
+        $result->setTerminal(true);                  
         return $result;
         
         }
@@ -561,8 +572,7 @@ class InfocomController extends AbstractActionController
             if (count($bodegas)>0){$displaybodegas = "none";}else{$displaybodegas = "block";}
             if (count($estacionamientos)>0){$displayestacionamientos = "none";}else{$displayestacionamientos = "block";}
             if (count($unidades)>0){$displayunidades = "none";}else{$displayunidades = "block";}            
-        
-        $this->layout('layout/admin'); 
+                
         $result = new ViewModel(array('valores'=>$valores,
                                       'displaytablauni'=>$displaytablauni,
                                       'displaybodegas'=>$displaybodegas,
@@ -571,7 +581,7 @@ class InfocomController extends AbstractActionController
                                       'chart'=>$chart,
                                       
                                       ));
-        
+        $result->setTerminal(true);  
         return $result;
     }
     
@@ -1539,61 +1549,35 @@ class InfocomController extends AbstractActionController
     
 
     
-
     public function guardargimnasioAction()       
-
     {
-
             //Obtenemos datos post                                              
-
             $lista = $this->request->getPost();            
-
             $sid = new Container('base');
-
             $db_name = $sid->offsetGet('dbNombre');
-
             $this->dbAdapter=$this->getServiceLocator()->get($db_name);
-
             
-
             $gim = new GimnasioTable($this->dbAdapter);
-
             // Validamos si es Insert o Update                      
-
             $id_pk = $lista['id_pk'];
-
             if($id_pk > 0){        
-
             $gim->actualizarGim($id_pk, $lista);   
-
             $descripcion ="Edici&oacute;n de Gimnasio exitosa";                           
-
             }else{                                     
-
             $gim->nuevoGim($lista);  
-
             $descripcion ="Gimnasio ingresado exitosamente al sistema"; 
-
             }       
-
             $lista = $gim->getDatos();       
-
             $result = new JsonModel(array(
-
                                     'status'=>'ok',
-
                                     'descripcion'=>$descripcion,
-
                                     'gim'=>$id_pk,                  
-
                     ));                                
-
-
 
              return $result;                               
     }
 
-//                                                          *****************SEGURIDAD************                        
+    ///////////////////////////////////////////////////// *****************SEGURIDAD************                        
     public function seguridadAction()
     {      
         $form = new SeguroForm("form");
@@ -1610,97 +1594,258 @@ class InfocomController extends AbstractActionController
         
         return $result;
     }
+            
+        
 
 //////////////////////////////////////////////////////////////////////////////SEGUROS
 
-
-
- public function seguroAction()
-
+    public function formseguroAction()
     {           
-
+           //Conectamos a BBDD
            $sid = new Container('base');
-
            $db_name = $sid->offsetGet('dbNombre');
-
+           $id_db = $sid->offsetGet('id_db');
            $this->dbAdapter=$this->getServiceLocator()->get($db_name);
-
-           $seg = new SeguroTable($this->dbAdapter);
-
-           $lista = $seg->getDatos();                                                                                              
-
-           $result = new JsonModel(array(
-
+           //Tablas y formularios           
+           $fon = new FondosTable($this->dbAdapter);
+           $tegr  = new TipoEgresoTable($this->dbAdapter);
+           $tser  = new TipoServicioTable($this->dbAdapter);
+           $prov  = new ProveedorTable($this->dbAdapter);           
+           $form = new SeguroForm("form");
+           //Obtenemos Datos  
+           $fondo   = $fon->getFondoOper();  
+           $servicio   = $tser->getServicioNombre("Aseguradora");
+           $tipo_egreso = $tegr->getTipoNombre("Seguros y Otros");
+           $aseguradoras = $prov->getAseguradoras($this->dbAdapter,$servicio[0]['id']);
+           //Cargamos form con datos para el egreso
+           $form->get('origen')->setAttribute('value' ,$fondo[0]['id']);
+           $form->get('id_tipo_egreso')->setAttribute('value' ,$tipo_egreso[0]['id']);  
+           $form->get('id_proveedor')->setAttribute('options' ,$aseguradoras);                                         
+                                                                                              
+           $result = new ViewModel(array(
                                     'status'=>'ok',
-
-                                    'seg'=>$lista,
-
+                                    'form'=>$form,                                    
                 ));
-
+           $result->setTerminal(true);     
            return $result;                    
-
-    }    
-
+    }
     
+    public function nuevoaseguradorAction()
+    {        
+        //Conectamos con BBDD
+        $sid = new Container('base');
+        $db_name = $sid->offsetGet('dbNombre');
+        $this->dbAdapter=$this->getServiceLocator()->get($db_name);
+        
+        //Instancias
+        $form = new ProveedorForm("form");
+        $ban  = new ListaBancoTable($this->dbAdapter);
+        $srv  = new TipoServicioTable($this->dbAdapter);
+        
+        //Obtenemos Datos y cargamos Formulario
+        $tipos = $srv->getComboAseguradora($this->dbAdapter);
+        $servi = $srv->getComboServAseguradora($this->dbAdapter);  
+               
+        $bancos = $ban->getDatos();
+        
+        //Cargamos combos
+        $form->get('categoria')->setAttribute('options' ,$tipos);
+        $form->get('categoria')->setAttribute('disabled', 'disabled');
+        $form->get('servicio')->setAttribute('options' ,$servi);
+        $form->get('servicio')->setAttribute('disabled', 'disabled');              
+        $form->get('id_banco')->setAttribute('options' ,$bancos);
+        
+        //Retornamos a la vista
+        $result = new ViewModel(array('form'=>$form));
+        $result->setTerminal(true);        
 
-    
+        return $result; 
+    }
 
-    
-
-    public function guardarseguroAction()       
-
-    {
-
-            //Obtenemos datos post  
-
-                                                        
-
-            $lista = $this->request->getPost();            
-
-            $sid = new Container('base');
-
-            $db_name = $sid->offsetGet('dbNombre');
-
-            $this->dbAdapter=$this->getServiceLocator()->get($db_name);
-
-            
-
-            $seg = new SeguroTable($this->dbAdapter);
-
-            // Validamos si es Insert o Update                      
-
-            $id_pk = $lista['id_pk'];
-
-            if($id_pk > 0){        
-
-            $seg->actualizarSeguro($id_pk, $lista);   
-
-            $descripcion ="Edici&oacute;n de Seguros exitosa";                           
-
-            }else{                                     
-
-            $seg->nuevoSeguro($lista);  
-
-            $descripcion ="Seguro ingresado exitosamente al sistema"; 
-
-            }       
-
-            $lista = $seg->getDatos();       
-
-            $result = new JsonModel(array(
-
+    public function seguroAction()
+    {           
+           //Conectamos a BBDD
+           $sid = new Container('base');
+           $db_name = $sid->offsetGet('dbNombre');
+           $id_db = $sid->offsetGet('id_db');
+           $this->dbAdapter=$this->getServiceLocator()->get($db_name);
+           //Tablas y formularios
+           $seg = new SeguroTable($this->dbAdapter);
+           $fon = new FondosTable($this->dbAdapter);
+           $cob = new CobroTable($this->dbAdapter);
+           $tegr  = new TipoEgresoTable($this->dbAdapter);
+           $prov  = new ProveedorTable($this->dbAdapter);           
+           $form = new SeguroForm("form");
+           //Obtenemos Datos
+           $seguros = $seg->getDatos();  
+           $fondo   = $fon->getFondoOper();  
+           $tipo_egreso = $tegr->getTipoNombre("Seguros y Otros");
+           $proveedores = $prov->getProveedoresCombo($this->dbAdapter);
+           //Cargamos form con datos para el egreso
+           $form->get('origen')->setAttribute('value' ,$fondo[0]['id']);
+           $form->get('id_tipo_egreso')->setAttribute('value' ,$tipo_egreso[0]['id']);  
+           $form->get('id_proveedor')->setAttribute('options' ,$proveedores);                              
+           //Construimos tabla de Seguros           
+           $tabla="";   
+           $ruta = '/files/db/'.$id_db.'/admin/infocom/seguro/';
+            for($i=0;$i<count($seguros);$i++){
+                if($seguros[$i]['estado'] == '1'){$estado="Activo";}else{$estado="Finalizado";}
+                $pf = strtotime($seguros[$i]['vigenciafin']);
+                $mostrarF = date("d-M-Y", $pf);
+                $prox_cuota = $cob->getCobroIdEgreso($seguros[$i]['id_egreso']);
+             $tabla=$tabla."<tr>
+                            <td align='left'>".$seguros[$i]['poliza']."</td>
+                            <td align='left'>".$seguros[$i]['riesgo']."</td>
+                            <td align='left'>$ ".number_format($seguros[$i]['valor_prima'],"0",".",".")."</td>
+                            <td align='left'>".$prox_cuota[0]['cuota']."/".$seguros[$i]['cuotas']."</td>
+                            <td align='left'>".$mostrarF."</td>
+                            <td align='left'>".$estado."</td>
+                            <td align='left'><a target='_blank' href='".$ruta.$seguros[$i]['url_poliza']."'><i class='fa fa-file'></i></td>
+                            </tr>";
+            }
+           
+           
+           
+                                                                                              
+           $result = new JsonModel(array(
                                     'status'=>'ok',
+                                    'tabla'=>$tabla,                                    
+                ));
+           $result->setTerminal(true);     
+           return $result;                    
+    }    
+    
+    public function segurofileAction()
+    {         
+       //Obtenemos id bbdd  
+       $sid = new Container('base');
+       $id_db = $sid->offsetGet('id_db');
+       //Guardamos Registro en Servidor
+       $File    = $this->params()->fromFiles('filepoliza');                 
+       $adapterFile = new \Zend\File\Transfer\Adapter\Http();
+       $nombre = $adapterFile->getFileName($File,false);
+       $ruta = $_SERVER['DOCUMENT_ROOT'].'/files/db/'.$id_db.'/admin/infocom/seguro';
+       //Validamos si existe el archivo 
+       if (file_exists($ruta."/".$nombre)){
+                    $status="nok";
+                    $desc="Nombre de Archivo ya existe en el servidor, use otro nombre";
+       }else{
+                    $status="ok";
+                    $adapterFile->setDestination($ruta);
+                    $adapterFile->receive($File['name']);
+                    $nombre = $adapterFile->getFileName($File,false);
+                    $desc="Archivo cargado Exitosamente";
+       }
 
-                                    'descripcion'=>$descripcion,
+       
+       //Retornamos a la vista
+       $result = new JsonModel(array('status'=>$status,'desc'=>$desc,'name'=>$nombre));                                            
+       return $result;    
+        
+    }      
 
+    
+    public function guardarseguroAction()       
+    {
+            //Obtenemos datos post                                                          
+            $lista = $this->request->getPost();
+            //Conectamos a BBDD            
+            $sid = new Container('base');
+            $db_name = $sid->offsetGet('dbNombre');
+            $lista['user_create'] = $sid->offsetGet('id_usuario');
+            $this->dbAdapter=$this->getServiceLocator()->get($db_name);
+            
+            $seg = new SeguroTable($this->dbAdapter);
+            $cob = new CobroTable($this->dbAdapter);   
+            $egr = new EgresoTable($this->dbAdapter); 
+            //Quitamos puntos al monto
+            $lista['valor_prima'] = str_replace(".","",$lista['valor_prima']);
+            $lista['montototal'] = $lista['valor_prima'];
+            // Validamos si es Insert o Update                      
+            if($lista['id_pk'] > 0){        
+                $seg->actualizarSeguro($lista);   
+                $desc ="Edici&oacute;n de Seguros exitosa";                           
+            }else{                                     
+                //Insertamos en Tablas de Egreso y Seguro                
+                $lista['foto'] = $lista['url_poliza'];
+                $lista['id_egreso'] = $egr->nuevoEgreso($lista);
+                $seg->nuevoSeguro($lista);
+                //Si existen Cuotas se ingresan como Cobros Pendientes
+                if($lista['cuotas']>1){
+                   for ($i=1;$i<$lista['cuotas'];$i++) {                     
+                     //Agregamos datos al array
+                     $lista['valor'] = $lista['valor_prima'];
+                     $lista['cuota'] = $i+1;                     
+                     $lista['fecha_cobro'] = date("Y/m/d", strtotime(date("Y/m/d")." +$i month"));   
+                     $lista['desc'] = $lista['cuota']."/".$lista['cuotas'];                               
+	                 $cob->nuevoCobro($lista);      
+                     $desc = 'Seguro ingresado exitosamente, se agregan '.$lista['cuotas'].' cobros mensuales';
+                  }  
+                }
+            }       
+            $lista = $seg->getDatos();       
+            $result = new JsonModel(array(
+                                    'status'=>'ok',
+                                    'descripcion'=>$desc,
                                     'seg'=>$id_pk,                  
-
                     ));                                
-
-
-
              return $result;                               
 
+    }
+    
+    public function camarasAction()
+    {
+      //Obtenemos datos post                                                          
+      $lista = $this->request->getPost();
+      //Conectamos a BBDD            
+      $sid = new Container('base');
+      $db_name = $sid->offsetGet('dbNombre');      
+      $this->dbAdapter=$this->getServiceLocator()->get($db_name);  
+      //Instancias      
+      $cam = new CamaraTable($this->dbAdapter);
+      $form = new CamarasForm("form");
+      
+      //Validamos si es POST
+      if (isset($lista['id_pk_cam'])){
+      $lista['user_create'] = $sid->offsetGet('id_usuario');      
+      
+      if($lista['id_pk_cam'] > 0){ 
+            //Actualizamos nueva info de camaras
+            $cam->editarCamara($lista['id_pk_cam'],$lista);
+            $desc = "Cambios guardados exitosamente"; 
+      }      
+      else{
+        
+            //Insertamos nueva info de camaras
+            $cam->nuevaCamara($lista);
+            $desc = "Datos ingresados exitosamente";
+                
+      }
+            //Retornamos a la Vista
+            $result = new JsonModel(array(
+                                    'status'=>'ok',
+                                    'desc'=>$desc,                                                      
+                    ));                   
+            $result->setTerminal(true);             
+            return $result; 
+      
+      }else{
+       $camaras = $cam->getDatos();
+       //Validamos si existen datos
+       if(isset($camaras)){
+        $form->get('id_pk_cam')->setAttribute('value' ,$camaras[0]['id']);
+        $form->get('graban')->setAttribute('value' ,$camaras[0]['graban']);
+        $form->get('camaras')->setAttribute('value' ,$camaras[0]['camaras']);
+        $form->get('reglas')->setAttribute('value' ,$camaras[0]['reglas']);
+       } 
+            //Retornamos a la Vista
+            $result = new ViewModel(array(
+                                    'status'=>'ok',
+                                    'form'=>$form,                                                      
+                    ));                   
+            $result->setTerminal(true);             
+            return $result;                     
+      }                                 
     }
     
     //////////////////////////////////////////////////////////////////////////////Conserjes

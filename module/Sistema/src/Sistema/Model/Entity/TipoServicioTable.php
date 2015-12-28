@@ -33,6 +33,32 @@ class TipoServicioTable extends TableGateway
          return $resultado;
     }
     
+    public function getComboAseguradora(Adapter $dbAdapter){
+
+         $this->dbAdapter=$dbAdapter;
+         $query = "select distinct(categoria), id from sis_m_servicio where nombre='Aseguradora' group by categoria order by categoria desc";
+         $datos=$this->dbAdapter->query($query,Adapter::QUERY_MODE_EXECUTE);
+         $recorre = $datos->toArray();
+            for($i=0;$i<count($recorre);$i++)
+              {
+                $resultado[$recorre[$i]['id']] = $recorre[$i]['categoria']; 
+              }
+         return $resultado;
+    }
+    public function getComboServAseguradora(Adapter $dbAdapter){
+
+         $this->dbAdapter=$dbAdapter;
+         $query = "select distinct(nombre), id from sis_m_servicio where nombre='Aseguradora' group by nombre order by nombre desc";
+         $datos=$this->dbAdapter->query($query,Adapter::QUERY_MODE_EXECUTE);
+         $recorre = $datos->toArray();
+            for($i=0;$i<count($recorre);$i++)
+              {
+                $resultado[$recorre[$i]['id']] = $recorre[$i]['nombre']; 
+              }
+         return $resultado;
+    }
+    
+    
     public function getComboServicio($categoria)
     {
         $datos = $this->select(array('categoria'=>$categoria));
@@ -49,6 +75,15 @@ class TipoServicioTable extends TableGateway
     {
         
         $datos = $this->select(array('id'=>$id));
+        $recorre = $datos->toArray();
+                      
+        return $recorre;
+    }
+    
+    public function getServicioNombre($nombre)
+    {
+        
+        $datos = $this->select(array('nombre'=>$nombre));
         $recorre = $datos->toArray();
                       
         return $recorre;

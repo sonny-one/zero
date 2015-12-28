@@ -10,7 +10,8 @@ class EgresoTable extends TableGateway
 {
     private $origen;
     private $id_fondo;
-    private $destino; 
+    private $destino;
+    private $id_proveedor;  
     private $monto;
     private $forma_pago;
     private $fecha_pago;
@@ -34,7 +35,8 @@ class EgresoTable extends TableGateway
     private function cargarCampos($datos=array())
     {    
         $this->id_fondo=$datos["origen"]; 
-        $this->destino=$datos["destino"];  
+        $this->destino=$datos["destino"];
+        $this->id_proveedor=$datos["id_proveedor"];    
         $this->monto=$datos["montototal"];
         $this->forma_pago=$datos["forma_pago"];
         $this->fecha_pago=$datos["fecha"];
@@ -56,6 +58,7 @@ class EgresoTable extends TableGateway
              (
                 'id_fondo'=>$this->id_fondo,
                 'destino'=>$this->destino,
+                'id_proveedor'=>$this->id_proveedor,
                 'monto'=>$this->monto,
                 'forma_pago'=>$this->forma_pago,
                 'fecha_pago'=>$this->fecha_pago,

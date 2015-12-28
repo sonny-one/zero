@@ -1,0 +1,77 @@
+ <?php 
+                                        $form = $this->form;
+                                        $form->prepare();
+                                        $form->setAttributes(array(
+                                        'action' => $this->basePath()."/admin/infocom/camaras",
+                                        'method' => 'post',
+                                        'id' => 'form_camaras',                                   
+                                        ));
+                                        echo $this->form()->openTag($form);
+                                        echo $this->formRow($this->form->get('id_pk_cam'));
+                                        ?>
+                        <div class="col-lg-6 col-md-6 col-xs-12">
+                                 <div class="col-lg-6 col-md-6 col-xs-12">                                                
+                                    <label>Camaras de Seguridad</label>
+                                    <div class="form-group input-group">                                            
+                                            <span class="input-group-addon"><i class="fa fa-video-camera"></i>
+                                            </span>
+                                            <?php                                             
+                                              echo $this->formRow($this->form->get('camaras'));
+                                            ?>                                            
+                                    </div>                                                 
+                                </div>                                                                                                                      
+                                <div class="col-lg-6 col-md-6 col-xs-12">
+                                    <div class="form-group" style="margin-top: 30px;">
+                                            <label>Graban? : &nbsp;</label>
+                                                <?php                                             
+                                              echo $this->formRow($this->form->get('graban'));
+                                            ?>
+                                    </div>  
+                                </div>                                                                                                                                                                                             
+                        </div> 
+                                
+                        <div class="col-lg-6 col-md-6 col-xs-12">                                                                                                                                                                                          
+                                <div class="col-lg-12 col-md-6 col-xs-12">
+                                    <div class="form-group">
+                                            <label>Reglas de Televigilancia</label>
+                                            <?php                                             
+                                              echo $this->formRow($this->form->get('reglas'));
+                                            ?>
+                                    </div>
+                                </div>
+                        </div> 
+                        <div class="row" style="text-align: center;">   
+                                        <div class="col-lg-12">                                          
+                                                 <?php                                             
+                                              echo $this->formRow($this->form->get('sendcam'));
+                                            ?>
+                                        </div>                                              
+                               </div>
+                               <?php echo $this->form()->closeTag()?> 
+<script>
+$("#sendcam").click(function()
+{ 
+     if( $("#nmro_camaras").val() == ""){
+        toastr.info("Debe indicar cantidad de cámaras del condominio (0 si no existen)")
+    }else{
+    var postData = $("#form_camaras").serializeArray();
+    var formURL = $("#form_camaras").attr("action");
+    $.ajax(
+    {
+        url : formURL,
+        type: "POST",
+        data : postData,
+        dataType : 'json',
+        success : function(response) {                    
+          toastr.success(response.desc);          
+          $('.panel-collapse.in').collapse('toggle');                               
+          $('html, body').animate({ scrollTop: 0 }, 'slow');                  
+        },
+        error: function(jqXHR, textStatus, errorThrown) 
+        {
+            toastr.error("Ups, ha ocurrido un error inesperado, favor contacta con soporte");
+        }
+    });
+    }   
+});
+</script>                               

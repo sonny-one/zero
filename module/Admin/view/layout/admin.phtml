@@ -90,6 +90,7 @@ License: You must have a valid license purchased only from themeforest(the above
 <script src="<?php echo $this->basePath()?>/metronic/admin/pages/scripts/tasks.js" type="text/javascript"></script>
 <script src="<?php echo $this->basePath()?>/metronic/global/plugins/bootstrap-toastr/toastr.min.js"></script>
 <script src="<?php echo $this->basePath()?>/metronic/admin/pages/scripts/ui-toastr.js"></script>
+<script src="<?php echo $this->basePath()?>/sb2/js/jquery.rut.js"></script>
 <script type="text/javascript" src="<?php echo $this->basePath()?>/metronic/global/plugins/bootbox/bootbox.min.js" type="text/javascript"></script>
 <!-- END PAGE LEVEL SCRIPTS -->
 <script>
@@ -251,13 +252,13 @@ jQuery(document).ready(function() {
 					<span class="arrow "></span>
 					</a>
 					<ul class="sub-menu">
-						<li>
-							<a href="<?php echo $this->basePath()."/admin/infocom/general"?>">
+						<li id="general">
+							<a onclick="menu('general')">
 							<i class="fa fa-cogs"></i>
 							Ajustes Generales</a>
 						</li>
-						<li>
-							<a href="<?php echo $this->basePath()."/admin/infocom/unidades"?>">
+						<li id="unidades">
+							<a onclick="menu('unidades')">
 							<i class="fa fa-home"></i>
 							Unidades</a>
 						</li>
@@ -434,7 +435,7 @@ jQuery(document).ready(function() {
 	</div>
 	<!-- END SIDEBAR -->
     <div class="page-content-wrapper">
-		<div class="page-content">
+		<div id="page-content" class="page-content">
 
     <?php echo $this->content; ?>
     	</div>
@@ -450,7 +451,20 @@ jQuery(document).ready(function() {
 		<i class="icon-arrow-up"></i>
 	</div>
 </div>
-<!-- END FOOTER -->
 </body>
 <!-- END BODY -->
 </html>
+
+<script>
+function menu(flag){ 
+	$.ajax( {  
+        url  : '<?php echo $this->basePath()."/admin/infocom/"?>'+flag,        
+		type : 'post',      
+		success : function(response) {
+		  $("#page-content").html(response);    
+          /* PENDIENTE PENDIENTE PENDIENTE PENDIENTE PENDIENTE PENDIENTE PENDIENTE PENDIENTE PENDIENTE PENDIENTE */
+          $("#"+flag).addClass("active");                     
+       }   
+});    
+}
+</script>

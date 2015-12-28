@@ -79,10 +79,10 @@ class CobroTable extends TableGateway
         return $recorre;
     }
     
-        public function getCobroIdEgreso($id_egreso)
+    public function getCobroIdEgreso($id_egreso)
     {
         
-        $datos = $this->select(array('id_egreso'=>$id_egreso));
+        $datos = $this->select(array('id_egreso'=>$id_egreso,'activo'=>'1'));
         $recorre = $datos->toArray();
                       
         return $recorre;
