@@ -19,6 +19,8 @@ class Module
         $eventManager        = $e->getApplication()->getEventManager();
         $moduleRouteListener = new ModuleRouteListener();
         $moduleRouteListener->attach($eventManager);
+        $translator = $e->getApplication()->getServiceManager()->get('translator');
+        $translator->setLocale('es_CL');
     }
 
     public function getConfig()

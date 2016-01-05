@@ -12,6 +12,7 @@ namespace Application\Controller;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use Zend\View\Model\JsonModel;
+use Sistema\Model\Entity\PersonaDetTable;
 use Sistema\Model\Entity\General\UsuarioTable;
 use Sistema\Model\Entity\General\PersonaTable;
 use Sistema\Model\Entity\General\SessionTable;
@@ -164,7 +165,7 @@ class LoginController extends AbstractActionController
         if($data['usuariobecheck']!=null && $data['password2']!=null){
             
             $this->dbAdapter=$this->getServiceLocator()->get('Zend\Db\Adapter');
-            $usuario = new UsuarioTable($this->dbAdapter);
+            $usuario = new UsuarioTable($this->dbAdapter);            
             $listaUsuario = $usuario->getUsuario($data['usuariobecheck'],strrev($data['password2']));
             if(!empty($listaUsuario)){
                 
@@ -174,6 +175,10 @@ class LoginController extends AbstractActionController
                     $dbTable = new DbTable($this->dbAdapter);
                     $listDb = $dbTable->listDBUser($this->dbAdapter,$listaUsuario[0]['id']);
                     
+                    //Obtenemos id_perdet
+                    $this->dbAdapter2=$this->getServiceLocator()->get($listDb[0]['nombre_db']);
+                    $per = new PersonaDetTable($this->dbAdapter2);
+                    $perdet = $per->getDatosxPersona($listaUsuario[0]['id']);
                     if(empty($listDb)){
                       return $this->forward()->dispatch('Application\Controller\Login',array('action'=>'index','id'=>5));  
                     }
@@ -191,6 +196,7 @@ class LoginController extends AbstractActionController
                         $sid->offsetSet('usuario', $listaUsuario[0]['usuario']);
                         $sid->offsetSet('id_usuario', $listaUsuario[0]['id']);
                         $sid->offsetSet('id_db',$listDb[0]['id']); 
+                        $sid->offsetSet('id_perdet',$perdet[0]['id']); 
                          
                         
                         

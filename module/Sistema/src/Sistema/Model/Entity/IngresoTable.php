@@ -18,7 +18,8 @@ class IngresoTable extends TableGateway
     private $observacion;
     private $tipo_ingreso;
     private $user_create;
-    
+        
+    private $dbAdapter;
     
  
     public function __construct(Adapter $adapter = null, $databaseSchema = null, ResultSet $selectResultPrototype = null)
@@ -71,6 +72,18 @@ class IngresoTable extends TableGateway
         $recorre = $datos->toArray();
                       
         return $recorre;
+    }
+    
+    public function getIngresosPeriodo(Adapter $dbAdapter)
+    {
+        $this->dbAdapter=$dbAdapter;
+       $query = "select ig.* from sis_w_ingreso ig, sis_m_cierre_mes cm 
+                    where ig.activo = '1' 
+                    and (ig.fecha_pago)>(cm.fecha_inicio)
+                    and (ig.fecha_pago)<(cm.fecha_cierre)
+                    order by fecha_pago desc";
+       $result=$this->dbAdapter->query($query,Adapter::QUERY_MODE_EXECUTE);
+       return $result->toArray();                              
     }
     
     

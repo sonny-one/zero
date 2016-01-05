@@ -29,7 +29,7 @@ class PagoEgresoForm extends Form
         //Input ///// /////////////////////////// id_prov (TEXT)
         $this->add(array(
             'type' => 'hidden',
-            'name' => 'id_prov',            
+            'name' => 'id_proveedor',            
             'attributes' => array(                                                   
                 'required' => 'true'               
             )

@@ -61,8 +61,7 @@ class UnidadTable extends TableGateway
         return $recorre;
     }
     public function getIdUnidad($nombre)
-    {
-        
+    {        
         $datos = $this->select(array('nombre'=>$nombre));
         $recorre = $datos->toArray();
                       

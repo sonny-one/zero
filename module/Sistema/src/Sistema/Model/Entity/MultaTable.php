@@ -62,5 +62,11 @@ class MultaTable extends TableGateway
 
         return $recorre;
     }
+    
+        public function pagoMulta($id)
+    {    
+        $array=array('pagado'=>'s');        
+        $this->update($array, array('id' => $id));
+    } 
 
 }

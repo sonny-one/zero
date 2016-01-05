@@ -24,6 +24,8 @@ class EgresoTable extends TableGateway
     private $user_create;
     private $cuotas;
     
+    private $dbAdapter;
+    
     
  
     public function __construct(Adapter $adapter = null, $databaseSchema = null, ResultSet $selectResultPrototype = null)
@@ -112,13 +114,29 @@ class EgresoTable extends TableGateway
                       
         return $recorre;
     }
-    public function getDatosxPersona($id_persona)
+    public function getEgresosPeriodo(Adapter $dbAdapter)
     {
-        
-        $datos = $this->select(array('id_persona'=>$id_persona));
-        $recorre = $datos->toArray();
-                      
-        return $recorre;
+        $this->dbAdapter=$dbAdapter;
+       $query = "select eg.* from sis_w_egreso eg, sis_m_cierre_mes cm 
+                    where eg.activo = '1' 
+                    and forma_pago is not null
+		            and (eg.date_start)>(cm.fecha_inicio)
+                    and (eg.date_start)<(cm.fecha_cierre)
+                    order by fecha_pago desc";
+       $result=$this->dbAdapter->query($query,Adapter::QUERY_MODE_EXECUTE);
+       return $result->toArray();                              
+    }
+    
+    public function getEgresosPendiente(Adapter $dbAdapter)
+    {
+        $this->dbAdapter=$dbAdapter;
+       $query = "select count(*) as pagos from sis_w_egreso eg, sis_m_cierre_mes cm 
+                    where eg.forma_pago is null 
+                    and eg.activo = '1' 
+                    and (eg.date_start)>(cm.fecha_inicio)
+                    and (eg.date_start)<(cm.fecha_cierre)";
+       $result=$this->dbAdapter->query($query,Adapter::QUERY_MODE_EXECUTE);
+       return $result->toArray();                              
     }
     
 }

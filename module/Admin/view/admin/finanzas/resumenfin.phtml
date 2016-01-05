@@ -24,11 +24,11 @@
                                                 </tr>                                                
                                                 <tr>
                                                         <th class="text-center" style="font-size: large;">Caja Chica</th>
-                                                        <td style="font-size: 22px;"><strong>$ <?php echo $this->morosos;?></strong></td>
+                                                        <td style="font-size: 22px;"><strong>$ <?php echo number_format($this->cajachica,"0",".",".");?></strong></td>
                                                 </tr>
                                                 <tr>
                                                         <th class="text-center" style="font-size: large;">Morosos</th>
-                                                        <td style="font-size: 22px;"><strong>$<?php echo $this->cajachica;?></strong></td>
+                                                        <td style="font-size: 22px;"><strong>$ <?php echo number_format($this->morosos,"0",".",".");?></strong> <!--span style="font-size: 12px;"> (15 unidades)</span--></td>
                                                 </tr>
                                                 </tbody>
                                   </table>
@@ -43,9 +43,9 @@
                                 </div>
                                 <div class="panel-body">
                                     <p><i class="fa fa-clock-o"></i>&nbsp; Quedan <strong><?php echo $this->dias_restantes?> d&iacute;as</strong> para el cierre del mes administrativo</p>
-                                    <p><p><i class="fa fa-dollar"></i>&nbsp; Aun existen <strong>18 Pagos</strong> pendientes</p>
-                                    <p><p><i class="fa fa-wrench"></i>&nbsp; Este mes hay <strong>4 Mantenciones</strong> programadas</p>
-                                    <p><p><i class="fa fa-bullhorn"></i>&nbsp; Se registran <strong>2 Reclamos</strong> por Gastos Comunes</p>
+                                    <p><p><i class="fa fa-dollar"></i>&nbsp; Aun existen <strong><?php echo $this->pagos_pendientes?> Pagos</strong> pendientes</p>
+                                    <p><p><i class="fa fa-wrench"></i>&nbsp; Este mes hay <strong><?php echo $this->mant_periodo?> Mantenciones</strong> programadas</p>
+                                    <p><p><i class="fa fa-bullhorn"></i>&nbsp; Se registran <strong>2 Reclamos</strong> por Gastos Comunes (PENDIENTE)</p>
                                 </div>
                             </div>
                         </div>
@@ -59,29 +59,38 @@
 					<div class="portlet box red">
 						<div class="portlet-title">
 							<div class="caption">
-								<i class="fa fa-upload"></i>  Ultimos 30 Egresos  
+								<i class="fa fa-upload"></i>  Egresos periodo actual  
 							</div>                            
 						</div>
                         <div class="portlet-body"> 
                         <div class="table-responsive">
                                 <table class="table table-hover">
-                                    <thead>
+                                    <thead >
                                         <tr>
                                             <th>N&deg;</th>                                            
-                                            <th>Fecha</th>
+                                            <th>Fecha Pago</th>
                                             <th>Destino</th>
                                             <th>Monto</th>
+                                            <th>Cuotas</th>
                                         </tr>
                                     </thead>
-                                    <tbody style="text-align: center;">
-                                       <?php for($i=0;$i<count($this->egresos);$i++){ 
+                                    <tbody >
+                                       <?php for($i=0;$i<count($egresos);$i++){ 
+                                       if($egresos[$i]['cuotas']>0){$cuotas="<a onclick='modalCuotas2(".$egresos[$i]['id'].")' data-target='#modalCuotas2' data-toggle='modal'>Si</a>";}else{$cuotas="No";}
+                                        if($egresos[$i]['fecha_pago'] == null){
+                                            $mostrarF="<span class='label label-sm label-warning'><i class='fa fa-thumb-tack' style='font-size: 12px;'></i> Pendiente</span>";
+                                        }else{
+                                            $pf = strtotime($egresos[$i]['fecha_pago']);
+                                            $mostrarF = date("d-M-Y", $pf);
+                                        }
                                        echo "
-                                       
+                                        
                                         <tr>
-                                            <td>".$this->egresos[$i]['id']."</td>
-                                            <td>".$this->egresos[$i]['fecha_pago']."</td>
-                                            <td>".$this->egresos[$i]['destino']."</td>
-                                            <td>$ ".number_format($this->egresos[$i]['monto'],"0",".",".")."</td>
+                                            <td>".$egresos[$i]['id']."</td>
+                                            <td>".$mostrarF."</td>
+                                            <td>".$egresos[$i]['destino']."</td>
+                                            <td>$ ".number_format($egresos[$i]['monto'],"0",".",".")."</td>
+                                            <td>".$cuotas."</td>
                                         </tr>";
                                          }?>
                                     </tbody>
@@ -96,7 +105,7 @@
 					<div class="portlet box blue-madison">
 						<div class="portlet-title blue-madison">
 							<div class="caption">
-								<i class="fa fa-upload"></i>  Ultimos 30 Ingresos  
+								<i class="fa fa-download"></i>  Ingresos periodo actual  
 							</div>                            
 						</div>
                         <div class="portlet-body"> 
@@ -105,18 +114,20 @@
                                     <thead>
                                         <tr>
                                             <th>N&deg;</th>
-                                            <th>Fecha</th>
+                                            <th>Fecha Pago</th>
                                             <th>Origen</th>
                                             <th>Monto</th>
                                         </tr>
                                     </thead>
-                                    <tbody style="text-align: center;">
-                                       <?php for($i=0;$i<count($this->ingresos);$i++){ 
+                                    <tbody>
+                                       <?php for($i=0;$i<count($ingresos);$i++){ 
+                                       $pf = strtotime($ingresos[$i]['fecha_pago']);
+                                        $mostrarFi = date("d-M-Y", $pf);
                                        echo "
                                        
                                         <tr>
                                             <td>".$this->ingresos[$i]['id']."</td>
-                                            <td>".$this->ingresos[$i]['fecha_pago']."</td>
+                                            <td>".$mostrarFi."</td>
                                             <td>".$this->ingresos[$i]['origen']."</td>
                                             <td>$ ".number_format($this->ingresos[$i]['monto'],"0",".",".")."</td>
                                         </tr>";
@@ -133,19 +144,32 @@
      </div>
 </div>
 
-               
+<!-- MODAL Cuotas -->
+
+<div class="modal fade bs-example-modal-md" id="modalCuotas2" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>                    
+                    <h4 class="modal-title" id="myModalLabel" style="text-align: center;">Cuotas Pactadas</h4>
+            </div>
+                <div id="bodycuotas2" class="modal-body">Cargando...</div>
+        </div>
+    </div>             
+</div>
+<!-- FIN MODAL Cuotas -->                       
                  
                   
 <script>
-function format(td)
-{
-var num = input.value.replace(/\./g,'');
-num = num.toString().split('').reverse().join('').replace(/(?=\d*\.?)(\d{3})/g,'$1.');
-num = num.split('').reverse().join('').replace(/^[\.]/,'');
-input.value = num;
-}
-else{ alert('Solo se permiten numeros');
-input.value = input.value.replace(/[^\d\.]*/g,'');
-}
+function modalCuotas2(id){ 
+    var parametros = {"id_egreso":id};
+	$.ajax( {  
+        url  : '<?php echo $this->basePath()."/admin/finanzas/modalcuotas"?>',
+        data : parametros,
+		type : 'post',      
+		success : function(response) {
+		  $("#bodycuotas2").html(response);                            
+       }   
+});    
 }
 </script>                        

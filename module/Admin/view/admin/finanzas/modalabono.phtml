@@ -1,0 +1,62 @@
+<?php echo $data['id_unidad']; ?>
+<div class="row">
+<br />
+
+    <div class="col-lg-5 text-center">
+        <i class="fa fa-home fa-4x" style="color: #428bca;"></i>   <br /><br /> 
+        <input class="form-control" value="201"/>
+        
+    </div>
+    
+    <!-- flecha -->
+    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 text-center" style="display: table; height:122px;">
+        <i class="fa fa-arrow-circle-o-right" style="display: table-cell; vertical-align: middle; font-size:20px"></i>                    
+    </div>
+    <!-- fin flecha -->
+    
+    <div class="col-lg-5 text-center">
+        <i class="fa fa-dollar fa-4x" style="color: #2ACA2A;"></i>   <br /><br /> 
+        <input placeholder="Ingresa el monto" id="montoabono" class="form-control"/>                                          
+    </div>
+    
+    <div class="col-lg-12 text-center" style="margin-top: 40px;">
+        <a class="btn btn-danger" data-dismiss="modal"><i class="fa fa-close" ></i> &nbsp;Cancelar</a> &nbsp;&nbsp;&nbsp;
+        <a onclick="ingresarAbono()" class="btn btn-primary"><i class="fa fa-check"></i> &nbsp;Ingresar abono</a>
+    </div>
+
+</div>
+<script>
+// Cargamos combo de DPTOS
+$.ajax(
+    {
+        url : '<?php echo $this->basePath()."/admin/infocom/combounidad"?>',
+        type: "POST",        
+        dataType : 'json',
+        success : function(response) {   
+            console.log(response)
+        var combo1 = $("#ingcombodptosabono");
+        combo1.empty();
+         $.each(response.combo1, function(k,v){            
+            combo1.append("<option value=\""+k+"\">"+v+"</option>");
+         });  },
+        error: function(jqXHR, textStatus, errorThrown) 
+        {            
+            alert("error"); 
+        }
+});
+function ingresarAbono()
+{
+var postData = {'id_unidad':$('#ingcombodptosabono').find('option:selected').val();
+                'monto':$('#montoabono').val();
+            }
+  	$.ajax( {
+        url : '<?php echo $this->basePath()."/admin/finanzas/pagarabono"?>',
+        type : 'post', 
+        data : 	postData,       	
+		success : function(response) {
+            
+		}
+	});   
+    
+}
+</script>

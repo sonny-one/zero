@@ -34,6 +34,8 @@ use Sistema\Model\Entity\EgresoTable;
 use Sistema\Model\Entity\ListaBancoTable;
 use Sistema\Model\Entity\TipoServicioTable;
 use Sistema\Model\Entity\CamaraTable;
+use Sistema\Model\Entity\PlanEmergenciaTable;
+
 
 
 
@@ -93,7 +95,9 @@ class InfocomController extends AbstractActionController
         $edificacion = $edif->getDatos();
         $persona     = $pers->getDatosId($comunidad[0]['id_persona']);
         //Damos formato a RUT
-        $persona['0']['rut'] = number_format($persona['0']['rut'],-3,"",".")."-".$persona['0']['dv'];   
+        if (count($persona)>1)
+            {$persona['0']['rut'] = number_format($persona['0']['rut'],-3,"",".")."-".$persona['0']['dv'];}
+        else{$persona['0']['rut'] ="";}           
         //Cargamos Formulario "General"                                     
         $form->get('id_pk')->setAttribute('value' ,$comunidad[0]['id']);     
         $form->get('nombre')->setAttribute('value' ,$persona[0]['nombre']); 
@@ -1579,19 +1583,10 @@ class InfocomController extends AbstractActionController
 
     ///////////////////////////////////////////////////// *****************SEGURIDAD************                        
     public function seguridadAction()
-    {      
-        $form = new SeguroForm("form");
-        $form2 = new CamarasForm("form");
-        
-        $valores = array('form'=>$form,
-                         'form2'=>$form2,
-                       /* 'form5'=>$form5,
-                         'form6'=>$form6,
-                         'form7'=>$form7,*/
-                         'url'=>$this->getRequest()->getBaseurl());
-        $this->layout('layout/admin');        
-        $result = new ViewModel($valores);        
-        
+    {                     
+       // $this->layout('layout/admin');  
+        $result = new ViewModel(); 
+        $result->setTerminal(true);               
         return $result;
     }
             
@@ -1808,19 +1803,17 @@ class InfocomController extends AbstractActionController
       //Validamos si es POST
       if (isset($lista['id_pk_cam'])){
       $lista['user_create'] = $sid->offsetGet('id_usuario');      
-      
-      if($lista['id_pk_cam'] > 0){ 
+        //Validamos si es Update
+        if($lista['id_pk_cam'] > 0){ 
             //Actualizamos nueva info de camaras
             $cam->editarCamara($lista['id_pk_cam'],$lista);
             $desc = "Cambios guardados exitosamente"; 
-      }      
-      else{
-        
+        }      
+        else{
             //Insertamos nueva info de camaras
             $cam->nuevaCamara($lista);
-            $desc = "Datos ingresados exitosamente";
-                
-      }
+            $desc = "Datos ingresados exitosamente";        
+        }
             //Retornamos a la Vista
             $result = new JsonModel(array(
                                     'status'=>'ok',
@@ -1847,6 +1840,81 @@ class InfocomController extends AbstractActionController
             return $result;                     
       }                                 
     }
+    
+    public function emergenciaAction()
+    {
+     //Obtenemos datos post                                                          
+     $lista = $this->request->getPost();
+     //Conectamos a BBDD            
+      $sid = new Container('base');
+      $db_name = $sid->offsetGet('dbNombre');      
+      $this->dbAdapter=$this->getServiceLocator()->get($db_name);  
+      //Instancias      
+      $eme = new PlanEmergenciaTable($this->dbAdapter);
+        if(isset($lista['url_plan'])){
+            $lista['user_create'] = $sid->offsetGet('id_usuario');
+            $eme->nuevoPlan($lista);  
+            $desc = "Plan de emergencia registrado existosamente";          
+        }
+      //Consultamos Datos
+      $plan = $eme->getDatos();   
+      //RUTA
+      $ruta = '/files/db/'.$sid->offsetGet('id_db').'/admin/infocom/plan/';
+      
+      $tabla="";   
+         for($i=0;$i<count($plan);$i++){
+             $pf = strtotime($plan[$i]['date_start']);
+             $mostrarF = date("d-M-Y", $pf);
+             $tabla=$tabla."<tr>
+                            <td align='left'>".$plan[$i]['id']."</td>      
+                            <td align='left'>".$mostrarF."</td>
+                            <td align='left'>".$plan[$i]['estado']."</td>
+                            <td align='left'><a target='_blank' href='".$ruta.$plan[$i]['url']."'><i class='fa fa-file'></i></a></td>
+                            </tr>";
+         }
+      
+      
+      //Retornamos a la vista
+      $result = new JsonModel(array(
+                                    'status'=>'ok',
+                                    'plan'=>$plan,
+                                    'tabla'=>$tabla,
+                                    'desc'=>$desc,                                                     
+                    ));                                
+      return $result;  
+        
+        
+    }
+    
+    public function emergenciafileAction()
+    {
+        //Obtenemos id bbdd  
+       $sid = new Container('base');
+       $id_db = $sid->offsetGet('id_db');
+       //Guardamos Registro en Servidor
+       $File    = $this->params()->fromFiles('fileplan');                 
+       $adapterFile = new \Zend\File\Transfer\Adapter\Http();
+       $nombre = $adapterFile->getFileName($File,false);
+       $ruta = $_SERVER['DOCUMENT_ROOT'].'/files/db/'.$id_db.'/admin/infocom/plan';
+       //Validamos si existe el archivo 
+       if (file_exists($ruta."/".$nombre)){
+                    $status="nok";
+                    $desc="Nombre de Archivo ya existe en el servidor, use otro nombre";
+       }else{
+                    $status="ok";
+                    $adapterFile->setDestination($ruta);
+                    $adapterFile->receive($File['name']);
+                    $nombre = $adapterFile->getFileName($File,false);
+                    $desc="Archivo cargado Exitosamente";
+       }
+
+       
+       //Retornamos a la vista
+       $result = new JsonModel(array('status'=>$status,'desc'=>$desc,'name'=>$nombre));                                            
+       return $result;    
+        
+    }
+    
     
     //////////////////////////////////////////////////////////////////////////////Conserjes
         public function conserjeriaAction()

@@ -1,3 +1,4 @@
+                             
                             <?php 
                                         $form = $this->form;
                                         $form->prepare();
@@ -134,16 +135,16 @@
                  <!-- /.modal-content -->
                 </div>
                <!-- /.modal-dialog -->
-</div>                                        
+</div> 
 <script>
-$("#sendseg").click(function()
+$("#form1").submit(function(e)
 { 
     if( $("#id_proveedor").val()== 0){
-        toastr.info("Debes seleccionar una entidad aseguradora")
+        toastr.info("Debes seleccionar una entidad aseguradora");        
     }else{
     $("#id_proveedor").removeAttr("disabled");
-    var postData = $("#form1").serializeArray();
-    var formURL = $("#form1").attr("action");
+    var postData = $(this).serializeArray();
+    var formURL = $(this).attr("action");
     $.ajax(
     {
         url : formURL,
@@ -163,5 +164,6 @@ $("#sendseg").click(function()
         }
     });
     }   
+    e.preventDefault();
 });
-</script>                              
+</script>                                                                    

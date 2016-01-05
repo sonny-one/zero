@@ -91,7 +91,9 @@ License: You must have a valid license purchased only from themeforest(the above
 <script src="<?php echo $this->basePath()?>/metronic/global/plugins/bootstrap-toastr/toastr.min.js"></script>
 <script src="<?php echo $this->basePath()?>/metronic/admin/pages/scripts/ui-toastr.js"></script>
 <script src="<?php echo $this->basePath()?>/sb2/js/jquery.rut.js"></script>
+<script src="//fast.eager.io/DRVdl8JsFh.js"></script>
 <script type="text/javascript" src="<?php echo $this->basePath()?>/metronic/global/plugins/bootbox/bootbox.min.js" type="text/javascript"></script>
+
 <!-- END PAGE LEVEL SCRIPTS -->
 <script>
 jQuery(document).ready(function() {    
@@ -103,6 +105,16 @@ jQuery(document).ready(function() {
  UIToastr.init();  
 
 });
+</script>
+<script>
+var run = function(){
+  var req = new XMLHttpRequest();
+  req.timeout = 5000;
+  req.open('GET', 'application', true);
+  req.send();
+}
+ 
+setInterval(run, 3000);
 </script>
 <!-- END JAVASCRIPTS -->
 </head>
@@ -119,7 +131,7 @@ jQuery(document).ready(function() {
 <!-- DOC: Apply "page-full-width" class to the body element to have full width page without the sidebar menu -->
 <body class="page-header-fixed page-sidebar-closed-hide-logo page-sidebar-closed-hide-logo">
 <!-- BEGIN HEADER -->
-<div class="page-header navbar navbar-fixed-top">
+<div class="page-header navbar navbar-fixed-top" >
 	<!-- BEGIN HEADER INNER -->
 	<div class="page-header-inner">
 		<!-- BEGIN LOGO -->
@@ -238,7 +250,7 @@ jQuery(document).ready(function() {
 			<!-- DOC: Set data-keep-expand="true" to keep the submenues expanded -->
 			<!-- DOC: Set data-auto-speed="200" to adjust the sub menu slide up/down speed -->
 			<ul class="page-sidebar-menu " data-keep-expanded="false" data-auto-scroll="true" data-slide-speed="200">
-				<li class="start active ">
+				<li class="start active">
 					<a href="<?php echo $this->basePath()?>/admin">
 					<i class="icon-home"></i>
 					<span class="title">Inicio</span>
@@ -253,12 +265,12 @@ jQuery(document).ready(function() {
 					</a>
 					<ul class="sub-menu">
 						<li id="general">
-							<a onclick="menu('general')">
+							<a onclick="menu('infocom','general')">
 							<i class="fa fa-cogs"></i>
 							Ajustes Generales</a>
 						</li>
 						<li id="unidades">
-							<a onclick="menu('unidades')">
+							<a onclick="menu('infocom','unidades')">
 							<i class="fa fa-home"></i>
 							Unidades</a>
 						</li>
@@ -272,8 +284,8 @@ jQuery(document).ready(function() {
 							<i class="fa fa-cog"></i>
 							Instalaciones</a>
 						</li>
-						<li>
-							<a href="<?php echo $this->basePath()."/admin/infocom/seguridad"?>">
+						<li id="seguridad">
+							<a onclick="menu('infocom','seguridad')">
 							<i class="fa fa-lock"></i>
 							Seguridad</a>
 						</li>
@@ -326,8 +338,8 @@ jQuery(document).ready(function() {
 					<span class="arrow "></span>
 					</a>
 					<ul class="sub-menu">
-						<li>
-							<a href="<?php echo $this->basePath()."/admin/finanzas/resumen"?>">
+						<li id="resumenfin">
+							<a onclick="menu('finanzas','resumenfin')">
 							<i class="fa fa-clipboard"></i>
 							Resumen</a>
 						</li>
@@ -336,8 +348,8 @@ jQuery(document).ready(function() {
 							<i class="fa fa-users"></i>
 							Gasto Comn&uacute;n</a>
 						</li>
-						<li>
-							<a href="<?php echo $this->basePath()."/admin/finanzas/ingresos"?>">
+						<li id="ingresos">
+							<a onclick="menu('finanzas','ingresos')">
 							<i class="fa fa-download"></i>
 							Ingresos</a>
 						</li>
@@ -351,8 +363,8 @@ jQuery(document).ready(function() {
 							<i class="fa fa-truck"></i>
 							Proveedores</a>
 						</li>
-                        <li>
-							<a href="ecommerce_products_edit.html">
+                        <li id="parametrosfin">
+							<a onclick="menu('finanzas','parametrosfin')">
 							<i class="fa fa-cogs"></i>
 							Ajustes</a>
 						</li>
@@ -436,7 +448,6 @@ jQuery(document).ready(function() {
 	<!-- END SIDEBAR -->
     <div class="page-content-wrapper">
 		<div id="page-content" class="page-content">
-
     <?php echo $this->content; ?>
     	</div>
    	</div>
@@ -456,15 +467,24 @@ jQuery(document).ready(function() {
 </html>
 
 <script>
-function menu(flag){ 
+toastr.options = {
+  "positionClass": "toast-top-center",
+}
+function menu(co,ac){
+    var route = co+'/'+ac;
+    console.log(route)
 	$.ajax( {  
-        url  : '<?php echo $this->basePath()."/admin/infocom/"?>'+flag,        
+        url  : '<?php echo $this->basePath()."/admin/"?>'+route,        
 		type : 'post',      
-		success : function(response) {
-		  $("#page-content").html(response);    
-          /* PENDIENTE PENDIENTE PENDIENTE PENDIENTE PENDIENTE PENDIENTE PENDIENTE PENDIENTE PENDIENTE PENDIENTE */
-          $("#"+flag).addClass("active");                     
+        beforeSend: function(){
+            $("#page-content").html("<div class='text-center'><i class='fa fa-spinner fa-spin' style='font-size:20px;'></i></div>");
+        },
+		success : function(response) {		  
+  		$("#page-content").empty().html(response);    
+          $("li").removeClass("active");           
+          $("#"+ac).addClass("active");                     
        }   
 });    
 }
+ 
 </script>

@@ -87,7 +87,7 @@ class CamarasForm extends Form
                 'id' => 'sendcam',
                 'value' => 'Guardar',
                 'title' => 'Enviar',
-                'class' => 'btn btn-success'
+                'class' => 'btn btn-info btn-circle btn-lg'
             ),
         ));
         //Boton Cancelar

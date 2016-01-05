@@ -1,0 +1,72 @@
+<?php 
+if($saldo>0){
+    $saldo= -$saldo;
+    $icnSaldo="warning";
+}else{
+    $icnSaldo="success";
+    $displayPagar="none";
+}
+?>
+<input type="hidden" id="id_uni_abono" value="<?php echo $gcomun[0]['id_unidad'];?>"/>
+<div class="col-lg-12">
+                     <h2 > <i class="fa fa-search"></i> Resultados</h2>
+                     <br />
+                     <table class="table table-condensed table-hover">
+                        <thead>
+                           <tr>
+                              <th>
+                                 <i class="fa fa-home" style="font-size: 22px;"></i>
+                              </th>
+                              <th>
+                                 Propietario
+                              </th>
+                              <?php                               
+                              $cantidad=count($gcomun);
+                              while($cantidad>0){
+                                $cantidad--; 
+                                echo "
+                                <th>".$meses[$gcomun[$cantidad]['mes']]."/<strong><span style='font-size: 11px'>".$gcomun[$cantidad]['year']."</span></strong></th>";                               
+                                }
+                              ?>
+                              <th>
+                                 Saldo 
+                              </th>
+                              <th>
+                                 Acci&oacute;n 
+                              </th>
+                           </tr>
+                        </thead>
+                        <tbody>
+                           <tr>
+                              <td>
+                                 <strong><?php echo $gcomun[0]['vivienda'];?></strong>
+                              </td>
+                              <td>
+                                 <strong><?php echo $gcomun[0]['nombre_persona'];?></strong>
+                              </td>   
+                               <?php                               
+                              $cantidad=count($gcomun);
+                              while($cantidad>0){                                
+                                $cantidad--; 
+                                if ($gcomun[$cantidad]['pagado']=="s"){$label="success";$icn="check";}else{$label="danger";$icn="close";}
+                                echo "<td>
+                                 <span class='label label-sm label-$label' style='font-size: 16px;'>
+                                    $ ".number_format($gcomun[$cantidad]['monto'],"0",".",".")."
+                                    &nbsp;<i class='fa fa-$icn' style='font-size: 9px;'></i></span>
+                                 </td>";                               
+                                }
+                              ?>                                                                                       
+                              <td >
+                                 <span class="label label-sm label-<?php echo $icnSaldo;?>" style="font-size: 16px;">$ <?php echo number_format($saldo,"0",".",".");?> </span>									
+                              </td>
+                              <td>
+                                 <a style="display: <?php echo $displayPagar;?>;text-decoration: none;" onclick="modalPago(<?php echo $gcomun[0]['id_unidad'];?>)" id="ingpagar" data-toggle='modal' data-target='#modalingreso' >
+                                 <span class="label label-sm label-info" style="font-size: 18px;">
+                                 <i class="fa fa-dollar" style="font-size: 16px;"></i> &nbsp;Pagar GC 
+                                 </span>
+                                 </a>
+                              </td>
+                           </tr>
+                        </tbody>
+                     </table>
+                  </div>                                               

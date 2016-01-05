@@ -1,0 +1,250 @@
+<!--div class="col-lg-3 col-md-3 col-sm-3 col-xs-3" id="1-dptos">
+                 
+                    <div class="col-lg-12">
+                        <a style="cursor: pointer;">
+                            <i class="fa fa-home fa-4x" style="color: #585DA0;"></i><br /><br />
+                            Seleccione un departamento
+                        </a><br /><br />
+                    </div>
+                    
+                    <div class="col-lg-12" >
+                    <select id="ingcombodptos" class="form-control"> 
+                        <option value="cop">Cargando ...</option>                       
+                    </select>
+                    </div>
+                    
+                  </div>
+                  
+                  <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1" style="display: table; height:122px;">
+                 
+                    <i class="fa fa-arrow-circle-o-right fa-2x" style="display: table-cell; vertical-align: middle"></i>
+                    
+                  </div>
+                  
+                  <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                 
+                    <div class="col-lg-12">
+                        <a style="cursor: default; text-decoration: none;">
+                            <i class="fa fa-calculator fa-4x" style="color: #585DA0;"></i><br /><br />
+                            Seleccione forma de Pago
+                        </a><br /><br />
+                    </div>
+                    
+                    <div class="col-lg-12">
+                    <select id="ingcomboforma" class="form-control" > 
+                        <option value="t">Pago Total</option>
+                        <option value="p">Pago Parcial</option>                                          
+                    </select>
+                    </div>
+                    
+                  </div>
+                  
+                  
+                  <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1" style="display: table; height:122px;">
+                 
+                    <i class="fa fa-arrow-circle-o-right fa-2x" style="display: table-cell; vertical-align: middle"></i>
+                    
+                  </div>
+                  
+                  <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                 
+                    <div class="col-lg-12">
+                        <a id="ingpagar" onclick="modalPago()" data-toggle='modal' data-target='#modal3' style="cursor: pointer; text-decoration: none; ">
+                            <i class="fa fa-money fa-4x" style="color: #585DA0; margin-top: 15px;"></i><br /><br />
+                            <span style="font-size: 150%;">Pagar !</span>
+                        </a>
+                    </div>
+                        
+                    
+                  </div-->
+                  
+                  
+
+ 
+                
+                <!--div class="row" style="border-solid: 2px; border-color: #fff;">
+                
+                <div class="col-lg-4" style="border-solid: 2px;">
+                    <h4 class="page-header text-center"> <i class="fa fa-plus-square"></i>  &nbsp; &nbsp;<a id="pagomasivo"  href="#importarres">Otros</a></h4>
+                </div> 
+
+                <div class="col-lg-4">
+                    <h4 class="page-header text-center"> <i class="fa fa-download"></i>  &nbsp; &nbsp;<a id="pagomasivo"  href="#importarres">Pagos Masivos</a></h4>
+                </div>
+                
+                <div class="col-lg-4">
+                   
+                    <h4 class="page-header text-center"> 
+                    <a onclick="modalAbono()" style="text-decoration: none;cursor: pointer;" data-toggle='modal' data-target='#modalAbono'> 
+                       <i class="fa fa-plus-square"></i>  
+                    &nbsp; &nbsp;Abonos
+                    </a>
+                    </h4>
+                   
+                </div>                                 
+                
+                </div-->
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                 <!--div class="col-lg-4 col-md-4" style="text-align: center;">
+<img src="<?php echo $this->basePath()?>/img/gcomun.png"  class="img-rounded" style="max-width: 200px;"/>
+                  </div>
+                  <div class="col-lg-8 col-md-8">
+                  <div  style="text-align:center">
+                                  <table class="table table-striped table-bordered table-hover" id="tablapagoun1">
+                                                <tbody>
+                                                <tr>
+                                                        <th width='300'>Departamento</th>
+                                                        <td id="td-dpto" style="font-weight: bold; font-size: 20px;"></td>
+                                                </tr>                                                                                              
+                                                <tr> 
+                                                        <th>Multas</th>
+                                                        <td id="td-multa"></td>
+                                                </tr>
+                                                <tr>
+                                                        <th>Total a Pagar</th>
+                                                        <td id="td-total"></td>
+                                                </tr>  
+                                                <tr>                                                                                    
+                                                        <th>Pagar</th>
+                                                        <td id="td-pagar"></td>
+                                                </tr>
+                                                </tbody>
+                                    </table>
+                                        </div>
+                  
+                  </div>
+                  <div class="col-lg-12 col-md-12">
+                  <table class="table table-striped table-bordered table-hover" id="tablapagoun2">
+                                    <thead>
+                                        <tr>
+                                            <th>Nombre</th>
+                                            <th>Departamento</th>
+                                            <th>Total Multas</th>
+                                            <th>Total Gastos Comunes</th>
+                                            <th>Estado</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+                                </table>
+                                </div 
+                                </div>
+                                </div>                                
+                    <div class="col-lg-12">
+<h4 class="page-header"> <i class="fa fa-download"></i>  &nbsp; &nbsp;<a id="pagomasivo" data-toggle="collapse" data-parent="#accordion" href="#importarres">Pagos Masivos</a></h4>
+                    </div>           
+                                
+                <div id="divmasivo" class="row" style="display: none;">
+                
+                <div class="col-lg-6">
+                <input type="file"  />
+                </div>
+                
+                </div-->
+                
+                
+<script>
+
+/*var test = $('#tablapagoun2 :[tbody td] ').text();
+
+alert(test);*/
+$(function(){
+    $('#tablapagoun2 tr th.Estado').each(function()
+    {
+    var valor = $(this).html();
+    $(this).addClass(this);
+    });
+});         
+// Cargamos combo de DPTOS
+$.ajax(
+    {
+        url : '<?php echo $this->basePath()."/admin/infocom/combounidad"?>',
+        type: "POST",        
+        dataType : 'json',
+        success : function(response) {   
+            console.log(response)
+        var combo1 = $("#ingcombodptos");
+        combo1.empty();
+         $.each(response.combo1, function(k,v){            
+            combo1.append("<option value=\""+k+"\">"+v+"</option>");
+         });  },
+        error: function(jqXHR, textStatus, errorThrown) 
+        {            
+            alert("error"); 
+        }
+});
+$('#tablapagoun2').on( 'click', 'tbody td:not(:first-child)', function (e) {
+        editor.inline( this );
+    } ); 
+$("#pagomasivo").click(function(){
+        $("#divmasivo").fadeToggle(250);        
+}); 
+
+$('#tablapagoun2 tbody').on( 'click', 'tr', function () {    
+    var col = $('#tablapagoun2').DataTable().row( this ).data();       
+    var saldo = col[3].replace("$","");
+    var saldo = saldo.replace(".","");     
+    var multa = col[2].replace("$","");
+    var multa = multa.replace(".",""); 
+    var total = parseInt(multa)+parseInt(saldo); 
+    var formatotal = total.toFixed(1).replace(/\d(?=(\d{3})+\.)/g, '$&.');
+    var respuesta = formatotal.substring(0,formatotal.length-2);        
+    $("#td-dpto").text(col[1]);
+    $("#td-total").text('$ '+respuesta);
+    $("#td-multa").text(col[2]);    
+    $("#td-pagar").html("<a href='javascript:void(0)' onclick='modalPago("+col[1]+","+saldo+","+multa+")' data-toggle='modal' data-target='#modal3'><i class='fa fa-dollar fa-2x'></i></a>").fadeIn(200);
+
+} );  
+$('#modal3').on('show.bs.modal', function (e) {
+  var button = e.relatedTarget;
+  if($(button).hasClass('no-modal')) {
+    e.stopPropegation();
+  }  
+});
+function modalAbono()
+{
+    $.ajax( {
+        url : '<?php echo $this->basePath()."/admin/finanzas/modalabono"?>',
+        type : 'post',       	
+		success : function(response) {
+			$("#modalAbonobody").html(response);
+		}
+	});  
+}   
+function modalPago(dpto)
+{   
+//$('#ingpagar').removeClass('no-modal')
+//var dpto = $('#ingcombodptos').find('option:selected').val();
+ if(dpto=="0"){
+     $('#ingpagar').addClass( "no-modal" );
+     $("#1-dptos").fadeOut().fadeIn() ; 
+ }else{
+    postData = {'id_unidad' : dpto, 
+                'forma'     : 't'}  
+	$.ajax( {
+        url : '<?php echo $this->basePath()."/admin/finanzas/modalpago"?>',
+        type : 'post', 
+        data : 	postData,       	
+		success : function(response) {
+		  if(response.nodeuda=='ok'){
+		      $("#nodeuda").text("Unidad no registra deuda !");		      
+		  }else{
+			$("#modalpagogc").html(response);
+            }
+		}
+	});  
+ }  
+}    
+</script>                

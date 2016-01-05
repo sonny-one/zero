@@ -16,6 +16,7 @@ class CobroTable extends TableGateway
     private $nmro_operacion;    
     private $id_banco;    
     private $desc;
+    private $estado;
     private $user_create;        
     private $activo;
     

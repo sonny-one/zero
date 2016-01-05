@@ -137,11 +137,11 @@ class SeguroForm extends Form
         $this->add(array(
             'name' => 'sendseg',
             'attributes' => array(
-                'type' => 'button',
+                'type' => 'submit',
                 'id' => 'sendseg',
                 'value' => 'Guardar',
                 'title' => 'Enviar',
-                'class' => 'btn btn-success'
+                'class' => 'btn btn-info btn-circle btn-lg'
             ),
         ));
         //Boton Cancelar

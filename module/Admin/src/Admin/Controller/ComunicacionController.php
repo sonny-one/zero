@@ -41,6 +41,7 @@ class ComunicacionController extends AbstractActionController
         
     }
     
+    
     public function detallemensajeAction()    
     {
         //$this->layout('layout/admin');   

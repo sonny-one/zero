@@ -61,12 +61,13 @@ class GCunidadTable extends TableGateway
          $result=$this->dbAdapter->query($query,Adapter::QUERY_MODE_EXECUTE);
          return $result;
     }
-        public function pagoParcialGasto($id)
+    
+    public function pagoParcialGasto($id)
     {    
-        $array=array('pagado'=>'s');
-        
+        $array=array('pagado'=>'s');        
         $this->update($array, array('id' => $id));
-    }                    
+    } 
+                       
     public function nuevoGasto($data=array())
     {
              self::cargarCampos($data);
@@ -80,6 +81,30 @@ class GCunidadTable extends TableGateway
                 'pagado'=>'n'                                
              );
                $this->insert($array);
-        }            
+        } 
+        
+    public function getHistoricoUni(Adapter $dbAdapter,$id_unidad){
+         $this->dbAdapter=$dbAdapter;
+         $query = "select un.nombre as vivienda,gc.*,concat(gp.nombre,' ',gp.apellido) as nombre_persona 
+                    from sis_w_gastocomun_u gc , sis_m_unidad un, sis_w_perdet pd, thouseap_general.sis_m_persona gp 
+                    where gc.id_unidad = '$id_unidad' 
+                    and  gc.id_unidad = un.id
+                    and gp.id = pd.id_persona
+                    and pd.id_unidad = un.id
+                    order by gc.date_start desc limit 6";
+         $result=$this->dbAdapter->query($query,Adapter::QUERY_MODE_EXECUTE);
+         $recorre = $result->toArray();
+         return $recorre;
+    }       
+    
+    public function getSaldoUnidad(Adapter $dbAdapter,$id_unidad){
+        
+        $this->dbAdapter=$dbAdapter;
+         $query = "select sum(monto) as saldo from sis_w_gastocomun_u 
+                    where id_unidad = '$id_unidad'
+                    and pagado =  'n'";
+         $result=$this->dbAdapter->query($query,Adapter::QUERY_MODE_EXECUTE);
+         $recorre = $result->toArray();
+         return $recorre;
+    }            
 }
-

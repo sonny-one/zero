@@ -10,7 +10,7 @@
                         <div class="portlet-body"> 
 						
                 <div class="col-lg-12">
-                <h3 class="page-header" ><i class="fa fa-list-alt" style="font-size: 20px;"></i> &nbsp;&nbsp;Mensajes sin Responder</h3>    
+                <h3 class="page-header" ><i class="fa fa-paper-plane" style="font-size: 20px;"></i> &nbsp;&nbsp;Mis mensajes Enviados</h3>    
                 </div>
                     
                         
@@ -20,7 +20,7 @@
                                 <tr>
                                     <td> N&deg;</td>
                                     <td><i class="fa fa-calendar"></i> Fecha</td>
-                                    <td><i class="fa fa-home"></i> Departamento</td>
+                                    <td><i class="fa fa-user"></i> Destino</td>
                                     <td><i class="fa fa-tag"></i> Asunto</td>                                    
                                     <td><i class="fa fa-plus"></i> Detalles</td>                                
                                 </tr>
@@ -29,24 +29,24 @@
                                 <tr>
                                     <td>025</td>
                                     <td>27-11-2015</td>
-                                    <td>603</td>
+                                    <td>Administrador</td>
                                     <td>Gastos Comunes</td>                                    
                                     <td><a> Abrir</a></td>                                
                                 </tr>
                                 <tr>
                                     <td>027</td>
                                     <td>21-11-2015</td>
-                                    <td>603</td>
+                                    <td>Administrador</td>
                                     <td>Asamblea</td>                                    
                                     <td><a> Abrir</a></td>                                
                                 </tr>
                                 <tr>
                                     <td>035</td>
                                     <td>28-11-2015</td>
-                                    <td>603</td>
+                                    <td>Administrador</td>
                                     <td>Salvo Conducto</td>                                    
                                     <td>
-                                        <a onclick="detalleMs()"> 
+                                        <a data-target="#modal_mensaje" data-toggle="modal" onclick="detalleMs(3)"> 
                                             Abrir
                                         </a>
                                     </td>                                
@@ -55,7 +55,7 @@
 							</table>
                             
                 <div class="col-lg-12">
-                <h3 class="page-header" ><i class="fa fa-history" style="font-size: 20px;"></i> &nbsp;&nbsp;Mensajes respondidos</h3>    
+                <h3 class="page-header" ><i class="fa fa-history" style="font-size: 20px;"></i> &nbsp;&nbsp;Mensajes Recibidos</h3>    
                 </div>
                     
                         
@@ -99,14 +99,33 @@
       </div>
      </div>
     </div>
+    
+<!-- MODAL Pago Proveedor -->
+<div class="modal fade bs-example-modal-md" id="modal_mensaje" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>                    
+                    <h4 class="modal-title" id="myModalLabel" ><i class="fa fa-envelope"></i> &nbsp;Detalle del mensaje</h4>
+            </div>
+                <div id="detalle_mensaje" class="modal-body">Cargando...</div>
+        </div>
+    </div>             
+</div>
+<!-- FIN MODAL Pago Proveedor -->  
+
 <script>
-function detalleMs(){
-$.ajax({
-    url:<?php echo $this->basePath()."/admin/comunicacion/detallemensaje"?>,
-    data:,
-    before:,
-    success:,
-    error:,                        
-});        
+function detalleMs(id_mensaje){
+var parametros =  {
+        "id_mensaje" : id_mensaje,                       
+};
+	$.ajax( {  
+        url  : '<?php echo $this->basePath()."/admin/comunicacion/detallemensaje"?>',
+        data : parametros,
+		type : 'post',      
+		success : function(response) {
+		  $("#detalle_mensaje").html(response);                               
+       }   
+});          
 }
 </script>        

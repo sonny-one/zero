@@ -1,0 +1,600 @@
+<div id="todo" class="row">
+<?php  
+                                        $form = $this->form;
+                                        $form->prepare();
+                                        $form->setAttributes(array(
+                                        'action' => $this->basePath()."/admin/finanzas/pagargc",
+                                        'method' => 'post', 
+                                        'id' => 'formpago'                                   
+                                        ));
+                                        echo $this->form()->openTag($form);
+                                        echo $this->formRow($this->form->get('tipo_ingreso'));                                                                           
+                                        ?> 
+<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+<div class="col-lg-5 col-md-5 col-sm-5 col-xs-5" style="text-align: center;">
+    <div class="form-group">
+        <label>Origen</label>
+            <div class="form-group input-group">
+            <span class="input-group-addon"><i class="fa fa-home"></i>
+            </span>
+                 <?php                                             
+                    echo $this->formRow($this->form->get('origen'));
+                 ?>                                            
+            </div>
+    </div>
+</div> 
+<div class="col-lg-1 col-md-1 col-sm-1 col-xs-1" style="margin-top: 27px;">
+<i class="fa fa-arrow-circle-o-right fa-2x"></i>
+</div>
+<div class="col-lg-5 col-md-5 col-sm-5 col-xs-5" style="text-align: center;">
+    <div class="form-group">
+        <label>Destino</label>
+            <div class="form-group">
+                <?php                                             
+                    echo $this->formRow($this->form->get('id_fondo'));
+                 ?>                 
+                                                            
+            </div>
+    </div>
+</div>
+</div>
+<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" id="divformapago">
+    <div class="form-group">
+        <label id="displaytotal" class="radio-inline" >
+               <?php                                             
+                    echo $this->formRow($this->form->get('radiototal'));
+                 ?>
+        </label>
+        <label id="displayparcial" class="radio-inline">
+               <?php                                             
+                    echo $this->formRow($this->form->get('radioparcial'));
+                 ?>
+        </label>
+    </div>
+</div>
+<!--Pago TOTAL-->
+<div  class="col-lg-12 col-md-12 col-sm-12 col-xs-12" id="divdetalle1" style="display: none;">
+<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+<div class="col-lg-6 col-md-4 col-xs-6">
+    <div class="text-center"><label>Gastos Comunes</label></div>
+    <table class="table table-striped table-bordered table-hover" id="tablatotal">
+        <tbody>
+            <tr>
+                <th>Mes</th>
+                <th>Monto</th>                                 
+            </tr>
+            <?php for ($i=0;$i<count($this->deuda);$i++){?>   
+            <tr >
+                <td width='100' style="text-align: center; text-height: bold;" ><?php echo $meses[$deuda[$i]['mes']];?></td>
+                
+               <td  style="text-align: center;" > <?php $monto = number_format($deuda[$i]['monto'],'0','.','.'); 
+                      echo $monto;?>&nbsp;&nbsp;<input type="checkbox" value="<?php echo $deuda[$i]['monto'].".".$deuda[$i]['id'];?>" checked disabled/></td>
+                    <?php } ?>
+                  
+                 </tr>                                   
+        </tbody>
+    </table>
+</div>
+<div class="col-lg-6 col-md-4 col-xs-6">
+<div class="text-center"><label>Multas</label></div>
+    <table class="table table-striped table-bordered table-hover" >
+        <tbody>
+            <tr>
+                <th>Multa</th>
+                <th>Motivo</th>                                 
+            </tr>
+            <?php for ($i=0;$i<count($this->multa);$i++){?>        
+            <tr>                   
+                <td  style="text-align: center;" >$ <?php echo $multa[$i]['monto'];?> &nbsp;&nbsp;<input type="checkbox" value="<?php echo $multa[$i]['monto'];?>" checked disabled/></td>  
+                <td  style="text-align: center;" ><?php echo $multa[$i]['observacion'];?></td>                                                                                            
+            <?php } ?>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</div>
+</div>
+<!--TOTAL 1-->
+<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" id="divpagototal" style="display: none;">
+<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+<div class="col-lg-6 col-md-4 col-xs-6">
+    <table class="table table-striped table-bordered table-hover" >
+        <tbody>
+            <tr>
+                <th>Sub Total</th>
+                <td id="total1" style="text-align: center;"><strong>$ <?php echo $this->total;?></strong></td>
+                <input id="total" type="hidden" value="<?php echo $this->total;?>"/>                
+            </tr>
+    </tbody>
+    </table>        
+</div>
+<div class="col-lg-1" style="margin-top: 10px ;">
+<a href="javascript:void(0)" onclick="mostrarDetalle1()" > Detalle</a>
+</div>
+</div>
+</div>
+
+<!--TOTAL 1-->
+
+<!--Pago Parcial-->
+<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" id="divdetalle2" style="display: none;">
+<div class="col-lg-6 col-md-4 col-xs-6">
+<div class="text-center"><label>Gastos Comunes</label></div>    
+    <table class="table table-striped table-bordered" id="tablaparcial" >
+        <tbody>
+            <tr>
+                <th>Mes</th>
+                <th>Monto</th>                                 
+            </tr>
+            <?php for ($i=0;$i<count($this->deuda);$i++){?> 
+            <tr >
+                <td width='100' style="text-align: center; text-height: bold;" ><?php echo $meses[$deuda[$i]['mes']];?></td>
+                
+                 <td  style="text-align: center;" >$ <?php $monto = number_format($deuda[$i]['monto'],'0','.','.'); 
+                      echo $monto;?>&nbsp;&nbsp;<input type="checkbox" name="mes[<?php echo $deuda[$i]['id'];?>]" onclick="sumar()" value="<?php echo $deuda[$i]['monto'];?>"/></td>
+                      <?php } ?>                  
+                
+            </tr>             
+        </tbody>
+    </table>
+</div>
+
+<div class="col-lg-6 col-md-4 col-xs-6">
+<div class="text-center"><label>Multas</label></div>
+    <table class="table table-striped table-bordered table-hover" >
+       <tbody> 
+            <tr>
+                <th>Multa</th>
+                <th>Motivo</th>                                 
+            </tr>  
+            <?php for ($i=0;$i<count($this->multa);$i++){?>
+            <tr>                                                  
+               <td  style="text-align: center;">$ <?php echo $multa[$i]['monto'];?> &nbsp;&nbsp;<input type="checkbox" name="multa[<?php echo $multa[$i]['id'];?>]" onclick="sumar()" value="<?php echo $multa[$i]['monto'];?>"/></td>   
+               <td  style="text-align: center;"><?php echo $multa[$i]['observacion'];?></td>
+              <?php }?>  
+              </tr>                                                                                           
+        </tbody>
+    </table>
+</div>
+
+</div>
+<!--TOTAL 2-->
+<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" id="divpagoparcial">
+<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+<div class="col-lg-6 col-md-4 col-xs-6">
+    <table class="table table-striped table-bordered table-hover" >
+        <tbody>
+            <tr>
+                <th>Total</th>
+                <td id="total2" style="text-align: center; font-weight: bold;"></td>                
+            </tr>
+    </tbody>
+    </table>        
+</div>
+<div class="col-lg-1" style="margin-top: 10px ;">
+<a href="javascript:void(0)" onclick="mostrarDetalle2()" > Detalle</a>
+</div>
+</div>
+</div>
+
+<!--TOTAL 2-->
+
+<hr width="80%"/>
+
+<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+    <div id="formaspago" class="form-group">
+        <label>Forma de Pago :</label><br />
+        <label class="radio-inline">
+               <?php                                             
+                    echo $this->formRow($this->form->get('efectivo'));
+                 ?>
+        </label>
+        <label class="radio-inline">
+               <?php                                             
+                    echo $this->formRow($this->form->get('transferencia'));
+                 ?>
+        </label>
+        <label class="radio-inline">
+               <?php                                            
+                    echo $this->formRow($this->form->get('cheque'));
+                 ?>
+        </label>
+        <label class="radio-inline">
+               <?php                                             
+                    echo $this->formRow($this->form->get('debito'));
+                 ?>
+        </label>
+    </div>
+</div> 
+<!--EFECTIVO-->
+<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" id="divefectivo" style="display: none;">
+<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6" style=" display: inline-block; ">
+    <div class="form-group">
+        <label>Fecha de Pago</label>
+            <div class="form-group input-group">
+            <span class="input-group-addon"><i class="fa fa-calendar"></i>
+            </span>
+                 <?php                                             
+                    echo $this->formRow($this->form->get('fecha'));
+                    
+                 ?>                                                        
+            </div>
+    </div>
+</div>
+</div>
+<!--TRANSFERENCIA-->
+<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" id="divtransferencia" style="display: none;">
+<div class="col-lg-5 col-md-5 col-sm-5 col-xs-5" style="text-align: center;">
+    <div class="form-group">
+        <label>N&deg; Operaci&oacute;n</label>
+            <div class="form-group input-group">
+            <span class="input-group-addon"><i class="fa fa-info"></i>
+            </span>
+                 <?php                                             
+                    echo $this->formRow($this->form->get('nmrooperacion'));
+                 ?>                                            
+            </div>
+    </div>
+</div>
+<div class="col-lg-5 col-md-5 col-sm-5 col-xs-5" style="text-align: center;">
+    <div class="form-group">
+        <label>Banco</label>
+            <div class="form-group input-group">
+            <span class="input-group-addon"><i class="fa fa-university"></i>
+            </span>
+                 <?php                                             
+                    echo $this->formRow($this->form->get('banco'));
+                 ?>                                            
+            </div>
+    </div>
+</div>
+<div class="col-lg-5 col-md-5 col-sm-5 col-xs-5" style="text-align: center;">
+    <div class="form-group">
+        <label>Fecha de Pago</label>
+            <div class="form-group input-group">
+            <span class="input-group-addon"><i class="fa fa-calendar"></i>
+            </span>
+                 <?php                                             
+                    echo $this->formRow($this->form->get('fecha'));
+                 ?>                                            
+            </div>
+    </div>
+</div>
+</div>
+<!--CHEQUE-->
+<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" id="divcheque" style="display: none;">
+<div class="col-lg-5 col-md-5 col-sm-5 col-xs-5" style="text-align: center;">
+    <div class="form-group">
+        <label>N&deg; Cheque</label>
+            <div class="form-group input-group">
+            <span class="input-group-addon"><i class="fa fa-info"></i>
+            </span>
+                 <?php                                             
+                    echo $this->formRow($this->form->get('nmrocheque'));
+                 ?>                                            
+            </div>
+    </div>
+</div>
+<div class="col-lg-5 col-md-5 col-sm-5 col-xs-5" style="text-align: center;">
+    <div class="form-group">
+        <label>Banco</label>
+            <div class="form-group input-group">
+            <span class="input-group-addon"><i class="fa fa-university"></i>
+            </span>
+                 <?php                                             
+                    echo $this->formRow($this->form->get('banco'));
+                 ?>                                            
+            </div>
+    </div>
+</div>
+<div class="col-lg-5 col-md-5 col-sm-5 col-xs-5" style="text-align: center;">
+    <div class="form-group">
+        <label>Fecha de Pago</label>
+            <div class="form-group input-group">
+            <span class="input-group-addon"><i class="fa fa-calendar"></i>
+            </span>
+                 <?php                                             
+                    echo $this->formRow($this->form->get('fecha'));
+                 ?>                                            
+            </div>
+    </div>
+</div>
+</div>
+<!--DEBITO-->
+<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" id="divdebito" style="display: none;">
+<div class="col-lg-5 col-md-5 col-sm-5 col-xs-5" style="text-align: center;">
+    <div class="form-group">
+        <label>N&deg; Operaci&oacute;n</label>
+            <div class="form-group input-group">
+            <span class="input-group-addon"><i class="fa fa-dollar"></i>
+            </span>
+                 <?php                                             
+                    echo $this->formRow($this->form->get('nmrooperacion'));
+                 ?>                                            
+            </div>
+    </div>
+</div>
+<div class="col-lg-5 col-md-5 col-sm-5 col-xs-5" style="text-align: center;">
+    <div class="form-group">
+        <label>Banco</label>
+            <div class="form-group input-group">
+            <span class="input-group-addon"><i class="fa fa-university"></i>
+            </span>
+                 <?php                                             
+                    echo $this->formRow($this->form->get('banco'));
+                 ?>                                            
+            </div>
+    </div>
+</div>
+<div class="col-lg-5 col-md-5 col-sm-5 col-xs-5" style="text-align: center;">
+    <div class="form-group">
+        <label>Fecha de Pago</label>
+            <div class="form-group input-group">
+            <span class="input-group-addon"><i class="fa fa-calendar"></i>
+            </span>
+                 <?php                                             
+                    echo $this->formRow($this->form->get('fecha'));
+                 ?>                                            
+            </div>
+    </div>
+</div>
+</div>
+<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="text-align: center;">
+<div class="col-lg-5 col-lg-offset-3">
+    <div class="form-group">
+        <label style="font-size: 19px;"><strong>Total</strong></label>
+            <div class="form-group input-group">
+            <span class="input-group-addon"><i class="fa fa-dollar"></i>
+            </span>
+                 <?php                                             
+                    echo $this->formRow($this->form->get('monto'));
+                 ?>                                            
+            </div>
+    </div>
+</div>
+<div id="noktotal" class="col-lg-1" style="margin: 32px 0 0 -20px; display: none; ">
+<i class="fa fa-close"></i>
+</div>
+<div id="oktotal" class="col-lg-1" style="margin: 32px 0 0 -20px; display: none; ">
+<i class="fa fa-check"></i>
+</div>
+</div>
+<hr width="80%"/>
+
+<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6" style="text-align: center;">
+    <div class="form-group">
+        <label>Comentario</label>
+            <div class="form-group">
+                 <?php                                             
+                    echo $this->formRow($this->form->get('observacion'));
+                 ?>                                            
+            </div>
+    </div>
+</div>
+<!--BOTONES-->
+
+<div class="col-lg-12 col-md-12 col-xs-12 text-right">
+    <?php                                             
+        echo $this->formRow($this->form->get('cancel'));
+    ?>
+
+    <?php                                             
+        echo $this->formRow($this->form->get('sendpago'));
+    ?>                                                                                                                 
+
+                                                                                                                 
+</div> 
+</div>
+<div id="respuestaok" class="row" style="display: none;">
+<div class="col-lg-12 text-center" style="padding: 80px;">
+
+<span><i class="fa fa-thumbs-o-up fa-5x"></i></span>
+<h2 id="descrok"></h2>
+
+</div>
+</div>
+<div id="respuestanok" class="row" style="display: none;">
+<div class="col-lg-12 text-center" style="padding: 80px;">
+
+<span><i class="fa fa-close fa-5x"></i></span>
+<h2 id="descrnok"></h2>
+
+</div>
+</div>
+<div id="loading" style="padding: 200px; display: none;"></div>
+<script>
+function closeModal(){
+    $('#modal3').modal('hide');
+}
+function mostrarTotal(){
+    $('#divpagoparcial').css("display","none");
+    $('#divdetalle2').css("display","none");
+
+    $('#total').removeAttr("disabled");
+    $('#divpagototal').css("display","block");           
+}
+function validaDestino(){
+     var index = $('#destino').find('option:selected').val();
+        if (index == '0'){
+            alert("Selecciona el destino del dinero!");
+            $('#sendpago').attr("disabled","disabled");
+        }else{
+            
+        }    
+    
+}
+function mostrarParcial(){    
+    
+    $('#divpagototal').css("display","none");
+    $('#divdetalle1').css("display","none"); 
+
+
+    $('#total').attr("disabled","disabled"); 
+    $('#divdetalle2').css("display","block");            
+    $('#divpagoparcial').css("display","block");   
+}
+function mostrarDetalle1(){
+  $("#divdetalle1").fadeToggle();  
+}
+function mostrarDetalle2(){
+  $("#divdetalle2").fadeToggle();  
+}
+function mostrarEfectivo(){    
+
+    $('#divtransferencia').css("display","none");
+    $('#divdebito').css("display","none");
+    $('#divcheque').css("display","none");     
+    $('#divcheque :input').attr("disabled","disabled");   
+    $('#divdebito :input').attr("disabled","disabled"); 
+    $('#divtransferencia :input').attr("disabled","disabled");
+    
+    $('#divefectivo :input').removeAttr("disabled");
+    $('#divefectivo').css("display","block");  
+
+}
+function mostrarTrans(){       
+
+    $('#divefectivo').css("display","none");
+    $('#divdebito').css("display","none");
+    $('#divcheque').css("display","none");       
+    $('#divcheque :input').attr("disabled","disabled");   
+    $('#divdebito :input').attr("disabled","disabled");
+    $('#divefectivo :input').attr("disabled","disabled");
+
+    $('#divtransferencia :input').removeAttr("disabled");
+    $('#divtransferencia').css("display","block");     
+
+}
+
+function mostrarCheque(){   
+
+    $('#divefectivo').css("display","none");  
+    $('#divtransferencia').css("display","none");
+    $('#divdebito').css("display","none");
+    $('#divdebito :input').attr("disabled","disabled");
+    $('#divtransferencia :input').attr("disabled","disabled");    
+    $('#divefectivo :input').attr("disabled","disabled");
+    
+
+    $('#divcheque :input').removeAttr("disabled");
+    $('#divcheque').css("display","block");         
+
+}
+
+function mostrarDebito(){       
+
+    $('#divefectivo').css("display","none");  
+    $('#divtransferencia').css("display","none");
+    $('#divcheque').css("display","none"); 
+    $('#divcheque :input').attr("disabled","disabled");
+    $('#divtransferencia :input').attr("disabled","disabled");    
+    $('#divefectivo :input').attr("disabled","disabled");
+
+    $('#divdebito :input').removeAttr("disabled");
+    $('#divdebito').css("display","block");     
+
+}
+function validaMonto(){
+    var select = $('#divdetalle2').find('input:checkbox:checked').length;
+    //Valido si selecciona checkbox 
+    if (select > 0){
+         a=0;
+         $("#noktotal").css('display','none');
+         $('#divdetalle2').find('input:checkbox:checked').each( function(){a = a + parseInt($(this).val());});    
+         var monto = $('#monto').val().replace(".","");
+            //Valido que monto sea superior a lo seleccionado
+            if (monto > a){
+                    $("#noktotal").css('display','inline-block');                    
+                    $("#oktotal").css('display','none');         
+                    alert("El monto debe ser igual o superior \n con respecto a los items seleccionados");           
+                    $('#monto').val('');
+            }else{
+                    $("#oktotal").css('display','inline-block');
+                    $("#noktotal").css('display','none');
+        
+       }
+    }else{
+        
+        
+    }
+}
+/*function formatMonto(input){
+
+    var valor = $("#monto").val();
+
+    console.log(valor);    
+
+/*  var format = valor.toFixed(1).replace(/\d(?=(\d{3})+\.)/g, '$&.');
+
+    var respuesta = format.substring(0,format.length-2);
+
+    
+
+}
+
+$("#monto").keyup(function () {
+
+      var value = $(this).val();
+
+      $("monto").text(value);
+
+    }).keyup();
+
+*/
+
+function sumar(){
+a = 0;
+$('#divdetalle2').find('input:checkbox:checked').each( function(){a = a + parseInt($(this).val());});
+    var formatotal = a.toFixed(1).replace(/\d(?=(\d{3})+\.)/g, '$&.');
+    var respuesta = formatotal.substring(0,formatotal.length-2);          
+$('#total2').text('$ '+respuesta);
+$('#monto').val(respuesta);
+$("#noktotal").css('display','none');
+$("#oktotal").css('display','inline-block');
+} 
+$("#divformapago input[type='radio']").change(function () {
+        var pago =  $("#divformapago input[type='radio']:checked").val();
+            if(pago =='total'){
+                    var monto = $("#total1").text().replace("$ ","");
+                    
+                        $("#monto").val(monto);
+                        $("#monto").attr('disabled','disabled');
+                        $("#oktotal").css('display','inline-block'); 
+            }else{
+                        $("#oktotal").css('display','none');
+                        $("#monto").removeAttr('disabled');
+                        $("#monto").val('');                         
+}});
+if($("#displaytotal").css("display")=="none"){
+    $("#radioparcial").trigger('click');
+}else{
+    $("#radiototal").trigger('click');    
+}
+$("#efectivo").trigger('click');
+$("#formpago").submit(function(e){
+    
+    $("#origen").prop("disabled", false);
+    $("#destino").prop("disabled", false);
+    $("#monto").prop("disabled", false); 
+    var postData = $(this).serializeArray();
+    var formURL = $(this).attr("action");
+    $.ajax(
+    {
+        url : formURL,
+        type: "POST",
+        data : postData,
+        dataType : 'json',
+        success : function(response) {
+             $("#modalingreso").modal('hide');
+            toastr.clear();
+            toastr.success(response.desc);                                         
+        },
+        error: function(jqXHR, textStatus, errorThrown) 
+        {            
+            toastr.error("Ups! Ocurrio un problema, favor contacta con al equipo de soporte");      
+        }
+    });
+    e.preventDefault(); //STOP default action
+    e.unbind(); //unbind. to stop multiple form submit.
+});
+</script>

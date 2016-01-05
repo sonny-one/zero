@@ -50,12 +50,11 @@ class PartidaMantTable extends TableGateway
         
     }
     
-    public function getPartidasMes(Adapter $dbAdapter,$mes){
-        $this->dbAdapter = $dbAdapter;
-        $query = "select * from sis_w_partida_mantencion where ".$mes."='on' and activo = '1'";
-                
-        $result=$this->dbAdapter->query($query,Adapter::QUERY_MODE_EXECUTE);
-        return $result->toArray(); 
+    public function getPartidasMes($mes)
+    {
+        $datos = $this->select(array("$mes"=>'on',"activo"=>'1'));
+        $recorre = $datos->toArray();
+        return $recorre;
         
     }
     
