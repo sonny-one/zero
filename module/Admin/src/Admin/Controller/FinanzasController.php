@@ -55,6 +55,7 @@ use Admin\Form\ProveedorForm;
 use Admin\Form\EgresoForm;
 use Admin\Form\PagoEgresoForm;
 use Admin\Form\CicloForm;
+use Admin\Form\AbonoForm;
 
 
 class FinanzasController extends AbstractActionController
@@ -909,11 +910,22 @@ class FinanzasController extends AbstractActionController
     public function modalabonoAction()
     {
         
-        //Obtenemos Datos          
-        $lista = $this->request->getPost();
+        //Obtenemos Datos POST          
+        $data = $this->request->getPost();
+        //Variables BBDD
+        $sid = new Container('base');
+        $db_name = $sid->offsetGet('dbNombre');
+        $this->dbAdapter=$this->getServiceLocator()->get($db_name);                        
+        //Instancias        
+        $uni = new UnidadTable($this->dbAdapter);
+        $form   = new AbonoForm("form"); 
         
+        //Consultamos info de unidad
+        $unidad = $uni->getDatosId($data['id_unidad']);
         
-        $result = new ViewModel(array("data"=>$lista));
+        //Cargamos Formulario
+        $form->get('nombre_unidad')->setAttribute('value' ,$unidad[0]['nombre']);
+        $result = new ViewModel(array("form"=>$form));
 
         $result->setTerminal(true);
 

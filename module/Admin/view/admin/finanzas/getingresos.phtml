@@ -11,8 +11,9 @@ if($saldo>0){
 <div class="col-lg-12">
                      <h2 > <i class="fa fa-search"></i> Resultados</h2>
                      <br />
-                     <table class="table table-condensed table-hover">
-                        <thead>
+                     <div class="portlet-body flip-scroll">
+							<table class="table table-bordered table-striped table-condensed flip-content">
+						<thead class="flip-content">
                            <tr>
                               <th>
                                  <i class="fa fa-home" style="font-size: 22px;"></i>
@@ -36,7 +37,7 @@ if($saldo>0){
                               </th>
                            </tr>
                         </thead>
-                        <tbody>
+							<tbody>
                            <tr>
                               <td>
                                  <strong><?php echo $gcomun[0]['vivienda'];?></strong>
@@ -68,5 +69,5 @@ if($saldo>0){
                               </td>
                            </tr>
                         </tbody>
-                     </table>
+							</table>      
                   </div>                                               

@@ -70,7 +70,7 @@ class UnidadTable extends TableGateway
     public function getDatosId($llave)
     {
         
-        $datos = $this->select(array('id'=>$llave));
+        $datos = $this->select(array('id'=>$llave,'activo'=>'1'));
         $recorre = $datos->toArray();
                       
         return $recorre;

@@ -24,7 +24,7 @@
                         </div>
                      </div>
                      <div class="col-md-6" style="display: block;">
-                                <a onclick="modalAbono()" data-target="#modalAbono" data-toggle="modal" class="btn btn-info"><i class="fa fa-plus"></i>&nbsp; Realizar Abono</a>
+                                <a id="btn_abono" onclick="modalAbono()" data-target="#modalAbono" data-toggle="modal" class="btn btn-success hidden"><i class="fa fa-plus"></i>&nbsp; Realizar Abono</a>
                                 
                                 <a class="btn btn-info"><i class="fa fa-plus"></i>&nbsp; Pagos Masivos</a>
                      </div>
@@ -109,6 +109,7 @@ function buscaDpto(){
         type : 'post', 
         data : 	postData,   
         beforeSend: function(){
+            $("#btn_abono").addClass('hidden');
             $("#btn_busca_dpto").attr('disabled','disabled');
             $("#resultado_ingresos").html("<i class='fa fa-spinner fa-spin' style='font-size:25px;'></i>");
         },    	
@@ -123,6 +124,8 @@ function buscaDpto(){
             $("#resultado_ingresos").html("");
 			$("#resultado_ingresos").html(response);
             $("#btn_busca_dpto").removeAttr('disabled');
+            $("#btn_abono").removeClass('hidden');
+            
             toastr.clear();
             toastr.success("Busqueda Exitosa para vivienda "+$("#nombre_dpto").val());
           } 

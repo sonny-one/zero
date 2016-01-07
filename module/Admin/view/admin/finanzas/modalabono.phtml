@@ -1,62 +1,284 @@
-<?php echo $data['id_unidad']; ?>
 <div class="row">
 <br />
-
-    <div class="col-lg-5 text-center">
-        <i class="fa fa-home fa-4x" style="color: #428bca;"></i>   <br /><br /> 
-        <input class="form-control" value="201"/>
+<?php  
+                                        $form = $this->form;
+                                        $form->prepare();
+                                        $form->setAttributes(array(
+                                        'action' => $this->basePath()."/admin/finanzas/pagarabono",
+                                        'method' => 'post', 
+                                        'id' => 'form_abono'                                   
+                                        ));
+                                        echo $this->form()->openTag($form);
+                                        echo $this->formRow($this->form->get('id_unidad'));                                                                           
+    ?> 
+    <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5 text-center">
+        <i class="fa fa-home" style="color: #428bca; font-size: 40px;"></i>   <br /><br /> 
+        <?php                                             
+                    echo $this->formRow($this->form->get('nombre_unidad'));
+        ?>  
         
     </div>
     
     <!-- flecha -->
     <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 text-center" style="display: table; height:122px;">
-        <i class="fa fa-arrow-circle-o-right" style="display: table-cell; vertical-align: middle; font-size:20px"></i>                    
+        <i class="fa fa-arrow-circle-o-right" style="display: table-cell; vertical-align: middle; font-size:30px"></i>                    
     </div>
     <!-- fin flecha -->
     
-    <div class="col-lg-5 text-center">
-        <i class="fa fa-dollar fa-4x" style="color: #2ACA2A;"></i>   <br /><br /> 
-        <input placeholder="Ingresa el monto" id="montoabono" class="form-control"/>                                          
+    <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5 text-center">
+        <i class="fa fa-dollar fa-4x" style="color: #2ACA2A;font-size: 40px;"></i>   <br /><br /> 
+        <?php                                             
+                    echo $this->formRow($this->form->get('monto_abono'));
+        ?>                                          
     </div>
     
-    <div class="col-lg-12 text-center" style="margin-top: 40px;">
-        <a class="btn btn-danger" data-dismiss="modal"><i class="fa fa-close" ></i> &nbsp;Cancelar</a> &nbsp;&nbsp;&nbsp;
-        <a onclick="ingresarAbono()" class="btn btn-primary"><i class="fa fa-check"></i> &nbsp;Ingresar abono</a>
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+    <div id="formaspago" class="form-group">
+        <label>Forma de Pago :</label><br />
+        <label class="radio-inline">
+               <?php                                             
+                    echo $this->formRow($this->form->get('efectivo'));
+                 ?>
+        </label>
+        <label class="radio-inline">
+               <?php                                             
+                    echo $this->formRow($this->form->get('transferencia'));
+                 ?>
+        </label>
+        <label class="radio-inline">
+               <?php                                            
+                    echo $this->formRow($this->form->get('cheque'));
+                 ?>
+        </label>
+        <label class="radio-inline">
+               <?php                                             
+                    echo $this->formRow($this->form->get('debito'));
+                 ?>
+        </label>
     </div>
-
+</div> 
+<!--EFECTIVO-->
+<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" id="divefectivo_abono" style="display: none;">
+<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6" style=" display: inline-block; ">
+    <div class="form-group">
+        <label>Fecha de Pago</label>
+            <div class="form-group input-group">
+            <span class="input-group-addon"><i class="fa fa-calendar"></i>
+            </span>
+                 <?php                                             
+                    echo $this->formRow($this->form->get('fecha'));
+                    
+                 ?>                                                        
+            </div>
+    </div>
 </div>
-<script>
-// Cargamos combo de DPTOS
-$.ajax(
-    {
-        url : '<?php echo $this->basePath()."/admin/infocom/combounidad"?>',
-        type: "POST",        
-        dataType : 'json',
-        success : function(response) {   
-            console.log(response)
-        var combo1 = $("#ingcombodptosabono");
-        combo1.empty();
-         $.each(response.combo1, function(k,v){            
-            combo1.append("<option value=\""+k+"\">"+v+"</option>");
-         });  },
-        error: function(jqXHR, textStatus, errorThrown) 
-        {            
-            alert("error"); 
-        }
-});
-function ingresarAbono()
-{
-var postData = {'id_unidad':$('#ingcombodptosabono').find('option:selected').val();
-                'monto':$('#montoabono').val();
-            }
-  	$.ajax( {
-        url : '<?php echo $this->basePath()."/admin/finanzas/pagarabono"?>',
-        type : 'post', 
-        data : 	postData,       	
-		success : function(response) {
-            
-		}
-	});   
+</div>
+<!--TRANSFERENCIA-->
+<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" id="divtransferencia_abono" style="display: none;">
+<div class="col-lg-5 col-md-5 col-sm-5 col-xs-5" style="text-align: center;">
+    <div class="form-group">
+        <label>N&deg; Operaci&oacute;n</label>
+            <div class="form-group input-group">
+            <span class="input-group-addon"><i class="fa fa-info"></i>
+            </span>
+                 <?php                                             
+                    echo $this->formRow($this->form->get('nmrooperacion'));
+                 ?>                                            
+            </div>
+    </div>
+</div>
+<div class="col-lg-5 col-md-5 col-sm-5 col-xs-5" style="text-align: center;">
+    <div class="form-group">
+        <label>Banco</label>
+            <div class="form-group input-group">
+            <span class="input-group-addon"><i class="fa fa-university"></i>
+            </span>
+                 <?php                                             
+                    echo $this->formRow($this->form->get('banco_abono'));
+                 ?>                                            
+            </div>
+    </div>
+</div>
+<div class="col-lg-5 col-md-5 col-sm-5 col-xs-5" style="text-align: center;">
+    <div class="form-group">
+        <label>Fecha de Pago</label>
+            <div class="form-group input-group">
+            <span class="input-group-addon"><i class="fa fa-calendar"></i>
+            </span>
+                 <?php                                             
+                    echo $this->formRow($this->form->get('fecha'));
+                 ?>                                            
+            </div>
+    </div>
+</div>
+</div>
+<!--CHEQUE-->
+<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" id="divcheque_abono" style="display: none;">
+<div class="col-lg-5 col-md-5 col-sm-5 col-xs-5" style="text-align: center;">
+    <div class="form-group">
+        <label>N&deg; Cheque</label>
+            <div class="form-group input-group">
+            <span class="input-group-addon"><i class="fa fa-info"></i>
+            </span>
+                 <?php                                             
+                    echo $this->formRow($this->form->get('nmrocheque'));
+                 ?>                                            
+            </div>
+    </div>
+</div>
+<div class="col-lg-5 col-md-5 col-sm-5 col-xs-5" style="text-align: center;">
+    <div class="form-group">
+        <label>Banco</label>
+            <div class="form-group input-group">
+            <span class="input-group-addon"><i class="fa fa-university"></i>
+            </span>
+                 <?php                                             
+                    echo $this->formRow($this->form->get('banco_abono'));
+                 ?>                                            
+            </div>
+    </div>
+</div>
+<div class="col-lg-5 col-md-5 col-sm-5 col-xs-5" style="text-align: center;">
+    <div class="form-group">
+        <label>Fecha de Pago</label>
+            <div class="form-group input-group">
+            <span class="input-group-addon"><i class="fa fa-calendar"></i>
+            </span>
+                 <?php                                             
+                    echo $this->formRow($this->form->get('fecha'));
+                 ?>                                            
+            </div>
+    </div>
+</div>
+</div>
+<!--DEBITO-->
+<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" id="divdebito_abono" style="display: none;">
+<div class="col-lg-5 col-md-5 col-sm-5 col-xs-5" style="text-align: center;">
+    <div class="form-group">
+        <label>N&deg; Operaci&oacute;n</label>
+            <div class="form-group input-group">
+            <span class="input-group-addon"><i class="fa fa-dollar"></i>
+            </span>
+                 <?php                                             
+                    echo $this->formRow($this->form->get('nmrooperacion'));
+                 ?>                                            
+            </div>
+    </div>
+</div>
+<div class="col-lg-5 col-md-5 col-sm-5 col-xs-5" style="text-align: center;">
+    <div class="form-group">
+        <label>Banco</label>
+            <div class="form-group input-group">
+            <span class="input-group-addon"><i class="fa fa-university"></i>
+            </span>
+                 <?php                                             
+                    echo $this->formRow($this->form->get('banco_abono'));
+                 ?>                                            
+            </div>
+    </div>
+</div>
+<div class="col-lg-5 col-md-5 col-sm-5 col-xs-5" style="text-align: center;">
+    <div class="form-group">
+        <label>Fecha de Pago</label>
+            <div class="form-group input-group">
+            <span class="input-group-addon"><i class="fa fa-calendar"></i>
+            </span>
+                 <?php                                             
+                    echo $this->formRow($this->form->get('fecha'));
+                 ?>                                            
+            </div>
+    </div>
+</div>  
+</div>  
     
+    <div class="col-lg-6 col-lg-offset-3 col-md-6 col-sm-6 col-sm-offset-3 col-xs-6 col-xs-offset-3" style="text-align: center;">
+    <div class="form-group">
+        <label>Comentario</label>
+            <div class="form-group">
+                 <?php                                             
+                    echo $this->formRow($this->form->get('comentario_abono'));
+                 ?>                                            
+            </div>
+    </div>
+    </div>
+    
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-center" style="margin-top: 40px;">
+        <?php                                             
+                    echo $this->formRow($this->form->get('cancel_abono'));
+        ?>
+        <?php                                             
+                    echo $this->formRow($this->form->get('send_abono'));
+        ?>
+    </div>
+                        <?php  
+                            echo $this->form()->closeTag($form);                                                                                                                                                                                                     
+                        ?> 
+</div>
+<br />
+<br />
+<script>
+function isNumber(e) {
+k = (document.all) ? e.keyCode : e.which;
+if (k==8 || k==0) return true;
+patron = /\d/;
+n = String.fromCharCode(k);
+return patron.test(n);
+}
+function formatMonto(){  
+    var format = $("#monto_abono").val().replace(/\./g,'').replace(/\B(?=(\d{3})+(?!\d))/g, ".")
+    $("#monto_abono").val(format);
+    $("#montototal").val(format);
+}
+function mostrarEfectivoAbono(){    
+
+    $('#divtransferencia_abono').css("display","none");
+    $('#divdebito_abono').css("display","none");
+    $('#divcheque_abono').css("display","none");     
+    $('#divcheque_abono :input').attr("disabled","disabled");   
+    $('#divdebito_abono :input').attr("disabled","disabled"); 
+    $('#divtransferencia_abono :input').attr("disabled","disabled");
+    
+    $('#divefectivo_abono :input').removeAttr("disabled");
+    $('#divefectivo_abono').css("display","block");  
+
+}
+function mostrarTransAbono(){       
+
+    $('#divefectivo_abono').css("display","none");
+    $('#divdebito_abono').css("display","none");
+    $('#divcheque_abono').css("display","none");       
+    $('#divcheque_abono :input').attr("disabled","disabled");   
+    $('#divdebito_abono :input').attr("disabled","disabled");
+    $('#divefectivo_abono :input').attr("disabled","disabled");
+
+    $('#divtransferencia_abono :input').removeAttr("disabled");
+    $('#divtransferencia_abono').css("display","block");     
+
+}
+function mostrarChequeAbono(){   
+
+    $('#divefectivo_abono').css("display","none");  
+    $('#divtransferencia_abono').css("display","none");
+    $('#divdebito_abono').css("display","none");
+    $('#divdebito_abono :input').attr("disabled","disabled");
+    $('#divtransferencia_abono :input').attr("disabled","disabled");    
+    $('#divefectivo_abono :input').attr("disabled","disabled");
+    
+
+    $('#divcheque_abono :input').removeAttr("disabled");
+    $('#divcheque_abono').css("display","block");         
+
+}
+function mostrarDebitoAbono(){       
+
+    $('#divefectivo_abono').css("display","none");  
+    $('#divtransferencia_abono').css("display","none");
+    $('#divcheque_abono').css("display","none"); 
+    $('#divcheque_abono :input').attr("disabled","disabled");
+    $('#divtransferencia_abono :input').attr("disabled","disabled");    
+    $('#divefectivo_abono :input').attr("disabled","disabled");
+
+    $('#divdebito_abono :input').removeAttr("disabled");
+    $('#divdebito_abono').css("display","block");     
 }
 </script>
