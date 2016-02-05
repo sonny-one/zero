@@ -1,0 +1,54 @@
+<div class="row">
+<div class="col-lg-12 col-md-12 text-center" >
+    <div class="form-group">
+        <label>Texto </label>  
+        <textarea id="textonota" rows="4" maxlength="57" class="form-control" placeholder="Escriba aqui..." required><?php echo $this->notas[0]['texto'];?></textarea>                                          
+    </div>
+</div>
+
+<div class="col-lg-12 col-md-12 col-sm-12">
+    <a  class="btn btn-info" data-dismiss="modal"><i class="fa fa-reply"></i></a>
+    <a class="btn btn-danger <?php echo $this->displayelim;?>" onclick="eliminaNota(<?php echo $this->notas[0]['id'];?>)"><i class="fa fa-trash"></i> &nbsp;Eliminar</a>
+    <a  class="btn btn-success <?php echo $this->displayguardar;?>" onclick="guardaNota(<?php echo $this->notas[0]['id'];?>)"><i class="fa fa-plus"></i> &nbsp;Guardar</a>
+</div>
+</div>
+<script>
+function eliminaNota(id){
+var data = { "id": id};    
+    	$.ajax( {
+        url : '<?php echo $this->basePath()."/admin/mantenciones/eliminanota"?>',
+        type : 'post', 
+        data : 	data,       	
+		success : function(response) {
+		  $("#modalnotas").modal('hide'); 
+		  toastr.success(response.descripcion);		 
+       //   cargaNotas();                         
+		},
+        error: function(jqXHR, textStatus, errorThrown) 
+        {            
+         toastr.error("Ups! Ocurrio un problema, favor contacta con al equipo de soporte");      
+        }
+	});  
+}
+function guardaNota(id){
+var texto = $('#textonota').val();    
+var data = {"id": id,"texto": texto};    
+    	$.ajax( {
+        url : '<?php echo $this->basePath()."/admin/mantenciones/guardanota"?>',
+        type : 'post', 
+        data : 	data,       	
+		success : function(response) {  		          
+		  if(response.status=='ok'){
+		      $("#modalnotas").modal('hide');
+              toastr.success(response.descripcion);                            
+         //   cargaNotas();              
+          }              
+		},
+        error: function(jqXHR, textStatus, errorThrown) 
+        {            
+         toastr.error("Ups! Ocurrio un problema, favor contacta con al equipo de soporte");      
+        }
+	});    
+    
+}
+</script>

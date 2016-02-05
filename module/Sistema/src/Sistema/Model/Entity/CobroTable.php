@@ -20,7 +20,7 @@ class CobroTable extends TableGateway
     private $user_create;        
     private $activo;
     
-    
+    private $dbAdapter;
  
     public function __construct(Adapter $adapter = null, $databaseSchema = null, ResultSet $selectResultPrototype = null)
     {
@@ -71,6 +71,7 @@ class CobroTable extends TableGateway
                       
         return $recorre;
     }
+    
     public function getCobroId($llave)
     {
         
@@ -87,6 +88,20 @@ class CobroTable extends TableGateway
         $recorre = $datos->toArray();
                       
         return $recorre;
+    }
+    
+    public function borraEgreso($id)
+    {             
+        $array=array('activo'=>'0');
+        $this->update($array,array('id_egreso'=>$id));                  
+    }
+    
+    public function getSumaCuotas(Adapter $dbAdapter,$id_egreso)
+    {         
+         $this->dbAdapter=$dbAdapter;
+         $query = "select sum(valor) as monto from sis_w_cobro where id_egreso = '$id_egreso' and estado <> 'impaga'";
+         $result=$this->dbAdapter->query($query,Adapter::QUERY_MODE_EXECUTE);
+         return $result->toArray();        
     }
     
 }

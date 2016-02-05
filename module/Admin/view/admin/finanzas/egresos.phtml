@@ -25,7 +25,7 @@
                  <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
                     <br /><br /> 
                         <div class="col-lg-12">                        
-                            <i class="fa fa-external-link-square" style="color: #585DA0; font-size: 42px;"></i> <br /><br />
+                            <i class="fa fa-hand-o-up" style="color: #585DA0; font-size: 42px;"></i> <br /><br />
                         </div>
                     
                         <div class="col-lg-12">
@@ -60,7 +60,7 @@
                         </div>                        
                         <div class="col-lg-12"> 
                             <?php                                             
-                            echo $this->formRow($this->form->get('proveedores'));
+                            echo $this->formRow($this->form->get('trabajadores'));
                             ?>                        
                         </div>                    
                   </div>    
@@ -74,7 +74,7 @@
                         
              <!--Fin Flecha 2--> 
              <!--3-->                  
-                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                <div id="div_3_proveedor" class="col-lg-3 col-md-3 col-sm-3 col-xs-3" style="display: none;">
                     <br /><br />
                         <div class="col-lg-12">                        
                             <i class="fa fa-dollar" style="color: #585DA0; font-size: 42px;"></i><br /><br />
@@ -86,7 +86,19 @@
                             ?> 
                         </div>                    
                   </div> 
-                    </div>          
+                  <div id="div_3_trabajador" class="col-lg-3 col-md-3 col-sm-3 col-xs-3" style="display: none;">
+                    <br /><br />
+                        <div class="col-lg-12">                        
+                            <i class="fa fa-dollar" style="color: #585DA0; font-size: 42px;"></i><br /><br />
+                        </div>
+                    
+                        <div class="col-lg-12">
+                            <?php                                             
+                            echo $this->formRow($this->form->get('enviar2'));
+                            ?> 
+                        </div>                    
+                  </div> 
+             </div>          
              <!--Fin 3--> 
                         <?php  
                             echo $this->form()->closeTag($form);                                                                                                                                                                                                     
@@ -96,32 +108,9 @@
         
         
      <!-- TABLA -->
-      <div class="col-lg-12">
-                <h3 class="page-header" ><i class="fa fa-list-alt" style="font-size: 20px;"></i> &nbsp;&nbsp;Egresos del condominio</h3>    
-      </div>
-       <div class="col-lg-12">
-     <div class="table-responsive">
-                                <table class="table table-hover">
-                                    <thead>
-                                        <tr>
-                                            <th>N&deg;</th>
-                                            <th>Fecha del Egreso</th>
-                                            <th>Origen</th>
-                                            <th>Destino</th>
-                                            <th>Monto</th>
-                                            <th>Boleta</th>
-                                            <th>Cuotas</th>
-                                            <th>Acci&oacute;n</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody style="text-align: center;">
-                                       <?php 
-                                       echo $tabla;
-                                         ?>
-                                    </tbody>
-                                </table>
-                            </div>
-                          </div>   
+      <div id="tabla_egresos">
+
+     </div>   
        <!-- FIN TABLA -->                   
 
 
@@ -153,7 +142,22 @@
         </div>
     </div>             
 </div>
-<!-- FIN MODAL Pago Proveedor -->    
+<!-- FIN MODAL Pago Proveedor -->
+
+<!-- MODAL Pago Trabajador -->
+
+<div class="modal fade bs-example-modal-lg" id="pagotrab" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>                    
+                    <h4 class="modal-title" id="myModalLabel" style="text-align: center;">Pago Remuneraciones</h4>
+            </div>
+                <div id="modalpagotrab" class="modal-body">Cargando...</div>
+        </div>
+    </div>             
+</div>
+<!-- FIN MODAL Pago Trabajador -->     
 
 <!-- MODAL Cuotas -->
 
@@ -171,9 +175,22 @@
 <!-- FIN MODAL Cuotas -->         
 
 <script>
+function getTablaEgresos(){
+    $.ajax( {  
+        url  : '<?php echo $this->basePath()."/admin/finanzas/tablaegreso"?>',        
+		type : 'post', 
+        beforeSend: function(){
+            $("#tabla_egresos").html("<div class='text-center'><i class='fa fa-spinner fa-spin' style='font-size:20px;'></i></div>");
+        },     
+		success : function(response) {
+		  $("#tabla_egresos").html(response);                           
+       }   
+});    
+}
 toastr.options = {
   "positionClass": "toast-top-center",
 }
+getTablaEgresos();
 /*$("#cproveedores").change(function(){
     var parametros = {"nombre_prov" : $("#cproveedores option:selected").text()};
     $.ajax( {  
@@ -198,8 +215,8 @@ toastr.options = {
 });     
 });*/
 function modalPago(){ 
-   if ($("#combo_proveedores").val()=='0' || $("#combo_proveedores").val()=='0'){
-        toastr.info("Falta seleccionar datos en el paso 2");
+   if ($("#combo_proveedores").val()=='0'){
+        toastr.info("Debes seleccionar un proveedor");
    }
     var parametros =  {
         "nombre_prov" : $("#combo_proveedores option:selected").text(),
@@ -211,12 +228,27 @@ function modalPago(){
 		type : 'post',      
 		success : function(response) {
 		  $("#modalpago").html(response);
-          return false;
-          /*  if(response.flag=='si'){
-                $("#pagoprov").modal('hide');
-                
-            }else{$("#modalpago").html(response);} */                                
+          return false;                              
        }   
+});    
+}
+function modalPagoTrabajador(){ 
+    var parametros =  {
+        "nombre_trabajador" : $("#combo_trabajadores option:selected").text(),
+        "id_trabajador" : $("#combo_trabajadores option:selected").val(),
+        "id_tipo_egreso" : $("#tipo_egreso option:selected").val(),                
+                      };
+	$.ajax( {  
+        url  : '<?php echo $this->basePath()."/admin/finanzas/modalpagotrabajador"?>',
+        data : parametros,
+		type : 'post',      
+		success : function(response) {
+		  $("#modalpagotrab").html(response);                              
+        },
+        error: function(jqXHR, textStatus, errorThrown) 
+        {            
+         toastr.error("Ups! Ocurrio un problema, favor contacta con al equipo de soporte");      
+        } 
 });    
 }
 function modalCuotas(id){ 
@@ -227,30 +259,42 @@ function modalCuotas(id){
 		type : 'post',      
 		success : function(response) {
 		  $("#bodycuotas").html(response);
-          return false;
-          /*  if(response.flag=='si'){
-                $("#pagoprov").modal('hide');
-                
-            }else{$("#modalpago").html(response);} */                                
-       }   
+          return false;                                  
+        },
+        error: function(jqXHR, textStatus, errorThrown) 
+        {            
+         toastr.error("Ups! Ocurrio un problema, favor contacta con al equipo de soporte");      
+        } 
 });    
 }
 function paso2(){
     if($("#tipo_egreso").val()=="0"){
         hidePaso2();
     }else if ($("#tipo_egreso").val()=="1"){
-        showP2trab();      
+        showP2trab(); 
+        $("#paso3").fadeOut();      
     }else {
         showP2prov();
+        $("#paso3").fadeOut(); 
     }
 }
-function paso3(){
+function paso3a(){
     if ($("#combo_proveedores").val()=='0'){
         $("#paso3").fadeOut(0);
     }else{
         $("#paso3").fadeIn(800);
-    }
-    
+        $("#div_3_proveedor").fadeIn(800);
+        $("#div_3_trabajador").fadeOut();
+    }   
+}
+function paso3b(){
+    if ($("#combo_trabajadores").val()=='0'){
+        $("#paso3").fadeOut(0);
+    }else{
+        $("#paso3").fadeIn(800);
+        $("#div_3_trabajador").fadeIn(800);
+        $("#div_3_proveedor").fadeOut();
+    }    
 }
 function hidePaso2 (){
         $("#paso2").fadeOut();
@@ -267,5 +311,32 @@ function showP2trab (){
         $("#div_prov").fadeOut(0);    
         $("#div_trab").fadeIn(800);        
 
+}
+function borra_egreso(id){
+bootbox.confirm("<strong>Se eliminar&aacute; este egreso, estas seguro...?</strong>", function(result) 
+{
+    if(result){
+        var postData = {'id':id}
+    	$.ajax({  
+            url  : '<?php echo $this->basePath()."/admin/finanzas/borraegreso"?>',
+            data : postData,
+            type : 'post',      
+            success : function(response) {
+                if(response.status =='nok'){
+                    toastr.error(response.desc);
+                }else{
+                    toastr.success(response.desc);
+                } 
+                getTablaEgresos();                                                   
+            },
+            error: function(jqXHR, textStatus, errorThrown) 
+            {            
+                toastr.error("Ups! Ocurrio un problema, favor contacta con al equipo de soporte");      
+            }   
+        }); 
+     }else{
+        toastr.info('Acci&oacute;n cancelada');
+     }
+});    
 }
 </script>                                                         

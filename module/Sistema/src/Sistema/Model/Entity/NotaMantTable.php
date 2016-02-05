@@ -4,6 +4,7 @@ namespace Sistema\Model\Entity;
 use Zend\Db\TableGateway\TableGateway;
 use Zend\Db\Adapter\Adapter;
 use Zend\Db\Sql\Sql;
+use Zend\Db\Sql\Select;
 use Zend\Db\ResultSet\ResultSet;
 
 use Sistema\Util\SysFnc;
@@ -19,10 +20,13 @@ class NotaMantTable extends TableGateway
        return parent::__construct('sis_w_nota_mantencion', $adapter, $databaseSchema,$selectResultPrototype);
     }
  
-    public function getNotas()
+      public function getNotas()
     {
         
-        $datos = $this->select(array('activo'=>'1'));
+        $datos = $this->select(function (Select $select) {
+             $select->where->like('activo', '1');
+            $select->order('date_start DESC'); //->limit(2);
+        });
         $recorre = $datos->toArray();
                       
         return $recorre;

@@ -14,25 +14,25 @@ use Sistema\Model\Entity\ReclamoTable;
 class IndexController extends AbstractActionController
 {
     public function indexAction()
-    {
-            
-            //Instancias
-            $sid = new Container('base');            
-            //Obtenemos datos de sesion                  
-            $db_name = $sid->offsetGet('dbNombre');
-            //Conectamos a BBDD Condominio
-            $this->dbAdapter = $this->getServiceLocator()->get($db_name); 
-            
-            //Obtenemos datos POST
-            $data = $this->request->getPost();
-            
-            //Tablas
-            $reclamo = new ReclamoTable($this->dbAdapter);            
-            $reclamo3 = $reclamo->getReclamo($id);
-                                    
-            $this->layout('layout/usuario');         
-
-            return new ViewModel(array('reclamo'=>$reclamo3));
+    { 
+        $this->layout('layout/usuario');
+    }
+    
+    
+    public function miunidadAction()
+    {        
+        $result = new ViewModel();
+        $result->setTerminal(true);
+       
+        return $result;       
+    }
+    
+    public function micondominioAction()
+    { 
+        $result = new ViewModel();
+        $result->setTerminal(true);
+       
+        return $result;      
     }
     
     public function reclamoAction()
@@ -52,7 +52,7 @@ class IndexController extends AbstractActionController
             $reclamo = new ReclamoTable($this->dbAdapter);            
             $reclamo3 = $reclamo->getReclamo($id);
                                     
-            $this->layout('layout/usuario');         
+        //    $this->layout('layout/usuario');         
 
             return new ViewModel(array('reclamo'=>$reclamo3));
     }

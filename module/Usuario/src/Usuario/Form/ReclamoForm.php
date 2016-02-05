@@ -42,13 +42,14 @@ class ReclamoForm extends Form
             )
         ));
         
-        //text ////////////////////////////////  telefono
+        //text ////////////////////////////////  Asunto
         $this->add(array(
             'type' => 'text',
-            'name' => 'telefono',
+            'name' => 'asunto',
             'attributes' => array(
                 'class' => 'form-control',
-                'id' => 'telefono',                                              
+                'id' => 'asunto_reclamo',
+                'disabled' => 'true',                                               
             )
         ));
                 
@@ -167,7 +168,7 @@ class ReclamoForm extends Form
             'attributes' => array(
                 'type' => 'reset',
                 'value' => 'Cancelar',
-                'onclick' => 'closeModal();',
+                'onclick' => "submenu('comunicacion/reclamo');",
                 'title' => 'Cancelar',
                 'class' => 'btn btn-danger'
             ),

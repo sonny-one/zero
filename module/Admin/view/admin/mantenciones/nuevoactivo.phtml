@@ -1,0 +1,341 @@
+<div id="todoactv" class="row">
+
+<div class="col-lg-3">
+        <div class="col-lg-12" style="text-align: center; margin-bottom: 10px;">
+            <img src="<?php echo $this->basePath()?>/img/inventario.jpg" class="img-rounded" style="max-width: 80%;"/> <br />
+        </div>                 
+        <div class="col-lg-12">
+                    <div class="well well-sm">
+                        <h4 style="text-align: center;">Rotulaci&oacute;n</h4>
+                        <p>Recuerde <strong>rotular cada art&iacute;culo de la comunidad</strong>, de esta forma podra <strong>controlar</strong> f&aacute;cilmente cada activo a lo largo del tiempo.</p>
+                    </div>
+        </div>
+</div>      
+                            <?php 
+                                        $form = $this->form;
+                                        $form->prepare();
+                                        $form->setAttributes(array(
+                                        'action' => $this->basePath()."/admin/mantenciones/nuevoactivo",
+                                        'method' => 'post',
+                                        'id' => 'formnuevoactivo',                                    
+                                        ));
+                                        echo $this->form()->openTag($form);                                        
+                                        ?>                                        
+<div class="col-lg-9 col-md-9 col-sm-9 col-xs-9">
+<div class="col-lg-5 col-md-5 col-xs-6">
+<div class="form-group">
+        <label>Nombre</label>
+    <div class="form-group input-group">
+    <span class="input-group-addon"><i class="fa fa-tag"></i>
+    </span>
+        <?php                                             
+        echo $this->formRow($this->form->get('nombre'));
+        ?>                                                                           
+    </div>
+</div>
+</div>
+
+<div class="col-lg-4 col-md-5 col-xs-6">
+<div class="form-group">
+        <label>Fondo</label>
+    <div class="form-group input-group">
+    <span class="input-group-addon"><i class="fa fa-dollar"></i>
+    </span>
+        <?php                                             
+        echo $this->formRow($this->form->get('id_fondo'));
+        ?>                                                                           
+    </div>
+</div>
+</div>
+
+
+<div class="col-lg-3 col-md-5 col-xs-6">
+<div class="form-group">
+        <label>Costo / Valor</label>
+    <div class="form-group input-group">
+    <span class="input-group-addon"><i class="fa fa-dollar"></i>
+    </span>
+        <?php                                             
+        echo $this->formRow($this->form->get('valor'));
+        ?>                                                                         
+    </div>
+
+</div>
+</div>
+
+<div class="col-lg-3 col-md-5 col-xs-6">
+<div class="form-group">
+        <label>Cantidad</label>
+    <div class="form-group input-group">
+    <span class="input-group-addon"><i class="fa fa-sort-numeric-asc"></i>
+    </span>
+        <?php                                             
+       echo $this->formRow($this->form->get('cantidad'));
+        ?>                                                                        
+    </div>
+
+</div>  
+</div>
+
+
+<div class="col-lg-4 col-md-4 col-xs-6">
+<div class="form-group">
+        <label>Area Responsable</label>
+    <div class="form-group input-group">
+    <span class="input-group-addon"><i class="fa fa-users"></i>
+    </span>
+        <?php                                             
+        echo $this->formRow($this->form->get('area_responsable'));
+        ?>                                                                             
+    </div>
+
+</div>
+</div>
+
+<div class="col-lg-5 col-md-4 col-xs-6">
+<div class="form-group">
+        <label>Responsable</label>
+    <div class="form-group input-group">
+    <span class="input-group-addon"><i class="fa fa-user"></i>
+    </span>
+        <?php                                             
+        echo $this->formRow($this->form->get('responsable'));
+        ?>                                                                             
+    </div>
+
+</div>
+</div>
+
+<div class="col-lg-4 col-md-4 col-xs-6">
+<div class="form-group">
+        <label>Estado</label>
+    <div class="form-group input-group">
+    <span class="input-group-addon"><i class="fa fa-info"></i>
+    </span>
+        <?php                                             
+        echo $this->formRow($this->form->get('estado'));
+        ?>                                                                         
+    </div>
+
+</div>
+</div>
+
+<div class="col-lg-3 col-md-4 col-xs-6">
+<div class="form-group">
+        <label>N&deg; Factura / Boleta</label>
+    <div class="form-group input-group">
+    <span class="input-group-addon"><i class="fa fa-info"></i>
+    </span>
+        <?php                                             
+        echo $this->formRow($this->form->get('factura'));        
+        ?>                                                                            
+    </div>
+
+</div>
+</div>
+
+<div class="col-lg-5 col-md-4 col-xs-6">
+<div class="form-group">
+        <label>Fecha Adquisici&oacute;n</label>
+    <div class="form-group input-group">
+    <span class="input-group-addon"><i class="fa fa-calendar"></i>
+    </span>
+        <?php                                             
+        echo $this->formRow($this->form->get('fecha'));
+        ?>                                                                         
+    </div>
+
+</div>
+</div>
+
+<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="margin-top: 12px; margin-bottom: 12px;">
+    <a onclick="especificaciones();" class="well well-sm" style="cursor: pointer; text-decoration: none;" >
+        <i class=" fa fa-plus"></i> &nbsp;Especificaciones
+    </a>
+</div>
+
+<div id="div-espec" style="display: none">
+<div class="col-lg-4 col-md-4 col-xs-6">
+<div class="form-group">
+        <label>Marca</label>
+    <div class="form-group input-group">
+    <span class="input-group-addon"><i class="fa fa-tag"></i>
+    </span>
+        <?php                                             
+        echo $this->formRow($this->form->get('marca'));
+        ?>                                                                         
+    </div>
+
+</div>
+</div>
+
+<div class="col-lg-4 col-md-4 col-xs-6">
+<div class="form-group">
+        <label>Modelo</label>
+    <div class="form-group input-group">
+    <span class="input-group-addon"><i class="fa fa-tag"></i>
+    </span>
+        <?php                                             
+        echo $this->formRow($this->form->get('modelo'));
+        ?>                                                                         
+    </div>
+
+</div>
+</div>
+
+<div class="col-lg-4 col-md-4 col-xs-6">
+<div class="form-group">
+        <label>N&deg; de Serie</label>
+    <div class="form-group input-group">
+    <span class="input-group-addon"><i class="fa fa-info"></i>
+    </span>
+        <?php                                             
+        echo $this->formRow($this->form->get('nmro_serie'));
+        ?>                                                                         
+    </div>
+
+</div>
+</div>
+
+<div class="col-lg-5 col-md-4 col-xs-6">
+<div class="form-group">
+        <label>Ubicaci&oacute;n</label>
+    <div class="form-group input-group">
+    <span class="input-group-addon"><i class="fa fa-map-marker"></i>
+    </span>
+        <?php                                             
+        echo $this->formRow($this->form->get('ubicacion'));
+        ?>                                                                         
+    </div>
+
+</div>
+</div>
+
+<div class="col-lg-6 col-md-4 col-xs-6">
+<div class="form-group">
+        <label>Observaciones</label>
+    <div class="form-group">
+        <?php                                             
+        echo $this->formRow($this->form->get('observacion'));
+        ?>                                                                         
+    </div>
+
+</div>
+</div>
+
+</div>
+
+</div>
+
+<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-right" style="margin-top: 20px;">
+
+<?php                                             
+        echo $this->formRow($this->form->get('cancel'));
+?>&nbsp;&nbsp;
+<?php                                             
+        echo $this->formRow($this->form->get('send'));
+        echo $this->form()->closeTag();        
+?>
+</div>
+
+</div> 
+<div id="nprespuestaok" class="row" style="display: none;">
+    <div class="col-lg-12 text-center" style="padding: 80px;">
+        <span>
+            <i class="fa fa-thumbs-o-up fa-5x"></i>
+        </span>
+        <h2 id="npdescrok"></h2>
+    </div>
+</div>
+<div id="nprespuestanok" class="row" style="display: none;">
+<div class="col-lg-12 text-center" style="padding: 80px;">
+        <span>
+            <i class="fa fa-close fa-5x"></i>
+        </span>
+<h2 id="npdescrnok"></h2>
+</div>
+</div>                               
+<script>
+function closeModal() {
+$("#nuevoactivo").modal('hide');
+}
+$("#formnuevoactivo").submit(function(e)
+{
+    var postData = $(this).serializeArray();
+    var formURL = $(this).attr("action");
+    $.ajax(
+    {
+        url : formURL,
+        type: "POST",
+        data : postData,
+        dataType : 'json',
+        success : function(response) {        
+          if(response.status == 'ok'){   
+           $("#todoactv").css("display","none");
+           $("#nprespuestaok").css("display","block");  
+           $("#npdescrok").text(response.descripcion); 
+           setTimeout(function(){
+                        $("#nuevoactivo").modal('hide');                        
+                      //  $(location).attr('href','<?php// echo $this->basePath()."/admin/matenciones"?>'); 
+                    },1200);                    
+          }else{            
+           $("#todoactv").css("display","none");
+           $("#nprespuestaok").css("display","block");  
+           $("#npdescrok").text("Ups!, tuvimos un problema!... favor informa esto con nuestro soporte");
+           setTimeout(function(){
+                        $("#nuevoactivo").modal('hide');                        
+                      //  $(location).attr('href','<?php// echo $this->basePath()."/admin/matenciones"?>'); 
+                    },1800);             
+          }
+        },
+        error: function(jqXHR, textStatus, errorThrown) 
+        {
+            $("#mostrarCJ").html('<div id="respuesta" class="alert alert-danger alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>Error en el env&iacute;o de datos al servidor</div>')      
+        }
+    });
+    e.preventDefault(); //STOP default action
+    e.unbind(); //unbind. to stop multiple form submit.
+});
+
+function comboResponsable(){
+    postData = {'area_responsable' : $('#area_responsable').find('option:selected').val()}
+    $.ajax(
+    {
+        url : '<?php echo $this->basePath()."/admin/mantenciones/comboresponsable"?>',
+        type: "POST",
+        data : postData,
+        dataType : 'json',
+        success : function(response) {              
+        var sel = $("#responsable");
+        sel.empty();      
+          for (var i=0; i<Object.keys(response).length; i++) {                    
+            sel.append('<option value="' +response[i] + '">' + response[i] + '</option>');
+            }                                       
+        },
+        error: function(jqXHR, textStatus, errorThrown) 
+        {            
+            alert("error"); 
+        }
+    });
+}
+$('#estado_tarea').change(function(){
+    if ($('#estado_tarea').find('option:selected').val()=="realizada"){
+        $('#avance_tarea').val("100");
+}else{
+        $('#avance_tarea').val(null);
+}
+});
+function especificaciones(){    
+   $('#div-espec').toggle("slow");    
+}
+/*
+function avance(){
+    if ($('#estado_tarea').find('option:selected').val()=="realizada"){
+        $('#avance_tarea').val("100");
+    }
+}*/
+function formatValor(){  
+    var format = $("#valor").val().replace(/\./g,'').replace(/\B(?=(\d{3})+(?!\d))/g, ".")
+    $("#monto").val(format);
+}
+</script>                                                                                                                                                                                  

@@ -1,0 +1,48 @@
+<div class="row">     
+                <div class="col-lg-12 col-md-12">
+                    <div class="panel panel-primary">
+                      <div class="panel-heading" ><i class="fa fa-pencil"></i>&nbsp;&nbsp;Escriba una nota...
+                        </div>
+                        <div class="panel-body">
+                        
+                            <div class="panel-group" id="accordionMant">
+  <div id="get_notas" class="col-lg-6 col-md-6">                           
+
+  </div>
+                     <div class="col-lg-6 col-md-6">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading" >
+                           <i class="fa fa-user"></i>&nbsp; Actividad mensual
+                        </div>
+                        <div class="panel-body">
+                            <p style="font-size: 16px;"><i class="fa fa-clock-o"></i>&nbsp; Quedan <strong><a id="test" data-toggle="tooltip" data-placement="top"><?php echo $this->dif?> d&iacute;as</a></strong> para el cierre del mes administrativo</p>                            
+                            <p style="font-size: 16px;"><i class="fa fa-dollar"></i>&nbsp; Aun existen <strong>18 Pagos</strong> pendientes</p>
+                            <p style="font-size: 16px;"><i class="fa fa-wrench"></i>&nbsp; Este mes hay <strong>4 Mantenciones</strong> programadas</p>
+                            <p style="font-size: 16px;"><i class="fa fa-bullhorn"></i>&nbsp; Se registran <strong>6 Reclamos</strong> por instalaciones en mal estado</p>
+                        </div>
+                    </div>
+                </div>                       
+
+                    </div>    
+
+                </div>                                        
+
+            </div>                                        
+
+        </div>  
+
+<script>
+function getNotasMantencion(){
+    $.ajax( {  
+        url  : '<?php echo $this->basePath()."/admin/mantenciones/getnotas"?>',        
+		type : 'post', 
+        beforeSend: function(){
+            $("#get_notas").html("<div class='text-center'><i class='fa fa-spinner fa-spin' style='font-size:20px;'></i></div>");
+        },     
+		success : function(response) {
+		  $("#get_notas").html(response);                           
+       }   
+});    
+}
+getNotasMantencion();
+</script>         

@@ -1,0 +1,192 @@
+<div id="todo2" class="row">
+<div class="col-lg-12"><div class="alert alert-danger alert-dismissable" id="alerta2" style="display: none;"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button></div></div>
+<?php  
+                                        $form = $this->form;
+                                        $form->prepare();
+                                        $form->setAttributes(array(
+                                        'action' => $this->basePath()."/admin/finanzas/nuevoservicio",
+                                        'method' => 'post', 
+                                        'id' => 'nuevoservicio'                                   
+                                        ));
+                                        echo $this->form()->openTag($form);                                                                                                                   
+                                        ?> 
+
+<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-center">
+<div class="col-lg-6 col-md-6 col-sm-5 col-xs-5 col-lg-offset-3">
+    <div class="form-group">
+        <label style="font-size: 14px;">Proveedor</label>
+            <div class="form-group input-group">
+            <span class="input-group-addon"><i class="fa fa-truck"></i>
+            </span>
+                 <?php                                             
+                    echo $this->formRow($this->form->get('proveedores'));
+                 ?>                                            
+            </div>
+    </div>
+</div>
+</div>
+<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+<h4 class="page-header"><i class="fa fa-plus"></i>&nbsp;&nbsp;&nbsp; Seleccione el nuevo servicio</h4>
+</div>
+<div class="col-lg-6 col-md-6 col-sm-12 col-xs-">
+    <div class="form-group">
+        <label>Categoria</label>
+            <div class="form-group input-group">
+            <span class="input-group-addon"><i class="fa fa-truck"></i>
+            </span>
+                 <?php                                             
+                    echo $this->formRow($this->form->get('categoria'));
+                 ?>                                            
+            </div>
+    </div>
+</div>
+<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+    <div class="form-group">
+        <label>Servicio</label>
+            <div id="comboservicio" class="form-group input-group">
+            <span class="input-group-addon"><i class="fa fa-truck"></i>
+            </span>
+                 <?php                                             
+                    echo $this->formRow($this->form->get('servicio'));
+                 ?>                                            
+            </div>
+    </div>
+</div>
+<div class="col-lg-4 col-md-4 col-sm-5 col-xs-5">
+    <div class="form-group">
+        <label>Observaci&oacute;n</label>
+            <div class="form-group">
+                 <?php                                             
+                    echo $this->formRow($this->form->get('observacion'));
+                 ?>                                            
+            </div>
+    </div>
+</div>
+<div class="col-lg-3 col-md-3 col-sm-5 col-xs-5 col-lg-offset-3" style="margin-top: 23px;">
+    <div class="form-group">
+        <div class="checkbox">
+            <label>
+            <?php                                             
+        echo $this->formRow($this->form->get('fijo'));
+            ?><strong>Cuenta Mensual</strong>
+        </label>
+        </div> 
+    </div>
+</div>
+
+  
+
+                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-right">                                          
+
+
+      <?php                                             
+
+                                              echo $this->formRow($this->form->get('cancel'));
+
+                                            ?>&nbsp;&nbsp;&nbsp;&nbsp;
+                                                <?php                                             
+
+                                              echo $this->formRow($this->form->get('sendprov'));
+
+                                            ?>
+
+                                        </div>                                              
+<?php echo $this->form()->closeTag()?>                            
+</div>
+
+<div id="respuestaok2" class="row" style="display: none;">
+
+<div class="col-lg-12 text-center" style="padding: 80px;">
+
+
+
+<span><i class="fa fa-thumbs-o-up fa-5x"></i></span>
+
+<h2 id="descrok2"></h2>
+
+
+
+</div>
+
+</div>
+<div id="respuestanok2" class="row" style="display: none;">
+
+<div class="col-lg-12 text-center" style="padding: 80px;">
+
+
+
+<span><i class="fa fa-thumbs-o-up fa-5x"></i></span>
+
+<h2 id="descrnok2"></h2>
+
+
+
+</div>
+
+</div>
+<script>
+function closeModal(){
+    $('#modalprov2').modal('hide');
+}
+function comboServicio(){
+    postData = {    'combo' : 's',
+        'categoria' : $('#categoria').find('option:selected').text()}
+    $.ajax(
+    {
+        url : '<?php echo $this->basePath()."/admin/finanzas/comboServicio"?>',
+        type: "POST",
+        data : postData,
+        dataType : 'json',
+        success : function(response) {              
+        var sel = $("#comboservicio :input");
+        sel.empty();
+          for (var i=0; i<Object.keys(response).length; i++) {                    
+            sel.append('<option value="' + Object.keys(response)[i] + '">' + response[Object.keys(response)[i]] + '</option>');
+            }                                        
+        },
+        error: function(jqXHR, textStatus, errorThrown) 
+        {            
+            alert("error"); 
+        }
+    });
+}
+$("#nuevoservicio").submit(function(e){
+    var postData = $(this).serializeArray();
+    var formURL = $(this).attr("action");
+    $.ajax(
+    {
+        url : formURL,
+        type: "POST",
+        data : postData,
+        dataType : 'json',
+        success : function(response) {
+            if (response.status=='ok'){
+           $("#todo2").css("display","none");
+           $("#respuestaok2").css("display","block");
+           $("#descrok2").text(response.descripcion);           
+            var t = $('#tablaprov').DataTable();  
+            t.row.add([            
+            response.prov[0]['nombre'],
+            response.prov[0]['servicio'],
+            response.prov[0]['telefono'],
+            response.prov[0]['direccion'],
+            response.prov[0]['ciudad'],                        
+        ]).draw();              
+           setTimeout(function(){             
+             $("#modalprov2").modal('hide');             
+            }, 3000);
+            }else{
+            $("#alerta2").text(response.descripcion).show();                
+            $("#alerta2").delay(3000).hide(600);    
+            }                                        
+        },
+        error: function(jqXHR, textStatus, errorThrown) 
+        {            
+            $("#todo2").css("display","none");
+            $("#respuestanok2").css("display","block");
+            $("#descrnok2").text("Ups! Ocurrio un problema, favor intenta nuevamente");      
+        }
+    });
+    e.preventDefault(); //STOP default action        
+});
+</script>

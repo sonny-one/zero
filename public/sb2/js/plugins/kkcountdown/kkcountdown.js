@@ -7,8 +7,8 @@
 
     KKCountdown.prototype.defaults = {
       dayText: ' dia ',
-      days2Text: ' dias ',
-      daysText: ' dias ',
+      days2Text: ' d&iacute;as ',
+      daysText: ' d&iacute;as ',
       hourText: ' horas ',
       hours2Text: ' horas ',
       hoursText: ' horas ',
@@ -51,12 +51,12 @@
       var box, boxDays, boxDaysText, boxHours, boxHoursText, boxMin, boxMinText, boxSec, boxSecText, _this;
       _this = this;
       box = $(document.createElement('span')).addClass(_this.opts.boxContenerClass);
-      boxDays = $(document.createElement('span')).addClass(_this.opts.boxDaysClass);
-      boxHours = $(document.createElement('span')).addClass(_this.opts.boxHoursClass);
+      boxDays = $(document.createElement('span')).addClass(_this.opts.boxDaysClass).css("font-size","34px");
+      boxHours = $(document.createElement('span')).addClass(_this.opts.boxHoursClass).css("font-size","34px");
       boxMin = $(document.createElement('span')).addClass(_this.opts.boxMinClass);
       boxSec = $(document.createElement('span')).addClass(_this.opts.boxSecClass);
-      boxDaysText = $(document.createElement('span')).addClass(_this.opts.boxDaysTextClass);
-      boxHoursText = $(document.createElement('span')).addClass(_this.opts.boxHoursTextClass);
+      boxDaysText = $(document.createElement('span')).addClass(_this.opts.boxDaysTextClass).css("font-size","18px");
+      boxHoursText = $(document.createElement('span')).addClass(_this.opts.boxHoursTextClass).css("font-size","18px");
       boxMinText = $(document.createElement('span')).addClass(_this.opts.boxMinTextClass);
       boxSecText = $(document.createElement('span')).addClass(_this.opts.boxSecTextClass);
       if (_this.opts.addClass) {

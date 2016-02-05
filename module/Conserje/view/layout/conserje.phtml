@@ -11,7 +11,7 @@ $perfil = $sid->offsetGet('perfil');
     exit;
  }
  //si tiene el perfil de Conserje o Super Administrador
- if($perfil!="Conserje" && $perfil!="Super Administrador"){
+ if($perfil!="Conserje" && $perfil!="SuperAdmin"){
      header ("Location: $url/application/login/7");
     exit;
  }

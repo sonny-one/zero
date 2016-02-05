@@ -1,0 +1,124 @@
+<script src="<?php echo $this->basePath()?>/sb2/js/plugins/kkcountdown/kkcountdown.js"></script>    
+<div class="row"> 
+    <div class="col-lg-12 col-md-12 ">
+        <div class="panel panel-primary">
+                      <div class="panel-heading" style="font-size: 18px;">
+                      <i class="fa fa-calendar"></i> 
+                      &nbsp;&nbsp;Relojes de Mantenci&oacute;n
+                      </div>
+                <div class="panel-body">                                                  
+                <ul class="nav nav-tabs" style="margin-bottom: 10px;">
+                                <li class="active"><a href="#relojmensual" data-toggle="tab">Relojes Mes <?php echo date('F');?></a>
+                                </li>
+                                <li><a href="#relojprox" data-toggle="tab">Relojes Mes <?php echo date('F', strtotime('+1 month'));?> </a>
+                                </li>
+                                <li><a href="#relojprox2" data-toggle="tab">Relojes Mes <?php echo date('F', strtotime('+2 month'));?></a>
+                                </li>
+                </ul>     
+                <div class="tab-content">
+                 <div class='tab-pane fade in active' id='relojmensual'>                                                                     
+                <?php for($i=0;$i<count($this->partidas);++$i){
+                    echo  "    
+                                     <div class='col-lg-4 col-md-4 col-sm-6 col-xs-12'>                                  
+														<div class='dashboard-stat blue'>
+															<div class='visual'>
+																<i class='fa fa-clock-o'></i>
+															</div>
+															<div class='details'>
+																<div class='number'>																	
+                                                                     <span style='font-size: 20px;' class='kkcountdown' data-seconds='".$this->segundos."'></span>                                                                     
+																</div>
+																<div class='desc'>
+																	 <strong>".$this->partidas[$i]['nombre']."</strong>
+																</div>
+															</div>
+															<a class='more' onclick='nuevaTareaReloj(".$this->partidas[$i]['id'].")' data-toggle='modal' data-target='#modalnuevatareareloj'>
+															".$this->partidas[$i]['accion']." <i class='m-icon-swapright m-icon-white'></i>
+															</a>
+														</div>                
+                   </div> "; }?>
+            </div>
+            <div class="tab-pane fade" id="relojprox">
+            <?php for($i=0;$i<count($this->partidas2);++$i){
+                    echo "                    
+                                                       <div class='col-lg-4 col-md-4 col-sm-6 col-xs-12'>                                  
+														<div class='dashboard-stat yellow'>
+															<div class='visual'>
+																<i class='fa fa-clock-o'></i>
+															</div>
+															<div class='details'>
+																<div class='number'>																	
+                                                                     <span style='font-size: 20px;' class='kkcountdown' data-seconds='".$this->segundos."'></span>                                                                     
+																</div>
+																<div class='desc'>
+																	 <strong>".$this->partidas2[$i]['nombre']."</strong>
+																</div>
+															</div>
+															<a class='more' onclick='nuevaTareaReloj(".$this->partidas2[$i]['id'].")' data-toggle='modal' data-target='#modalnuevatareareloj'>
+															".$this->partidas2[$i]['accion']." <i class='m-icon-swapright m-icon-white'></i>
+															</a>
+														</div>                
+                   </div>"; }?>
+            </div>
+            
+            <div class="tab-pane fade" id="relojprox2">
+            <?php for($i=0;$i<count($this->partidas3);++$i){
+                    echo "                    
+                    <div class='col-lg-4 col-md-4 col-sm-6 col-xs-12'>                                  
+														<div class='dashboard-stat yellow'>
+															<div class='visual'>
+																<i class='fa fa-clock-o'></i>
+															</div>
+															<div class='details'>
+																<div class='number'>																	
+                                                                     <span style='font-size: 20px;' class='kkcountdown' data-seconds='".$this->segundos."'></span>                                                                     
+																</div>
+																<div class='desc'>
+																	 <strong>".$this->partidas3[$i]['nombre']."</strong>
+																</div>
+															</div>
+															<a class='more' onclick='nuevaTareaReloj(".$this->partidas3[$i]['id'].")' data-toggle='modal' data-target='#modalnuevatareareloj'>
+															".$this->partidas3[$i]['accion']." <i class='m-icon-swapright m-icon-white'></i>
+															</a>
+														</div>                
+                   </div>"; }?>
+            </div>
+                    
+                                
+        </div>
+    </div>
+</div>
+</div>                
+</div>      
+
+<!-- MODAL Nueva Tarea -->
+
+<div class="modal fade bs-example-modal-lg" id="modalnuevatareareloj" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel2" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>                    
+                    <h4 class="modal-title" id="myModalLabel2" style="text-align: center;">Ingresar nueva tarea al sistema</h4>
+            </div>
+                <div id="bodynuevatareareloj" class="modal-body" style="text-align: center;">Cargando...</div>
+        </div>                 
+    </div>              
+</div>
+
+<!-- FIN MODAL Nueva Tarea -->                                                                                                                                                                                                                             
+<script>
+$(".kkcountdown").kkcountdown(); 
+function nuevaTareaReloj(id){
+    var parametros = {
+      'id_partida': id,      
+    }
+	$.ajax( {
+        url : '<?php echo $this->basePath()."/admin/mantenciones/nuevatarea"?>',
+        data: parametros,
+		type : 'post',
+		success : function(response) {
+			$("#bodynuevatareareloj").html(response);
+		}
+	});
+}
+</script>

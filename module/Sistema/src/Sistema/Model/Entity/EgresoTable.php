@@ -4,6 +4,7 @@ namespace Sistema\Model\Entity;
 use Zend\Db\TableGateway\TableGateway;
 use Zend\Db\Adapter\Adapter;
 use Zend\Db\Sql\Sql;
+use Zend\Db\Sql\Select;
 use Zend\Db\ResultSet\ResultSet;
 
 class EgresoTable extends TableGateway
@@ -36,7 +37,7 @@ class EgresoTable extends TableGateway
          
     private function cargarCampos($datos=array())
     {    
-        $this->id_fondo=$datos["origen"]; 
+        $this->id_fondo=$datos["id_fondo"]; 
         $this->destino=$datos["destino"];
         $this->id_proveedor=$datos["id_proveedor"];    
         $this->monto=$datos["montototal"];
@@ -53,7 +54,7 @@ class EgresoTable extends TableGateway
         
     }
     
-        public function nuevoEgreso($data=array())
+    public function nuevoEgreso($data=array())
     {
              self::cargarCampos($data);
              $array=array
@@ -78,6 +79,11 @@ class EgresoTable extends TableGateway
                $id = $this->lastInsertValue;
                return $id;
         } 
+    public function borraEgreso($id)
+    {             
+        $array=array('activo'=>'0');
+        $this->update($array,array('id'=>$id));                  
+    }
     
     public function getDatosActivos()
     {
@@ -93,7 +99,10 @@ class EgresoTable extends TableGateway
     public function getDatos()
     {
         
-        $datos = $this->select(array('activo'=>'1'));
+        $datos = $this->select(function (Select $select) {
+             $select->where->like('activo', '1');
+            $select->order('date_start DESC'); //->limit(2);
+        });
         $recorre = $datos->toArray();
                       
         return $recorre;
@@ -109,7 +118,7 @@ class EgresoTable extends TableGateway
     public function getDatosId($llave)
     {
         
-        $datos = $this->select(array('id'=>$llave));
+        $datos = $this->select(array('id'=>$llave,'activo'=>'1'));
         $recorre = $datos->toArray();
                       
         return $recorre;
@@ -120,9 +129,9 @@ class EgresoTable extends TableGateway
        $query = "select eg.* from sis_w_egreso eg, sis_m_cierre_mes cm 
                     where eg.activo = '1' 
                     and forma_pago is not null
-		            and (eg.date_start)>(cm.fecha_inicio)
-                    and (eg.date_start)<(cm.fecha_cierre)
-                    order by fecha_pago desc";
+		            and (eg.fecha_pago)>(cm.fecha_inicio)
+                    and (eg.fecha_pago)<(cm.fecha_cierre)
+                    order by date_start desc";
        $result=$this->dbAdapter->query($query,Adapter::QUERY_MODE_EXECUTE);
        return $result->toArray();                              
     }
@@ -133,8 +142,8 @@ class EgresoTable extends TableGateway
        $query = "select count(*) as pagos from sis_w_egreso eg, sis_m_cierre_mes cm 
                     where eg.forma_pago is null 
                     and eg.activo = '1' 
-                    and (eg.date_start)>(cm.fecha_inicio)
-                    and (eg.date_start)<(cm.fecha_cierre)";
+                    and (eg.fecha_pago)>(cm.fecha_inicio)
+                    and (eg.fecha_pago)<(cm.fecha_cierre)";
        $result=$this->dbAdapter->query($query,Adapter::QUERY_MODE_EXECUTE);
        return $result->toArray();                              
     }

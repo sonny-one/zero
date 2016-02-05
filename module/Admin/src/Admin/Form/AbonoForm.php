@@ -57,8 +57,8 @@ class AbonoForm extends Form
                         'label' => 'Efectivo',
                         'value' => 'efectivo',
                         'attributes' => array(                            
-                            'name' => 'forma_pago',
-                            'id' => 'efectivo',                            
+                            'name' => 'forma_pago_abono',
+                            'id' => 'efectivo_abono',                            
                             'onclick' => 'mostrarEfectivoAbono()',                            
                         ),
                     ),                
@@ -75,7 +75,7 @@ class AbonoForm extends Form
                         'label' => 'Transferencia',
                         'value' => 'transferencia',
                         'attributes' => array(                            
-                            'name' => 'forma_pago',                            
+                            'name' => 'forma_pago_abono',                            
                             'onclick' => 'mostrarTransAbono()',                            
                         ),
                     ),                
@@ -92,7 +92,7 @@ class AbonoForm extends Form
                         'label' => 'Cheque',
                         'value' => 'cheque',
                         'attributes' => array(                            
-                            'name' => 'forma_pago',                            
+                            'name' => 'forma_pago_abono',                            
                             'onclick' => 'mostrarChequeAbono()',                            
                         ),
                     ),                
@@ -110,7 +110,7 @@ class AbonoForm extends Form
                         'label' => 'Debito/Credito',
                         'value' => 'debito/credito',
                         'attributes' => array(                            
-                            'name' => 'forma_pago',                            
+                            'name' => 'forma_pago_abono',                            
                             'onclick' => 'mostrarDebitoAbono()',                            
                         ),
                     ),                
@@ -121,9 +121,9 @@ class AbonoForm extends Form
         // - Date - ///////////////////////////////// Fecha Pago 
         $this->add(array(
             'type' => 'date',
-            'name' => 'fecha',
+            'name' => 'fecha_pago',
             'attributes' => array(                
-                'id' => 'fecha_pago',
+                'id' => 'fecha_pago_abono',
                 'class' => 'form-control',
                 'required' => 'true',                           
             )

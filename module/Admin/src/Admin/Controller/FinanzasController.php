@@ -33,14 +33,16 @@ use Sistema\Model\Entity\MesesTable;
 use Sistema\Model\Entity\MultaTable;
 use Sistema\Model\Entity\ProveedorTable;
 use Sistema\Model\Entity\TipoServicioTable;
+use Sistema\Model\Entity\TipoEgresoTable;
+use Sistema\Model\Entity\TipoContratoTable;
 use Sistema\Model\Entity\EgresoTable;
 use Sistema\Model\Entity\CobroTable;
-use Sistema\Model\Entity\TipoEgresoTable;
 use Sistema\Model\Entity\VProveedorTable;
 use Sistema\Model\Entity\CicloAdminTable;
 use Sistema\Model\Entity\TareaTable;
 use Sistema\Model\Entity\EgresoTrabajadorTable;
 use Sistema\Model\Entity\PartidaMantTable;
+use Sistema\Model\Entity\AbonoTable;
 
 
 use Admin\Form\FinancieraForm;
@@ -54,6 +56,7 @@ use Admin\Form\IngresoPagoForm;
 use Admin\Form\ProveedorForm;
 use Admin\Form\EgresoForm;
 use Admin\Form\PagoEgresoForm;
+use Admin\Form\PagoTrabajadorForm;
 use Admin\Form\CicloForm;
 use Admin\Form\AbonoForm;
 
@@ -127,8 +130,6 @@ class FinanzasController extends AbstractActionController
 
     public function gastocomunAction()
     {    
-        $translator = $this->getServiceLocator()->get('translator');
-        $translator->setLocale($myLocale);
         //Conectamos con BBDD  
         $sid = new Container('base');
         $db_name = $sid->offsetGet('dbNombre');
@@ -139,41 +140,61 @@ class FinanzasController extends AbstractActionController
         $tar = new TareaTable($this->dbAdapter);
         $egr = new EgresoTrabajadorTable($this->dbAdapter);
         $cic = new CicloAdminTable($this->dbAdapter);
+        $tct = new TipoContratoTable($this->dbAdapter);
         $per = new PersonaTable($this->dbAdapter2);
-        //Obtenemos dia de cierre    
+        
+        //Obtenemos ciclo administrativo
         $ciclo = $cic->getCiclo();
-        $fecha_inicio = FechasSys::getInicioMes($ciclo[0]['dia'],substr($ciclo[0]['hora'],0,2),substr($ciclo[0]['hora'],3,5));        
-        $funcionarios = $tra->getTrabajadores();        
-            for($i=0;$i<count($funcionarios);$i++){                
-                    //Obtenemos datos de trabajador
-                   $ultimo_pago = $egr->getLastEgresoTrab($this->dbAdapter,$funcionarios[$i]['id']);
-                   $funcionarios[$i]['persona'] = $per->getDatosId($funcionarios[$i]['id_persona']);                   
-                   //Validamos ultimo pago
-                   if(strtotime($ultimo_pago[0]['fecha'])<strtotime($fecha_inicio->format('Y-m-d H:i:s')))
-                   {
-                        $funcionarios[$i]['estado_pago'] = "Pendiente &nbsp;<i class='fa fa-close'></i>";
-                        $funcionarios[$i]['bag']="red";   
-                                                                    
-                   }else{
-                        $funcionarios[$i]['estado_pago'] = "Pagado &nbsp;<i class='fa fa-check'></i>";
-                        $funcionarios[$i]['fecha_pago'] = $ultimo_pago;
-                        $funcionarios[$i]['monto'] = $ultimo_pago[0]['monto'];
-                        $funcionarios[$i]['bag']="green";
-                   }
+        
+        //Tabla trabajadores
+        $tabla_trabajadores = "";
+        //Consultarmos trabajadores
+        $trabajadores = $tra->getTrabajadores($this->dbAdapter);                
+        //Consultamos estado de pago de trabajador
+        $total = 0;     
+        for($i=0;$i<count($trabajadores);$i++){
+           
+            //Verificamos si tiene pagos en el periodo
+            $pagos_periodo = $egr->getPagoPeriodo($this->dbAdapter,$trabajadores[$i]['id']);  
+            
+            //Obtenemos nombre de contrato
+            $tipo_contrato = $tct->getTipoId($trabajadores[$i]['id_tipo_contrato']);
                     
-            }                                                        
-                                                                         
-        $tareas =  $tar->getTareasgc();
+            if(count($pagos_periodo)>0){                
+                //Pagado
+                $estado = "Pagado";
+                $span = "success"; 
+                $icn = "check";    
+                $total += $pagos_periodo[0]['monto'];  
+                $monto = "$ ".number_format($pagos_periodo[0]['monto'],"0",".",".");  
+                $pf = strtotime($pagos_periodo[0]['fecha_pago']);
+                $fecha_pago = date("d-M-Y", $pf);                         
+            }
+            else{
+                //Sin pago
+                $estado = "Impago";
+                $span = "danger"; 
+                $icn = "close";    
+                $monto = "";
+                $fecha_pago = "";
+            }                        
+             $tabla_trabajadores=$tabla_trabajadores."<tr>
+                            <td align='left'>".$trabajadores[$i]['nombre']."</td>                            
+                            <td align='left'>".$trabajadores[$i]['cargo']."</td>
+                            <td align='left'>".$tipo_contrato[0]['nombre']."</td>
+                            <td align='left'><span class='label label-sm label-".$span."' id='spanbag'>".$estado."&nbsp; <i class='fa fa-".$icn."'></i></span></td>
+                            
+                            <td align='left'>$ 126.000</td>
+                            <td align='left'>".$monto."</td>
+                            </tr>";                                               
+        }
                 
-
+        
         $result = new ViewModel(array(
-                            'funcionarios'=>$funcionarios,
-                            'tareas'=>$tareas,
-                            'fecha_inicial'=>$funcionarios[2]['id_trabajador'],
-                            'mes'=>$fecha_inicio->format('F'),
+                            'tabla_trabajadores'=>$tabla_trabajadores,
+                            'total_trabajadores'=> number_format($total,"0",".","."),
                             ));
-
-        $this->layout('layout/admin');          
+        $result->setTerminal(true);          
         return $result;
     }     
 
@@ -277,6 +298,7 @@ class FinanzasController extends AbstractActionController
         //Tablas
         $gcom  = new GCunidadTable($this->dbAdapter);
         $unid  = new UnidadTable($this->dbAdapter);
+        $abon  = new AbonoTable($this->dbAdapter);
                         
         //Obtenemos datos y validamos
         $unidad = $unid->getIdUnidad($data['nombre']);        
@@ -287,18 +309,42 @@ class FinanzasController extends AbstractActionController
                     return $result;
             }
         $gcomun = $gcom->getHistoricoUni($this->dbAdapter,$unidad[0]['id']);
-        $saldo  = $gcom->getSaldoUnidad($this->dbAdapter,$unidad[0]['id']);
+        $saldo  = $gcom->getSaldoUnidad($this->dbAdapter,$unidad[0]['id']); //Abonos restados YA !
+        $gcomunsaldo = $gcom->getSaldoGC($this->dbAdapter,$unidad[0]['id']);
+        $abono  = $abon->getAbonosActivos($this->dbAdapter,$unidad[0]['id']);
+        
+            if ($gcomunsaldo[0]['saldo_gc']=='0'){
+                $displayAjuste="none";
+                $displayPagar="none";                
+            }else{
+              $displayAjuste="none";
+               $displayPagar="block";  
+            }
+            
+            /*
+              if ($abono[0]['monto']-$saldo[0]['saldo_total']>$saldo[0]['saldo_total']){
+                    $displayAjuste="none";
+                    $displayPagar="none";
+                }elseif($saldo[0]['saldo_total']=0){
+                    $displayPagar="block";
+                    $displayAjuste="none";
+                }
+            */
+        
         //Devolvemos meses a la vista
         $meses = array("NA","Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre");
         
         $result = new ViewModel(array('meses'=>$meses,
                                       'gcomun'=>$gcomun,
-                                      'saldo'=>$saldo[0]['saldo']));        
+                                      'saldo'=>$saldo[0]['saldo_total'],
+                                      'abono'=>$abono,  
+                                      'displayPagar'=>$displayPagar,
+                                      'displayAjuste'=>$displayAjuste,      
+                                      ));
         $result->setTerminal(true);
         return $result;
     }
-
-    public function egresosAction()
+     public function ajustargcAction()
     {
         //Conectamos con BBDD  
         $sid = new Container('base');
@@ -306,18 +352,77 @@ class FinanzasController extends AbstractActionController
         $id_db = $sid->offsetGet('id_db');
         $this->dbAdapter=$this->getServiceLocator()->get($db_name);
         //Instancias
-        $prov  = new ProveedorTable($this->dbAdapter);
-        $egr   = new EgresoTable($this->dbAdapter);
+        $gcom  = new GCunidadTable($this->dbAdapter);
+        $abon  = new AbonoTable($this->dbAdapter);
+        //Obtenemos Datos desde POST
+        $lista = $this->getRequest()->getPost(); 
+        //Obtenemos mes a pagar con Abono
+        $mes_ajuste = $gcom->getPrimerMesDeuda($this->dbAdapter,$lista['id_unidad']);
+        //Pagamos MES con abono
+        $gcom->pagoParcialGasto($mes_ajuste[0]['id']);
+        //Eliminamos ABONO
+        $abon->UsoAbono($lista['id_abono']);
+        //Restamos monto de GC al abono, e insertamos nuevo ABONO si corresponde
+        $lista['monto_abono'] = ($lista['monto_abono']-$mes_ajuste[0]['monto']);
+            if($lista['monto_abono']>0){
+               //Insertamos nuevo abono
+               $abon->nuevoAbono($lista);
+            }
+        //Retornamos a la vista
+        $desc="Ajuste efectuado exitosamente";
+        $result = new JsonModel(array(
+                                    'status'=>'ok',
+                                    'desc'=>$desc,
+                                                                                                                         
+                    ));                                
+            return $result;                                                                    
+    }
+    public function egresosAction()
+    {
+        //Conectamos con BBDD  
+        $sid = new Container('base');
+        $db_name = $sid->offsetGet('dbNombre');        
+        $this->dbAdapter=$this->getServiceLocator()->get($db_name);
+        //Instancias
+        $prov  = new ProveedorTable($this->dbAdapter);        
         $tegr  = new TipoEgresoTable($this->dbAdapter);
-        $fon   = new FondosTable($this->dbAdapter);
-        $ruta = '/files/db/'.$id_db.'/admin/finanzas/egreso/';
-        
+        $trab  = new TrabajadorTable($this->dbAdapter);                
         $form = new EgresoForm("form");
         
         //Datos
-        $proveedores = $prov->getProveedoresCombo($this->dbAdapter);
-        $tipo_egreso = $tegr->getTipoEgreso($this->dbAdapter);
-        $egresos     = $egr->getDatos();            
+        $proveedores  = $prov->getProveedoresCombo3($this->dbAdapter);
+        $tipo_egreso  = $tegr->getTipoEgreso2($this->dbAdapter);
+          
+        $trabajadores = $trab->getComboTrabajadores($this->dbAdapter);         
+        
+        $form->get('proveedores')->setAttribute('options' ,$proveedores);
+        $form->get('tipo_egreso')->setAttribute('options' ,$tipo_egreso);
+        $form->get('trabajadores')->setAttribute('options' ,$trabajadores);
+        
+
+        //Retornamos a la vista
+        $result = new ViewModel(array('form'=>$form,'tabla'=>$tabla));
+        $result->setTerminal(true);              
+        return $result;
+    } 
+    
+    public function tablaegresoAction()
+    {   
+        
+        //Conectamos con BBDD  
+        $sid = new Container('base');
+        $db_name = $sid->offsetGet('dbNombre');   
+        $id_db = $sid->offsetGet('id_db');     
+        $this->dbAdapter=$this->getServiceLocator()->get($db_name);
+        //Tablas
+        $egr   = new EgresoTable($this->dbAdapter);
+        $fon   = new FondosTable($this->dbAdapter);
+        
+        //Cargamos ruta de files asociados
+        $ruta = '/files/db/'.$id_db.'/admin/finanzas/egreso/';
+        
+        //Obtengo egresos del periodo
+        $egresos      = $egr->getEgresosPeriodo($this->dbAdapter); 
         
         //Tabla HTML de Egresos 
         $tabla="";   
@@ -338,18 +443,60 @@ class FinanzasController extends AbstractActionController
                             <td align='left'><strong>$ ". number_format($egresos[$i]['monto'],"0",".",".")."</strong></td>
                             <td align='left'><a target='_blank': style='cursor: pointer' href='".$ruta.$egresos[$i]['foto']."'><i class='fa fa-file'></i></a></td>
                             <td align='left'>".$td_cuota."</td>
-                            <td align='left'><i class='fa fa-plus'></i> | <i class='fa fa-trash'></i> </td>
+                            <td align='left'><a onclick='borra_egreso(".$egresos[$i]['id'].")'<i class='fa fa-trash'></i> </td>
                             </tr>";
-         }
-        $form->get('proveedores')->setAttribute('options' ,$proveedores);
-        $form->get('tipo_egreso')->setAttribute('options' ,$tipo_egreso);
-
-
-        $result = new ViewModel(array('form'=>$form,'tabla'=>$tabla));
-        $this->layout('layout/admin');        
-        
+         }  
+         
+         //Retornamos a la vista
+        $result = new ViewModel(array('tabla'=>$tabla));
+        $result->setTerminal(true);              
         return $result;
-    } 
+        
+        
+    }
+    
+    public function borraegresoAction()
+    {
+       //Conectamos con BBDD  
+        $sid = new Container('base');
+        $db_name = $sid->offsetGet('dbNombre');        
+        $this->dbAdapter=$this->getServiceLocator()->get($db_name); 
+        //Obtenemos ID desde POST
+        $data = $this->getRequest()->getPost(); 
+        //Instancias 
+        $descuota="";
+        $egr = new EgresoTable($this->dbAdapter);
+        $cob = new CobroTable($this->dbAdapter);
+        $fon   = new FondosTable($this->dbAdapter);
+        $monto = 0;
+        //Consultamos si existen cuotas para el egreso
+        $egreso = $egr->getDatosId($data['id']);
+        
+        //Validamos que ya no ha sido eliminados       
+        if(count($egreso)<1){
+            //Retornamos a la vista                                
+            $result = new JsonModel(array('status'=>'nok','desc'=>"Egreso ya se elimin&oacute;"));                                
+            return $result;  
+        }
+        
+        
+        $monto += $egreso[0]['monto'];
+         if ($egreso[0]['cuotas']=='si'){
+            $suma_cuotas = $cob->getSumaCuotas($this->dbAdapter,$data['id']);
+            $monto += $suma_cuotas[0]['monto'];
+            $cob->borraEgreso($data['id']);
+            $descuota="como tambi&eacute;n sus cuotas";
+         }
+        //Eliminamos egreso
+        $egr->borraEgreso($data['id']);
+        //Sumamos monto de egreso y cuotas al fondo
+        $fon->sumaFondo($this->dbAdapter,$egreso[0]['id_fondo'],$monto); 
+        $fondo = $fon->getFondoId($egreso[0]['id_fondo']);
+        
+        //Retornamos a la vista                                
+        $result = new JsonModel(array('desc'=>"Se ha eliminado egreso exitosamente, Su sumaron $".number_format($monto,"0",".",".")." pesos al ".$fondo[0]['nombre']));                                
+        return $result;                   
+    }
     
     public function pagoegresoAction()
     {                  
@@ -376,7 +523,7 @@ class FinanzasController extends AbstractActionController
             //Quitamos puntos del monto
             $data['montototal'] = str_replace(".","",$data['montototal']);
             //Restamos monto de Fondo Origen
-            $fop->restaFondo($this->dbAdapter,$data['origen'],$data['montototal']);           
+            $fop->restaFondo($this->dbAdapter,$data['id_fondo'],$data['montototal']);           
                                     
             //Insertamos egreso en la BBDD            
             $id_egreso = $egr->nuevoEgreso($data);
@@ -397,11 +544,10 @@ class FinanzasController extends AbstractActionController
                   }
                 
              }
-                                            
+            //Retornamos a la vista                                
             $result = new JsonModel(array(
                                     'status'=>'ok',
-                                    'desc'=>$desc,
-                                                                                                                         
+                                    'desc'=>$desc,                                                                                                                         
                     ));                                
             return $result;             
         }          
@@ -419,7 +565,7 @@ class FinanzasController extends AbstractActionController
         $form->get('id_proveedor')->setAttribute('value' ,$proveedor[0]['id']);                
         $form->get('destino')->setAttribute('value',$proveedor[0]['nombre']);
         $form->get('concepto')->setAttribute('value',$servicio[0]['nombre']);
-        $form->get('origen')->setAttribute('options' ,$fondos);
+        $form->get('id_fondo')->setAttribute('options' ,$fondos);
         $form->get('id_banco')->setAttribute('options' ,$bancos);        
         //$form->get('origen')->setAttribute('value','8');
         $form->get('observacion')->setAttribute('value',$servicio[0]['categoria']." / ".$servicio[0]['nombre']);        
@@ -437,15 +583,20 @@ class FinanzasController extends AbstractActionController
         $sid = new Container('base');
         $db_name = $sid->offsetGet('dbNombre');
         $this->dbAdapter=$this->getServiceLocator()->get($db_name);
+        
         //Obtenemos ID desde POST
-        $data = $this->getRequest()->getPost();  
+        $data = $this->getRequest()->getPost();
+          
         //Instancias 
-        $cob = new CobroTable($this->dbAdapter);     
+        $cob = new CobroTable($this->dbAdapter);    
+        $egr = new EgresoTable($this->dbAdapter); 
+        
         //Obtenemos datos
         $cobros = $cob->getCobroIdEgreso($data['id_egreso']);
-                
+        $egreso = $egr->getDatosId($data['id_egreso']);     
+           
         //Retornamos a la vista
-        $result = new ViewModel(array('cobros'=>$cobros));
+        $result = new ViewModel(array('cobros'=>$cobros,'egreso'=>$egreso));
         $result->setTerminal(true);
         return $result;        
     }
@@ -479,7 +630,6 @@ class FinanzasController extends AbstractActionController
         
     }
     
-    
      public function servicioprovAction(){
         
         //Conectamos con BBDD  
@@ -511,20 +661,18 @@ class FinanzasController extends AbstractActionController
                                     return $result;            
         
      }
-     
-     
-    /////////////////////////////////////////////////////////// Proveedores
+             
     public function proveedoresAction()
-
-    {   
-        $this->layout('layout/admin');   
-        $result = new ViewModel();                       
+    {              
+        $result = new ViewModel();
+        $result->setTerminal(true);                       
         return $result;
 
     }
-        public function getproveedoresAction()
 
-    {   //conectamos a BBDD
+    public function tablaproveedoresAction()
+    {
+        //conectamos a BBDD
         $sid = new Container('base');
         $db_name = $sid->offsetGet('dbNombre');
         $this->dbAdapter=$this->getServiceLocator()->get($db_name);
@@ -532,15 +680,31 @@ class FinanzasController extends AbstractActionController
         $pro = new VProveedorTable($this->dbAdapter);
         //Datos
         $proveedores = $pro->getProveedores(); 
+        
                 //Damos formato a la fecha
                 for($i=0;$i<count($proveedores);$i++){
                     $proveedores[$i]['ultimopago']=date("d-m-Y",strtotime($proveedores[$i]['ultimopago']));
-                }                      
+                }
+                
+        //Tabla HTML de Egresos 
+        $tabla="";   
+         for($i=0;$i<count($proveedores);$i++){              
+            $pf = strtotime($proveedores[$i]['ultimopago']);
+            $mostrarF = date("d-M-Y", $pf);                  
+             $tabla=$tabla."<tr>
+                            <td align='left'>".$proveedores[$i]['nombre']."</td>
+                            <td align='left'>".$proveedores[$i]['servicio']."</td>
+                            <td align='left'>".$proveedores[$i]['telefono']."</td>
+                            <td align='left'>".$mostrarF."</td>
+                            <td align='left'><strong><div class=''><a onclick='detalleProv('".$proveedores[$i]['id']."')' style='cursor:pointer;'><i class='fa fa-eye '></i></a> | <i class='fa fa-edit'></i>  | <a onclick='eliminarProv('".$proveedores[$i]['id']."','0')' style='cursor:pointer;'><i class='fa fa-trash'></i></a></div></td>                            
+                            </tr>";
+         }                                        
         
-        $result = new JsonModel(array(
+        $result = new ViewModel(array(
                                     'status'=>'ok',
-                                    'prov'=>$proveedores,                                                                                        
-                    ));                                
+                                    'tabla'=>$tabla,                                                                                        
+                    ));  
+        $result->setTerminal(true);                               
         return $result;
 
     }
@@ -609,7 +773,7 @@ class FinanzasController extends AbstractActionController
             }
         }  
         
-        public function comboservicioAction()
+    public function comboservicioAction()
     {
         //Conectamos con BBDD
         $sid = new Container('base');
@@ -625,7 +789,7 @@ class FinanzasController extends AbstractActionController
         
     }
     
-     public function nuevoservicioAction()
+    public function nuevoservicioAction()
     {
         //Conectamos con BBDD
         $sid = new Container('base');
@@ -693,8 +857,8 @@ class FinanzasController extends AbstractActionController
         
     }
     
-    public function eliminarproveedorAction(){
-    
+    public function eliminarproveedorAction()
+    {    
         //Conectamos con BBDD  
         $sid = new Container('base');
         $db_name = $sid->offsetGet('dbNombre');
@@ -717,8 +881,8 @@ class FinanzasController extends AbstractActionController
         return $result;                                         
     }
     
-    public function detalleproveedorAction(){
-    
+    public function detalleproveedorAction()
+    {    
         //Conectamos con BBDD  
         $sid = new Container('base');
         $db_name = $sid->offsetGet('dbNombre');
@@ -744,10 +908,9 @@ class FinanzasController extends AbstractActionController
 
         return $result;                                         
     }
-//////////////////////////////////////////////////////////////        Finanzas INGRESOS    
+       
     public function pagogcAction()
-    {
-        
+    {        
         //Conectamos con BBDD  
         $sid = new Container('base');
         $db_name = $sid->offsetGet('dbNombre');
@@ -775,10 +938,7 @@ class FinanzasController extends AbstractActionController
         return $result;
     }
 
-
-
     public function modalpagoAction()
-
     {
         //Variables BBDD
         $sid = new Container('base');
@@ -791,7 +951,8 @@ class FinanzasController extends AbstractActionController
         $gcu = new GCunidadTable($this->dbAdapter);
         $uni = new UnidadTable($this->dbAdapter);
         $ing = new IngresoTable($this->dbAdapter);
-        $mul = new MultaTable($this->dbAdapter);           
+        $mul = new MultaTable($this->dbAdapter);
+        $abo = new AbonoTable($this->dbAdapter);            
 
         $form   = new IngresoPagoForm("form");               
 
@@ -801,7 +962,8 @@ class FinanzasController extends AbstractActionController
         $fondos = $fop->getCombo();
         $unidad = $uni->getDatosId($data["id_unidad"]);            
         $deuda  = $gcu->getNoPagado($unidad[0]['id']);
-        $multa  = $mul->getMultaUnidad($unidad[0]['id']);        
+        $multa  = $mul->getMultaUnidad($unidad[0]['id']);    
+        $abono  = $abo->getAbonosUnidad($unidad[0]['id']);    
         $listab  = $ban->getDatos();
         $total = 0;      
         
@@ -823,6 +985,11 @@ class FinanzasController extends AbstractActionController
                     $total = $total + $multa[$i]["monto"];
                 }
         }
+        if (count($abono)>0){
+                for($i=0;$i<count($abono);$i++){
+                    $total = $total - $abono[$i]["monto"];
+                }
+        }
         $total = number_format($total,"0",".",".");
 
       //   $multa = number_format($data["multa"],"0",".",".");         
@@ -830,32 +997,26 @@ class FinanzasController extends AbstractActionController
         //Cargamos Formulario                                       
 
         $form->get('banco')->setAttribute('options' ,$listab);  
-        $form->get('origen')->setAttribute('value' ,$unidad[0]['nombre']);
+        //$form->get('origen')->setAttribute('value' ,$unidad[0]['nombre']);
         $form->get('id_fondo')->setAttribute('options' ,$fondos);
         $form->get('id_fondo')->setAttribute('value','2');
 
-                                                        
+        //Retornamos a la Vista                                                        
         $meses = array("NA","Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre");
         $result = new ViewModel(array(
                         'form'=>$form,
                         'deuda'=>$deuda,
                         'total'=>$total,
                         'multa'=>$multa,
+                        'abono'=>$abono,
                         'displaytotal'=>$displaytotal,
                         'displayparcial'=>$displayparcial,
                         'meses'=>$meses
                         ));
-
         $result->setTerminal(true);
-
-       
-
         return $result;
-
-        
-
     }
-
+    
     public function pagargcAction()
     {
         //Variables BBDD
@@ -868,16 +1029,23 @@ class FinanzasController extends AbstractActionController
         $gcu = new GCunidadTable($this->dbAdapter);
         $mul = new MultaTable($this->dbAdapter); 
         $uni = new UnidadTable($this->dbAdapter);
-        $fon = new FondosTable($this->dbAdapter);               
+        $fon = new FondosTable($this->dbAdapter);
+        $abn = new AbonoTable($this->dbAdapter);               
 
         //Obtenemos Datos          
-        $lista = $this->request->getPost();
+        $lista = $this->request->getPost();        
         $lista['user_create'] = $sid->offsetGet('id_usuario');
         $id_uni = $uni->getIdUnidad($lista["origen"]); 
         $lista['monto'] = str_replace(".","",$lista['monto']) ;
 
         //Insertamos Datos           
             if ($lista['tipo_pago']=='total'){
+                if(count($lista['abono'])>0){
+                    $pagarabono = array_keys($lista['abono']);
+                        for ($i=0;$i<count($pagarabono);$i++){
+                            $abn->UsoAbono($pagarabono[$i]);                                                                          
+                        }                  
+                    } 
                 $mul->pagoMultaTotal($this->dbAdapter,$id_uni[0]['id']);
                 $gcu->pagoTotalGasto($this->dbAdapter,$id_uni[0]['id']);                                  
             }else{        
@@ -893,6 +1061,12 @@ class FinanzasController extends AbstractActionController
                             $mul->pagoMulta($pagarm[$i]);                                                                          
                         }                  
                     }
+                if(count($lista['abono'])>0){
+                    $pagarabono = array_keys($lista['abono']);
+                        for ($i=0;$i<count($pagarabono);$i++){
+                            $abn->UsoAbono($pagarabono[$i]);                                                                          
+                        }                  
+                    }    
                 }
           //Registramos ingreso a la BBDD                
           $ing->nuevoIngreso($lista);             
@@ -903,13 +1077,114 @@ class FinanzasController extends AbstractActionController
          $descripcion = "Se ha registrado correctamente el ingreso";              
          $result = new JsonModel(array(
                                  'desc'=>$descripcion,
-                    ));                                
+                    ));                                                    
+         return $result;  
+    }
+    
+     public function modalpagotrabajadorAction()
+    {
+        //Variables BBDD
+        $sid = new Container('base');
+        $db_name = $sid->offsetGet('dbNombre');
+        $this->dbAdapter=$this->getServiceLocator()->get($db_name);
+
+        //Instancias
+        $fop = new FondosTable($this->dbAdapter);
+        $ban = new ListaBancoTable($this->dbAdapter);               
+
+        $form   = new PagoTrabajadorForm("form");               
+
+        //Obtenemos Datos        
+        $data   = $this->getRequest()->getPost(); 
+        $fondos = $fop->getCombo();               
+        $listab  = $ban->getDatos();        
+
+        //Cargamos Formulario
+        $form->get('id_trabajador')->setAttribute('value' ,$data["id_trabajador"]);        
+        $form->get('id_tipo_egreso')->setAttribute('value' ,$data["id_tipo_egreso"]);
+        $form->get('montototal')->setAttribute('disabled' ,'true');                                        
+        $form->get('id_banco')->setAttribute('options' ,$listab);  
+        $form->get('trabajador')->setAttribute('value' ,$data["nombre_trabajador"]);
+        $form->get('id_fondo')->setAttribute('options' ,$fondos);
+        $form->get('id_fondo')->setAttribute('value','2');
+        $form->get('id_fondo')->setAttribute('disabled','true');
+        $form->get('observacion')->setAttribute('value' ,utf8_encode("Remuneración Personal"));
+        $form->get('concepto')->setAttribute('value' ,"Remuneraciones");
+        $form->get('cuotas')->setAttribute('value' ,"no");
+
+        //Retornamos a la Vista                                                                
+        $result = new ViewModel(array(
+                        'form'=>$form,                        
+                        ));
+        $result->setTerminal(true);
+        return $result;
+    }
+    
+    public function egresotrabajadorfileAction()
+    {         
+       //Obtenemos id bbdd  
+       $sid = new Container('base');
+       $id_db = $sid->offsetGet('id_db');
+       //Guardamos Registro en Servidor
+       $File    = $this->params()->fromFiles('nombrefile');                 
+       $adapterFile = new \Zend\File\Transfer\Adapter\Http();
+       $nombre = $adapterFile->getFileName($File,false);
+       $ruta = $_SERVER['DOCUMENT_ROOT'].'/files/db/'.$id_db.'/admin/finanzas/egreso';
+       //Validamos si existe el archivo 
+       if (file_exists($ruta."/".$nombre)){
+                    $status="nok";
+                    $desc="Nombre de Archivo ya existe en el servidor, use otro nombre";
+       }else{
+                    $status="ok";
+                    $adapterFile->setDestination($ruta);
+                    $adapterFile->receive($File['name']);
+                    $nombre = $adapterFile->getFileName($File,false);
+                    $desc="Archivo cargado Exitosamente";
+       }
+       
+       //Retornamos a la vista
+       $result = new JsonModel(array('status'=>$status,'desc'=>$desc,'name'=>$nombre));                                            
+       return $result;    
+        
+    }
+
+     public function pagartrabajadorAction()
+    {
+        //Variables BBDD
+        $sid = new Container('base');
+        $db_name = $sid->offsetGet('dbNombre');
+        $this->dbAdapter=$this->getServiceLocator()->get($db_name);
+
+        //Cargamos Clases 
+        $egt = new EgresoTrabajadorTable($this->dbAdapter);
+        $egr = new EgresoTable($this->dbAdapter); 
+        $fop = new FondosTable($this->dbAdapter);                  
+
+        //Obtenemos Datos          
+        $lista = $this->request->getPost();        
+        $lista['user_create'] = $sid->offsetGet('id_usuario');        
+        $lista['destino'] = $lista['trabajador'];   
+        //Quitamos formato a Montos
+        $lista['montototal'] = str_replace(".","",$lista['montototal']) ;
+        $lista['leysocial'] = str_replace(".","",$lista['leysocial']) ;
+        $lista['sueldo'] = str_replace(".","",$lista['sueldo']) ;              
+        //Registramos Egreso 
+        $lista['id_egreso'] = $egr->nuevoEgreso($lista);
+        //Restamos monto de Fondo Origen
+        $fop->restaFondo($this->dbAdapter,$lista['id_fondo'],$lista['montototal']); 
+        //Insertamos en tabla Egreso Trabajador
+        $egt->nuevoEgresoTrabajador($lista);
+                                          
+         //Enviamos a la Vista                                                      
+         $descripcion = "Se ha registrado correctamente el egreso";              
+         $result = new JsonModel(array(
+                                 'desc'=>$descripcion,
+                    ));                                                    
          return $result;  
     }
 
     public function modalabonoAction()
-    {
-        
+    {        
         //Obtenemos Datos POST          
         $data = $this->request->getPost();
         //Variables BBDD
@@ -918,23 +1193,22 @@ class FinanzasController extends AbstractActionController
         $this->dbAdapter=$this->getServiceLocator()->get($db_name);                        
         //Instancias        
         $uni = new UnidadTable($this->dbAdapter);
+        $ban = new ListaBancoTable($this->dbAdapter);
         $form   = new AbonoForm("form"); 
         
         //Consultamos info de unidad
         $unidad = $uni->getDatosId($data['id_unidad']);
+        $bancos = $ban->getDatos(); 
         
         //Cargamos Formulario
         $form->get('nombre_unidad')->setAttribute('value' ,$unidad[0]['nombre']);
+        $form->get('id_unidad')->setAttribute('value' ,$unidad[0]['id']);
+        $form->get('banco_abono')->setAttribute('options' ,$bancos);  
+        
+        //Retornamos a la vista
         $result = new ViewModel(array("form"=>$form));
-
         $result->setTerminal(true);
-
-       
-
         return $result;
-
-
-
     }
     
     public function pagarabonoAction()
@@ -945,14 +1219,27 @@ class FinanzasController extends AbstractActionController
         $this->dbAdapter=$this->getServiceLocator()->get($db_name);
 
         //Cargamos Clases         
-        $gcu = new AbonoTable($this->dbAdapter);
-        $fon = new FondosTable($this->dbAdapter);  
+        $abn = new AbonoTable($this->dbAdapter);
+        $fon = new FondosTable($this->dbAdapter);                                            
         
         //Obtenemos Datos          
         $lista = $this->request->getPost();
+        
+        // Identificamos usuario
         $lista['user_create'] = $sid->offsetGet('id_usuario');  
         
+        //Quitamos puntos del monto
+        $lista['monto_abono'] = str_replace(".","",$lista['monto_abono']);
+                               
+        //Ingresamos Abono
+        $abn->nuevoAbono($lista); 
+                     
+        //Retornamos a la vista
+        $desc = "Abono ingresado correctamente para vivienda ".$lista['nombre_unidad'];
+        $result = new JsonModel(array('status'=>'ok','desc'=>$desc));                                
+        return $result;           
     }
+    
   //////////////////////////////////////////////////////////////Financiera FONDO OPERACIONAL    
     public function guardarcicloAction()
     {  

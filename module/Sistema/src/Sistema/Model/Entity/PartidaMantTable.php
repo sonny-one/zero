@@ -40,13 +40,11 @@ class PartidaMantTable extends TableGateway
 
     }
     
-    public function getPartidaId(Adapter $dbAdapter,$id)
-    {
-        $this->dbAdapter = $dbAdapter;
-        $query = "select * from sis_w_partida_mantencion where id='".$id."' and activo = '1'";
-                
-        $result=$this->dbAdapter->query($query,Adapter::QUERY_MODE_EXECUTE);
-        return $result->toArray(); 
+    public function getPartidaId($id)
+    {        
+       $datos = $this->select(array("id"=>$id,"activo"=>'1'));
+       $recorre = $datos->toArray();
+       return $recorre;
         
     }
     
@@ -68,18 +66,18 @@ class PartidaMantTable extends TableGateway
     {             
              $array=array
              (
-                'ene'=>$data['Jan'],
-                'feb'=>$data['Feb'],
-                'mar'=>$data['Mar'],
-                'abr'=>$data['Apr'],
-                'may'=>$data['May'],
-                'jun'=>$data['Jun'],
-                'jul'=>$data['Jul'],
-                'ago'=>$data['Aug'],            
-                'sep'=>$data['Sep'],
-                'oct'=>$data['Oct'],
-                'nov'=>$data['Nov'],             
-                'dic'=>$data['Dec'],                                  
+                'Jan'=>$data['Jan'],
+                'Feb'=>$data['Feb'],
+                'Mar'=>$data['Mar'],
+                'Apr'=>$data['Apr'],
+                'May'=>$data['May'],
+                'Jun'=>$data['Jun'],
+                'Jul'=>$data['Jul'],
+                'Aug'=>$data['Aug'],            
+                'Sep'=>$data['Sep'],
+                'Oct'=>$data['Oct'],
+                'Nov'=>$data['Nov'],             
+                'Dec'=>$data['Dec'],                                  
              );
                $this->update($array,array('id'=>$data['id_pk']));
     }

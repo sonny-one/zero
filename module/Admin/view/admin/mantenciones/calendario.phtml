@@ -1,0 +1,714 @@
+<div class="row">     
+<br /> <br />    
+                <div class="col-lg-10 col-md-10 col-lg-offset-1 col-md-offset-1">
+                    <div class="panel panel-primary">
+                      <div class="panel-heading" style="color: #fff; font-size: 18px;">
+                        <i class="fa fa-check"></i>&nbsp;&nbsp;
+                            Seleccione meses que realizar&aacute; mantenciones 
+                            <div  style="float: right;"> 
+                             <a>
+                                <button id="popover" class="fa fa-info-circle" style="cursor: pointer;color: #fff;" tabindex="0" data-container="body" data-toggle="popover" data-placement="left"  style="cursor: pointer;" ></i></button>
+                             </a>
+                            </div> 
+                        </div>
+                        <div class="panel-body">
+                        
+                            <div class="panel-group" id="accordionMant">
+                            
+                            <div class="col-lg-12" style="margin-bottom: 1em;">
+                            <a data-toggle="collapse" data-parent="#accordionMant" href="#instsanitarias" style="text-decoration: none;"  >
+                                <p style="color: #000;text-align: left; font-size: 18px;">
+                                    <i class="fa fa-tint"></i>
+                                    &nbsp; Instalaciones Sanitarias
+                                </p>
+                            </a>
+                            </div>
+                            
+                            <div id="instsanitarias" class="col-lg-12 col-lg-12 table-responsive panel-collapse collapse ">                                                                                            
+                            <table class="table table-striped">
+                           
+                                    <thead> 
+                                        <tr>
+                                            <th>Partida &nbsp;&nbsp; <a onclick="nuevaPartida('Instalaciones Sanitarias')" class="btn btn-success btn-circle"><i class="fa fa-plus"></i></a></th>
+                                            <th>Frecuencia</th>
+                                            <th>Acci&oacute;n</th>
+                                            <th>Ene</th>
+                                            <th>Feb</th>
+                                            <th>Mar</th>
+                                            <th>Abr</th>
+                                            <th>May</th>
+                                            <th>Jun</th>
+                                            <th>Jul</th>
+                                            <th>Ago</th>
+                                            <th>Sep</th>
+                                            <th>Oct</th>
+                                            <th>Nov</th>
+                                            <th>Dic</th>
+                                            <th>Editar</th>
+                                        </tr>
+                                    </thead>                                                                    
+                                    <tbody style="text-align: center;">
+                                     <?php for ($i=0;$i<count($this->partidas);$i++){?>
+                                    <?php    if ($this->partidas[$i]['categoria']=="Instalaciones Sanitarias"){    ?>
+                                        <tr>
+                                            <td><?php echo $this->partidas[$i]["nombre"];?></td>
+                                            <td><?php echo $this->partidas[$i]["frecuencia"];?></td>
+                                            <td><?php echo $this->partidas[$i]["accion"];?></td>
+                                            <td><input <?php if($this->partidas[$i]["Jan"]=="on"){echo "checked disabled";}else{ echo "disabled";};?> type="checkbox" /></td>
+											<td><input <?php if($this->partidas[$i]["Feb"]=="on"){echo "checked disabled";}else{ echo "disabled";};?> type="checkbox" /></td>
+											<td><input <?php if($this->partidas[$i]["Mar"]=="on"){echo "checked disabled";}else{ echo "disabled";};?> type="checkbox" /></td>
+											<td><input <?php if($this->partidas[$i]["Abr"]=="on"){echo "checked disabled";}else{ echo "disabled";};?> type="checkbox" /></td>
+											<td><input <?php if($this->partidas[$i]["May"]=="on"){echo "checked disabled";}else{ echo "disabled";};?> type="checkbox" /></td>
+											<td><input <?php if($this->partidas[$i]["Jun"]=="on"){echo "checked disabled";}else{ echo "disabled";};?> type="checkbox" /></td>
+											<td><input <?php if($this->partidas[$i]["Jul"]=="on"){echo "checked disabled";}else{ echo "disabled";};?> type="checkbox" /></td>
+											<td><input <?php if($this->partidas[$i]["Ago"]=="on"){echo "checked disabled";}else{ echo "disabled";};?> type="checkbox" /></td>
+											<td><input <?php if($this->partidas[$i]["Sep"]=="on"){echo "checked disabled";}else{ echo "disabled";};?> type="checkbox" /></td>
+											<td><input <?php if($this->partidas[$i]["Oct"]=="on"){echo "checked disabled";}else{ echo "disabled";};?> type="checkbox" /></td>
+											<td><input <?php if($this->partidas[$i]["Nov"]=="on"){echo "checked disabled";}else{ echo "disabled";};?> type="checkbox" /></td>
+											<td><input <?php if($this->partidas[$i]["Dec"]=="on"){echo "checked disabled";}else{ echo "disabled";};?> type="checkbox" /></td>
+                                            <td><a style="cursor: pointer;" style="cursor: pointer;" onclick="editarPartida('<?php echo $this->partidas[$i]["id"];?>')" data-toggle="modal" data-target="#modaleditar" keyboard="false"><i class="fa fa-edit"></i></a></td>
+                                        </tr> 
+                             <?php    }}   ?>
+                                    </tbody>
+                                </table>
+                            </div>
+                           
+                            <div class="col-lg-12" style="margin-bottom: 1em;">
+                            <a data-toggle="collapse" data-parent="#accordionMant" href="#instelect" >
+                                <p style="color: #000;text-align: left; font-size: 18px;">
+                                    <i class="fa fa-bolt"></i>
+                                    &nbsp; &nbsp;&nbsp;Instalaci&oacute;n el&eacute;ctrica y corrientes d&eacute;biles
+                                </p>
+                            </a>
+                            </div>
+                            
+                            <div id="instelect" class="col-lg-12 table-responsive panel-collapse collapse ">
+                            <table class="table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>Partida &nbsp;&nbsp; <a onclick="nuevaPartida('Instalacion electrica y corrientes debiles')" class="btn btn-success btn-circle"><i class="fa fa-plus"></i></a></th>
+                                            <th>Frecuencia</th>
+                                            <th>Acci&oacute;n</th>
+                                            <th>Ene</th>
+                                            <th>Feb</th>
+                                            <th>Mar</th>
+                                            <th>Abr</th>
+                                            <th>May</th>
+                                            <th>Jun</th>
+                                            <th>Jul</th>
+                                            <th>Ago</th>
+                                            <th>Sep</th>
+                                            <th>Oct</th>
+                                            <th>Nov</th>
+                                            <th>Dic</th>
+                                            <th>Editar</th>
+                                        </tr>
+                                    </thead> 
+                                    <?php for ($i=0;$i<count($this->partidas);$i++){?>                                  
+                                    <tbody style="text-align: center;">
+                                    <?php    if ($this->partidas[$i]['categoria']=="Instalacion electrica y corrientes debiles"){    ?>
+                                        <tr>
+                                            <td><?php echo $this->partidas[$i]["nombre"];?></td>
+                                            <td><?php echo $this->partidas[$i]["frecuencia"];?></td>
+                                            <td><?php echo $this->partidas[$i]["accion"];?></td>
+                                            <td><input <?php if($this->partidas[$i]["Jan"]=="on"){echo "checked disabled";}else{ echo "disabled";};?> type="checkbox" /></td>
+											<td><input <?php if($this->partidas[$i]["Feb"]=="on"){echo "checked disabled";}else{ echo "disabled";};?> type="checkbox" /></td>
+											<td><input <?php if($this->partidas[$i]["Mar"]=="on"){echo "checked disabled";}else{ echo "disabled";};?> type="checkbox" /></td>
+											<td><input <?php if($this->partidas[$i]["Abr"]=="on"){echo "checked disabled";}else{ echo "disabled";};?> type="checkbox" /></td>
+											<td><input <?php if($this->partidas[$i]["May"]=="on"){echo "checked disabled";}else{ echo "disabled";};?> type="checkbox" /></td>
+											<td><input <?php if($this->partidas[$i]["Jun"]=="on"){echo "checked disabled";}else{ echo "disabled";};?> type="checkbox" /></td>
+											<td><input <?php if($this->partidas[$i]["Jul"]=="on"){echo "checked disabled";}else{ echo "disabled";};?> type="checkbox" /></td>
+											<td><input <?php if($this->partidas[$i]["Ago"]=="on"){echo "checked disabled";}else{ echo "disabled";};?> type="checkbox" /></td>
+											<td><input <?php if($this->partidas[$i]["Sep"]=="on"){echo "checked disabled";}else{ echo "disabled";};?> type="checkbox" /></td>
+											<td><input <?php if($this->partidas[$i]["Oct"]=="on"){echo "checked disabled";}else{ echo "disabled";};?> type="checkbox" /></td>
+											<td><input <?php if($this->partidas[$i]["Nov"]=="on"){echo "checked disabled";}else{ echo "disabled";};?> type="checkbox" /></td>
+											<td><input <?php if($this->partidas[$i]["Dec"]=="on"){echo "checked disabled";}else{ echo "disabled";};?> type="checkbox" /></td>
+                                            <td><a style="cursor: pointer;" onclick="editarPartida('<?php echo $this->partidas[$i]["id"];?>')" data-toggle="modal" data-target="#modaleditar" keyboard="false"><i class="fa fa-edit"></i></a></td>
+                                        </tr> 
+                             <?php    }}    ?>
+                                    </tbody>
+                                </table>
+                            </div>
+                            
+                            
+                            <div class="col-lg-12" style="margin-bottom: 1em;">
+                            <a data-toggle="collapse" data-parent="#accordionMant" href="#calefaccion" >
+                                <p style="color: #000;text-align: left; font-size: 18px;">
+                                    <i class="fa fa-fire"></i>
+                                    &nbsp; &nbsp;Calefacci&oacute;n 
+                                </p>
+                            </a>
+                            </div>
+                            
+                            <div id="calefaccion" class="col-lg-12 table-responsive panel-collapse collapse ">
+                            <table class="table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>Partida &nbsp;&nbsp; <a onclick="nuevaPartida('Instalacion electrica y corrientes debiles')" class="btn btn-success btn-circle"><i class="fa fa-plus"></i></a></th>
+                                            <th>Frecuencia</th>
+                                            <th>Acci&oacute;n</th>
+                                            <th>Ene</th>
+                                            <th>Feb</th>
+                                            <th>Mar</th>
+                                            <th>Abr</th>
+                                            <th>May</th>
+                                            <th>Jun</th>
+                                            <th>Jul</th>
+                                            <th>Ago</th>
+                                            <th>Sep</th>
+                                            <th>Oct</th>
+                                            <th>Nov</th>
+                                            <th>Dic</th>
+                                            <th>Editar</th>
+                                        </tr>
+                                    </thead> 
+                                    <?php for ($i=0;$i<count($this->partidas);$i++){?>                                  
+                                    <tbody style="text-align: center;">
+                                    <?php    if ($this->partidas[$i]['categoria']=="Calefaccion"){    ?>
+                                        <tr>
+                                            <td><?php echo $this->partidas[$i]["nombre"];?></td>
+                                            <td><?php echo $this->partidas[$i]["frecuencia"];?></td>
+                                            <td><?php echo $this->partidas[$i]["accion"];?></td>
+                                            <td><input <?php if($this->partidas[$i]["Jan"]=="on"){echo "checked disabled";}else{ echo "disabled";};?> type="checkbox" /></td>
+											<td><input <?php if($this->partidas[$i]["Feb"]=="on"){echo "checked disabled";}else{ echo "disabled";};?> type="checkbox" /></td>
+											<td><input <?php if($this->partidas[$i]["Mar"]=="on"){echo "checked disabled";}else{ echo "disabled";};?> type="checkbox" /></td>
+											<td><input <?php if($this->partidas[$i]["Abr"]=="on"){echo "checked disabled";}else{ echo "disabled";};?> type="checkbox" /></td>
+											<td><input <?php if($this->partidas[$i]["May"]=="on"){echo "checked disabled";}else{ echo "disabled";};?> type="checkbox" /></td>
+											<td><input <?php if($this->partidas[$i]["Jun"]=="on"){echo "checked disabled";}else{ echo "disabled";};?> type="checkbox" /></td>
+											<td><input <?php if($this->partidas[$i]["Jul"]=="on"){echo "checked disabled";}else{ echo "disabled";};?> type="checkbox" /></td>
+											<td><input <?php if($this->partidas[$i]["Ago"]=="on"){echo "checked disabled";}else{ echo "disabled";};?> type="checkbox" /></td>
+											<td><input <?php if($this->partidas[$i]["Sep"]=="on"){echo "checked disabled";}else{ echo "disabled";};?> type="checkbox" /></td>
+											<td><input <?php if($this->partidas[$i]["Oct"]=="on"){echo "checked disabled";}else{ echo "disabled";};?> type="checkbox" /></td>
+											<td><input <?php if($this->partidas[$i]["Nov"]=="on"){echo "checked disabled";}else{ echo "disabled";};?> type="checkbox" /></td>
+											<td><input <?php if($this->partidas[$i]["Dec"]=="on"){echo "checked disabled";}else{ echo "disabled";};?> type="checkbox" /></td>
+                                            <td><a style="cursor: pointer;" onclick="editarPartida('<?php echo $this->partidas[$i]["id"];?>')" data-toggle="modal" data-target="#modaleditar" keyboard="false"><i class="fa fa-edit"></i></a></td>
+                                        </tr>  
+                             <?php    }}    ?>
+                                    </tbody>
+                                </table>
+                            </div>
+                            
+                            <div class="col-lg-12" style="margin-bottom: 1em;">
+                            <a data-toggle="collapse" data-parent="#accordionMant" href="#ascensores" >
+                                <p style="color: #000;text-align: left; font-size: 18px;">
+                                    <i class="fa fa-building-o"></i>
+                                    &nbsp; &nbsp;Ascensores
+                                </p>
+                            </a>
+                            </div>
+                            
+                            <div id="ascensores" class="col-lg-12 table-responsive panel-collapse collapse ">
+                            <table class="table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>Partida &nbsp;&nbsp; <a onclick="nuevaPartida('Instalacion electrica y corrientes debiles')" class="btn btn-success btn-circle"><i class="fa fa-plus"></i></a></th>
+                                            <th>Frecuencia</th>
+                                            <th>Acci&oacute;n</th>
+                                            <th>Ene</th>
+                                            <th>Feb</th>
+                                            <th>Mar</th>
+                                            <th>Abr</th>
+                                            <th>May</th>
+                                            <th>Jun</th>
+                                            <th>Jul</th>
+                                            <th>Ago</th>
+                                            <th>Sep</th>
+                                            <th>Oct</th>
+                                            <th>Nov</th>
+                                            <th>Dic</th>
+                                            <th>Editar</th>
+                                        </tr>
+                                    </thead> 
+                                    <?php for ($i=0;$i<count($this->partidas);++$i){?>                                  
+                                    <tbody style="text-align: center;">
+                                    <?php    if (utf8_encode($this->partidas[$i]['categoria'])=="Ascensores"){    ?>
+                                        <tr>
+                                            <td><?php echo $this->partidas[$i]["nombre"];?></td>
+                                            <td><?php echo $this->partidas[$i]["frecuencia"];?></td>
+                                            <td><?php echo $this->partidas[$i]["accion"];?></td>
+                                            <td><input <?php if($this->partidas[$i]["Jan"]=="on"){echo "checked disabled";}else{ echo "disabled";};?> type="checkbox" /></td>
+											<td><input <?php if($this->partidas[$i]["Feb"]=="on"){echo "checked disabled";}else{ echo "disabled";};?> type="checkbox" /></td>
+											<td><input <?php if($this->partidas[$i]["Mar"]=="on"){echo "checked disabled";}else{ echo "disabled";};?> type="checkbox" /></td>
+											<td><input <?php if($this->partidas[$i]["Abr"]=="on"){echo "checked disabled";}else{ echo "disabled";};?> type="checkbox" /></td>
+											<td><input <?php if($this->partidas[$i]["May"]=="on"){echo "checked disabled";}else{ echo "disabled";};?> type="checkbox" /></td>
+											<td><input <?php if($this->partidas[$i]["Jun"]=="on"){echo "checked disabled";}else{ echo "disabled";};?> type="checkbox" /></td>
+											<td><input <?php if($this->partidas[$i]["Jul"]=="on"){echo "checked disabled";}else{ echo "disabled";};?> type="checkbox" /></td>
+											<td><input <?php if($this->partidas[$i]["Ago"]=="on"){echo "checked disabled";}else{ echo "disabled";};?> type="checkbox" /></td>
+											<td><input <?php if($this->partidas[$i]["Sep"]=="on"){echo "checked disabled";}else{ echo "disabled";};?> type="checkbox" /></td>
+											<td><input <?php if($this->partidas[$i]["Oct"]=="on"){echo "checked disabled";}else{ echo "disabled";};?> type="checkbox" /></td>
+											<td><input <?php if($this->partidas[$i]["Nov"]=="on"){echo "checked disabled";}else{ echo "disabled";};?> type="checkbox" /></td>
+											<td><input <?php if($this->partidas[$i]["Dec"]=="on"){echo "checked disabled";}else{ echo "disabled";};?> type="checkbox" /></td>
+                                            <td><a style="cursor: pointer;" onclick="editarPartida('<?php echo $this->partidas[$i]["id"];?>')" data-toggle="modal" data-target="#modaleditar" keyboard="false"><i class="fa fa-edit"></i></a></td>
+                                        </tr> 
+                             <?php    }}    ?>
+                                    </tbody>
+                                </table>
+                            </div>
+                            
+                            <div class="col-lg-12" style="margin-bottom: 1em;">
+                            <a data-toggle="collapse" data-parent="#accordionMant" href="#incendios" >
+                                <p style="color: #000;text-align: left; font-size: 18px;">
+                                    <i class="fa fa-fire-extinguisher"></i>
+                                    &nbsp; &nbsp;Instalaci&oacute;n prevenci&oacute;n Incendios
+                                </p>
+                            </a>
+                            </div>
+                            
+                             <div id="incendios" class="col-lg-12 table-responsive panel-collapse collapse ">
+                            <table class="table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>Partida &nbsp;&nbsp; <a onclick="nuevaPartida('Instalacion electrica y corrientes debiles')" class="btn btn-success btn-circle"><i class="fa fa-plus"></i></a></th>
+                                            <th>Frecuencia</th>
+                                            <th>Acci&oacute;n</th>
+                                            <th>Ene</th>
+                                            <th>Feb</th>
+                                            <th>Mar</th>
+                                            <th>Abr</th>
+                                            <th>May</th>
+                                            <th>Jun</th>
+                                            <th>Jul</th>
+                                            <th>Ago</th>
+                                            <th>Sep</th>
+                                            <th>Oct</th>
+                                            <th>Nov</th>
+                                            <th>Dic</th>
+                                            <th>Editar</th>
+                                        </tr>
+                                    </thead> 
+                                    <?php for ($i=0;$i<count($this->partidas);$i++){?>                                  
+                                    <tbody style="text-align: center;">
+                                    <?php    if ($this->partidas[$i]['categoria']=="Instalacion prevencion Incendios"){    ?>
+                                        <tr>
+                                            <td><?php echo $this->partidas[$i]["nombre"];?></td>
+                                            <td><?php echo $this->partidas[$i]["frecuencia"];?></td>
+                                            <td><?php echo $this->partidas[$i]["accion"];?></td>
+                                            <td><input <?php if($this->partidas[$i]["Jan"]=="on"){echo "checked disabled";}else{ echo "disabled";};?> type="checkbox" /></td>
+											<td><input <?php if($this->partidas[$i]["Feb"]=="on"){echo "checked disabled";}else{ echo "disabled";};?> type="checkbox" /></td>
+											<td><input <?php if($this->partidas[$i]["Mar"]=="on"){echo "checked disabled";}else{ echo "disabled";};?> type="checkbox" /></td>
+											<td><input <?php if($this->partidas[$i]["Abr"]=="on"){echo "checked disabled";}else{ echo "disabled";};?> type="checkbox" /></td>
+											<td><input <?php if($this->partidas[$i]["May"]=="on"){echo "checked disabled";}else{ echo "disabled";};?> type="checkbox" /></td>
+											<td><input <?php if($this->partidas[$i]["Jun"]=="on"){echo "checked disabled";}else{ echo "disabled";};?> type="checkbox" /></td>
+											<td><input <?php if($this->partidas[$i]["Jul"]=="on"){echo "checked disabled";}else{ echo "disabled";};?> type="checkbox" /></td>
+											<td><input <?php if($this->partidas[$i]["Ago"]=="on"){echo "checked disabled";}else{ echo "disabled";};?> type="checkbox" /></td>
+											<td><input <?php if($this->partidas[$i]["Sep"]=="on"){echo "checked disabled";}else{ echo "disabled";};?> type="checkbox" /></td>
+											<td><input <?php if($this->partidas[$i]["Oct"]=="on"){echo "checked disabled";}else{ echo "disabled";};?> type="checkbox" /></td>
+											<td><input <?php if($this->partidas[$i]["Nov"]=="on"){echo "checked disabled";}else{ echo "disabled";};?> type="checkbox" /></td>
+											<td><input <?php if($this->partidas[$i]["Dec"]=="on"){echo "checked disabled";}else{ echo "disabled";};?> type="checkbox" /></td>
+                                            <td><a style="cursor: pointer;" onclick="editarPartida('<?php echo $this->partidas[$i]["id"];?>')" data-toggle="modal" data-target="#modaleditar" keyboard="false"><i class="fa fa-edit"></i></a></td>
+                                        </tr> 
+                             <?php    }}    ?>
+                                    </tbody>
+                                </table>
+                            </div>
+                            
+                            
+                            <div class="col-lg-12" style="margin-bottom: 1em;">
+                            <a data-toggle="collapse" data-parent="#accordionMant" href="#basura" >
+                                <p style="color: #000;text-align: left; font-size: 18px;">
+                                    <i class="fa fa-trash"></i>
+                                    &nbsp; &nbsp;Recolecci&oacute;n de basuras
+                                </p>
+                            </a>
+                            </div>
+                            
+                            <div id="basura" class="col-lg-12 table-responsive panel-collapse collapse ">
+                            <table class="table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>Partida &nbsp;&nbsp; <a onclick="nuevaPartida('Instalacion electrica y corrientes debiles')" class="btn btn-success btn-circle"><i class="fa fa-plus"></i></a></th>
+                                            <th>Frecuencia</th>
+                                            <th>Acci&oacute;n</th>
+                                            <th>Ene</th>
+                                            <th>Feb</th>
+                                            <th>Mar</th>
+                                            <th>Abr</th>
+                                            <th>May</th>
+                                            <th>Jun</th>
+                                            <th>Jul</th>
+                                            <th>Ago</th>
+                                            <th>Sep</th>
+                                            <th>Oct</th>
+                                            <th>Nov</th>
+                                            <th>Dic</th>
+                                            <th>Editar</th>
+                                        </tr>
+                                    </thead> 
+                                    <?php for ($i=0;$i<count($this->partidas);$i++){?>                                  
+                                    <tbody style="text-align: center;">
+                                    <?php    if ($this->partidas[$i]['categoria']=="Recoleccion de basuras"){    ?>
+                                        <tr>
+                                            <td><?php echo $this->partidas[$i]["nombre"];?></td>
+                                            <td><?php echo $this->partidas[$i]["frecuencia"];?></td>
+                                            <td><?php echo $this->partidas[$i]["accion"];?></td>
+                                            <td><input <?php if($this->partidas[$i]["Jan"]=="on"){echo "checked disabled";}else{ echo "disabled";};?> type="checkbox" /></td>
+											<td><input <?php if($this->partidas[$i]["Feb"]=="on"){echo "checked disabled";}else{ echo "disabled";};?> type="checkbox" /></td>
+											<td><input <?php if($this->partidas[$i]["Mar"]=="on"){echo "checked disabled";}else{ echo "disabled";};?> type="checkbox" /></td>
+											<td><input <?php if($this->partidas[$i]["Abr"]=="on"){echo "checked disabled";}else{ echo "disabled";};?> type="checkbox" /></td>
+											<td><input <?php if($this->partidas[$i]["May"]=="on"){echo "checked disabled";}else{ echo "disabled";};?> type="checkbox" /></td>
+											<td><input <?php if($this->partidas[$i]["Jun"]=="on"){echo "checked disabled";}else{ echo "disabled";};?> type="checkbox" /></td>
+											<td><input <?php if($this->partidas[$i]["Jul"]=="on"){echo "checked disabled";}else{ echo "disabled";};?> type="checkbox" /></td>
+											<td><input <?php if($this->partidas[$i]["Ago"]=="on"){echo "checked disabled";}else{ echo "disabled";};?> type="checkbox" /></td>
+											<td><input <?php if($this->partidas[$i]["Sep"]=="on"){echo "checked disabled";}else{ echo "disabled";};?> type="checkbox" /></td>
+											<td><input <?php if($this->partidas[$i]["Oct"]=="on"){echo "checked disabled";}else{ echo "disabled";};?> type="checkbox" /></td>
+											<td><input <?php if($this->partidas[$i]["Nov"]=="on"){echo "checked disabled";}else{ echo "disabled";};?> type="checkbox" /></td>
+											<td><input <?php if($this->partidas[$i]["Dec"]=="on"){echo "checked disabled";}else{ echo "disabled";};?> type="checkbox" /></td>
+                                            <td><a style="cursor: pointer;" onclick="editarPartida('<?php echo $this->partidas[$i]["id"];?>')" data-toggle="modal" data-target="#modaleditar" keyboard="false"><i class="fa fa-edit"></i></a></td>
+                                        </tr>  
+                             <?php    }}    ?>
+                                    </tbody>
+                                </table>
+                            </div>
+                            
+                            <div class="col-lg-12" style="margin-bottom: 1em;">
+                            <a data-toggle="collapse" data-parent="#accordionMant" href="#lluvias" >
+                                <p style="color: #000;text-align: left; font-size: 18px;">
+                                    <i class="fa fa-umbrella"></i>
+                                    &nbsp; &nbsp;Aguas Lluvias
+                                </p>
+                            </a>
+                            </div>
+                            
+                            <div id="lluvias" class="col-lg-12 table-responsive panel-collapse collapse ">
+                            <table class="table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>Partida &nbsp;&nbsp; <a onclick="nuevaPartida('Instalacion electrica y corrientes debiles')" class="btn btn-success btn-circle"><i class="fa fa-plus"></i></a></th>
+                                            <th>Frecuencia</th>
+                                            <th>Acci&oacute;n</th>
+                                            <th>Ene</th>
+                                            <th>Feb</th>
+                                            <th>Mar</th>
+                                            <th>Abr</th>
+                                            <th>May</th>
+                                            <th>Jun</th>
+                                            <th>Jul</th>
+                                            <th>Ago</th>
+                                            <th>Sep</th>
+                                            <th>Oct</th>
+                                            <th>Nov</th>
+                                            <th>Dic</th>
+                                            <th>Editar</th>
+                                        </tr>
+                                    </thead> 
+                                    <?php for ($i=0;$i<count($this->partidas);$i++){?>                                  
+                                    <tbody style="text-align: center;">
+                                    <?php    if ($this->partidas[$i]['categoria']=="Aguas Lluvias"){    ?>
+                                        <tr>
+                                            <td><?php echo $this->partidas[$i]["nombre"];?></td>
+                                            <td><?php echo $this->partidas[$i]["frecuencia"];?></td>
+                                            <td><?php echo $this->partidas[$i]["accion"];?></td>
+                                            <td><input <?php if($this->partidas[$i]["Jan"]=="on"){echo "checked disabled";}else{ echo "disabled";};?> type="checkbox" /></td>
+											<td><input <?php if($this->partidas[$i]["Feb"]=="on"){echo "checked disabled";}else{ echo "disabled";};?> type="checkbox" /></td>
+											<td><input <?php if($this->partidas[$i]["Mar"]=="on"){echo "checked disabled";}else{ echo "disabled";};?> type="checkbox" /></td>
+											<td><input <?php if($this->partidas[$i]["Abr"]=="on"){echo "checked disabled";}else{ echo "disabled";};?> type="checkbox" /></td>
+											<td><input <?php if($this->partidas[$i]["May"]=="on"){echo "checked disabled";}else{ echo "disabled";};?> type="checkbox" /></td>
+											<td><input <?php if($this->partidas[$i]["Jun"]=="on"){echo "checked disabled";}else{ echo "disabled";};?> type="checkbox" /></td>
+											<td><input <?php if($this->partidas[$i]["Jul"]=="on"){echo "checked disabled";}else{ echo "disabled";};?> type="checkbox" /></td>
+											<td><input <?php if($this->partidas[$i]["Ago"]=="on"){echo "checked disabled";}else{ echo "disabled";};?> type="checkbox" /></td>
+											<td><input <?php if($this->partidas[$i]["Sep"]=="on"){echo "checked disabled";}else{ echo "disabled";};?> type="checkbox" /></td>
+											<td><input <?php if($this->partidas[$i]["Oct"]=="on"){echo "checked disabled";}else{ echo "disabled";};?> type="checkbox" /></td>
+											<td><input <?php if($this->partidas[$i]["Nov"]=="on"){echo "checked disabled";}else{ echo "disabled";};?> type="checkbox" /></td>
+											<td><input <?php if($this->partidas[$i]["Dec"]=="on"){echo "checked disabled";}else{ echo "disabled";};?> type="checkbox" /></td>
+                                            <td><a style="cursor: pointer;" onclick="editarPartida('<?php echo $this->partidas[$i]["id"];?>')" data-toggle="modal" data-target="#modaleditar" keyboard="false"><i class="fa fa-edit"></i></a></td>
+                                        </tr> 
+                             <?php    }}    ?>
+                                    </tbody>
+                                </table>
+                            </div>
+                            
+                            <div class="col-lg-12" style="margin-bottom: 1em;">
+                            <a data-toggle="collapse" data-parent="#accordionMant" href="#lavanderia" >
+                                <p style="color: #000;text-align: left; font-size: 18px;">
+                                    <i class="fa fa-instagram"></i>
+                                    &nbsp; &nbsp;Lavander&iacute;a 
+                                </p>
+                            </a>
+                            </div>
+                            
+                            <div id="lavanderia" class="col-lg-12 table-responsive panel-collapse collapse ">
+                            <table class="table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>Partida &nbsp;&nbsp; <a onclick="nuevaPartida('Instalacion electrica y corrientes debiles')" class="btn btn-success btn-circle"><i class="fa fa-plus"></i></a></th>
+                                            <th>Frecuencia</th>
+                                            <th>Acci&oacute;n</th>
+                                            <th>Ene</th>
+                                            <th>Feb</th>
+                                            <th>Mar</th>
+                                            <th>Abr</th>
+                                            <th>May</th>
+                                            <th>Jun</th>
+                                            <th>Jul</th>
+                                            <th>Ago</th>
+                                            <th>Sep</th>
+                                            <th>Oct</th>
+                                            <th>Nov</th>
+                                            <th>Dic</th>
+                                            <th>Editar</th>
+                                        </tr>
+                                    </thead> 
+                                    <?php for ($i=0;$i<count($this->partidas);$i++){?>                                  
+                                    <tbody style="text-align: center;">
+                                    <?php    if ($this->partidas[$i]['categoria']=="Lavanderia"){    ?>
+                                        <tr>
+                                            <td><?php echo $this->partidas[$i]["nombre"];?></td>
+                                            <td><?php echo $this->partidas[$i]["frecuencia"];?></td>
+                                            <td><?php echo $this->partidas[$i]["accion"];?></td>
+                                            <td><input <?php if($this->partidas[$i]["Jan"]=="on"){echo "checked disabled";}else{ echo "disabled";};?> type="checkbox" /></td>
+											<td><input <?php if($this->partidas[$i]["Feb"]=="on"){echo "checked disabled";}else{ echo "disabled";};?> type="checkbox" /></td>
+											<td><input <?php if($this->partidas[$i]["Mar"]=="on"){echo "checked disabled";}else{ echo "disabled";};?> type="checkbox" /></td>
+											<td><input <?php if($this->partidas[$i]["Abr"]=="on"){echo "checked disabled";}else{ echo "disabled";};?> type="checkbox" /></td>
+											<td><input <?php if($this->partidas[$i]["May"]=="on"){echo "checked disabled";}else{ echo "disabled";};?> type="checkbox" /></td>
+											<td><input <?php if($this->partidas[$i]["Jun"]=="on"){echo "checked disabled";}else{ echo "disabled";};?> type="checkbox" /></td>
+											<td><input <?php if($this->partidas[$i]["Jul"]=="on"){echo "checked disabled";}else{ echo "disabled";};?> type="checkbox" /></td>
+											<td><input <?php if($this->partidas[$i]["Ago"]=="on"){echo "checked disabled";}else{ echo "disabled";};?> type="checkbox" /></td>
+											<td><input <?php if($this->partidas[$i]["Sep"]=="on"){echo "checked disabled";}else{ echo "disabled";};?> type="checkbox" /></td>
+											<td><input <?php if($this->partidas[$i]["Oct"]=="on"){echo "checked disabled";}else{ echo "disabled";};?> type="checkbox" /></td>
+											<td><input <?php if($this->partidas[$i]["Nov"]=="on"){echo "checked disabled";}else{ echo "disabled";};?> type="checkbox" /></td>
+											<td><input <?php if($this->partidas[$i]["Dec"]=="on"){echo "checked disabled";}else{ echo "disabled";};?> type="checkbox" /></td>
+                                            <td><a style="cursor: pointer;" onclick="editarPartida('<?php echo $this->partidas[$i]["id"];?>')" data-toggle="modal" data-target="#modaleditar" keyboard="false"><i class="fa fa-edit"></i></a></td>
+                                        </tr> 
+                             <?php    }}    ?>
+                                    </tbody>
+                                </table>
+                            </div>
+                            
+                            <div class="col-lg-12" style="margin-bottom: 1em;">
+                            <a data-toggle="collapse" data-parent="#accordionMant" href="#jardines" >
+                                <p style="color: #000;text-align: left; font-size: 18px;">
+                                    <i class="fa fa-tree"></i>
+                                    &nbsp; &nbsp;Jardines 
+                                </p>
+                            </a>
+                            </div>
+                            
+                            <div id="jardines" class="col-lg-12 table-responsive panel-collapse collapse ">
+                            <table class="table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>Partida &nbsp;&nbsp; <a onclick="nuevaPartida('Instalacion electrica y corrientes debiles')" class="btn btn-success btn-circle"><i class="fa fa-plus"></i></a></th>
+                                            <th>Frecuencia</th>
+                                            <th>Acci&oacute;n</th>
+                                            <th>Ene</th>
+                                            <th>Feb</th>
+                                            <th>Mar</th>
+                                            <th>Abr</th>
+                                            <th>May</th>
+                                            <th>Jun</th>
+                                            <th>Jul</th>
+                                            <th>Ago</th>
+                                            <th>Sep</th>
+                                            <th>Oct</th>
+                                            <th>Nov</th>
+                                            <th>Dic</th>
+                                            <th>Editar</th>
+                                        </tr>
+                                    </thead> 
+                                    <?php for ($i=0;$i<count($this->partidas);$i++){?>                                  
+                                    <tbody style="text-align: center;">
+                                    <?php    if ($this->partidas[$i]['categoria']=="Jardines"){    ?>
+                                        <tr>
+                                            <td><?php echo $this->partidas[$i]["nombre"];?></td>
+                                            <td><?php echo $this->partidas[$i]["frecuencia"];?></td>
+                                            <td><?php echo $this->partidas[$i]["accion"];?></td>
+                                            <td><input <?php if($this->partidas[$i]["Jan"]=="on"){echo "checked disabled";}else{ echo "disabled";};?> type="checkbox" /></td>
+											<td><input <?php if($this->partidas[$i]["Feb"]=="on"){echo "checked disabled";}else{ echo "disabled";};?> type="checkbox" /></td>
+											<td><input <?php if($this->partidas[$i]["Mar"]=="on"){echo "checked disabled";}else{ echo "disabled";};?> type="checkbox" /></td>
+											<td><input <?php if($this->partidas[$i]["Abr"]=="on"){echo "checked disabled";}else{ echo "disabled";};?> type="checkbox" /></td>
+											<td><input <?php if($this->partidas[$i]["May"]=="on"){echo "checked disabled";}else{ echo "disabled";};?> type="checkbox" /></td>
+											<td><input <?php if($this->partidas[$i]["Jun"]=="on"){echo "checked disabled";}else{ echo "disabled";};?> type="checkbox" /></td>
+											<td><input <?php if($this->partidas[$i]["Jul"]=="on"){echo "checked disabled";}else{ echo "disabled";};?> type="checkbox" /></td>
+											<td><input <?php if($this->partidas[$i]["Ago"]=="on"){echo "checked disabled";}else{ echo "disabled";};?> type="checkbox" /></td>
+											<td><input <?php if($this->partidas[$i]["Sep"]=="on"){echo "checked disabled";}else{ echo "disabled";};?> type="checkbox" /></td>
+											<td><input <?php if($this->partidas[$i]["Oct"]=="on"){echo "checked disabled";}else{ echo "disabled";};?> type="checkbox" /></td>
+											<td><input <?php if($this->partidas[$i]["Nov"]=="on"){echo "checked disabled";}else{ echo "disabled";};?> type="checkbox" /></td>
+											<td><input <?php if($this->partidas[$i]["Dec"]=="on"){echo "checked disabled";}else{ echo "disabled";};?> type="checkbox" /></td>
+                                            <td><a style="cursor: pointer;" onclick="editarPartida('<?php echo $this->partidas[$i]["id"];?>')" data-toggle="modal" data-target="#modaleditar" keyboard="false"><i class="fa fa-edit"></i></a></td>
+                                        </tr> 
+                             <?php    }}    ?>
+                                    </tbody>
+                                </table>
+                            </div>
+                            
+                            <div class="col-lg-12" style="margin-bottom: 1em;">
+                            <a data-toggle="collapse" data-parent="#accordionMant" href="#pavimento" >
+                                <p style="color: #000;text-align: left; font-size: 18px;">
+                                    <i class="fa fa-road"></i>
+                                    &nbsp; &nbsp;Pavimentos y Aguas Lluvias 
+                                </p>
+                            </a>
+                            </div>
+                            
+                            <div id="pavimento" class="col-lg-12 table-responsive panel-collapse collapse ">
+                            <table class="table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>Partida &nbsp;&nbsp; <a onclick="nuevaPartida('Instalacion electrica y corrientes debiles')" class="btn btn-success btn-circle"><i class="fa fa-plus"></i></a></th>
+                                            <th>Frecuencia</th>
+                                            <th>Acci&oacute;n</th>
+                                            <th>Ene</th>
+                                            <th>Feb</th>
+                                            <th>Mar</th>
+                                            <th>Abr</th>
+                                            <th>May</th>
+                                            <th>Jun</th>
+                                            <th>Jul</th>
+                                            <th>Ago</th>
+                                            <th>Sep</th>
+                                            <th>Oct</th>
+                                            <th>Nov</th>
+                                            <th>Dic</th>
+                                            <th>Editar</th>
+                                        </tr>
+                                    </thead> 
+                                    <?php for ($i=0;$i<count($this->partidas);$i++){?>                                  
+                                    <tbody style="text-align: center;">
+                                    <?php    if ($this->partidas[$i]['categoria']=="Pavimentos y Aguas Lluvias"){    ?>
+                                        <tr>
+                                            <td><?php echo $this->partidas[$i]["nombre"];?></td>
+                                            <td><?php echo $this->partidas[$i]["frecuencia"];?></td>
+                                            <td><?php echo $this->partidas[$i]["accion"];?></td>
+                                            <td><input <?php if($this->partidas[$i]["Jan"]=="on"){echo "checked disabled";}else{ echo "disabled";};?> type="checkbox" /></td>
+											<td><input <?php if($this->partidas[$i]["Feb"]=="on"){echo "checked disabled";}else{ echo "disabled";};?> type="checkbox" /></td>
+											<td><input <?php if($this->partidas[$i]["Mar"]=="on"){echo "checked disabled";}else{ echo "disabled";};?> type="checkbox" /></td>
+											<td><input <?php if($this->partidas[$i]["Abr"]=="on"){echo "checked disabled";}else{ echo "disabled";};?> type="checkbox" /></td>
+											<td><input <?php if($this->partidas[$i]["May"]=="on"){echo "checked disabled";}else{ echo "disabled";};?> type="checkbox" /></td>
+											<td><input <?php if($this->partidas[$i]["Jun"]=="on"){echo "checked disabled";}else{ echo "disabled";};?> type="checkbox" /></td>
+											<td><input <?php if($this->partidas[$i]["Jul"]=="on"){echo "checked disabled";}else{ echo "disabled";};?> type="checkbox" /></td>
+											<td><input <?php if($this->partidas[$i]["Ago"]=="on"){echo "checked disabled";}else{ echo "disabled";};?> type="checkbox" /></td>
+											<td><input <?php if($this->partidas[$i]["Sep"]=="on"){echo "checked disabled";}else{ echo "disabled";};?> type="checkbox" /></td>
+											<td><input <?php if($this->partidas[$i]["Oct"]=="on"){echo "checked disabled";}else{ echo "disabled";};?> type="checkbox" /></td>
+											<td><input <?php if($this->partidas[$i]["Nov"]=="on"){echo "checked disabled";}else{ echo "disabled";};?> type="checkbox" /></td>
+											<td><input <?php if($this->partidas[$i]["Dec"]=="on"){echo "checked disabled";}else{ echo "disabled";};?> type="checkbox" /></td>
+                                            <td><a style="cursor: pointer;" onclick="editarPartida('<?php echo $this->partidas[$i]["id"];?>')" data-toggle="modal" data-target="#modaleditar" keyboard="false"><i class="fa fa-edit"></i></a></td>
+                                        </tr> 
+                             <?php    }}    ?>
+                                    </tbody>
+                                </table>
+                            </div>
+                            
+                            <div class="col-lg-12" style="margin-bottom: 1em;">
+                            <a data-toggle="collapse" data-parent="#accordionMant" href="#iluminacion" >
+                                <p style="color: #000;text-align: left; font-size: 18px;">
+                                    <i class="fa fa-lightbulb-o"></i>
+                                    &nbsp; &nbsp;Iluminaci&oacute;n
+                                </p>
+                            </a>
+                            </div>
+                            
+                            <div id="iluminacion" class="col-lg-12 table-responsive panel-collapse collapse ">
+                            <table class="table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>Partida &nbsp;&nbsp; <a onclick="nuevaPartida('Instalacion electrica y corrientes debiles')" class="btn btn-success btn-circle"><i class="fa fa-plus"></i></a></th>
+                                            <th>Frecuencia</th>
+                                            <th>Acci&oacute;n</th>
+                                            <th>Ene</th>
+                                            <th>Feb</th>
+                                            <th>Mar</th>
+                                            <th>Abr</th>
+                                            <th>May</th>
+                                            <th>Jun</th>
+                                            <th>Jul</th>
+                                            <th>Ago</th>
+                                            <th>Sep</th>
+                                            <th>Oct</th>
+                                            <th>Nov</th>
+                                            <th>Dic</th>
+                                            <th>Editar</th>
+                                        </tr>
+                                    </thead> 
+                                    <?php for ($i=0;$i<count($this->partidas);$i++){?>                                  
+                                    <tbody style="text-align: center;">
+                                    <?php    if ($this->partidas[$i]['categoria']=="Iluminacion"){    ?>
+                                        <tr>
+                                            <td><?php echo $this->partidas[$i]["nombre"];?></td>
+                                            <td><?php echo $this->partidas[$i]["frecuencia"];?></td>
+                                            <td><?php echo $this->partidas[$i]["accion"];?></td>
+                                            <td><input <?php if($this->partidas[$i]["Jan"]=="on"){echo "checked disabled";}else{ echo "disabled";};?> type="checkbox" /></td>
+											<td><input <?php if($this->partidas[$i]["Feb"]=="on"){echo "checked disabled";}else{ echo "disabled";};?> type="checkbox" /></td>
+											<td><input <?php if($this->partidas[$i]["Mar"]=="on"){echo "checked disabled";}else{ echo "disabled";};?> type="checkbox" /></td>
+											<td><input <?php if($this->partidas[$i]["Abr"]=="on"){echo "checked disabled";}else{ echo "disabled";};?> type="checkbox" /></td>
+											<td><input <?php if($this->partidas[$i]["May"]=="on"){echo "checked disabled";}else{ echo "disabled";};?> type="checkbox" /></td>
+											<td><input <?php if($this->partidas[$i]["Jun"]=="on"){echo "checked disabled";}else{ echo "disabled";};?> type="checkbox" /></td>
+											<td><input <?php if($this->partidas[$i]["Jul"]=="on"){echo "checked disabled";}else{ echo "disabled";};?> type="checkbox" /></td>
+											<td><input <?php if($this->partidas[$i]["Ago"]=="on"){echo "checked disabled";}else{ echo "disabled";};?> type="checkbox" /></td>
+											<td><input <?php if($this->partidas[$i]["Sep"]=="on"){echo "checked disabled";}else{ echo "disabled";};?> type="checkbox" /></td>
+											<td><input <?php if($this->partidas[$i]["Oct"]=="on"){echo "checked disabled";}else{ echo "disabled";};?> type="checkbox" /></td>
+											<td><input <?php if($this->partidas[$i]["Nov"]=="on"){echo "checked disabled";}else{ echo "disabled";};?> type="checkbox" /></td>
+											<td><input <?php if($this->partidas[$i]["Dec"]=="on"){echo "checked disabled";}else{ echo "disabled";};?> type="checkbox" /></td>
+                                            <td><a style="cursor: pointer;" onclick="editarPartida('<?php echo $this->partidas[$i]["id"];?>')" data-toggle="modal" data-target="#modaleditar" keyboard="false"><i class="fa fa-edit"></i></a></td>
+                                        </tr>  
+                             <?php    }}    ?>
+                                    </tbody>
+                                </table>
+                            </div>
+                            
+
+                    </div>    
+
+                </div>                                        
+
+            </div>                                        
+
+        </div> 
+        
+        <div class="modal fade bs-example-modal-lg" id="modaleditar" tabindex="-2" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+               <div class="modal-dialog modal-lg">
+                 <div class="modal-content">
+                          <div class="col-lg-12 text-right" style="margin-top: 9px;"> <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="fa fa-close"></i></button></div>                          
+                           <div id="mostrareditar" class="modal-body">Hello</div>
+                 </div>
+                 <!-- /.modal-content -->
+                </div>
+               <!-- /.modal-dialog -->
+        </div>
+        
+        <div class="modal fade bs-example-modal-lg" id="modalnueva" tabindex="-2" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+               <div class="modal-dialog modal-lg">
+                 <div class="modal-content">
+                          <div class="col-lg-12 text-right" style="margin-top: 9px;"> <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="fa fa-close"></i></button></div>                          
+                           <div id="mostrareditar" class="modal-body">Hello</div>
+                 </div>
+                 <!-- /.modal-content -->
+                </div>
+               <!-- /.modal-dialog -->
+        </div>
+        
+<?php echo $this->rsptaOK ?>  
+<script>
+function editarPartida(id){
+  var parametros = {'id' : id};
+    	$.ajax( {
+		data : parametros,
+        url : '<?php echo $this->basePath()."/admin/mantenciones/editarpartida"?>',
+		type : 'post',
+		beforeSend : function() {
+		  $("#mostrareditar").html("<img src='<?php echo $this->basePath()?>/img/loading.gif'/>");            
+		},
+		success : function(response) {
+			$("#mostrareditar").html(response);
+		} 
+	});
+    
+}
+function nuevaPartida(categoria){
+var parametros = {'categoria' : categoria};
+    $.ajax( {
+		data : parametros,
+        url : '<?php echo $this->basePath()."/admin/mantenciones/nuevapartida"?>',
+		type : 'post',
+		beforeSend : function() {
+		//	$("#loading2").modal('show');    
+		  $("#mostrareditar").html("<img src='<?php echo $this->basePath()?>/img/loading.gif'/>");            
+		},
+		success : function(response) {
+		 //Habilitamos click!
+        //    $("#loading").html("");
+			$("#mostrareditar").html(response);
+		} 
+	});
+    
+}
+</script>         

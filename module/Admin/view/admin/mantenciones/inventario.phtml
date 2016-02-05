@@ -1,0 +1,159 @@
+<div class="row"> 
+<br /><br />            
+    <div class="col-lg-10 col-md-10 col-lg-offset-1 col-md-offset-1">
+        <div class="panel panel-primary">
+                    <div class=" panel-heading" style="color: #fff; font-size: 18px;">    
+                       <i class="fa fa-search"></i> &nbsp;Inventario de la comunidad
+                     <div  style="float: right;"> 
+                        <a>
+                            <button id="popover" class="fa fa-info-circle" style="cursor: pointer; color: #fff;" tabindex="0" data-container="body" data-toggle="popover" data-placement="left" ></button>
+                        </a>
+                     </div>                                  
+                    </div>                            
+            <div class="panel-body">                                                                                          
+                <div class="row">                                                       
+                            <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 text-center">
+                                <img style="max-width: 200px;" src="<?php echo $this->basePath()?>/img/inventario.jpg" />                                                                                                             
+                            </div>                                                                                     
+                            <div class="col-lg-9 col-md-9 col-sm-6 col-xs-12 text-center"> 
+                            <div class="panel panel-primary panel-body">
+                            <p> Seleccione una acci&oacute;n...</p>                               
+                                <button class="btn btn-info" onclick="NuevoActivo()" data-toggle='modal' data-target='#nuevoactivo'><i class="fa fa-plus"></i> &nbsp;Ingresar activo</button>&nbsp;&nbsp;
+                                <button class="btn btn-success"><i class="fa fa-file-excel-o"></i> &nbsp;Generar planilla</button>                                                                                                                                                       
+                            </div> 
+                            </div> 
+                      
+                </div>  
+                <br />
+                <br />
+                <div class="row">                                                
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                           <div class="dataTable_wrapper">
+                                <table class="table table-striped table-bordered table-hover" id="tablainvt" style="text-align: center;">
+                                    <thead>
+                                        <tr>
+                                            <th>Nombre</th>                                            
+                                            <th>Ubicaci&oacute;n</th>
+                                            <th>Responsable</th>
+                                            <th>Cantidad</th>
+                                            <th>Mas</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="tablainvt2">
+                                    </tbody>
+                                </table>
+                            </div>                                                    
+                    </div> 
+                </div>                                   
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- MODAL Nuevo Activo -->
+
+<div class="modal fade bs-example-modal-lg" id="nuevoactivo" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>                    
+                    <h4 class="modal-title" id="myModalLabel" style="text-align: center;">Registrar Activo</h4>
+            </div>
+                <div id="modalnuevoactivo" class="modal-body">Cargando ...</div>
+        </div>
+    </div>             
+</div>
+<!-- FIN MODAL Nuevo Activo -->
+
+<!-- MODAL Editar Activo -->
+
+<div class="modal fade bs-example-modal-lg" id="editaractivo" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>                    
+                    <h4 class="modal-title" id="myModalLabel" style="text-align: center;">Editar Activo</h4>
+            </div>
+                <div id="modaleditaractivo" class="modal-body">Cargando ...</div>
+        </div>
+    </div>             
+</div>
+<!-- FIN MODAL Editar Activo -->
+
+<!-- Ayuda -->
+<div id="cont-ayuda" class='col-lg-12 col-md-12 col-sm-12 col-xs-12 hide'>
+    <div id="popover-head" >
+        <h4 style="text-align: center;">Ayuda del sistema</h4>
+        </div>
+    <div>
+        <p style='font-size: 16px;'> &nbsp;&nbsp;Desde aca Ud. puede gestionar <strong>todos los activos de la comunidad</strong>, registre cada uno de los bienes informando su <strong>estado</strong>, la <strong>ubicaci&oacute;n</strong> en el edificio y el <strong>responsable</strong> a cargo.</p>
+        <div class='text-right'> <i class='fa fa-check fa-2x'></i></div>
+    </div>                                                                                                                                                        
+</div>
+<!-- FIN Ayuda-->
+<?php echo $this->rsptaOK ?>
+<script>
+$('#tablainvt').DataTable({
+                responsive: true
+        });
+$.ajax( {  
+        url : '<?php echo $this->basePath()."/admin/mantenciones/getinventario"?>',
+		type : 'post',
+        beforeSend : function() {
+           $('#tablainvt').DataTable().clear();          
+            },        
+		success : function(response) {
+        var t = $('#tablainvt').DataTable();    
+        for (i=0; i<=response.inventario.length; i++) {        
+         t.row.add( [                        
+            response.inventario[i].nombre,
+            response.inventario[i].ubicacion,
+            response.inventario[i].responsable,
+            response.inventario[i].cantidad,
+            '<div class="row"><a onclick="editarActivo('+response.inventario[i].id+')" style="cursor:pointer;" data-toggle="modal" data-target="#editaractivo" keyboard="false"><i class="fa fa-eye"></i></a> | <a onclick="eliminarActivo('+response.inventario[i].id+')" style="cursor:pointer;" data-toggle="modal" data-target="#eliminaractivo" keyboard="false"><i class="fa fa-trash"></i></a></div>',                              
+        ] ).draw();
+      }                
+  }   
+});                 
+$(function () {
+  $('[data-toggle="popover"]').popover()
+})         
+$('#popover').popover({ 
+    html : true,
+    content: function() {
+      return $("#cont-ayuda").html();
+    }
+});     
+function closeModal(){
+    $('#modalprov2').modal('hide');
+}    
+function NuevoActivo()
+{   
+	$.ajax( {  
+        url : '<?php echo $this->basePath()."/admin/mantenciones/nuevoactivo"?>',
+		type : 'post',
+        beforeSend : function() {
+        $("#modalnuevoactivo").html("<img src='<?php echo $this->basePath()?>/img/loading.gif'/>");          
+            },        
+		success : function(response) {
+        $("#modalnuevoactivo").html(response);
+             
+                  
+       }   
+});
+} 
+function editarActivo(id){
+var parametros = {'id': id}; 
+	$.ajax( {  
+        url : '<?php echo $this->basePath()."/admin/mantenciones/editaractivo"?>',
+        data: parametros,
+		type : 'post',
+        beforeSend : function() {
+        $("#modaleditaractivo").html("<img src='<?php echo $this->basePath()?>/img/loading.gif'/>");          
+            },        
+		success : function(response) {
+        $("#modaleditaractivo").html(response);                               
+       }   
+});         
+}
+</script>

@@ -9,9 +9,12 @@
 						</div>                                                                    
 						<div class="portlet-body">                 
                             
-                            
-                            <a onclick="modalNuevoReclamo()" data-toggle="modal" data-target="#modalNuevoReclamo" class="btn btn-success"> 
-                            <i class="fa fa-plus"></i> &nbsp;
+                       
+                           <a onclick="modalReclamo()" data-toggle="modal" data-target="#modalNuevoReclamo" class="btn btn-success"> 
+                       
+                           <!--a data-toggle="modal" data-target="#modalNuevoReclamo" onclick="submenu('comunicacion/nuevoreclamo')" class="btn btn-success"--> 
+                           
+                           <i class="fa fa-plus"></i> &nbsp;
                                     Nuevo Reclamo                            
                             </a>
                             
@@ -64,7 +67,7 @@
 
 <!-- MODAL Nuevo Reclamo -->
 
-<div class="modal fade" id="modalNuevoReclamo"  tabindex="-1" role="dialog"  aria-hidden="true">
+<div class="modal fade" id="modalNuevoReclamo" role="dialog"  aria-hidden="true">
     <div class="modal-dialog modal-sm">
         <div  class="modal-content">
         <div id="BodyNuevoReclamo" class="modal-body" >
@@ -74,20 +77,4 @@
     </div>              
 </div>
 
-<!-- FIN MODAL Nuevo Reclamo -->
-                    
-<script>
-toastr.options = {
-  "positionClass": "toast-top-center",
-}
-
-function modalNuevoReclamo(){ 
-	$.ajax( {  
-        url  : '<?php echo $this->basePath()."/usuario/comunicacion/nuevoreclamo"?>',		 
-		success : function(response) {
-		  $("#BodyNuevoReclamo").html(response);    
-       }   
-       });    
-}
-
-</script>                                                   
+<!-- FIN MODAL Nuevo Reclamo -->                                                  

@@ -20,5 +20,5 @@ require_once $root.'/pmv/vendor/Classes/PHPExcel.php';
 require_once $root.'/pmv/vendor/Classes/HtmlCorreo/HtmlCorreo.php';
 require_once $root.'/pmv/vendor/Classes/GoogChart/GoogChart.class.php';
 
-// Run the application!
+// Run becheck !
 Zend\Mvc\Application::init(require 'config/application.config.php')->run();

@@ -1,0 +1,170 @@
+<div class="row">
+    <div class="col-lg-12">
+        <div class="col-lg-1 col-md-2 col-sm-2 col-xs-2">
+             <h2 class="page-header" style="font-size: 20px; text-align: right"><a href="<?php echo $this->basePath()?>/admin"><i class="fa fa-reply fa-2x"></i></a> </h2>  
+        </div>
+<div class="col-lg-10 col-md-8 col-sm-8 col-xs-8" style="text-align: center;">
+<h2 class="page-header"></a> <?php echo $this->titulo?>  </h2>
+</div>
+ </div> 
+  </div> 
+   <div class="row"> 
+<nav>
+
+  <ul>
+    <li><a style="background-color: <?php echo $this->color;?>;" id="notas" href="#notas-pills" data-toggle="tab"><span><i class="fa fa-clipboard  fa-2x"  style="margin-bottom: 10px;"></i><br /> Notas</span></a></li>
+    <li><a style="background-color: <?php echo $this->color;?>;" id="tareas" href="#tareas-pills" data-toggle="tab"><span><i class="fa fa-bookmark-o  fa-2x"  style="margin-bottom: 10px;"></i><br /> Tareas</span></a></li>
+    <li><a style="background-color: <?php echo $this->color;?>;" id="relojes" href="#relojes-pills" data-toggle="tab"><span><i class="fa fa-clock-o  fa-2x"  style="margin-bottom: 10px;"></i><br /> Relojes</span></a></li>
+    <li><a style="background-color: <?php echo $this->color;?>;" id="calendario" href="#calendario-pills" data-toggle="tab"><span><i class="fa fa-calendar  fa-2x"  style="margin-bottom: 10px;"></i><br /> Calendario </span></a></li>
+    <li><a style="background-color: <?php echo $this->color;?>;" id="inventario" href="#inventario-pills" data-toggle="tab"><span><i class="fa fa-tags  fa-2x"  style="margin-bottom: 10px;"></i><br /> Inventario </span></a></li>            
+  </ul>
+  <div class="row text-center "id="loading"></div>
+</nav>
+</div>  
+
+<div class="row">    
+  <div class="col-lg-12 col-md-12" >
+                                
+                <div class="tab-content">            
+                              
+                              <div class="tab-pane fade " id="notas-pills">
+                                             
+                                             <div id="cargarNotas"></div>                        
+                             </div>
+                             
+                             <div class="tab-pane fade" id="tareas-pills">
+                             
+                                            <div id="cargarTareas"></div>
+                             
+                             </div>
+                              
+                             <div class="tab-pane fade" id="relojes-pills">
+                             
+                                            <div id="cargarRelojes"></div>
+                             
+                             </div>                                                              
+                                                         
+                             <div class="tab-pane fade" id="calendario-pills">
+                             
+                                                <div id="cargarCalendario"></div> 
+                             
+                             </div>  
+                             
+                             <div class="tab-pane fade" id="inventario-pills">
+                             
+                                                <div id="cargarInventario"></div> 
+                             
+                             </div>
+                                          
+                  </div>    
+                                
+                </div>
+</div>
+
+<script>
+$("#notas").click(function(){
+  var parametros = {
+		"test" : "1",
+	};
+	$.ajax( {
+		data : parametros,
+        url : '<?php echo $this->basePath()."/admin/mantenciones/notas"?>',
+		type : 'post',
+		beforeSend : function() {
+		//	$("#loading").modal('show');
+			$("#loading").html("<div class='three-quarters-loader'></div>");     
+            $("[data-toggle='popover']").popover('hide');
+		},
+		success : function(response) {
+		//	$("#loading").modal('hide');
+            $("#loading").html("");
+			$("#cargarNotas").html(response);
+		}
+	});
+});
+function cargarNotas(){
+  $("#notas").trigger('click');  
+}
+$("#notas").trigger('click');
+$("#tareas").click(function(){
+  var parametros = {
+		"test" : "1",
+	};
+	$.ajax( {
+		data : parametros,
+        url : '<?php echo $this->basePath()."/admin/mantenciones/tareas"?>',
+		type : 'post',
+		beforeSend : function() {
+		//	$("#loading").modal('show');
+			$("#loading").html("<div class='three-quarters-loader'></div>");     
+            $("[data-toggle='popover']").popover('hide');
+		},
+		success : function(response) {
+		//	$("#loading").modal('hide');
+            $("#loading").html("");
+			$("#cargarTareas").html(response);
+		}
+	});
+});
+$("#calendario").click(function(){
+  var parametros = {
+		"test" : "1",
+	};
+	$.ajax( {
+		data : parametros,
+        url : '<?php echo $this->basePath()."/admin/mantenciones/calendario"?>',
+		type : 'post',
+		beforeSend : function() {
+		//	$("#loading").modal('show');
+			$("#loading").html("<div class='three-quarters-loader'></div>");     
+            $("[data-toggle='popover']").popover('hide');
+		},
+		success : function(response) {
+		//	$("#loading").modal('hide');
+            $("#loading").html("");
+			$("#cargarCalendario").html(response);
+		}
+	});
+});
+$("#relojes").click(function(){
+  var parametros = {
+		"test" : "1",
+	};
+	$.ajax( {
+		data : parametros,
+        url : '<?php echo $this->basePath()."/admin/mantenciones/relojes"?>',
+		type : 'post',
+		beforeSend : function() {
+		//	$("#loading").modal('show');
+			$("#loading").html("<div class='three-quarters-loader'></div>");     
+            $("[data-toggle='popover']").popover('hide');
+		},
+		success : function(response) {
+		//	$("#loading").modal('hide');
+            $("#loading").html("");
+			$("#cargarRelojes").html(response);
+		}
+	});
+});
+$("#inventario").click(function(){
+  var parametros = {
+		"asd" : "1",
+	};
+	$.ajax( {
+		data : parametros,
+        url : '<?php echo $this->basePath()."/admin/mantenciones/inventario"?>',
+		type : 'post',
+		beforeSend : function() {
+			$("[data-toggle='popover']").popover('hide');
+            $("#loading").html("<div class='three-quarters-loader'></div>");     
+	//		$("#cargarInventario").html("<img src='<?php echo $this->basePath()?>/img/loading.gif'/>");
+		},
+		success : function(response) {
+			$("#loading").html("");     
+			$("#cargarInventario").html(response);
+		} 
+	});
+});
+</script>                             
+
+                              

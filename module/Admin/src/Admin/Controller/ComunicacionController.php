@@ -7,6 +7,8 @@ use Zend\View\Model\ViewModel;
 use Zend\View\Model\JsonModel;
 use Zend\Session\Container;
 use Sistema\Model\Entity\CircularTable;
+use Sistema\Model\Entity\MensajeModuloTable;
+use Sistema\Model\Entity\General\ModuloTable;
 use Sistema\Util\SysFnc;
 
 use Zend\Mail\Message;
@@ -33,14 +35,137 @@ class ComunicacionController extends AbstractActionController
     
     public function mensajesAction()    
     {
-        $this->layout('layout/admin');   
-        $result = new ViewModel();    
-       // $result->setTerminal(true);        
+        $this->layout('layout/admin');
+        
+        
+        
+        $sid = new Container('base');                                      
+        $id_usuario = $sid->offsetGet('id_usuario');
+        $id_db = $sid->offsetGet('id_db');
+        $status="";$mensaje="";
+        $recibido=Array();
+        $enviado=Array();
+        if(isset($id_usuario)){
+            
+               
+                $modulosTable = new ModuloTable($this->dbAdapter=$this->getServiceLocator()->get('Zend\Db\Adapter'));
+                $modulos = $modulosTable->getModuloActivo();
+                $j=0;$modulo_id="";
+                for ($i=0;$i<count($modulos);$i++){
+                    if($modulos[$i]['nombre']!='Administrador'){
+                        $selectionCheck[$j] = array("id"=>$modulos[$i]['id'],"nombre"=>$modulos[$i]['nombre']);
+                        $j++;
+                    }else{
+                        $modulo_id = $modulos[$i]['id'];
+                    }
+                    
+                }
+                $db_name = $sid->offsetGet('dbNombre');
+                $this->dbAdapter=$this->getServiceLocator()->get($db_name);
+                $mensajeTable = new MensajeModuloTable($this->dbAdapter);
+                $recibido=$mensajeTable->getMsjModuloRecibido($this->dbAdapter, $modulo_id);
+                $enviado=$mensajeTable->getMsjModuloEnviado($this->dbAdapter, $modulo_id);
+
+                
+        }else{
+            $status="nok";
+            $mensaje="usuario del sistema no encontrado, sesion time-out";
+        }
+        
+        
+        
+        
+        $result = new ViewModel(array("status"=>$status,"mensaje"=>$mensaje,"recibido"=>$recibido,"enviado"=>$enviado,"selectionCheck"=>$selectionCheck,'modulo_id'=>$modulo_id,'id_db'=>$id_db));    
+       
+        
     
         return $result;
         
     }
     
+    public function gettextoAction(){
+        
+         
+        $status="ok";$error="";
+        $this->layout('layout/admin');
+        $sid = new Container('base');                                      
+        $db_name = $sid->offsetGet('dbNombre');
+        $this->dbAdapter=$this->getServiceLocator()->get($db_name);
+        $msjTable = new MensajeModuloTable($this->dbAdapter);
+        
+        $prm = $this->request->getPost();
+        $lista = $msjTable->getMsjModuloDetalle($prm['id']);
+        
+        if($lista[0]['estado']=="No leido" && $prm['oper']=="r"){
+            // actualizamos a leido
+            $msjTable->actualizaEstado($prm['id'],"Leido");
+        }
+        
+        
+         return new JsonModel(array("status"=>$status,"error"=>$error,"texto"=>$lista[0]['texto']));    
+       
+        
+    
+        
+    }
+    
+    public function regmensajeAction(){
+        
+        
+
+        $sid = new Container('base');
+        $id_usuario = $sid->offsetGet('id_usuario');
+        $status="";$mensaje="";
+        if(isset($id_usuario)){
+            $id_db = $sid->offsetGet('id_db');
+            
+            //Primero hay que cargar el archivo es decir reemplazamos el archivo
+            $File    = $this->params()->fromFiles('fileData');
+            $adapterFile = new \Zend\File\Transfer\Adapter\Http();
+            $adapterFile->setDestination($_SERVER['DOCUMENT_ROOT'].'/files/db/'.$id_db.'/msjmodulo');
+            $adapterFile->receive($File['name']);
+            $nombreArchivo=isset($File['name'])?$File['name']:"";
+            $prm = $this->request->getPost();
+            $id_perdet=$sid->offsetGet('id_persona');
+            $id_msj_rspta = isset($prm['id_msg_rspta'])?$prm['id_msg_rspta']:"";
+            $cadena = explode(";", $prm['destino']);
+            $db_name = $sid->offsetGet('dbNombre');
+            $this->dbAdapter=$this->getServiceLocator()->get($db_name);
+            $msjModulo = new MensajeModuloTable($this->dbAdapter);
+            
+            for($j=0;$j<count($cadena);$j++){     
+                 if($cadena[$j]!=""){
+                    $datos = array("id_perdet"=>$id_perdet,"asunto"=>$prm['asunto'],"adjunto"=>$nombreArchivo,"texto"=>$prm['texto'],"id_modulo_o"=>$prm['id_modulo_o'],"estado"=>'No leido',"id_modulo_d"=>$cadena[$j],"activo"=>"1","id_msj_rspta"=>$id_msj_rspta);  
+                    $msjModulo->nuevoMsjModulo($datos);
+                    
+                    if($id_msj_rspta!=""){
+                        //Actualizamos el estado a respondido
+                        $msjModulo->actualizaEstado($id_msj_rspta, "Respondido");
+                    }    
+                    $status="ok";
+                    $mensaje="Mensaje Enviado Exitosamente...";
+                 }
+            }
+            
+            
+            
+        }else{
+            $status="nok";
+            $mensaje="Sesion expirada...";
+        }
+        
+        return new JsonModel(
+                        array(
+                        'status'=>$status,
+                        'mensaje'=>$mensaje
+                            
+                        )
+        );        
+        
+        
+        
+        
+    }
     
     public function detallemensajeAction()    
     {

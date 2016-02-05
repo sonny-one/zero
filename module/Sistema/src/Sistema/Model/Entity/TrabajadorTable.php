@@ -52,12 +52,20 @@ class TrabajadorTable extends TableGateway
          $result=$this->dbAdapter->query($query,Adapter::QUERY_MODE_EXECUTE);
          return $result->toArray();
     } 
-    
-    public function getTrabajadores()
-    {
-        $datos = $this->select(array('activo'=>'1'));
-        $recorre = $datos->toArray();
-        return $recorre;
+        
+    public function getTrabajadores(Adapter $dbAdapter)
+     {   
+         $this->dbAdapter=$dbAdapter;
+         $query = "SELECT 
+                    t.id as id,
+                    CONCAT(p.nombre,' ',p.apellido)as nombre,
+                    t.cargo as cargo,
+                    t.id_tipo_contrato as id_tipo_contrato
+                  FROM thouseap_general.sis_m_persona as p, sis_w_trabajador as t, sis_w_egreso_trabajador as et
+                  WHERE t.id_persona = p.id
+                  group by t.id_persona";
+         $result=$this->dbAdapter->query($query,Adapter::QUERY_MODE_EXECUTE);
+         return $result->toArray();
     } 
     
      public function getDatosFullConserje(Adapter $dbAdapter)
@@ -76,12 +84,26 @@ class TrabajadorTable extends TableGateway
     }
 
     public function getDatosidPersona($id)
-
     {
-
         $datos = $this->select(array('id_persona'=>$id, 'activo'=>'1'));
         $recorre = $datos->toArray();
         return $recorre;
+    }
+    public function getComboTrabajadores(Adapter $dbAdapter)
+    {
+        $this->dbAdapter=$dbAdapter;
+        $query ="SELECT w.id as id_trabajador, CONCAT(p.nombre,' ',p.apellido,' (',w.cargo,')') as nombre 
+                FROM sis_w_trabajador w, thouseap_general.sis_m_persona p 
+                WHERE w.id_persona=p.id
+                AND w.activo = '1'";
+        $result=$this->dbAdapter->query($query,Adapter::QUERY_MODE_EXECUTE);
+        $recorre = $result->toArray();
+        $resultado["0"]="Selecciona un Trabajador";
+        for($i=0;$i<count($recorre);$i++)
+        {
+          $resultado[$recorre[$i]['id_trabajador']] = $recorre[$i]['nombre']; 
+        }
+        return $resultado;
     }
     
     public function nuevoTrabajador($datos)

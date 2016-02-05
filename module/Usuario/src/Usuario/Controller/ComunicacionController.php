@@ -7,8 +7,6 @@ use Zend\View\Model\ViewModel;
 use Zend\View\Model\JsonModel;
 use Zend\Session\Container;
 
-
-
 use Sistema\Model\Entity\ReclamoTable;
 
 use Usuario\Form\ReclamoForm;
@@ -17,12 +15,7 @@ use Usuario\Form\ReclamoForm;
 
 class ComunicacionController extends AbstractActionController
 {
-    
-    public function indexAction()
-    
-    {                                       
-            
-    }
+ 
             
     public function reclamoAction()
     
@@ -35,31 +28,72 @@ class ComunicacionController extends AbstractActionController
         $recl = new ReclamoTable($this->dbAdapter);
                 
                           
-        //Retornamos a la vista
-        $this->layout('layout/usuario');
+        //Retornamos a la vista       
         $result = new ViewModel();            
-             
+        $result->setTerminal(true);   
         return $result;
     }
     
         public function nuevoreclamoAction()
     
     {   
+        //Obtenemos datos post                                                      
+        $data = $this->request->getPost();
+        
         //Conectamos con BBDD
         $sid = new Container('base');
         $db_name = $sid->offsetGet('dbNombre');
         $this->dbAdapter=$this->getServiceLocator()->get($db_name); 
         //Instancias
         $recl = new ReclamoTable($this->dbAdapter);
+        $recl->nuevoReclamo($data);
         
         //Cargamos Formulario 
         $form = new ReclamoForm("form"); 
         
-                          
+        //
+        if ($data['nombre']!=""){
+            
+            
+            
+            $desc ="Mensaje de prueba";
+           
+            //Retornamos a la vista        
+            $result = new JsonModel(array('data'=>$data,'status'=>'ok','desc'=>$desc));                         
+            return $result;
+            
+        }else{          
+                                      
         //Retornamos a la vista        
         $result = new ViewModel(array('form'=>$form));            
         $result->setTerminal(true);    
         return $result;
+        
+        }
+        
+
+    }
+    
+    public function megustareclamoAction()
+    
+    {
+        //Obtenemos datos post                                                      
+        $data = $this->request->getPost();
+        
+         //Conectamos con BBDD
+        $sid = new Container('base');
+        $db_name = $sid->offsetGet('dbNombre');
+        $this->dbAdapter=$this->getServiceLocator()->get($db_name);  
+        
+        //Instancias
+        $recl = new ReclamoTable($this->dbAdapter);
+        $recl->megustaReclamo($this->dbAdapter,$data['id']);
+        
+        //Retornamos a la vista        
+        $result = new JsonModel(array('status'=>'ok','desc'=>'Camnpo actualizado'));                         
+        return $result;
+        
+        
     }
     
     

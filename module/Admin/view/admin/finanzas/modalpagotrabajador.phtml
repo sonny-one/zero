@@ -1,0 +1,433 @@
+<div id="todo" class="row">
+<?php  
+                                        $form = $this->form;
+                                        $form->prepare();
+                                        $form->setAttributes(array(
+                                        'action' => $this->basePath()."/admin/finanzas/pagartrabajador",
+                                        'method' => 'post', 
+                                        'id' => 'form_pago_trabajador'                                   
+                                        ));
+                                        echo $this->form()->openTag($form);
+                                        echo $this->formRow($this->form->get('id_tipo_egreso'));
+                                        echo $this->formRow($this->form->get('id_trabajador'));
+                                        echo $this->formRow($this->form->get('foto'));
+                                        echo $this->formRow($this->form->get('concepto'));                                                                                                                        
+                                        echo $this->formRow($this->form->get('cuotas'));
+                                        ?> 
+<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+<div class="col-lg-5 col-md-5 col-sm-5 col-xs-5" style="text-align: center;">
+    <div class="form-group">
+        <label>Fondo origen</label>
+            <div class="form-group">
+                <?php                                             
+                    echo $this->formRow($this->form->get('id_fondo'));
+                 ?>                                  
+            </div>
+    </div>
+</div> 
+
+<div class="col-lg-1 col-md-1 col-sm-1 col-xs-1" style="margin-top: 27px;">
+&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-arrow-circle-o-right" style="font-size: 18px;"></i>
+</div>
+
+<div class="col-lg-6 col-md-6 col-sm-6 col-xs-5" style="text-align: center;">
+    <div class="form-group">
+        <label>Trabajador</label>
+            <div class="form-group input-group">
+            <span class="input-group-addon"><i class="fa fa-user"></i>
+            </span>
+                 <?php                                             
+                    echo $this->formRow($this->form->get('trabajador'));
+                 ?>                                            
+            </div>
+    </div>
+</div>
+</div>
+<!--Pago TOTAL-->
+<div  class="col-lg-12 col-md-12 col-sm-12 col-xs-12" id="div_inputs_suma">
+<div class="col-lg-4 col-lg-offset-2 col-md-4 col-md-offset-2 col-sm-4 col-sm-offset-2 col-xs-12">
+    <div class="form-group">
+        <label>Leyes Sociales</label>
+            <div class="form-group input-group">
+            <span class="input-group-addon"><i class="fa fa-dollar"></i>
+            </span>
+                <?php                                             
+                    echo $this->formRow($this->form->get('leysocial'));
+                 ?>                                         
+            </div>
+    </div>
+</div>    
+<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+    <div class="form-group">
+        <label>Sueldo</label>
+            <div class="form-group input-group">
+            <span class="input-group-addon"><i class="fa fa-dollar"></i>
+            </span>
+                <?php                                             
+                    echo $this->formRow($this->form->get('sueldo'));
+                 ?>                                         
+            </div>
+    </div>
+</div>        
+</div>
+<!--div  class="col-lg-12 col-md-12 col-sm-12 col-xs-12" id="divdetalle1">
+<div class="col-lg-4 col-lg-offset-4 col-md-4 col-md-offset-4 col-sm-4 col-sm-12 col-xs-12">
+    <table class="table table-striped table-bordered table-hover" >
+        <tbody>
+            <tr>
+                <th>SubTotal</th>
+                <td id="total1" style="text-align: center;"><strong>$ <?php echo $this->total;?></strong></td>
+                <input id="total" type="hidden" value="<?php echo $this->total;?>"/>                
+            </tr>
+    </tbody>
+    </table> 
+</div>       
+</div-->
+<!--TOTAL 1-->
+
+<hr width="80%"/>
+
+
+<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+    <div id="formaspago" class="form-group">
+        <label>M&eacute;todo de Pago :</label><br />
+        <label class="radio-inline">
+               <?php                                             
+                    echo $this->formRow($this->form->get('efectivo'));
+                 ?>
+        </label>
+        <label class="radio-inline">
+               <?php                                             
+                    echo $this->formRow($this->form->get('transferencia'));
+                 ?>
+        </label>
+        <label class="radio-inline">
+               <?php                                            
+                    echo $this->formRow($this->form->get('cheque'));
+                 ?>
+        </label>
+        <label class="radio-inline">
+               <?php                                             
+                    echo $this->formRow($this->form->get('debito'));
+                 ?>
+        </label>
+    </div>
+</div> 
+<!--EFECTIVO-->
+<div id="divefectivo_tr" style="display: none;">
+<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6" style=" display: inline-block; ">
+    <div class="form-group">
+        <label>Fecha de Pago</label>
+            <div class="form-group input-group">
+            <span class="input-group-addon"><i class="fa fa-calendar"></i>
+            </span>
+                 <?php                                             
+                    echo $this->formRow($this->form->get('fecha'));
+                    
+                 ?>                                                        
+            </div>
+    </div>
+</div>
+</div>
+<!--TRANSFERENCIA-->
+<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" id="divtransferencia_tr" style="display: none;">
+<div class="col-lg-5 col-md-5 col-sm-5 col-xs-5" style="text-align: center;">
+    <div class="form-group">
+        <label>N&deg; Operaci&oacute;n</label>
+            <div class="form-group input-group">
+            <span class="input-group-addon"><i class="fa fa-info"></i>
+            </span>
+                 <?php                                             
+                    echo $this->formRow($this->form->get('nmrooperacion'));
+                 ?>                                            
+            </div>
+    </div>
+</div>
+<div class="col-lg-5 col-md-5 col-sm-5 col-xs-5" style="text-align: center;">
+    <div class="form-group">
+        <label>Banco Destino</label>
+            <div class="form-group input-group">
+            <span class="input-group-addon"><i class="fa fa-university"></i>
+            </span>
+                 <?php                                             
+                    echo $this->formRow($this->form->get('id_banco'));
+                 ?>                                            
+            </div>
+    </div>
+</div>
+<div class="col-lg-5 col-md-5 col-sm-5 col-xs-5" style="text-align: center;">
+    <div class="form-group">
+        <label>Fecha de Pago</label>
+            <div class="form-group input-group">
+            <span class="input-group-addon"><i class="fa fa-calendar"></i>
+            </span>
+                 <?php                                             
+                    echo $this->formRow($this->form->get('fecha'));
+                 ?>                                            
+            </div>
+    </div>
+</div>
+</div>
+<!--CHEQUE-->
+<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" id="divcheque_tr" style="display: none;">
+<div class="col-lg-5 col-md-5 col-sm-5 col-xs-5" style="text-align: center;">
+    <div class="form-group">
+        <label>N&deg; Cheque</label>
+            <div class="form-group input-group">
+            <span class="input-group-addon"><i class="fa fa-info"></i>
+            </span>
+                 <?php                                             
+                    echo $this->formRow($this->form->get('nmrocheque'));
+                 ?>                                            
+            </div>
+    </div>
+</div>
+<div class="col-lg-5 col-md-5 col-sm-5 col-xs-5" style="text-align: center;">
+    <div class="form-group">
+        <label>Fecha de Pago</label>
+            <div class="form-group input-group">
+            <span class="input-group-addon"><i class="fa fa-calendar"></i>
+            </span>
+                 <?php                                             
+                    echo $this->formRow($this->form->get('fecha'));
+                 ?>                                            
+            </div>
+    </div>
+</div>
+</div>
+<!--DEBITO-->
+<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" id="divdebito_tr" style="display: none;">
+<div class="col-lg-5 col-md-5 col-sm-5 col-xs-5" style="text-align: center;">
+    <div class="form-group">
+        <label>N&deg; Operaci&oacute;n</label>
+            <div class="form-group input-group">
+            <span class="input-group-addon"><i class="fa fa-info"></i>
+            </span>
+                 <?php                                             
+                    echo $this->formRow($this->form->get('nmrooperacion'));
+                 ?>                                            
+            </div>
+    </div>
+</div>
+<div class="col-lg-5 col-md-5 col-sm-5 col-xs-5" style="text-align: center;">
+    <div class="form-group">
+        <label>Fecha de Pago</label>
+            <div class="form-group input-group">
+            <span class="input-group-addon"><i class="fa fa-calendar"></i>
+            </span>
+                 <?php                                             
+                    echo $this->formRow($this->form->get('fecha'));
+                 ?>                                            
+            </div>
+    </div>
+</div>
+</div>
+<br />
+<div class="col-lg-6 col-lg-offset-3 col-md-6 col-md-offset-3 col-sm-6 col-sm-offset-3 col-xs-6 col-xs-offset-3" style="text-align: center;">
+    <div class="form-group">
+        <label style="font-size: 19px;"><strong>Total</strong></label>
+            <div class="form-group input-group">
+            <span class="input-group-addon"><i class="fa fa-dollar"></i>
+            </span>
+                 <?php                                             
+                    echo $this->formRow($this->form->get('montototal'));
+                 ?>                                            
+            </div>
+    </div>
+</div>
+<hr width="80%"/>
+
+<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6" style="text-align: center;">
+    <div class="form-group">
+        <label><strong><i class="fa fa-file"></i> Detalle en gasto com&uacute;n</strong> (Quedan <span id="caracteresTr"></span> caracteres)</label>
+            <div class="form-group">
+                 <?php                                             
+                    echo $this->formRow($this->form->get('observacion'));
+                 ?>                                            
+            </div>
+    </div>
+</div>
+
+<div class="col-lg-6">
+<div class="col-lg-4  udt">
+<br />
+<a>
+  <a id="mostrarnombre_tr" class="btn btn-success"><i id="icnAdjuntarEgresoTr" class="fa fa-file"></i> Adjuntar Comprobante</a>      
+        <?php 
+            echo $this->formRow($this->form->get('nombrefile'));
+        ?>                                                                                                                                                                                                                                                                              
+</a> 
+</div>
+</div>
+<!--BOTONES-->
+
+<div class="col-lg-12 col-md-12 col-xs-12 text-center">
+    <?php                                             
+        echo $this->formRow($this->form->get('cancel'));
+    ?>
+
+    <?php                                             
+        echo $this->formRow($this->form->get('sendpago'));
+    ?>                                                                                                                 
+
+                                                                                                                 
+</div> 
+</div>
+<br />
+<script>
+function mostrarEfectivoTr(){    
+    $('#divtransferencia_tr').css("display","none");
+    $('#divdebito_tr').css("display","none");
+    $('#divcheque_tr').css("display","none");     
+    $('#divcheque_tr :input').attr("disabled","disabled");   
+    $('#divdebito_tr :input').attr("disabled","disabled"); 
+    $('#divtransferencia_tr :input').attr("disabled","disabled");
+    
+    $('#divefectivo_tr :input').removeAttr("disabled");
+    $('#divefectivo_tr').css("display","block");  
+
+}
+function mostrarTransTr(){       
+
+    $('#divefectivo_tr').css("display","none");
+    $('#divdebito_tr').css("display","none");
+    $('#divcheque_tr').css("display","none");       
+    $('#divcheque_tr :input').attr("disabled","disabled");   
+    $('#divdebito_tr :input').attr("disabled","disabled");
+    $('#divefectivo_tr :input').attr("disabled","disabled");
+
+    $('#divtransferencia_tr :input').removeAttr("disabled");
+    $('#divtransferencia_tr').css("display","block");     
+
+}
+
+function mostrarChequeTr(){   
+
+    $('#divefectivo_tr').css("display","none");  
+    $('#divtransferencia_tr').css("display","none");
+    $('#divdebito_tr').css("display","none");
+    $('#divdebito_tr :input').attr("disabled","disabled");
+    $('#divtransferencia_tr :input').attr("disabled","disabled");    
+    $('#divefectivo_tr :input').attr("disabled","disabled");
+    
+
+    $('#divcheque_tr :input').removeAttr("disabled");
+    $('#divcheque_tr').css("display","block");         
+
+}
+
+function mostrarDebitoTr(){       
+
+    $('#divefectivo_tr').css("display","none");  
+    $('#divtransferencia_tr').css("display","none");
+    $('#divcheque_tr').css("display","none"); 
+    $('#divcheque_tr :input').attr("disabled","disabled");
+    $('#divtransferencia_tr :input').attr("disabled","disabled");    
+    $('#divefectivo_tr :input').attr("disabled","disabled");
+
+    $('#divdebito_tr :input').removeAttr("disabled");
+    $('#divdebito_tr').css("display","block");     
+
+}
+function seleccionaTr(){
+    if(document.getElementById('egreso_file_tr').files[0].size<2000000){  	                        
+            var file_data = $('#egreso_file_tr').prop('files')[0];
+            var parametros = new FormData();                  
+                           parametros.append('fileData', file_data);
+                           $.ajax( {
+                                    contentType:false,
+                                    processData:false,	
+                                    cache:false,
+                                    data : parametros,
+                                    url : '<?php echo $this->basePath()."/admin/finanzas/egresotrabajadorfile"?>',
+                                    type : 'post',
+                                    beforeSend : function() {
+                                        loadImg2();
+                                    },
+                                    success : function(response) {
+                                        if(response.status == "nok"){
+                                            toastr.warning(response.desc);
+                                            unloadImg2()
+                                        }else{
+                                            toastr.success(response.desc);       
+                                            $("#sendpago_tr").removeAttr('disabled');                                                                                                                            
+                                            $("#sendpago_tr").val('Ingresar Pago al sistema');                                        
+                                            document.getElementById("mostrarnombre_tr").innerHTML="Archivo subido OK: [<strong>"+document.getElementById('egreso_file_tr').files[0].name+"</strong>]";
+                                            $("#foto_tr").val(response.name);   
+                                        }
+                                                                                                              
+                                    },      
+                            });
+        
+    }else{
+     document.getElementById("mostrarnombre").innerHTML="<font color='red'>Error Ha superado el limite permitido (2Mb): [<strong>"+document.getElementById('egreso_file').files[0].name+"</strong>] NOK</font>";
+    }
+}
+function loadImg2(){
+    $("#sendpago_tr").attr('disabled','disabled');
+    $("#egreso_file_tr").add('class','btn-warning');                                        
+    $("#sendpago_tr").val('Subiendo imagen...');
+    $("#icnAdjuntarEgresoTr").attr("class","fa fa-spinner fa-spin");    
+}  
+function unloadImg2(){
+    $("#sendpago_tr").removeAttr('disabled');
+    $("#egreso_file_tr").add('class','btn-success');                                        
+    $("#sendpago_tr").val('Adjuntar Boleta');
+    $("#icnAdjuntarEgresoTr").attr("class","fa fa-file"); 
+    $("#sendpago_tr").val('Ingresar Pago al sistema');      
+}   
+$("#radioefectivo_tr").trigger('click');
+$("#form_pago_trabajador").submit(function(e){        
+    $("#id_fondo_origen_ptrabajador").prop("disabled", false);
+    $("#nombre_trabajador").prop("disabled", false);
+    $("#montototal_tr").prop("disabled", false);     
+    var postData = $(this).serializeArray();
+    var formURL = $(this).attr("action");
+    $.ajax(
+    {
+        url : formURL,
+        type: "POST",
+        data : postData,
+        dataType : 'json',
+        success : function(response) {
+            console.log(response)
+             $("#pagotrab").modal('hide');
+            toastr.success(response.desc); 
+//            setTimeout(function(){ $("#btn_busca_dpto").trigger('click'); }, 1000);                                         
+        },
+        error: function(jqXHR, textStatus, errorThrown) 
+        {            
+            toastr.error("Ups! Ocurrio un problema, favor contacta con al equipo de soporte");      
+        }
+    });
+    e.preventDefault(); //STOP default action
+
+});
+
+function formatMontoTrab(id){
+var totalPoints = 0;
+$('#div_inputs_suma').find('input').each(function(i,n){
+        totalPoints += parseInt($(n).val().replace(".",""),10); 
+      });      
+      if($("#leysocial_tr").val() != "" && $("#sueldo_tr").val() != ""){
+            $("#montototal_tr").val(totalPoints.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")); 
+      }else{
+        $("#montototal_tr").val("");
+      }      
+    var format = $("#"+id).val().replace(/\./g,'').replace(/\B(?=(\d{3})+(?!\d))/g, ".")
+    $("#"+id).val(format);
+  //  $("#montototal_tr").val(format);
+}
+function esNumber(e) {
+k = (document.all) ? e.keyCode : e.which;
+if (k==8 || k==0) return true;
+patron = /\d/;
+n = String.fromCharCode(k);
+return patron.test(n);
+}
+$(cuentaTr());
+function cuentaTr(){  
+    var cuenta = 40 - $("#observacion_egreso_tr").val().length
+    $("#caracteresTr").text(cuenta); 
+} 
+</script>

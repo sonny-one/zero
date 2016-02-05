@@ -29,6 +29,18 @@ class TipoEgresoTable extends TableGateway
         return $resultado;
     } 
     
+    public function getTipoEgreso2()
+    {
+        $datos = $this->select(array('activo'=>'1',));
+        $recorre = $datos->toArray();
+        $resultado["0"]="¿ Que vas a pagar ?";
+        for($i=0;$i<count($recorre);$i++)
+        {
+          $resultado[$recorre[$i]['id']] = $recorre[$i]['nombre']; 
+        }
+        return $resultado;
+    } 
+    
     public function getTipoNombre($nombre)
     {
         $datos = $this->select(array('nombre'=>$nombre));

@@ -9,9 +9,16 @@
                                         </tr>
                                     </thead>
                                     <tbody>
+                                    <tr>
+                                            <td>1/<?php echo count($cobros)+1;?></td>
+                                            <td><?php $pf1 = strtotime($egreso[0]['fecha_pago']);
+                                                      $mostrarFe = date("d F Y", $pf1);
+                                                echo $mostrarFe;?></td>
+                                            <td>$ <?php echo number_format($egreso[0]['monto'],"0",".",".");?></td>
+                                            <td><span class='label label-sm label-success'>Pagada <i class = 'fa fa-check'></i></span></td>
+                                        </tr>
                                        <?php for($i=0;$i<count($cobros);$i++){ 
-                                       $pf = strtotime($cobros[$i]['fecha_cobro']);
-                                       setlocale(LC_ALL,"es_CL");
+                                       $pf = strtotime($cobros[$i]['fecha_cobro']);                                       
                                         $mostrarFi = date("d F Y", $pf);
                                         if($cobros[$i]['estado']=="impaga"){$label="danger";$icn="close";}else{$label="success";$icn="check";}
                                        echo "

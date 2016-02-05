@@ -57,7 +57,7 @@ class PagoEgresoForm extends Form
         //Input //////////////////////////////// ORIGEN (COMBO)
         $this->add(array(
             'type' => 'Zend\Form\Element\Select',
-            'name' => 'origen',            
+            'name' => 'id_fondo',            
             'attributes' => array(                
                 'class' => 'form-control',
                 'id' => 'origen',                
@@ -116,6 +116,7 @@ class PagoEgresoForm extends Form
                 'onchange' => 'calculaCuota()',            
                 'required' => 'true',
                 'options' => array(
+                    '0'=>'Selecciona cuotas',
                     '2'=>'2',
                     '3'=>'3',
                     '4'=>'4',
@@ -320,9 +321,12 @@ class PagoEgresoForm extends Form
             'attributes' => array(
                 'class' => 'form-control',
                 'placeholder'=>'Escriba aqui',
-                'id' => 'observacion',
+                'id' => 'observacion_egreso',
+                'maxlength'=>'40',
+                'onKeyDown' => 'cuenta()',
+                'onKeyUp' => 'cuenta()',
                 'rows' => '3',                
-                'style' => 'width: max;'
+                'style' => 'width: max;'                
             )
         ));  
         

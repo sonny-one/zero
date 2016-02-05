@@ -150,7 +150,7 @@ setInterval(run, 3000);
 		<!-- END RESPONSIVE MENU TOGGLER -->
 		<!-- BEGIN PAGE ACTIONS -->
 		<!-- DOC: Remove "hide" class to enable the page header actions -->
-		<div class="page-actions">
+		<div id="nav_bar_focus" class="page-actions">
 			<div class="btn-group">
 				<button type="button" class="btn red-haze btn-sm dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
 				<span class="hidden-sm hidden-xs">Atajos&nbsp;</span><i class="fa fa-angle-down"></i>
@@ -343,8 +343,8 @@ setInterval(run, 3000);
 							<i class="fa fa-clipboard"></i>
 							Resumen</a>
 						</li>
-						<li>
-							<a href="<?php echo $this->basePath()."/admin/finanzas/gastocomun"?>">
+						<li id="gastocomun">
+							<a onclick="menu('finanzas','gastocomun')">
 							<i class="fa fa-users"></i>
 							Gasto Comn&uacute;n</a>
 						</li>
@@ -353,13 +353,13 @@ setInterval(run, 3000);
 							<i class="fa fa-download"></i>
 							Ingresos</a>
 						</li>
-						<li>
-							<a href="<?php echo $this->basePath()."/admin/finanzas/egresos"?>">
+						<li id="egresos">
+							<a onclick="menu('finanzas','egresos')">
 							<i class="fa fa-upload"></i>
 							Egresos</a>
 						</li>
-						<li>
-							<a href="<?php echo $this->basePath()."/admin/finanzas/proveedores"?>">
+						<li id="proveedores">
+							<a onclick="menu('finanzas','proveedores')">
 							<i class="fa fa-truck"></i>
 							Proveedores</a>
 						</li>
@@ -380,28 +380,28 @@ setInterval(run, 3000);
 					<span class="arrow "></span>
 					</a>
 					<ul class="sub-menu">
-						<li>
-							<a href="ecommerce_index.html">
+						<li id="notas">
+							<a onclick="menu('mantenciones','notas')">
 							<i class="fa fa-clipboard"></i>
 							Notas de Mantenci&oacute;n</a>
 						</li>
-						<li>
-							<a href="ecommerce_orders.html">
+						<li id="tareas">
+							<a onclick="menu('mantenciones','tareas')">
 							<i class="fa fa-bookmark"></i>
 							Tareas</a>
 						</li>
-						<li>
-							<a href="ecommerce_orders_view.html">
+						<li id="relojes">
+							<a onclick="menu('mantenciones','relojes')">
 							<i class="fa fa-clock-o"></i>
 							Relojes</a>
 						</li>
-						<li>
-							<a href="ecommerce_products.html">
+						<li id="calendario">
+							<a onclick="menu('mantenciones','calendario')">
 							<i class="fa fa-calendar"></i>
 							Calendario</a>
 						</li>
 						<li>
-							<a href="ecommerce_products_edit.html">
+							<a onclick="menu('mantenciones','inventario')">
 							<i class="fa fa-tags"></i>
 							Inventario</a>
 						</li>
@@ -419,22 +419,22 @@ setInterval(run, 3000);
 					</a>
 					<ul class="sub-menu">
 						<li>
-							<a href="ecommerce_index.html">
+							<a onclick="menu('mantenciones','resumen')">
 							<i class="fa fa-clipboard"></i>
 							Resumen</a>
 						</li>
 						<li>
-							<a href="ecommerce_orders.html">
+							<a onclick="menu('mantenciones','resumenfin')">
 							<i class="fa fa-bookmark"></i>
 							Conserjer&iacute;a</a>
 						</li>
 						<li>
-							<a href="ecommerce_orders_view.html">
+							<a onclick="menu('mantenciones','resumenfin')">
 							<i class="fa fa-trash"></i>
 							Aseo y Hornato</a>
 						</li>
 						<li>
-							<a href="ecommerce_products_edit.html">
+							<a onclick="menu('mantenciones','resumenfin')">
 							<i class="fa fa-list-alt"></i>
 							Liquidaciones</a>
 						</li>
@@ -456,7 +456,7 @@ setInterval(run, 3000);
 <!-- BEGIN FOOTER -->
 <div class="page-footer">
 	<div class="page-footer-inner">
-		2014 &copy; Metronic by keenthemes. <a href="http://themeforest.net/item/metronic-responsive-admin-dashboard-template/4021469?ref=keenthemes" title="Purchase Metronic just for 27$ and get lifetime updates for free" target="_blank">Purchase Metronic!</a>
+		<?php echo date('Y');?> &copy; becheck - Integrando condominios 
 	</div>
 	<div class="scroll-to-top">
 		<i class="icon-arrow-up"></i>
@@ -469,10 +469,10 @@ setInterval(run, 3000);
 <script>
 toastr.options = {
   "positionClass": "toast-top-center",
+   "newestOnTop": true,
 }
 function menu(co,ac){
-    var route = co+'/'+ac;
-    console.log(route)
+    var route = co+'/'+ac;    
 	$.ajax( {  
         url  : '<?php echo $this->basePath()."/admin/"?>'+route,        
 		type : 'post',      

@@ -1,0 +1,99 @@
+<div class="row">     
+<br /> <br />    
+                <div class="col-lg-12 col-md-12 ">
+                    <div class="panel panel-primary">
+                      <div class="panel-heading" ><i class="fa fa-check"></i>&nbsp;&nbsp;Seleccione meses que realizar&aacute; mantenciones  
+                        </div>
+                        <div class="panel-body">                                                                                
+                            <div class="col-lg-12" style="margin-bottom: 1em;">                            
+                                <p style="color: #000;text-align: left; font-size: 18px;">
+                                    <i class="fa fa-tint"></i>
+                                    &nbsp; <?php echo $this->partida[0]["nombre"];?>
+                                </p>                            
+                            </div>                                                        
+                            <table class="table table-striped">
+                                    <thead> 
+                                        <tr>                                            
+                                            <th>Frecuencia</th>
+                                            <th>Acci&oacute;n</th>
+                                            <th>Ene</th>
+                                            <th>Feb</th>
+                                            <th>Mar</th>
+                                            <th>Abr</th>
+                                            <th>May</th>
+                                            <th>Jun</th>
+                                            <th>Jul</th>
+                                            <th>Ago</th>
+                                            <th>Sep</th>
+                                            <th>Oct</th>
+                                            <th>Nov</th>
+                                            <th>Dic</th>                                            
+                                        </tr>
+                                    </thead>                                                                                                             
+                                    <tbody style="text-align: center;">                                    
+                                        <tr>                                          
+                                        <input type="hidden" name="id_pk" value="<?php echo $this->partida[0]["id"];?>"/>                                         
+                                            <td><?php echo $this->partida[0]["frecuencia"];?></td>
+                                            <td><?php echo $this->partida[0]["accion"];?></td>
+                                            <td><input <?php if($this->partida[0]["ene"]=="on"){echo "checked";};?> type="checkbox" name="ene"/></td>
+											<td><input <?php if($this->partida[0]["feb"]=="on"){echo "checked";};?> type="checkbox" name="feb"/></td>
+											<td><input <?php if($this->partida[0]["mar"]=="on"){echo "checked";};?> type="checkbox" name="mar"/></td>
+											<td><input <?php if($this->partida[0]["abr"]=="on"){echo "checked";};?> type="checkbox" name="abr"/></td>
+											<td><input <?php if($this->partida[0]["may"]=="on"){echo "checked";};?> type="checkbox" name="may"/></td>
+											<td><input <?php if($this->partida[0]["jun"]=="on"){echo "checked";};?> type="checkbox" name="jun"/></td>
+											<td><input <?php if($this->partida[0]["jul"]=="on"){echo "checked";};?> type="checkbox" name="jul"/></td>
+											<td><input <?php if($this->partida[0]["ago"]=="on"){echo "checked";};?> type="checkbox" name="ago"/></td>
+											<td><input <?php if($this->partida[0]["sep"]=="on"){echo "checked";};?> type="checkbox" name="sep"/></td>
+											<td><input <?php if($this->partida[0]["oct"]=="on"){echo "checked";};?> type="checkbox" name="oct"/></td>
+											<td><input <?php if($this->partida[0]["nov"]=="on"){echo "checked";};?> type="checkbox" name="nov"/></td>
+											<td><input <?php if($this->partida[0]["dic"]=="on"){echo "checked";};?> type="checkbox" name="dic"/></td>                                            
+                                        </tr>   
+                                                                  
+                                    </tbody>
+                                </table>                            
+</div>
+</div>
+
+<div class="col-lg-12 col-md-12 text-center">
+<a  class="btn btn-info" onclick="closeModal()"><i class="fa fa-reply"></i> &nbsp;Salir</a>
+&nbsp;
+<a class="btn btn-danger  <?php echo $this->displayelim;?>" onclick="eliminaPartida('<?php echo $this->partida[0]["id"];?>')"><i class="fa fa-trash"></i> &nbsp;Eliminar</a>
+&nbsp;
+<button  class="btn btn-success" type="submit"><i class="fa fa-download"></i> &nbsp;Guardar</button>
+</div>
+ 
+</div>
+</div>
+
+<!-- MODAL Eliminar Partida -->
+
+<div class="modal fade bs-example-modal-sm" id="elimninarpart" data-backdrop="static" tabindex="1" role="dialog" aria-labelledby="myLargeModalLabel2" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+        <div  class="modal-content">
+        <div class="modal-body text-center" >
+        <div id="todoelimina">
+            <div class="col-lg-12" style="text-align: center;">
+                <div class="col-lg-12" style="padding: 20px;"><i class="fa fa-warning fa-3x"></i></div>
+                    <h4>Se eliminar&aacute; la partida del programa</h4><br />
+            </div>
+            
+                    <button class="btn btn-info" onclick="closeModal2()"><i class="fa fa-reply"></i>&nbsp;&nbsp; Atras</button>&nbsp;&nbsp;&nbsp;&nbsp;
+                    <button id="btneliminarpart" class="btn btn-danger"><i class="fa fa-trash"></i>&nbsp;&nbsp; Eliminar</button>           
+        </div>
+        <div class="row" id="rsptaelim" style="display: none;">
+            <div class="col-lg-12" style="text-align: center;">
+                <div class="col-lg-12" style="padding: 20px;"><i class="fa fa-check fa-3x"></i></div>
+                    <h4 id="descrpelim"></h4><br />
+            </div>
+        </div>
+         </div> 
+        </div>                 
+    </div>              
+</div>
+
+<!-- FIN MODAL Eliminar Partida -->
+<script>
+function closeModal(){
+$("#modaleditar").modal('hide');
+}
+</script>                          

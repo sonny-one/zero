@@ -1,121 +1,657 @@
+<link rel="stylesheet" type="text/css" href="../../metronic/global/plugins/select2/select2.css"/>
+<link rel="stylesheet" type="text/css" href="../../metronic/global/plugins/datatables/plugins/bootstrap/dataTables.bootstrap.css"/>
+<script type="text/javascript" src="../../metronic/global/plugins/select2/select2.min.js"></script>
+<script type="text/javascript" src="../../metronic/global/plugins/datatables/media/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="../../metronic/global/plugins/datatables/extensions/TableTools/js/dataTables.tableTools.min.js"></script>
+<script type="text/javascript" src="../../metronic/global/plugins/datatables/plugins/bootstrap/dataTables.bootstrap.js"></script>
+
+
+
 <div class="row">
-				<div class="col-md-12 ">
-					<!-- BEGIN SAMPLE FORM PORTLET-->
-					<div class="portlet box blue-madison">
-						<div class="portlet-title blue-madison">
-							<div class="caption">
-								<i class="fa fa-envelope"></i>  Mi Buz&oacute;n
-							</div>                            
-						</div>
-                        <div class="portlet-body"> 
+	<div class="col-md-12 ">
+	<!-- BEGIN SAMPLE FORM PORTLET-->
+            <div class="portlet box blue-madison">
+		<div class="portlet-title blue-madison">
+                    <div class="caption">
+                        <a href="#" class="btn red-sunglo" id="redactar">  <strong>REDACTAR</strong> <i class="fa fa-edit"></i></a>                    </div>                            
+		</div>
+<div class="portlet-body"> 
 						
-                <div class="col-lg-12">
-                <h3 class="page-header" ><i class="fa fa-paper-plane" style="font-size: 20px;"></i> &nbsp;&nbsp;Mis mensajes Enviados</h3>    
-                </div>
-                    
-                        
-                        
-                        	<table class="table table-striped table-bordered table-hover" id="sample_1">
-							<thead>
-                                <tr>
-                                    <td> N&deg;</td>
-                                    <td><i class="fa fa-calendar"></i> Fecha</td>
-                                    <td><i class="fa fa-user"></i> Destino</td>
-                                    <td><i class="fa fa-tag"></i> Asunto</td>                                    
-                                    <td><i class="fa fa-plus"></i> Detalles</td>                                
-                                </tr>
-							</thead>
-							<tbody>
-                                <tr>
-                                    <td>025</td>
-                                    <td>27-11-2015</td>
-                                    <td>Administrador</td>
-                                    <td>Gastos Comunes</td>                                    
-                                    <td><a> Abrir</a></td>                                
-                                </tr>
-                                <tr>
-                                    <td>027</td>
-                                    <td>21-11-2015</td>
-                                    <td>Administrador</td>
-                                    <td>Asamblea</td>                                    
-                                    <td><a> Abrir</a></td>                                
-                                </tr>
-                                <tr>
-                                    <td>035</td>
-                                    <td>28-11-2015</td>
-                                    <td>Administrador</td>
-                                    <td>Salvo Conducto</td>                                    
-                                    <td>
-                                        <a data-target="#modal_mensaje" data-toggle="modal" onclick="detalleMs(3)"> 
-                                            Abrir
-                                        </a>
-                                    </td>                                
-                                </tr>
-							</tbody>
-							</table>
-                            
-                <div class="col-lg-12">
-                <h3 class="page-header" ><i class="fa fa-history" style="font-size: 20px;"></i> &nbsp;&nbsp;Mensajes Recibidos</h3>    
-                </div>
-                    
-                        
-                        
-                        	<table class="table table-striped table-bordered table-hover" id="sample_1">
-							<thead>
-                                <tr>
-                                    <td> N&deg;</td>
-                                    <td><i class="fa fa-calendar"></i> Fecha</td>
-                                    <td><i class="fa fa-home"></i> Departamento</td>
-                                    <td><i class="fa fa-tag"></i> Asunto</td>                                    
-                                    <td><i class="fa fa-plus"></i> Detalles</td>                                
-                                </tr>
-							</thead>
-							<tbody>
-                                <tr>
-                                    <td>025</td>
-                                    <td>27-11-2015</td>
-                                    <td>603</td>
-                                    <td>Gastos Comunes</td>                                    
-                                    <td><a> Abrir</a></td>                                
-                                </tr>
-                                <tr>
-                                    <td>027</td>
-                                    <td>21-11-2015</td>
-                                    <td>603</td>
-                                    <td>Asamblea</td>                                    
-                                    <td><a> Abrir</a></td>                                
-                                </tr>
-                                <tr>
-                                    <td>035</td>
-                                    <td>28-11-2015</td>
-                                    <td>603</td>
-                                    <td>Salvo Conducto</td>                                    
-                                    <td><a> Abrir</a></td>                                
-                                </tr>
-							</tbody>
-							</table>
-                            
+<!-- BEGIN PAGE CONTENT-->
+<div class="row">
+        <div class="col-md-12">
+                <div class="tabbable tabbable-custom tabbable-noborder">
+                        <ul class="nav nav-tabs">
+                                <li class="active">
+                                        <a data-toggle="tab" href="#tab_1_1">
+                                       <i class="fa fa-paper-plane"></i> Mensajes Recibidos </a>
+                                </li>
+                                <li>
+                                        <a data-toggle="tab" href="#tab_1_2">
+                                        <i class="fa fa-history"></i> Mensajes Enviados </a>
+                                </li>
+
+                        </ul>
+                        <div class="tab-content">
+                                <div id="tab_1_1" class="tab-pane active">
+                                        <div class="portlet-body">
+                                        <div class="table-responsive">
+                                                <table class="table table-hover" id='sample_3'>
+                                                <thead>
+                                                <tr>
+                                                        <th>
+                                                                <!--<i class="fa fa-paperclip"></i>-->
+                                                        </th>
+                                                        <th>
+                                                                <i class="fa fa-tag"></i> Asunto
+                                                        </th>
+                                                        <th>
+                                                                <i class="fa fa-user"></i> Remitente
+                                                        </th>
+                                                        <th>
+                                                                <i class="fa fa-check-square-o"></i> De
+                                                        </th>
+
+                                                        <th>
+                                                                <i class="fa fa-calendar"></i> Fecha
+                                                        </th>
+                                                        <th>
+                                                        </th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <?php 
+                                                    for($k=0;$k<count($recibido);$k++){
+                                                        $verAdjunto=$recibido[$k]['adjunto']==""?"":"<i class='fa fa-paperclip'></i>";
+                                                        $leido="";
+                                                        if($recibido[$k]['estado']=="No leido"){
+                                                         $leido='<span class="label label-success label-sm">'.$recibido[$k]['estado'].'</span>';   
+                                                        }
+                                                        if($recibido[$k]['estado']=="Leido"){
+                                                         $leido='<span class="label label-warning label-sm">'.$recibido[$k]['estado'].'</span>';   
+                                                        }
+                                                        if($recibido[$k]['estado']=="Respondido"){
+                                                         $leido='<span class="label label-danger label-sm">'.$recibido[$k]['estado'].'</span>';   
+                                                        }
+                                                    ?>
+                                                <tr>
+                                                    <td><?php echo $verAdjunto?></td>
+                                                        <td><a href="javascript:void(0)" onclick="verDetRec('r','<?php echo $recibido[$k]['id']?>','<?php echo $recibido[$k]['asunto']?>','<?php echo $recibido[$k]['nombres']?>','<?php echo $recibido[$k]['adjunto']?>','<?php echo $recibido[$k]['de']?>','<?php echo $recibido[$k]['id_modulo_o']?>','<?php echo $recibido[$k]['estado']?>')"><?php echo $recibido[$k]['asunto']?></a></td>
+                                                        <td><?php echo $recibido[$k]['nombres']?></td>
+                                                        <td><?php echo $recibido[$k]['de']?></td>
+                                                        <td><?php echo $recibido[$k]['date_start']?></td>
+                                                        <td><?php echo $leido?></td>
+                                                        <?php }?>
+                                                </tr>
+                                               
+                                                </tbody>
+                                                </table>
+                                        </div>
+                                        </div>
+                                </div>
+                               
+                                <!--end tab-pane-->
+                                <div id="tab_1_2" class="tab-pane">
+                                        <div class="portlet-body">
+                                        <div class="table-responsive">
+                                                <table class="table table-hover" id='sample_2'>
+                                                <thead>
+                                                <tr>
+                                                        <th>
+                                                               <!-- <i class="fa fa-paperclip"></i>-->
+                                                        </th>
+                                                        <th>
+                                                                <i class="fa fa-tag"></i> Asunto
+                                                        </th>
+                                                        <th>
+                                                                <i class="fa fa-user"></i> Remitente
+                                                        </th>
+                                                        <th>
+                                                                <i class="fa fa-check-square-o"></i> Para
+                                                        </th>
+                                                        
+                                                        <th>
+                                                                <i class="fa fa-calendar"></i> Fecha
+                                                        </th>
+                                                        <th>
+                                                        </th>
+                                                </tr>
+                                                </thead>
+                                              <tbody>
+                                                    <?php 
+                                                    for($k=0;$k<count($enviado);$k++){
+                                                        $verAdjunto=$enviado[$k]['adjunto']==""?"":"<i class='fa fa-paperclip'></i>";
+                                                        $leido="";
+                                                        if($enviado[$k]['estado']=="No leido"){
+                                                         $leido='<span class="label label-success label-sm">'.$enviado[$k]['estado'].'</span>';   
+                                                        }
+                                                        if($enviado[$k]['estado']=="Leido"){
+                                                         $leido='<span class="label label-warning label-sm">'.$enviado[$k]['estado'].'</span>';   
+                                                        }
+                                                        if($enviado[$k]['estado']=="Respondido"){
+                                                         $leido='<span class="label label-danger label-sm">'.$enviado[$k]['estado'].'</span>';   
+                                                        }
+                                                    ?>
+                                                <tr>
+                                                    <td><?php echo $verAdjunto?></td>
+                                                    <td><a href="javascript:void(0)" onclick="verDetRec('e','<?php echo $enviado[$k]['id']?>','<?php echo $enviado[$k]['asunto']?>','<?php echo $enviado[$k]['nombres']?>','<?php echo $enviado[$k]['adjunto']?>','','','<?php echo $enviado[$k]['estado']?>')"><?php echo $enviado[$k]['asunto']?></a></td>
+                                                        <td><?php echo $enviado[$k]['nombres']?></td>
+                                                        <td><?php echo $enviado[$k]['para']?></td>
+                                                        <td><?php echo $enviado[$k]['date_start']?></td>
+                                                        <td><?php echo $leido?></td>
+                                                </tr>
+                                                    <?php }?>
+                                               
+                                                </tbody>
+                                                </table>
+                                        </div>
+                                        </div>
+                                </div>
+
                         </div>
-      </div>
+                </div>
+        </div>
+        <!--end tabbable-->
+</div>
+                       <!-- END PAGE CONTENT-->               
+
+
+
+
+
+
+                       </div>
      </div>
-    </div>
+     </div>
+
     
-<!-- MODAL Pago Proveedor -->
+    </div>
+
+<!-- Inicio nuevo de Mensaje -->
 <div class="modal fade bs-example-modal-md" id="modal_mensaje" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-md">
         <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>                    
-                    <h4 class="modal-title" id="myModalLabel" ><i class="fa fa-envelope"></i> &nbsp;Detalle del mensaje</h4>
-            </div>
-                <div id="detalle_mensaje" class="modal-body">Cargando...</div>
-        </div>
+            			<div class="row">
+				<div class="col-lg-12">
+					<!-- BEGIN SAMPLE FORM PORTLET-->
+					<div class="portlet box red-sunglo">
+						<div class="portlet-title">
+							<div class="caption">
+								<i class="fa fa-edit"></i> Nuevo Mensaje
+							</div>
+							<div class="tools">
+								<a href="" class="close" data-dismiss="modal">
+								</a>
+							</div>
+						</div>
+						<div class="portlet-body form">
+							<form role="form">
+								<div class="form-body">
+                       <div class="form-group form-md-checkboxes">
+                        <input type="hidden" id="cntChk" value="<?php echo count($selectionCheck)?>"/>
+                        <input type="hidden" id="modulo_id" value="<?php echo $modulo_id?>"/>
+                        <input type="hidden" id="modulo_id_origen"/>
+                        <input type="hidden" id="fileError" value="OK"/>
+                        <input type="hidden" id="id_msj_det"/>
+                        
+                        <div class="md-checkbox-inline">
+                            <?php for($z=0;$z<count($selectionCheck);$z++){?>
+                                <div class="md-checkbox">
+                                        <input type="checkbox" id="checkbox<?php echo $z?>" class="md-check" value="<?php echo $selectionCheck[$z]['id']?>">
+                                        <label for="checkbox<?php echo $z?>">
+                                        <span></span>
+                                        <span class="check"></span>
+                                        <span class="box"></span>
+                                        <?php echo $selectionCheck[$z]['nombre']?> </label>
+                                </div>
+                            <?php }?>
+                        </div>
+		</div>
+                    <div class="form-group form-md-line-input form-md-floating-label has-success">
+										<input type="text" class="form-control" id="asuntoMensaje">
+										<label for="form_control_1">Asunto:</label>
+		    </div>
+                    <div class="form-group form-md-line-input form-md-floating-label">
+										<textarea class="form-control" rows="6" id="textoMensaje"></textarea>
+										<label for="form_control_1">Escribe un mensaje</label>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="udt">
+                                <a><input id="fileSelectMensaje" type="file"/>
+                                    <button id="btnSelectMensaje" class="btn btn-success">
+                                    <i id="icnSelectMensaje" class="fa fa-paperclip"></i> <span id="txtSelectMensaje"> Agregar archivo o foto</span>
+                                    </button>
+                                </a>
+               
+                            </div>
+                        </div>
+                        <div class="col-md-6" align="right">
+                            <button type="button" class="btn blue" id="btnEnviarMensaje">Enviar <i class="fa fa-send" id="icnButtonEnviarMensaje"></i></button>&nbsp;&nbsp;&nbsp;
+                        </div>
+                  </div>
+
+
+                                                                </div>
+                                                </div>
+                                        </div>
+                                </div>
+                                    </div>
+
     </div>             
 </div>
-<!-- FIN MODAL Pago Proveedor -->  
+</div>
+<!-- Fin nuevo de Mensaje -->
+
+
+
+<!-- MODAL Detalle Mensaje -->
+<div class="modal fade bs-example-modal-md" id="md_msj_det_rec" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+            			<div class="row">
+				<div class="col-lg-12">
+					<!-- BEGIN SAMPLE FORM PORTLET-->
+					<div class="portlet box blue">
+						<div class="portlet-title">
+							<div class="caption">
+								<i class="fa fa-info-circle"></i> Detalle del Mensaje
+							</div>
+							<div class="tools">
+								<a href="" class="close" data-dismiss="modal">
+								</a>
+							</div>
+						</div>
+						<div class="portlet-body form">
+							<form role="form">
+								<div class="form-body">
+                                                                    <div class="input-icon margin-top-10">
+											<i class="fa fa-chevron-right"></i>
+											<input type="text" class="form-control" id="asuntoMsjDet">
+										</div>
+                                                                    <div class="input-icon margin-top-10">
+											<i class="fa fa-user"></i>
+											<input type="text" class="form-control" id="remMsjDet">
+										</div>
+                                                               <div class="input-icon margin-top-10">
+                                                                   <i class="fa fa-align-justify"></i>
+										<textarea class="form-control" rows="8" id="msjTextoDet"></textarea>
+									</div>
+                                                                    <br/>
+                                                                    <div align="right">
+                                                                        <a href="#" id="linkDet" target="_blank"><span id="adjuntaDet"></span></a>&nbsp;&nbsp;
+                                                                    <button type="button" class="btn blue" id="btnRsp">Responder <i class="fa fa-send" id="icnRsp"></i></button>&nbsp;&nbsp;&nbsp;
+                                                                    </div>
+
+
+                                                                </div>
+                                                </div>
+                                        </div>
+                                </div>
+                                    </div>
+
+    </div>             
+</div>
+</div>
+<!-- FIN MODAL Detalle Mensaje -->  
+
+<!-- Inicio responder mensaje-->
+
+<div class="modal fade bs-example-modal-md" id="md_msj_rsp_rec" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+            			<div class="row">
+				<div class="col-lg-12">
+					<!-- BEGIN SAMPLE FORM PORTLET-->
+					<div class="portlet box green">
+						<div class="portlet-title">
+							<div class="caption">
+								<i class="fa fa-mail-forward"></i> Responder el Mensaje
+							</div>
+							<div class="tools">
+								<a href="" class="close" data-dismiss="modal">
+								</a>
+							</div>
+						</div>
+						<div class="portlet-body form">
+							<form role="form">
+								<div class="form-body">
+                                                                    <div class="form-group form-md-line-input form-md-floating-label has-success">
+                            <input type="text" class="form-control" id="rspParaMensaje">
+                        </div>
+                        <div class="form-group form-md-line-input form-md-floating-label">
+                            <textarea class="form-control" rows="6" id="textoRspMensaje"></textarea>
+                            <label for="form_control_1">Escribe un mensaje</label>
+                        </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="udt">
+                                <a><input id="fileRspSelectMensaje" type="file"/>
+                                    <button id="btnRspSelectMensaje" class="btn btn-success">
+                                    <i id="icnRspSelectMensaje" class="fa fa-paperclip"></i> <span id="txtRspSelectMensaje"> Agregar archivo o foto</span>
+                                    </button>
+                                </a>
+               
+                            </div>
+                        </div>
+                        <div class="col-md-6" align="right">
+                            <button type="button" class="btn blue" id="btnRspMensaje">Enviar <i class="fa fa-send" id="icnRspMensaje"></i></button>&nbsp;&nbsp;&nbsp;
+                        </div>
+                  </div>
+
+
+                                                                </div>
+                                                </div>
+                                        </div>
+                                </div>
+                                    </div>
+
+    </div>             
+</div>
+</div>
+
+<!-- Fin responder mensaje-->
+
+
 
 <script>
-function detalleMs(id_mensaje){
+
+function verDetRec(oper,id,asunto,nombres,adjunto,para,id_modulo_o,estado){
+    $("#md_msj_det_rec").modal();
+    $("#asuntoMsjDet").val(asunto);
+    $("#remMsjDet").val(nombres);
+    $("#modulo_id_origen").val(id_modulo_o);
+    $("#adjuntaDet").text(adjunto);
+    $("#rspParaMensaje").val("Para: "+para);
+    $("#id_msj_det").val(id);
+    
+    $("#linkDet").attr('href','/files/db/<?php echo $this->id_db?>/msjmodulo/'+adjunto);    
+    $("#btnRsp").show();
+    
+    if(oper=='e'){
+        $("#btnRsp").hide();
+    }
+    if(estado=='Respondido'){
+        $("#btnRsp").hide();
+    }
+    
+    var parametros = {"id" : id,"oper":oper};
+        $.ajax({  
+		data : parametros,
+                url : '<?php echo $this->basePath()."/admin/comunicacion/gettexto"?>',
+		type : 'post',
+		beforeSend : function() {},
+		success : function(r) {
+                    if(r.status=='ok'){
+                        $("#msjTextoDet").val(r.texto);
+                    }else{
+                        messageRspta('error',r.error,'Aviso');
+                    }
+		},
+                error:function(e){   messageRspta('error','Ocurrio un error inesperado','Aviso');     }
+    
+    
+        });
+        
+    
+}
+$("#btnRsp").click(function(){
+
+    $("#md_msj_rsp_rec").modal();
+    $("#textoRspMensaje").val("");
+    $("#txtRspSelectMensaje").text("Agregar archivo o foto");
+    $("#btnRspSelectMensaje").attr("class","btn btn-success");
+    $("#icnRspSelectMensaje").attr("class","fa fa-paperclip");
+    
+
+});
+$("#redactar").click(function(){
+    
+    $("#modal_mensaje").modal();
+    //limpiamos
+    var cnt = parseInt($("#cntChk").val());
+    for(var i=0;i<cnt;i++){
+    $("#checkbox"+i).prop("checked", "");
+    }
+    $("#asuntoMensaje").val("");
+    $("#textoMensaje").val("");
+    
+    
+    
+});
+
+$("#fileRspSelectMensaje").change(function(){
+    
+          var txtNombreFile = $(this).val().replace("C:\\fakepath\\", "  ");
+          $("#txtRspSelectMensaje").text(txtNombreFile);
+          $("#fileError").val("OK");
+          if(this.files[0].size<2000000){
+              $("#btnRspSelectMensaje").attr("class","btn btn-primary");
+              $("#icnRspSelectMensaje").attr("class","fa fa-check");
+              
+          }else{
+              $("#fileError").val("Error");
+               messageRspta('error','Error: Mayor a 2Mb','Error'); 
+              $("#btnRspSelectMensaje").attr("class","btn btn-danger");
+              $("#icnRspSelectMensaje").attr("class","fa fa-times");
+          }
+         
+              
+     });
+
+$("#fileSelectMensaje").change(function(){
+    
+          var txtNombreFile = $(this).val().replace("C:\\fakepath\\", "  ");
+          $("#txtSelectMensaje").text(txtNombreFile);
+          $("#fileError").val("OK");
+          if(this.files[0].size<2000000){
+              $("#btnSelectMensaje").attr("class","btn btn-primary");
+              $("#icnSelectMensaje").attr("class","fa fa-check");
+              
+          }else{
+              $("#fileError").val("Error");
+               messageRspta('error','Error: Mayor a 2Mb','Error'); 
+              $("#btnSelectMensaje").attr("class","btn btn-danger");
+              $("#icnSelectMensaje").attr("class","fa fa-times");
+          }
+         
+              
+     });
+
+//ACA ES DEL BOTON RESPONDERRR
+$("#btnRspMensaje").click(function(){
+    
+        var asunto = $("#asuntoMsjDet").val();
+        var texto  = $("#textoRspMensaje").val();
+        
+        if (texto==""){
+            messageRspta('error','Ingrese Mensaje...','Aviso');
+            return false;
+        }
+        if($("#fileError").val()!="OK"){
+            messageRspta('error','Seleccione otro fichero...','Aviso');
+            return false;
+        }
+        
+        
+        
+        
+        
+        bootbox.confirm("<strong>Estas seguro que deseas enviar el mensaje...?</strong>", function(result) {
+                   
+                   if(result){
+                       
+                        $("#icnRspMensaje").attr("class","fa fa-spinner fa-spin");
+                        $("#btnRspMensaje").addClass('disabled');
+                       
+                       var file_data = $('#fileRspSelectMensaje').prop('files')[0];
+                       
+                       var parametros = new FormData();                  
+                           parametros.append('fileData', file_data);
+                           parametros.append('asunto',asunto);
+                           parametros.append('texto',texto);
+                           parametros.append('id_modulo_o',$("#modulo_id").val());
+                           parametros.append('destino',$("#modulo_id_origen").val());
+                           parametros.append('id_msg_rspta',$("#id_msj_det").val());
+                           
+                           
+                           $.ajax( {
+                                    contentType:false,
+                                    processData:false,	
+                                    cache:false,
+                                    data : parametros,
+                                    url : '<?php echo $this->basePath()."/admin/comunicacion/regmensaje"?>',
+                                    type : 'post',
+                                    beforeSend : function() {
+                                        //Metronic.blockUI();
+                                    },
+                                    success : function(r) {
+                                        if(r.status=='ok'){
+                                                $("#md_msj_rsp_rec").modal('hide');
+                                                $("#md_msj_det_rec").modal('hide');
+                                             
+                                             
+                                            //$(location).attr('href',r.url);
+                                            messageRspta('success',r.mensaje,'Aviso');
+                                             setTimeout(function(){
+                                                $(location).attr('href','<?php //echo $this->basePath()."/admin/comunicacion/mensajes"?>'); 
+                                                },5000); 
+                                            
+                                        }else{
+                                             messageRspta('error',r.mensaje,'Aviso');
+                                        }
+                                            $("#icnRspMensaje").attr("class","fa fa-send");
+                                            $("#btnRspMensaje").removeClass('disabled');        
+
+                                        
+                                    },
+                                    error:function(e){
+                                            $("#icnRspMensaje").attr("class","fa fa-send");
+                                            $("#btnRspMensaje").removeClass('disabled');        
+                                        messageRspta('error','Error Tecnico','Aplicacion');
+                                        
+                                    }        
+                            });
+                   }else{
+                       messageRspta('warning','has cancelado la operacion','Aviso');
+                   }
+     });
+
+    
+});
+
+//FIN RESPONDERRR
+
+
+$("#btnEnviarMensaje").click(function(){
+    
+        var asunto = $("#asuntoMensaje").val();
+        var texto  = $("#textoMensaje").val();
+        var destino ="";
+        var cnt = parseInt($("#cntChk").val());
+        for(var i=0;i<cnt;i++){
+           if( $('#checkbox'+i).prop('checked') ) {
+                destino = destino+$('#checkbox'+i).val()+";";
+            }
+        }
+        if (asunto==""){
+            messageRspta('error','Ingrese Asunto...','Aviso');
+            return false;
+        }
+        if (texto==""){
+            messageRspta('error','Ingrese Mensaje...','Aviso');
+            return false;
+        }
+        if (destino==""){
+            messageRspta('error','Ingrese a quien va el mensaje...','Aviso');
+            return false;
+        }
+        if($("#fileError").val()!="OK"){
+            messageRspta('error','Seleccione otro fichero...','Aviso');
+            return false;
+            
+        }
+        
+        
+        
+        
+        
+        bootbox.confirm("<strong>Estas seguro que deseas enviar el mensaje...?</strong>", function(result) {
+                   
+                   if(result){
+                       
+                        $("#icnBtnEnviarMensaje").attr("class","fa fa-spinner fa-spin");
+                        $("#btnEnviarMensaje").addClass('disabled');
+                       
+                       var file_data = $('#fileSelectMensaje').prop('files')[0];
+                       
+                       var parametros = new FormData();                  
+                           parametros.append('fileData', file_data);
+                           parametros.append('asunto',asunto);
+                           parametros.append('texto',texto);
+                           parametros.append('id_modulo_o',$("#modulo_id").val());
+                           parametros.append('destino',destino);
+                           
+                           
+                           $.ajax( {
+                                    contentType:false,
+                                    processData:false,	
+                                    cache:false,
+                                    data : parametros,
+                                    url : '<?php echo $this->basePath()."/admin/comunicacion/regmensaje"?>',
+                                    type : 'post',
+                                    beforeSend : function() {
+                                        //Metronic.blockUI();
+                                    },
+                                    success : function(r) {
+                                        if(r.status=='ok'){
+                                             $("#modal_mensaje").modal('hide');
+                                            //$(location).attr('href',r.url);
+                                            messageRspta('success',r.mensaje,'Aviso');
+                                             setTimeout(function(){
+                                                $(location).attr('href','<?php //echo $this->basePath()."/admin/comunicacion/mensajes"?>'); 
+                                                },5000); 
+                                            
+                                        }else{
+                                             messageRspta('error',r.mensaje,'Aviso');
+                                        }
+                                            $("#icnBtnEnviarMensaje").attr("class","fa fa-send");
+                                            $("#btnEnviarMensaje").removeClass('disabled');        
+
+                                        
+                                    },
+                                    error:function(e){
+                                      $("#icnBtnEnviarMensaje").attr("class","fa fa-send");
+                                       $("#btnEnviarMensaje").removeClass('disabled');        
+                                        messageRspta('error','Error Tecnico','Aplicacion');
+                                        
+                                    }        
+                            });
+                   }else{
+                       messageRspta('warning','has cancelado la operacion','Aviso');
+                   }
+     });
+    
+});
+
+ function messageRspta(tipo,msg,titulo)
+     {
+       toastr.options.closeButton=true;
+       toastr.options.positionClass='toast-top-center';
+       toastr.options.onclick=null;
+       toastr.options.showDuration = 1000;
+       toastr.options.hideDuration = 1000;
+       toastr.options.timeOut = 7000;
+       toastr.options.extendedTimeOut = 1000;
+       toastr.options.showEasing = 'swing';
+       toastr.options.hideEasing = 'linear';
+       toastr.options.showMethod = 'fadeIn';
+       toastr.options.hideMethod = 'fadeOut';
+       toastr[tipo](msg, titulo);
+    }     
+
+
+/*function detalleMs(id_mensaje){
 var parametros =  {
         "id_mensaje" : id_mensaje,                       
 };
@@ -127,5 +663,147 @@ var parametros =  {
 		  $("#detalle_mensaje").html(response);                               
        }   
 });          
-}
-</script>        
+}*/
+</script>  
+
+<script>
+var table = $('#sample_3');
+var table2 = $('#sample_2');
+
+        /* Table tools samples: https://www.datatables.net/release-datatables/extras/TableTools/ */
+
+        /* Set tabletools buttons and button container */
+
+        $.extend(true, $.fn.DataTable.TableTools.classes, {
+            "container": "btn-group tabletools-dropdown-on-portlet",
+            "buttons": {
+                "normal": "btn btn-sm default",
+                "disabled": "btn btn-sm default disabled"
+            },
+            "collection": {
+                "container": "DTTT_dropdown dropdown-menu tabletools-dropdown-menu"
+            }
+        });
+
+        var oTable = table.dataTable({
+
+            // Internationalisation. For more info refer to http://datatables.net/manual/i18n
+            "language": {
+                "aria": {
+                    "sortAscending": ": activate to sort column ascending",
+                    "sortDescending": ": activate to sort column descending"
+                },
+                "emptyTable": "No hay mensajes",
+                "info": "Mostrando _START_ a _END_ de _TOTAL_ mensajes",
+                "infoEmpty": "No encontrado",
+                "infoFiltered": "(filtered1 desde _MAX_ total mensajes)",
+                "lengthMenu": "Ver _MENU_ entradas",
+                "search": "Buscar:",
+                "zeroRecords": "No se encontraron Mensajes"
+            },
+
+            // Or you can use remote translation file
+            //"language": {
+            //   url: '//cdn.datatables.net/plug-ins/3cfcc339e89/i18n/Portuguese.json'
+            //},
+
+           "order": [
+              [3, 'desc']
+            ],
+            
+            "lengthMenu": [
+                [5, 10, 15, 20, 1],
+                [5, 10, 15, 20, "All"] // change per page values here
+            ],
+            // set the initial value
+            "pageLength": 10,
+
+            "dom": "<'row' <'col-md-12'T>><'row'<'col-md-6 col-sm-12'l><'col-md-6 col-sm-12'f>r><'table-scrollable't><'row'<'col-md-5 col-sm-12'i><'col-md-7 col-sm-12'p>>", // horizobtal scrollable datatable
+            "tableTools": {
+                "sSwfPath": "../../metronic/global/plugins/datatables/extensions/TableTools/swf/copy_csv_xls_pdf.swf",
+                "aButtons": [{
+                    "sExtends": "pdf",
+                    "sButtonText": "<i class='fa fa-file-pdf-o'></i>"
+                },{
+                    "sExtends": "xls",
+                    "sButtonText": "<i class='fa fa-file-excel-o'></i>"
+                },{
+                    "sExtends": "csv",
+                    "sButtonText": "CSV"
+                }]
+            }
+
+            // Uncomment below line("dom" parameter) to fix the dropdown overflow issue in the datatable cells. The default datatable layout
+            // setup uses scrollable div(table-scrollable) with overflow:auto to enable vertical scroll(see: assets/global/plugins/datatables/plugins/bootstrap/dataTables.bootstrap.js). 
+            // So when dropdowns used the scrollable div should be removed. 
+            //"dom": "<'row' <'col-md-12'T>><'row'<'col-md-6 col-sm-12'l><'col-md-6 col-sm-12'f>r>t<'row'<'col-md-5 col-sm-12'i><'col-md-7 col-sm-12'p>>",
+
+            
+        });
+var oTable2 = table2.dataTable({
+
+            // Internationalisation. For more info refer to http://datatables.net/manual/i18n
+            "language": {
+                "aria": {
+                    "sortAscending": ": activate to sort column ascending",
+                    "sortDescending": ": activate to sort column descending"
+                },
+                "emptyTable": "No hay mensajes",
+                "info": "Mostrando _START_ a _END_ de _TOTAL_ mensajes",
+                "infoEmpty": "No encontrado",
+                "infoFiltered": "(filtered1 desde _MAX_ total mensajes)",
+                "lengthMenu": "Ver _MENU_ entradas",
+                "search": "Buscar:",
+                "zeroRecords": "No se encontraron Mensajes"
+            },
+
+            // Or you can use remote translation file
+            //"language": {
+            //   url: '//cdn.datatables.net/plug-ins/3cfcc339e89/i18n/Portuguese.json'
+            //},
+
+            "order": [
+                [3, 'desc']
+            ],
+            
+            "lengthMenu": [
+                [5, 10, 15, 20, -1],
+                [5, 10, 15, 20, "All"] // change per page values here
+            ],
+            // set the initial value
+            "pageLength": 10,
+
+            "dom": "<'row' <'col-md-12'T>><'row'<'col-md-6 col-sm-12'l><'col-md-6 col-sm-12'f>r><'table-scrollable't><'row'<'col-md-5 col-sm-12'i><'col-md-7 col-sm-12'p>>", // horizobtal scrollable datatable
+            "tableTools": {
+                "sSwfPath": "../../metronic/global/plugins/datatables/extensions/TableTools/swf/copy_csv_xls_pdf.swf",
+                "aButtons": [{
+                    "sExtends": "pdf",
+                    "sButtonText": "<i class='fa fa-file-pdf-o'></i>"
+                },{
+                    "sExtends": "xls",
+                    "sButtonText": "<i class='fa fa-file-excel-o'></i>"
+                },{
+                    "sExtends": "csv",
+                    "sButtonText": "CSV"
+                }]
+            }
+
+            // Uncomment below line("dom" parameter) to fix the dropdown overflow issue in the datatable cells. The default datatable layout
+            // setup uses scrollable div(table-scrollable) with overflow:auto to enable vertical scroll(see: assets/global/plugins/datatables/plugins/bootstrap/dataTables.bootstrap.js). 
+            // So when dropdowns used the scrollable div should be removed. 
+            //"dom": "<'row' <'col-md-12'T>><'row'<'col-md-6 col-sm-12'l><'col-md-6 col-sm-12'f>r>t<'row'<'col-md-5 col-sm-12'i><'col-md-7 col-sm-12'p>>",
+
+            
+        });
+
+ var tableWrapper2 = $('#sample_2_wrapper'); // datatable creates the table wrapper by adding with id {your_table_jd}_wrapper
+
+      tableWrapper2.find('.dataTables_length select').select2(); // initialize select2 dropdown  
+        
+var tableWrapper = $('#sample_3_wrapper'); // datatable creates the table wrapper by adding with id {your_table_jd}_wrapper
+
+      tableWrapper.find('.dataTables_length select').select2(); // initialize select2 dropdown 
+        
+       
+        
+</script>

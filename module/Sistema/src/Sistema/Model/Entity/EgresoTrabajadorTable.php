@@ -10,7 +10,11 @@ class EgresoTrabajadorTable extends TableGateway
 {
 
     private $id_egreso;
-    private $id_trabajador;  
+    private $id_trabajador;
+    private $leyes_sociales;  
+    private $sueldo;
+    private $monto;    
+      
     
     public $dbAdapter;   
     
@@ -24,14 +28,36 @@ class EgresoTrabajadorTable extends TableGateway
     private function cargarCampos($datos=array())
     {    
         $this->id_egreso=$datos["id_egreso"]; 
-        $this->id_trabajador=$datos["id_trabajador"];          
+        $this->id_trabajador=$datos["id_trabajador"];
+        $this->leyes_sociales=$datos["leysocial"];    
+        $this->sueldo=$datos["sueldo"];              
+        $this->monto=$datos["montototal"];        
         
     }
+    public function nuevoEgresoTrabajador($data=array())
+    {
+             self::cargarCampos($data);
+             $array=array
+             (
+                'id_egreso'=>$this->id_egreso,
+                'id_trabajador'=>$this->id_trabajador,
+                'leyes_sociales'=>$this->leyes_sociales,
+                'sueldo'=>$this->sueldo,
+                'monto'=>$this->monto,                                                  
+             );
+               $this->insert($array);
+               $id = $this->lastInsertValue;
+               return $id;
+        } 
     
-     public function getLastEgresoTrab(Adapter $dbAdapter,$id_trabajador)
+     public function getPagoPeriodo(Adapter $dbAdapter,$id_trabajador)
     {        
         $this->dbAdapter = $dbAdapter;
-        $query = "SELECT max(date_start) as fecha, monto FROM sis_w_egreso_trabajador WHERE id_trabajador='$id_trabajador';";
+        $query = "SELECT e.monto, e.fecha_pago as fecha_pago, et.id_tipo_egreso_trabajador
+                    FROM sis_w_egreso_trabajador et, sis_w_egreso e, sis_m_cierre_mes cm
+                    WHERE et.id_trabajador='$id_trabajador'
+                    and et.id_egreso = e.id
+                    and e.fecha_pago between cm.fecha_inicio and  cm.fecha_cierre";
                 
         $result=$this->dbAdapter->query($query,Adapter::QUERY_MODE_EXECUTE);
         return $result->toArray();

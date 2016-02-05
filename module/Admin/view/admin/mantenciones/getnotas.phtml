@@ -1,0 +1,45 @@
+<ul id="sticker" > 
+    <li id="sticker">
+      <a id="sticker" onclick="modalNotas(0)" data-toggle='modal' data-target='#modalnotas' >      
+        <h4 id="sticker"><i class="fa fa-plus"></i>Nueva Nota</h4>                
+      </a>
+    </li>
+    <?php for($i=0;$i<count($this->notas);++$i){
+    echo "<li id='sticker'>
+      <a id='sticker' onclick='modalNotas(".$this->notas[$i]['id'].")' data-toggle='modal' data-target='#modalnotas'>      
+        <h4 id='sticker'>Nota ".$this->notas[$i]['id']."</h4>
+        <p>".$this->notas[$i]['texto']."</p>
+        <div id='sticker'>".date('d/m/Y - H:i',strtotime($this->notas[$i]['date_update']))."</div>
+      </a>
+    </li>";}?>
+  </ul>
+  <div class="modal fade bs-example-modal-sm" id="modalnotas" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+
+                <div id="bodymodalnotas" class="modal-body">Cargando...</div>
+        </div>
+                 <!-- /.modal-content -->
+    </div>
+               <!-- /.modal-dialog -->
+</div> 
+
+<script>
+function modalNotas(id){
+var data = { "id": id};   
+	$.ajax( {
+        url : '<?php echo $this->basePath()."/admin/mantenciones/modalnotas"?>',
+        type : 'post', 
+        data : 	data,       	
+		beforeSend : function() {			
+			$("#bodymodalnotas").html("<img src='<?php echo $this->basePath()?>/img/loading.gif'/>");
+		},
+		success : function(response) {			
+			$("#bodymodalnotas").html(response);
+		}
+	});           
+}  
+function cargaNotas(){
+    getNotasMantencion();
+}
+</script>

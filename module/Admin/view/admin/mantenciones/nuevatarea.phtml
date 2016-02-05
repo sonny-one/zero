@@ -1,0 +1,221 @@
+<div id="todocj" class="row">
+
+<div class="col-lg-3">
+        <div class="col-lg-12" style="text-align: center;">
+            <img src="<?php echo $this->basePath()?>/img/calendar_icon.png" class="img-rounded" style="max-width: 80%;"/> <br />
+        </div>                 
+        <div class="col-lg-12">
+                    <div class="well well-sm">
+                        <h4>Gasto Com&uacute;n</h4>
+                        <p>Las tareas asociadas a un pago bloquean la generaci&oacute;n del gasto com&uacute;n mensual.</p>
+                    </div>
+        </div>
+</div>      
+                            <?php 
+                                        $form = $this->form;
+                                        $form->prepare();
+                                        $form->setAttributes(array(
+                                        'action' => $this->basePath()."/admin/mantenciones/nuevatarea",
+                                        'method' => 'post',
+                                        'id' => 'formnuevatarea',                                    
+                                        ));
+                                        echo $this->form()->openTag($form);                                        
+                                        ?>                                        
+<div class="col-lg-9 col-md-9 col-sm-9 col-xs-9">
+
+<div class="col-lg-7 col-md-5 col-xs-6">
+<div class="form-group">
+        <label>Nombre de la tarea</label>
+    <div class="form-group input-group">
+    <span class="input-group-addon"><i class="fa fa-info"></i>
+    </span>    
+        <?php                                             
+        echo $this->formRow($this->form->get('nombre'));
+        ?>                                                                           
+    </div>
+</div>
+</div>
+
+<div class="col-lg-5 col-md-4 col-xs-6" style="margin-top: 20px;">
+<div class="form-group">
+            <div class="checkbox">
+            <label>
+            <?php                                             
+        echo $this->formRow($this->form->get('urgente'));
+        ?> <strong>Marcar como Urgente</strong>
+        </label>
+        </div>        
+</div>
+</div>
+
+<div class="col-lg-6 col-md-5 col-xs-6">
+<div class="form-group">
+        <label>&Aacute;rea Responsable</label>
+    <div class="form-group input-group">
+    <span class="input-group-addon"><i class="fa fa-user"></i>
+    </span>
+        <?php                                             
+        echo $this->formRow($this->form->get('area_responsable'));
+        ?>                                                                         
+    </div>
+
+</div>
+</div>
+
+<div class="col-lg-6 col-md-5 col-xs-6">
+<div class="form-group">
+        <label>Seleccione Responsable</label>
+    <div class="form-group input-group">
+    <span class="input-group-addon"><i class="fa fa-user"></i>
+    </span>
+        <?php                                             
+        echo $this->formRow($this->form->get('responsable'));
+        ?>                                                                        
+    </div>
+
+</div>  
+</div>
+
+
+<div class="col-lg-4 col-md-4 col-xs-6">
+<div class="form-group">
+        <label>Pago</label>
+    <div class="form-group input-group">
+    <span class="input-group-addon"><i class="fa fa-dollar"></i>
+    </span>
+        <?php                                             
+        echo $this->formRow($this->form->get('pago'));
+        ?>                                                                             
+    </div>
+
+</div>
+</div>
+
+<div class="col-lg-4 col-md-4 col-xs-6">
+<div class="form-group">
+        <label>Estado</label>
+    <div class="form-group input-group">
+    <span class="input-group-addon"><i class="fa fa-cogs"></i>
+    </span>
+        <?php                                             
+        echo $this->formRow($this->form->get('estado'));
+        ?>                                                                         
+    </div>
+
+</div>
+</div>
+
+<div class="col-lg-4 col-md-4 col-xs-6">
+<div class="form-group">
+        <label>Avance</label>
+    <div class="form-group input-group">
+    <span class="input-group-addon"><i>%</i>
+    </span>
+        <?php                                             
+        echo $this->formRow($this->form->get('avance'));
+        ?>                                                                         
+    </div>
+
+</div>
+</div>
+
+<div class="col-lg-6 col-md-4 col-xs-6">
+<div class="form-group">
+        <label>Fecha de Inicio</label>
+    <div class="form-group input-group">
+    <span class="input-group-addon"><i class="fa fa-calendar"></i>
+    </span>
+        <?php                                             
+        echo $this->formRow($this->form->get('fecha'));        
+        ?>                                                                            
+    </div>
+
+</div>
+</div>
+
+</div>
+
+<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-right" style="margin-top: 20px;">
+
+<?php                                             
+        echo $this->formRow($this->form->get('cancel'));
+?>&nbsp;&nbsp;
+<?php                                             
+        echo $this->formRow($this->form->get('sendtarea'));
+        echo $this->form()->closeTag();        
+?>
+</div>
+
+</div>                                
+<script>
+function closeModal() {
+$("#modalnuevatarea").modal('hide');
+}
+$("#formnuevatarea").submit(function(e)
+{   
+    var postData = $(this).serializeArray();
+    var formURL = $(this).attr("action");
+    $.ajax(
+    {
+        url : formURL,
+        type: "POST",
+        data : postData,
+        dataType : 'json',
+        success : function(response) {        
+          if(response.tarea == 'ok'){          
+           $("#modalnuevatarea").modal('hide'); 
+           $("#descrok").text("Nueva tarea ingresada al sistema...");
+           $("#respuestaOK").modal('show');
+           setTimeout(function(){
+                        $("#respuestaOK").modal('hide');                        
+                      //  $(location).attr('href','<?php// echo $this->basePath()."/admin/matenciones"?>'); 
+                    },1200);                     
+          }else{            
+            //$("#mostrarCJ").html('<div id="respuesta" class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>'+response.descripcion+'</div>');            
+          }
+        },
+        error : function(jqXHR, textStatus, errorThrown) 
+        {
+            $("#mostrarCJ").html('<div id="respuesta" class="alert alert-danger alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>Error en el env&iacute;o de datos al servidor</div>')      
+        }
+    });
+    e.preventDefault(); //STOP default action    
+});
+
+function comboResponsable(){
+    postData = {'area_responsable' : $('#area_responsable').find('option:selected').val()}
+    $.ajax(
+    {
+        url : '<?php echo $this->basePath()."/admin/mantenciones/comboresponsable"?>',
+        type: "POST",
+        data : postData,
+        dataType : 'json',
+        success : function(response) {    
+        var keys = [];
+        for(var k in response) keys.push(k);               
+        var sel = $("#responsable");
+        sel.empty();             
+          for (var i=0; i<keys.length; i++) {            
+           sel.append('<option value="' +keys[i] + '">' + response[keys[i]] + '</option>');
+            }                                       
+        },
+        error: function(jqXHR, textStatus, errorThrown) 
+        {            
+            alert("error"); 
+        }
+    });
+}
+$('#estado_tarea').change(function(){
+    if ($('#estado_tarea').find('option:selected').val()=="realizada"){
+        $('#avance_tarea').val("100");
+}else{
+        $('#avance_tarea').val(null);
+}
+});
+/*
+function avance(){
+    if ($('#estado_tarea').find('option:selected').val()=="realizada"){
+        $('#avance_tarea').val("100");
+    }
+}*/
+</script>                                                                                                                                                                                    

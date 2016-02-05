@@ -24,7 +24,7 @@
     </div>
 </div> 
 <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1" style="margin-top: 27px;">
-<i class="fa fa-arrow-circle-o-right fa-2x"></i>
+<i class="fa fa-arrow-circle-o-right" style="font-size: 16px;"></i>
 </div>
 <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5" style="text-align: center;">
     <div class="form-group">
@@ -56,7 +56,7 @@
 <div  class="col-lg-12 col-md-12 col-sm-12 col-xs-12" id="divdetalle1" style="display: none;">
 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 <div class="col-lg-6 col-md-4 col-xs-6">
-    <div class="text-center"><label>Gastos Comunes</label></div>
+    <div class="text-center"><label><strong>Gastos Comunes</strong></label></div>
     <table class="table table-striped table-bordered table-hover" id="tablatotal">
         <tbody>
             <tr>
@@ -76,7 +76,7 @@
     </table>
 </div>
 <div class="col-lg-6 col-md-4 col-xs-6">
-<div class="text-center"><label>Multas</label></div>
+<div class="text-center"><label><strong>Multas</strong></label></div>
     <table class="table table-striped table-bordered table-hover" >
         <tbody>
             <tr>
@@ -89,6 +89,26 @@
                 <td  style="text-align: center;" ><?php echo $multa[$i]['observacion'];?></td>                                                                                            
             <?php } ?>
         </tr>
+        </tbody>
+    </table>
+</div>
+
+<div id="div_abono_s" class="col-lg-6 col-md-4 col-xs-6">
+<div class="text-center"><label><strong>Abonos</strong></label></div>
+    <table class="table table-striped table-bordered table-hover" >
+       <tbody> 
+            <tr>
+                <th>Fecha</th>
+                <th>Monto</th>                                 
+            </tr>  
+            <?php for ($i=0;$i<count($abono);$i++){?>
+            <tr>                                                                    
+               <td  style="text-align: center;"><?php $pf = strtotime($abono[$i]['fecha_pago']);
+                                                    $mostrarF = date("d-M-Y", $pf);
+                                            echo $mostrarF;?></td>
+               <td  style="text-align: center;">$ <?php echo  number_format($abono[$i]['monto'],'0','.','.');?> &nbsp;&nbsp;<input type="checkbox" disabled checked="true" name="abono[<?php echo $abono[$i]['id'];?>]" value="<?php echo $abono[$i]['monto'];?>"/></td>
+              <?php }?>  
+              </tr>                                                                                           
         </tbody>
     </table>
 </div>
@@ -118,8 +138,8 @@
 
 <!--Pago Parcial-->
 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" id="divdetalle2" style="display: none;">
-<div class="col-lg-6 col-md-4 col-xs-6">
-<div class="text-center"><label>Gastos Comunes</label></div>    
+<div id="ch_gc_total" class="col-lg-6 col-md-4 col-xs-6">
+<div class="text-center"><label><strong>Gastos Comunes</strong></label></div>    
     <table class="table table-striped table-bordered" id="tablaparcial" >
         <tbody>
             <tr>
@@ -140,7 +160,7 @@
 </div>
 
 <div class="col-lg-6 col-md-4 col-xs-6">
-<div class="text-center"><label>Multas</label></div>
+<div class="text-center"><label><strong>Multas</strong></label></div>
     <table class="table table-striped table-bordered table-hover" >
        <tbody> 
             <tr>
@@ -156,8 +176,29 @@
         </tbody>
     </table>
 </div>
-
 </div>
+<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" >
+<div id="div_abono" class="col-lg-6 col-md-4 col-xs-6" style="display: none;">
+<div class="text-center"><label><strong>Abonos</strong></label></div>
+    <table class="table table-striped table-bordered table-hover" >
+       <tbody> 
+            <tr>
+                <th>Fecha</th>
+                <th>Monto</th>                                 
+            </tr>  
+            <?php for ($i=0;$i<count($abono);$i++){?>
+            <tr>                                                                    
+               <td  style="text-align: center;"><?php $pf = strtotime($abono[$i]['fecha_pago']);
+                                                    $mostrarF = date("d-M-Y", $pf);
+                                            echo $mostrarF;?></td>
+               <td  style="text-align: center;">$ <?php echo  number_format($abono[$i]['monto'],'0','.','.');?> &nbsp;&nbsp;<input id="v_monto_abono" disabled checked="true" type="checkbox" name="abono[<?php echo $abono[$i]['id'];?>]" onclick="sumar()" value="<?php echo $abono[$i]['monto'];?>"/></td>
+              <?php }?>  
+              </tr>                                                                                           
+        </tbody>
+    </table>
+</div>
+</div>
+
 <!--TOTAL 2-->
 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" id="divpagoparcial">
 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -165,7 +206,7 @@
     <table class="table table-striped table-bordered table-hover" >
         <tbody>
             <tr>
-                <th>Total</th>
+                <th>Sub Total</th>
                 <td id="total2" style="text-align: center; font-weight: bold;"></td>                
             </tr>
     </tbody>
@@ -339,8 +380,8 @@
     </div>
 </div>
 </div>
-<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="text-align: center;">
-<div class="col-lg-5 col-lg-offset-3">
+<br />
+<div class="col-lg-6 col-lg-offset-3 col-md-6 col-md-offset-3 col-sm-6 col-sm-offset-3 col-xs-6 col-xs-offset-3" style="text-align: center;">
     <div class="form-group">
         <label style="font-size: 19px;"><strong>Total</strong></label>
             <div class="form-group input-group">
@@ -352,16 +393,9 @@
             </div>
     </div>
 </div>
-<div id="noktotal" class="col-lg-1" style="margin: 32px 0 0 -20px; display: none; ">
-<i class="fa fa-close"></i>
-</div>
-<div id="oktotal" class="col-lg-1" style="margin: 32px 0 0 -20px; display: none; ">
-<i class="fa fa-check"></i>
-</div>
-</div>
 <hr width="80%"/>
 
-<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6" style="text-align: center;">
+<div class="col-lg-6 col-lg-offset-3 col-md-6 col-md-offset-3 col-sm-6 col-sm-offset-3 col-xs-6 col-xs-offset-3" style="text-align: center;">
     <div class="form-group">
         <label>Comentario</label>
             <div class="form-group">
@@ -373,7 +407,7 @@
 </div>
 <!--BOTONES-->
 
-<div class="col-lg-12 col-md-12 col-xs-12 text-right">
+<div class="col-lg-12 col-md-12 col-xs-12 text-center">
     <?php                                             
         echo $this->formRow($this->form->get('cancel'));
     ?>
@@ -385,32 +419,16 @@
                                                                                                                  
 </div> 
 </div>
-<div id="respuestaok" class="row" style="display: none;">
-<div class="col-lg-12 text-center" style="padding: 80px;">
-
-<span><i class="fa fa-thumbs-o-up fa-5x"></i></span>
-<h2 id="descrok"></h2>
-
-</div>
-</div>
-<div id="respuestanok" class="row" style="display: none;">
-<div class="col-lg-12 text-center" style="padding: 80px;">
-
-<span><i class="fa fa-close fa-5x"></i></span>
-<h2 id="descrnok"></h2>
-
-</div>
-</div>
-<div id="loading" style="padding: 200px; display: none;"></div>
-<br />
 <br />
 <script>
+$("#divformapago input[type='radio']").find
 function closeModal(){
     $('#modal3').modal('hide');
 }
 function mostrarTotal(){
     $('#divpagoparcial').css("display","none");
     $('#divdetalle2').css("display","none");
+    $('#div_abono').css("display","none");         
 
     $('#total').removeAttr("disabled");
     $('#divpagototal').css("display","block");           
@@ -432,14 +450,16 @@ function mostrarParcial(){
 
 
     $('#total').attr("disabled","disabled"); 
-    $('#divdetalle2').css("display","block");            
+    $('#divdetalle2').css("display","block");
+    $('#div_abono').css("display","block");                
     $('#divpagoparcial').css("display","block");   
 }
 function mostrarDetalle1(){
   $("#divdetalle1").fadeToggle();  
 }
 function mostrarDetalle2(){
-  $("#divdetalle2").fadeToggle();  
+  $("#divdetalle2").fadeToggle();
+  $("#div_abono").fadeToggle();  
 }
 function mostrarEfectivo(){    
 
@@ -501,7 +521,6 @@ function validaMonto(){
     //Valido si selecciona checkbox 
     if (select > 0){
          a=0;
-         $("#noktotal").css('display','none');
          $('#divdetalle2').find('input:checkbox:checked').each( function(){a = a + parseInt($(this).val());});    
          var monto = $('#monto').val().replace(".","");
             //Valido que monto sea superior a lo seleccionado
@@ -512,7 +531,6 @@ function validaMonto(){
                     $('#monto').val('');
             }else{
                     $("#oktotal").css('display','inline-block');
-                    $("#noktotal").css('display','none');
         
        }
     }else{
@@ -545,8 +563,10 @@ $("#monto").keyup(function () {
 */
 
 function sumar(){
-a = 0;
+var a = 0;
+var b = 0;
 $('#divdetalle2').find('input:checkbox:checked').each( function(){a = a + parseInt($(this).val());});
+$('#div_abono').find('input:checkbox:checked').each( function(){a = a - parseInt($(this).val());});  
     var formatotal = a.toFixed(1).replace(/\d(?=(\d{3})+\.)/g, '$&.');
     var respuesta = formatotal.substring(0,formatotal.length-2);          
 $('#total2').text('$ '+respuesta);
@@ -564,7 +584,7 @@ $("#divformapago input[type='radio']").change(function () {
                         $("#oktotal").css('display','inline-block'); 
             }else{
                         $("#oktotal").css('display','none');
-                        $("#monto").removeAttr('disabled');
+                      //  $("#monto").removeAttr('disabled');
                         $("#monto").val('');                         
 }});
 if($("#displaytotal").css("display")=="none"){
@@ -573,11 +593,16 @@ if($("#displaytotal").css("display")=="none"){
     $("#radiototal").trigger('click');    
 }
 $("#efectivo").trigger('click');
-$("#formpago").submit(function(e){
-    
+$("#formpago").submit(function(e){    
+    var validagc = $("#ch_gc_total").find('input:checkbox:checked').length;
+    if(validagc<1 && $("#divformapago input[type='radio']:checked").val() == "parcial"){
+         e.preventDefault(); //STOP default action
+         toastr.info("Debe seleccionar al menos 1 Gasto Comun");
+    }else{
     $("#origen").prop("disabled", false);
     $("#destino").prop("disabled", false);
     $("#monto").prop("disabled", false); 
+    $("#div_abono_s").find('input:checkbox:checked').each(function(){$(this).prop("disabled", false);;});  
     var postData = $(this).serializeArray();
     var formURL = $(this).attr("action");
     $.ajax(
@@ -587,9 +612,11 @@ $("#formpago").submit(function(e){
         data : postData,
         dataType : 'json',
         success : function(response) {
+            console.log(response)
              $("#modalingreso").modal('hide');
             toastr.clear();
-            toastr.success(response.desc);                                         
+            toastr.success(response.desc); 
+            setTimeout(function(){ $("#btn_busca_dpto").trigger('click'); }, 1000);                                         
         },
         error: function(jqXHR, textStatus, errorThrown) 
         {            
@@ -597,6 +624,6 @@ $("#formpago").submit(function(e){
         }
     });
     e.preventDefault(); //STOP default action
-    e.unbind(); //unbind. to stop multiple form submit.
+    }
 });
 </script>

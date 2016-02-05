@@ -32,12 +32,24 @@ class EgresoForm extends Form
             'type' => 'Zend\Form\Element\Select',
             'name' => 'proveedores',
             'attributes' => array(
-                'onchange' => 'paso3()',
+                'onchange' => 'paso3a()',
                 'class' => 'form-control',
                 'id' => 'combo_proveedores',                
                 'required' => 'true'                               
             )
         ));  
+        
+        //Select ///////////////////////////////// Combo trabajadores
+        $this->add(array(
+            'type' => 'Zend\Form\Element\Select',
+            'name' => 'trabajadores',
+            'attributes' => array(
+                'onchange' => 'paso3b()',
+                'class' => 'form-control',
+                'id' => 'combo_trabajadores',                
+                'required' => 'true'                               
+            )
+        )); 
         
         //Button ///////////////////////////////// Ir a Pagar
         $this->add(array(
@@ -49,6 +61,20 @@ class EgresoForm extends Form
                 'title' => 'Enviar',
                 'data-toggle'=>'modal',
                 'data-target'=>'#pagoprov',
+                'class' => 'btn btn-success',
+            ),
+        ));
+        
+        //Button ///////////////////////////////// Ir a Pagar
+        $this->add(array(
+            'name' => 'enviar2',
+            'attributes' => array(                                
+                'onclick' => 'modalPagoTrabajador()',
+                'type' => 'button',
+                'value' => 'Ir a pagar',
+                'title' => 'Enviar',
+                'data-toggle'=>'modal',
+                'data-target'=>'#pagotrab',
                 'class' => 'btn btn-success',
             ),
         ));

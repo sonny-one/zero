@@ -7,38 +7,60 @@
     <div class="col-lg-12">
         <div class="panel panel-green">                           
             <div class="panel-body">                                                                                          
-                <div class="row">                                                       
+                <div class="row">   
+                
+                <!--div class="col-lg-3 col-md-3  col-sm-6 col-xs-6" >
+                                            <a class="btn btn-success"  style="color : #fff;"onclick="modalProv()" data-toggle='modal' data-target='#modalprov'><i class="fa fa-plus"></i> Nuevo Proveedor</a>
+                                        </div-->
+                                        <!--BOTON 2-->                            
+                                        <!--div class="col-lg-3 col-md-3  col-sm-6 col-xs-6">
+                                            <a class="btn btn-success"  style="color : #fff;"onclick="modalServ()" data-toggle='modal' data-target='#modalprov2'><i class="fa fa-plus"></i> Nuevo Servicio</a>
+                </div-->
+                
+                                                                    
                             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">                                                  
                                         <!--BOTON 1-->
-                                        <div class="col-lg-3 col-md-3  col-sm-6 col-xs-6" >
-                                            <a class="btn btn-success"  style="color : #fff;"onclick="modalProv()" data-toggle='modal' data-target='#modalprov'><i class="fa fa-plus"></i> Nuevo Proveedor</a>
-                                        </div>
-                                        <!--BOTON 2-->                            
-                                        <div class="col-lg-3 col-md-3  col-sm-6 col-xs-6">
-                                            <a class="btn btn-success"  style="color : #fff;"onclick="modalServ()" data-toggle='modal' data-target='#modalprov2'><i class="fa fa-plus"></i> Nuevo Servicio</a>
-                                        </div>
-                            </div>                                                                                         
-                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                <h2 class="page-header" style=""><i class="fa fa-search"></i> &nbsp;&nbsp;Proveedores Activos </h2>    
-                            </div>                     
-                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                           <div class="dataTable_wrapper">
-     							<table class="table table-bordered table-hover text-center" id="tablaprov">
-							     <thead>
-                                    <tr>
-                                            <th>Nombre</th>
-                                            <th>Servicio</th>
-                                            <th>Telefono</th>
-                                            <th>Ultimo Pago</th>
-                                            <th>Mas</th>
-                                            
-                                    </tr>
-							     </thead>
-							      <tbody id="tablaprov2">
-                                    </tbody>
-							    </table>
-                            </div>                                                    
-                    </div>
+                            <a class='more' onclick="modalProv()" data-toggle='modal' data-target='#modalprov'>
+                                        <div class='col-lg-3 col-md-3 col-sm-6 col-xs-12'>                                  
+												<div class='dashboard-stat green'>                                                
+															<div class='visual'>
+																<i class='fa fa-plus'></i>
+															</div>
+                                                            
+															<div class='details'>
+																<div class='number'>																	
+                                                                     <span style='font-size: 20px;'> </span>                                                                     
+																</div>
+																<div class='desc'>
+																	 <strong>Ingresar nuevo proveedor al sistema</strong>
+																</div>
+															</div>
+                                                                                                                    																													     														
+												</div>                                                                                                                         
+                                        </div>  
+                            </a> 
+                            <a class='more' onclick="modalServ()" data-toggle='modal' data-target='#modalprov2'>
+                                        <div class='col-lg-3 col-md-3 col-sm-6 col-xs-12'>                                  
+												<div class='dashboard-stat blue'>                                                
+															<div class='visual'>
+																<i class='fa fa-plus'></i>
+															</div>
+                                                            
+															<div class='details'>
+																<div class='number'>																	
+                                                                     <span style='font-size: 20px;'> </span>                                                                     
+																</div>
+																<div class='desc'>
+																	 <strong>Agregar nuevo servicio a proveedor</strong>
+																</div>
+															</div>
+                                                                                                                    																													     														
+												</div>                                                                                                                         
+                                        </div>  
+                            </a>
+                             <div id="tabla_proveedores">                                                                                                                
+                            </div> 
+                        
                 </div>                     
             </div>
         </div>
@@ -202,6 +224,19 @@
 
 <!-- FIN MODAL Detalle Proveedor -->
 <script>
+function getTablaProveedores(){
+    $.ajax( {  
+        url  : '<?php echo $this->basePath()."/admin/finanzas/tablaproveedores"?>',        
+		type : 'post', 
+        beforeSend: function(){
+            $("#tabla_proveedores").html("<div class='text-center'><i class='fa fa-spinner fa-spin' style='font-size:20px;'></i></div>");
+        },     
+		success : function(response) {
+		  $("#tabla_proveedores").html(response);                           
+       }   
+});    
+}
+getTablaProveedores();
 $('#tablaprov').DataTable({
                 responsive: true
         });            
@@ -225,10 +260,7 @@ $.ajax( {
          $('#tablaprov2 tr:last').attr('id',response.prov[i].id);                      
       }                
   }   
-});  
-function closeModal(){
-    $('#modalprov2').modal('hide');
-}                                     
+});                                  
 function modalProv()
 {   
 	$.ajax( {  

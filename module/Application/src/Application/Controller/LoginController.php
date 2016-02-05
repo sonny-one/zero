@@ -195,10 +195,10 @@ class LoginController extends AbstractActionController
                         $sid = new Container('base');
                         $sid->offsetSet('usuario', $listaUsuario[0]['usuario']);
                         $sid->offsetSet('id_usuario', $listaUsuario[0]['id']);
+                        $sid->offsetSet('id_persona', $listaUsuario[0]['id_persona']);
                         $sid->offsetSet('id_db',$listDb[0]['id']); 
-                        $sid->offsetSet('id_perdet',$perdet[0]['id']); 
-                         
-                        
+                        $sid->offsetSet('id_perdet',$perdet[0]['id']);
+                        $sid->offsetSet('id_unidad',$perdet[0]['id_unidad']);                                                  
                         
                         //Usuario posee mas edificios
                         if (count($listDb)>1){

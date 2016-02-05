@@ -76,7 +76,7 @@ class ProveedorTable extends TableGateway
     public function getProveedoresCombo(Adapter $dbAdapter){
 
          $this->dbAdapter=$dbAdapter;
-         $query = "select distinct id,nombre from sis_w_proveedor where activo = '1'";
+         $query = "select distinct id,nombre from sis_w_proveedor where activo = '1' order by nombre ";
          $result=$this->dbAdapter->query($query,Adapter::QUERY_MODE_EXECUTE);
          $recorre = $result->toArray();
          $resultado["0"]="Seleccione un Proveedor";
@@ -87,10 +87,26 @@ class ProveedorTable extends TableGateway
             return $resultado;
     }
     
+            
+    
+    public function getProveedoresCombo3(Adapter $dbAdapter){
+
+         $this->dbAdapter=$dbAdapter;
+         $query = "select distinct id,nombre from sis_w_proveedor where activo = '1' order by nombre";
+         $result=$this->dbAdapter->query($query,Adapter::QUERY_MODE_EXECUTE);
+         $recorre = $result->toArray();
+         $resultado["0"]="Elige un proveedor";
+            for($i=1;$i<=count($recorre);$i++)
+                {
+                    $resultado[$recorre[$i-1]['id']] = $recorre[$i-1]['nombre']; 
+                }
+            return $resultado;
+    }
+    
     public function getAseguradoras(Adapter $dbAdapter, $id_servicio){
 
          $this->dbAdapter=$dbAdapter;
-         $query = "select distinct id,nombre from sis_w_proveedor where id_servicio = '$id_servicio' and activo = '1'";
+         $query = "select distinct id,nombre from sis_w_proveedor where id_servicio = '$id_servicio' and activo = '1' order by nombre";
          $result=$this->dbAdapter->query($query,Adapter::QUERY_MODE_EXECUTE);
          $recorre = $result->toArray();
          $resultado["0"]="Seleccione una Aseguradora";

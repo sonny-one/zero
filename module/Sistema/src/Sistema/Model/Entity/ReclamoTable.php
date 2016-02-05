@@ -105,6 +105,15 @@ class ReclamoTable extends TableGateway
         $this->update($array, array('id' => $id));
     }
     
+    public function megustaReclamo(Adapter $dbAdapter, $id)
+    {             
+        $this->dbAdapter=$dbAdapter;
+
+        $query =  "SELECT count(*) as total FROM us_w_reclamo WHERE id='$id' order by id desc";              
+        
+        $this->dbAdapter->query($query,Adapter::QUERY_MODE_EXECUTE);		
+
+    }
     public function getEstadistica(Adapter $dbAdapter, $flag)
     {
         

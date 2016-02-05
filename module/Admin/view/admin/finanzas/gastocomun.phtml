@@ -3,39 +3,41 @@
                     <div class="panel panel-green">
                         <div class="panel-body">
                     <div class="col-lg-12">
-                        <h2 class="page-header text-center">Confecci&oacute;n Gasto Com&uacute;n <?php setlocale(LC_ALL,”es_ES”);echo ucfirst($mes);?> 2015</h2>
+                        <h2 class="page-header text-center">Confecci&oacute;n Gasto Com&uacute;n Enero <?php //setlocale(LC_ALL,”es_ES”);echo ucfirst($mes);?> 2015</h2>
                     </div> 
                         <div class="panel-group" id="accordionf">
 <!--Funcionarios-->                        
                             <div class="col-lg-12" style="margin-bottom: 1em;">
                             <a id="btn_gcomun" class="btn" data-toggle="collapse" data-parent="#accordionf" href="#funcionarios">
                                 <p style="color: #000;text-align: left; font-size: 18px;"><i class="fa fa-users">
-                                </i>&nbsp; &nbsp;Remuneraciones del personal <span style="float: right;">Total: $ <span class="personal_total"></span></span></p> 
+                                </i>&nbsp; &nbsp;Administraci&oacute;n <span class='label label-sm label-success'>Total: <strong>$ <?php echo $total_trabajadores;  ?></strong></span></p> 
                             </a>
-                            <div id="funcionarios" class="table-responsive panel-collapse collapse">
+                            <div id="funcionarios" class="table-responsive panel-collapse ">
                             <input type="hidden" value="0" id="personal_input_hi" />
-                                <table id="personal_tabla" class="table table-striped">
+                            
+                            <div class="table-responsive">
+                                <table class="table table-hover">
                                     <thead>
-                                        <tr>
-                                            <th>N&deg; Empleado</th>
-                                            <th>Nombre</th>
-                                            <th>Cargo</th>                                            
-                                            <th>Estado Pago</th>
-                                            <th>Monto</th>
+                                        <tr>                                            
+                                            <th>Nombre Trabajador</th>
+                                            <th>Cargo</th>
+                                            <th>Tipo Contrato</th>                                            
+                                            <th>Estado Pago</th>                                                                                        
+                                            <th>Anticipos</th>                                            
+                                            <th>Sueldo</th>                                            
+                                            <th>Total peri&oacute;do </th>
+                                            <th>Comprobante</th>                                            
                                         </tr>
                                     </thead>
                                     <tbody style="text-align: center;">
-                                    <?php for ($i=0;$i<(count($this->funcionarios));$i++){?>
-                                        <tr >
-                                            <td><?php echo (1000+$this->funcionarios[$i]['id']); ?></td>
-                                            <td><?php echo $this->funcionarios[$i]['persona'][0]['nombre']." ".$this->funcionarios[$i]['persona'][0]['apellido']; ?></td>
-                                            <td><?php echo $this->funcionarios[$i]['cargo'];?></td>
-                                            <td><span class="bag-<?php echo $this->funcionarios[$i]['bag'];?>" id="spanbag"><?php echo ucfirst($this->funcionarios[$i]['estado_pago']);?></span></td>
-                                            <td ><span class="personal_suma"><?php echo number_format($this->funcionarios[$i]['monto'],"0",".",".");?></span></td>
-                                        </tr>
-                                        <?php };?>                                                                      
+                                       <?php 
+                                       echo $tabla_trabajadores;
+                                         ?>
                                     </tbody>
                                 </table>
+                            </div>
+                                
+
                             </div>
                             </div> 
                             
@@ -44,7 +46,7 @@
                            <div class="col-lg-12" style="margin-bottom: 1em;">
                             <a id="btn_gcomun" class="btn" data-toggle="collapse" data-parent="#accordionf" href="#mantenciones">
                                 <p style="color: #000;text-align: left; font-size: 18px;"><i class="fa fa-wrench">
-                                </i>&nbsp; &nbsp;Tareas de Mantenci&oacute;n<span style="float: right;">Total: $3.131.136</span></p> </a>
+                                </i>&nbsp; &nbsp;Tareas de Mantenci&oacute;n <span style="float: right;">&nbsp;&nbsp;<strong> $ 3.131.136</strong></span></p> </a>
                             <div id="mantenciones" class="table-responsive panel-collapse collapse">
                                 <table class="table table-striped">
                                     <thead>
@@ -80,7 +82,7 @@
 <div class="col-lg-12" style="margin-bottom: 1em;">
                             <a id="btn_gcomun" class="btn" data-toggle="collapse" data-parent="#accordionf" href="#gastos">
                                 <p style="color: #000;text-align: left; font-size: 18px;"><i class="fa fa-users">
-                                </i>&nbsp; &nbsp;Gastos e Insumos<span style="float: right;">Total: $2.231.136</span></p> 
+                                </i>&nbsp; &nbsp;Gastos e Insumos <span style="float: right;">&nbsp;&nbsp; <strong>$ 2.231.136</strong></span></p> 
                                 </a>
                             <div id="gastos" class="table-responsive panel-collapse collapse">
                                 <table class="table table-striped">
@@ -125,7 +127,7 @@
 <!--Seguros y Otros-->                  
 
 <div class="col-lg-12" style="margin-bottom: 1em;">
-                            <a id="btn_gcomun" class="btn" data-toggle="collapse" data-parent="#accordionf" href="#segyotros"><p style="color: #000;text-align: left; font-size: 18px;"><i class="fa fa-users"></i>&nbsp; &nbsp;Seguros y Otros</p> </a>
+                            <a id="btn_gcomun" class="btn" data-toggle="collapse" data-parent="#accordionf" href="#segyotros"><p style="color: #000;text-align: left; font-size: 18px;"><i class="fa fa-users"></i>&nbsp; &nbsp;Seguros y Otros &nbsp;&nbsp; <strong>$ 926.633</strong></p> </a>
                             <div id="segyotros" class="table-responsive panel-collapse collapse">
                                 <table class="table table-striped">
                                     <thead>

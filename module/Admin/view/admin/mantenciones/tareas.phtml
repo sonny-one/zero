@@ -1,0 +1,211 @@
+<div class="row"> 
+<br /> <br />          
+                    <div class="col-lg-10 col-md-10 col-lg-offset-1 col-md-offset-1">
+                        <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            <i class="fa fa-check"></i> &nbsp;&nbsp;Gestion de tareas de mantenci&oacute;n
+                        </div>                            
+                        <div class="panel-body text-center">
+        
+        <div class="col-lg-3" style="text-align: center;">
+            <img src="<?php echo $this->basePath()?>/img/calendar_icon.png" class="img-rounded" style="max-width: 80%;"/> <br />
+        </div> 
+                  <div class="col-lg-9">
+                  <h4 id="titulo_tabla1">Seleccione una tarea...</h4>
+                  <div class="table-responsive" style="text-align:center">
+                                  <table class="table table-striped table-bordered table-hover" id="data-table-perfil">
+                                                <tbody>
+                                                <tr>
+                                                        <th WIDTH="200">Nombre</th>
+                                                        <td id="td-nombre"></td>
+                                                </tr>
+                                                <tr>
+                                                        <th>Fecha L&iacute;mite</th>
+                                                        <td id="td-fecha"></td>
+                                                </tr>                                                
+                                                <tr> 
+                                                        <th>Responsable</th>
+                                                        <td id="td-responsable"></td>
+                                                </tr>
+                                                <tr>                                                                                    
+                                                        <th>Editar</th>
+                                                        <td id="td-editar"></td>
+                                                </tr>
+                                                </tbody>
+                                                </table>
+                                        </div>
+                  </div>
+                 <div class="col-lg-12 text-right" style="margin-bottom: 20px;">
+                  
+                  <a class="btn btn-success" style="color: #fff;" onclick="excelTareas();"data-toggle="modal" data-target="#modalxcltarea" keyboard="false"> <i class="fa fa-file-excel-o"></i> &nbsp;Generar Excel</a>
+                  
+                  <a class="btn btn-primary" style="color: #fff;" onclick="nuevaTarea();" data-toggle="modal" data-target="#modalnuevatarea" keyboard="false"> <i class="fa fa-plus"></i> Nueva Tarea</a>                
+                  
+                  </div>
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-left">
+                                <h4 class="page-header" style="margin-top: -10px;"><i class="fa fa-calendar"></i> &nbsp;&nbsp;Tareas Mensuales </h4>    
+                            </div>
+            <div class="col-lg-12">                                                                                        
+                <div class="dataTable_wrapper" id="tablaconserje">
+                                <table class="table table-striped table-bordered table-hover" id="tablatarea">
+                                    <thead>
+                                        <tr>                                            
+                                            <th>N&deg;</th>
+                                            <th>Nombre Tarea</th>
+                                            <th>Resposable</th>
+                                            <th>Estado</th>
+                                            <th>Fecha de Inicio</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="body-table-tareas">   
+                                                                                                                           
+                                    </tbody>
+                                </table>
+                            </div>
+                </div>
+            </div>           
+        </div>           
+     </div>            
+</div>           
+
+
+
+<!-- MODAL Nueva Tarea -->
+
+<div class="modal fade bs-example-modal-lg" id="modalnuevatarea" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel2" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>                    
+                    <h4 class="modal-title" id="myModalLabel2" style="text-align: center;">Ingresar nueva tarea al sistema</h4>
+            </div>
+                <div id="bodynuevatarea" class="modal-body" style="text-align: center;">Cargando...</div>
+        </div>                 
+    </div>              
+</div>
+
+<!-- FIN MODAL Nueva Tarea --> 
+
+<!-- MODAL Excel Tarea -->
+
+<div class="modal fade bs-example-modal-sm" id="modalxcltarea" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel2" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+        <div class="text-right" style="padding: 12px;">
+                <i style="cursor: pointer;" data-dismiss="modal" class="fa fa-close"></i>                    
+            </div>           
+                <div id="bodynuevatarea" class="modal-body" style="text-align: center;">
+                <i id="i_xcltarea" class="fa fa-file-excel-o fa-4x"></i>
+                <p id="p_xcltarea" style="font-size: 18px;">Se ha generado un documento Excel</p>                
+                <a id="b_xcltarea" href="<?php echo $this->ruta;?>" class="btn btn-success"><i class="fa fa-download"></i> Descargar</a>
+                </div>
+        </div>                 
+    </div>              
+</div>
+
+<!-- FIN MODAL Excel Tarea --> 
+
+<!-- MODAL Editar Tarea -->
+
+<div class="modal fade bs-example-modal-lg" id="modaleditartarea" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel2" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>                    
+                    <h4 class="modal-title" id="myModalLabel2" style="text-align: center;">Editar Tarea</h4>
+            </div>
+                <div id="bodyeditartarea" class="modal-body" style="text-align: center;">Cargando...</div>
+        </div>                 
+    </div>              
+</div>
+
+<!-- FIN MODAL Editar Tarea -->  
+
+<?php echo $this->rsptaOK ?>
+<script>
+$('#tablatarea').DataTable({
+                responsive: true
+        });
+$.ajax( {  
+        url : '<?php echo $this->basePath()."/admin/mantenciones/gettareas"?>',
+		type : 'post',
+        beforeSend : function() {
+           $('#tablatarea').DataTable().clear();          
+            },        
+		success : function(response) {
+        var t = $('#tablatarea').DataTable();    
+        var nok = 0;  
+        for (i=0; i<=response.tareas.length; i++) {        
+         t.row.add( [                        
+            response.tareas[i].id,
+            response.tareas[i].nombre,
+            response.tareas[i].responsable,
+            response.tareas[i].estado,
+            response.tareas[i].fecha,                              
+        ] ).draw();
+         //$('#tablaprov2 tr:last').attr('id',response.prov[i].id);                      
+      }                
+  }   
+});   
+
+$('#tablatarea tbody').on( 'click', 'tr', function () {
+    $('#titulo_tabla1').text("Tarea seleccionada")
+    var col = $('#tablatarea').DataTable().row( this ).data();               
+    $("#td-nombre").text(col[1]);
+    $("#td-responsable").text(col[2]); 
+    $("#td-fecha").text(col[4]);       
+    $("#td-editar").html("<a href='javascript:void(0)' onclick='editarTarea("+col[0]+")' data-toggle='modal' data-target='#modaleditartarea' style='cursor: pointer;'><i class='fa fa-edit fa-2x'></i></a>").fadeIn(200);
+
+} );
+function nuevaTarea(){
+	$.ajax( {
+        url : '<?php echo $this->basePath()."/admin/mantenciones/nuevatarea"?>',
+		type : 'post',
+		beforeSend : function() {
+		//	$("#loading").modal('show');
+		//	$("#loading").html("<img src='<?php echo $this->basePath()?>/img/loading.gif'/>");
+		},
+		success : function(response) {
+		//	$("#loading").modal('hide');
+         //   $("#loading").html("");
+			$("#bodynuevatarea").html(response);
+		}
+	});
+}
+function editarTarea(id){
+    var parametros = {'id':id};
+$.ajax( {
+        url : '<?php echo $this->basePath()."/admin/mantenciones/editartarea"?>',
+        data : parametros,
+		type : 'post',
+		beforeSend : function() {
+		//	$("#loading").modal('show');
+		//	$("#loading").html("<img src='<?php echo $this->basePath()?>/img/loading.gif'/>");
+		},
+		success : function(response) {
+		//	$("#loading").modal('hide');
+         //   $("#loading").html("");
+			$("#bodyeditartarea").html(response);
+		}
+	});  
+    
+}
+function excelTareas(){
+  $.ajax( {
+        url : '<?php echo $this->basePath()."/admin/mantenciones/exceltareas"?>',
+		type : 'post',
+		beforeSend : function() {
+		//	$("#loading").modal('show');
+		//	$("#loading").html("<img src='<?php echo $this->basePath()?>/img/loading.gif'/>");
+		},
+		success : function(response) {
+		          if(response.status=="nok"){
+                    $("#i_xcltarea").removeClass("fa-file-pdf-o").addClass("fa-warning");
+                    $("#p_xcltarea").text("Ups! tuvimos un problema! favor contacte con nuestro soporte");                    
+                    $("#b_xcltarea").css("display","none");		              
+		          }			
+		}
+	}); 
+    
+}
+</script>

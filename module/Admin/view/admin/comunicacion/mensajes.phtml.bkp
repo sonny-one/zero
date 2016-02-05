@@ -1,0 +1,131 @@
+<div class="row">
+				<div class="col-md-12 ">
+					<!-- BEGIN SAMPLE FORM PORTLET-->
+					<div class="portlet box blue-madison">
+						<div class="portlet-title blue-madison">
+							<div class="caption">
+								<i class="fa fa-envelope"></i>  Mi Buz&oacute;n
+							</div>                            
+						</div>
+                        <div class="portlet-body"> 
+						
+                <div class="col-lg-12">
+                <h3 class="page-header" ><i class="fa fa-paper-plane" style="font-size: 20px;"></i> &nbsp;&nbsp;Mis mensajes Enviados</h3>    
+                </div>
+                    
+                        
+                        
+                        	<table class="table table-striped table-bordered table-hover" id="sample_1">
+							<thead>
+                                <tr>
+                                    <td> N&deg;</td>
+                                    <td><i class="fa fa-calendar"></i> Fecha</td>
+                                    <td><i class="fa fa-user"></i> Destino</td>
+                                    <td><i class="fa fa-tag"></i> Asunto</td>                                    
+                                    <td><i class="fa fa-plus"></i> Detalles</td>                                
+                                </tr>
+							</thead>
+							<tbody>
+                                <tr>
+                                    <td>025</td>
+                                    <td>27-11-2015</td>
+                                    <td>Administrador</td>
+                                    <td>Gastos Comunes</td>                                    
+                                    <td><a> Abrir</a></td>                                
+                                </tr>
+                                <tr>
+                                    <td>027</td>
+                                    <td>21-11-2015</td>
+                                    <td>Administrador</td>
+                                    <td>Asamblea</td>                                    
+                                    <td><a> Abrir</a></td>                                
+                                </tr>
+                                <tr>
+                                    <td>035</td>
+                                    <td>28-11-2015</td>
+                                    <td>Administrador</td>
+                                    <td>Salvo Conducto</td>                                    
+                                    <td>
+                                        <a data-target="#modal_mensaje" data-toggle="modal" onclick="detalleMs(3)"> 
+                                            Abrir
+                                        </a>
+                                    </td>                                
+                                </tr>
+							</tbody>
+							</table>
+                            
+                <div class="col-lg-12">
+                <h3 class="page-header" ><i class="fa fa-history" style="font-size: 20px;"></i> &nbsp;&nbsp;Mensajes Recibidos</h3>    
+                </div>
+                    
+                        
+                        
+                        	<table class="table table-striped table-bordered table-hover" id="sample_1">
+							<thead>
+                                <tr>
+                                    <td> N&deg;</td>
+                                    <td><i class="fa fa-calendar"></i> Fecha</td>
+                                    <td><i class="fa fa-home"></i> Departamento</td>
+                                    <td><i class="fa fa-tag"></i> Asunto</td>                                    
+                                    <td><i class="fa fa-plus"></i> Detalles</td>                                
+                                </tr>
+							</thead>
+							<tbody>
+                                <tr>
+                                    <td>025</td>
+                                    <td>27-11-2015</td>
+                                    <td>603</td>
+                                    <td>Gastos Comunes</td>                                    
+                                    <td><a> Abrir</a></td>                                
+                                </tr>
+                                <tr>
+                                    <td>027</td>
+                                    <td>21-11-2015</td>
+                                    <td>603</td>
+                                    <td>Asamblea</td>                                    
+                                    <td><a> Abrir</a></td>                                
+                                </tr>
+                                <tr>
+                                    <td>035</td>
+                                    <td>28-11-2015</td>
+                                    <td>603</td>
+                                    <td>Salvo Conducto</td>                                    
+                                    <td><a> Abrir</a></td>                                
+                                </tr>
+							</tbody>
+							</table>
+                            
+                        </div>
+      </div>
+     </div>
+    </div>
+    
+<!-- MODAL Pago Proveedor -->
+<div class="modal fade bs-example-modal-md" id="modal_mensaje" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>                    
+                    <h4 class="modal-title" id="myModalLabel" ><i class="fa fa-envelope"></i> &nbsp;Detalle del mensaje</h4>
+            </div>
+                <div id="detalle_mensaje" class="modal-body">Cargando...</div>
+        </div>
+    </div>             
+</div>
+<!-- FIN MODAL Pago Proveedor -->  
+
+<script>
+function detalleMs(id_mensaje){
+var parametros =  {
+        "id_mensaje" : id_mensaje,                       
+};
+	$.ajax( {  
+        url  : '<?php echo $this->basePath()."/admin/comunicacion/detallemensaje"?>',
+        data : parametros,
+		type : 'post',      
+		success : function(response) {
+		  $("#detalle_mensaje").html(response);                               
+       }   
+});          
+}
+</script>        

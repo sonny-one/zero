@@ -1,10 +1,13 @@
 <?php 
-if($saldo>0){
-    $saldo= -$saldo;
-    $icnSaldo="warning";
+if($abono>0){
+    $icnAbono="success";  
 }else{
-    $icnSaldo="success";
-    $displayPagar="none";
+    $icnAbono="info"; 
+}
+if($saldo>0){
+    $icnSaldo="danger";
+}else{
+    $icnSaldo="info";
 }
 ?>
 <input type="hidden" id="id_uni_abono" value="<?php echo $gcomun[0]['id_unidad'];?>"/>
@@ -30,7 +33,10 @@ if($saldo>0){
                                 }
                               ?>
                               <th>
-                                 Saldo 
+                                 Saldo Favor 
+                              </th>
+                              <th>
+                                 Total 
                               </th>
                               <th>
                                  Acci&oacute;n 
@@ -56,7 +62,10 @@ if($saldo>0){
                                     &nbsp;<i class='fa fa-$icn' style='font-size: 9px;'></i></span>
                                  </td>";                               
                                 }
-                              ?>                                                                                       
+                              ?>   
+                              <td >
+                                 <span class="label label-sm label-<?php echo $icnAbono;?>" style="font-size: 16px;">$ <?php echo number_format($abono[0]['monto'],"0",".",".");?> </span>									
+                              </td>                                                                                    
                               <td >
                                  <span class="label label-sm label-<?php echo $icnSaldo;?>" style="font-size: 16px;">$ <?php echo number_format($saldo,"0",".",".");?> </span>									
                               </td>
@@ -65,9 +74,37 @@ if($saldo>0){
                                  <span class="label label-sm label-info" style="font-size: 18px;">
                                  <i class="fa fa-dollar" style="font-size: 16px;"></i> &nbsp;Pagar GC 
                                  </span>
-                                 </a>
-                              </td>
+                                 </a>   
+                                   <a style="display: <?php echo $displayAjuste;?>;text-decoration: none;" onclick="ajusteGC(<?php echo $gcomun[0]['id_unidad'].",".$abono[0]['monto'];?>)" >
+                                 <span class="label label-sm label-info" style="font-size: 18px;">
+                                 <i class="fa fa-dollar" style="font-size: 16px;"></i> &nbsp;Ajuste GC 
+                                 </span>
+                                 </a>                               
+                              </td>                              
                            </tr>
                         </tbody>
 							</table>      
-                  </div>                                               
+                  </div>
+<script>
+function ajusteGC(id_uni,monto_abono){   
+    var postData =
+             {'id_unidad': id_uni,    
+              'monto_abono': monto_abono}
+    $.ajax(
+    {
+        url : '<?php echo $this->basePath()."/admin/finanzas/ajustargc"?>',
+        type: "POST",
+        data : postData,
+        dataType : 'json',
+        success : function(response) {             
+            toastr.clear();
+            toastr.success(response.desc); 
+            setTimeout(function(){ $("#btn_busca_dpto").trigger('click'); }, 1000);                                         
+        },
+        error: function(jqXHR, textStatus, errorThrown) 
+        {            
+            toastr.error("Ups! Ocurrio un problema, favor contacta con al equipo de soporte");      
+        }
+    });
+}
+</script>                  

@@ -91,7 +91,7 @@ class GCunidadTable extends TableGateway
                     and  gc.id_unidad = un.id
                     and gp.id = pd.id_persona
                     and pd.id_unidad = un.id
-                    order by gc.date_start desc limit 6";
+                    order by gc.date_start desc limit 4";
          $result=$this->dbAdapter->query($query,Adapter::QUERY_MODE_EXECUTE);
          $recorre = $result->toArray();
          return $recorre;
@@ -100,11 +100,35 @@ class GCunidadTable extends TableGateway
     public function getSaldoUnidad(Adapter $dbAdapter,$id_unidad){
         
         $this->dbAdapter=$dbAdapter;
-         $query = "select sum(monto) as saldo from sis_w_gastocomun_u 
-                    where id_unidad = '$id_unidad'
-                    and pagado =  'n'";
+         $query = "select 
+                    COALESCE((select sum(monto) from sis_w_gastocomun_u where pagado='n' and id_unidad = '$id_unidad'),0)
+                    -
+                    COALESCE((select sum(monto) from sis_w_abono where activo='1' and id_unidad = '$id_unidad'),0) 
+                    as saldo_total";
          $result=$this->dbAdapter->query($query,Adapter::QUERY_MODE_EXECUTE);
          $recorre = $result->toArray();
          return $recorre;
-    }            
+    } 
+    public function getSaldoGC(Adapter $dbAdapter,$id_unidad){
+        
+        $this->dbAdapter=$dbAdapter;
+         $query = "select 
+                    COALESCE((select sum(monto) from sis_w_gastocomun_u where pagado='n' and id_unidad = '$id_unidad'),0)                                         
+                    as saldo_gc";
+         $result=$this->dbAdapter->query($query,Adapter::QUERY_MODE_EXECUTE);
+         $recorre = $result->toArray();
+         return $recorre;
+    } 
+     public function getPrimerMesDeuda(Adapter $dbAdapter,$id_unidad){
+        
+        $this->dbAdapter=$dbAdapter;
+         $query = "select * from sis_w_gastocomun_u 
+                    where id_unidad = '$id_unidad'
+                    and pagado = 'n'
+                    order by date_start asc
+                    limit 1 ";
+         $result=$this->dbAdapter->query($query,Adapter::QUERY_MODE_EXECUTE);
+         $recorre = $result->toArray();
+         return $recorre;
+    }           
 }
