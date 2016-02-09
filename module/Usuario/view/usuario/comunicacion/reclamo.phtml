@@ -1,3 +1,6 @@
+  <br><br>
+<br><br><br> 
+
 <div class="row">
 				<div class="col-md-12 ">
 					<!-- BEGIN SAMPLE FORM PORTLET-->
@@ -9,10 +12,10 @@
 						</div>                                                                    
 						<div class="portlet-body">                 
                             
-                       
-                           <a onclick="modalReclamo()" data-toggle="modal" data-target="#modalNuevoReclamo" class="btn btn-success"> 
-                       
-                           <!--a data-toggle="modal" data-target="#modalNuevoReclamo" onclick="submenu('comunicacion/nuevoreclamo')" class="btn btn-success"--> 
+                           <!-- 
+                           <a onclick="modalNuevoReclamo()" data-toggle="modal" data-target="#modalNuevoReclamo" class="btn btn-success"> 
+                           --> 
+                           <a onclick="submenu('comunicacion/nuevoreclamo')" class="btn btn-success"> 
                            
                            <i class="fa fa-plus"></i> &nbsp;
                                     Nuevo Reclamo                            
@@ -26,6 +29,9 @@
 									<th>
 										 N&deg;
 									</th>
+                                                                      <!--  <th>
+										 Titulo
+									</th>-->
 									<th>
 										 Asunto
 									</th>
@@ -38,22 +44,38 @@
 								</tr>
 								</thead>
 								<tbody>
+                                                                    <?php
+                                                                    
+                                                   if (!empty($reclamos)) {
+                                                        foreach ($reclamos as $rcm) {
+                                                            ?>
+                                                        
 								<tr>
 									<td>
-										 15
+									 <?php echo $rcm['id']; ?>
+									</td>
+								<!--	<td>
+							  	 <?php //echo $rcm['titulo']; ?>
+									</td> -->
+                                                                        <td>
+							   <?php echo $rcm['id_asunto']; ?>
 									</td>
 									<td>
-							             Gritos
+							  <?php echo "Dpto ".$rcm['id_unidad']; ?>
 									</td>
-									<td>
-										 Dpto 1503
-									</td>
-									<td>
+                                                                        <td>
 										<a class="btn btn-circle btn-default">
-								            <i class="fa fa-thumbs-up"></i> 35 
+								            <i class="fa fa-thumbs-up"></i> <?php echo $rcm['cant_votos_pos']; ?>
                                         </a>	
+                                                                            					<a class="btn btn-circle btn-default">
+								            <i class="fa fa-thumbs-down"></i> <?php echo $rcm['cant_votos_neg']; ?>
+                                        </a>	
+							
 									</td>
 								</tr>
+                                                    <?php }
+                                                   
+                                                                        }else{echo '<tr><td colspan="5">No existen reclamos pendientes</td> </tr>';}?>
 								</tbody>
 								</table>
 
@@ -67,14 +89,13 @@
 
 <!-- MODAL Nuevo Reclamo -->
 
-<div class="modal fade" id="modalNuevoReclamo" role="dialog"  aria-hidden="true">
-    <div class="modal-dialog modal-sm">
-        <div  class="modal-content">
-        <div id="BodyNuevoReclamo" class="modal-body" >
-                Cargando...
-         </div> 
-        </div>                     
-    </div>              
-</div>
+ 
+<!-- FIN MODAL Nuevo Reclamo -->
+                    
+<script>
+toastr.options = {
+  "positionClass": "toast-top-center",
+}
 
-<!-- FIN MODAL Nuevo Reclamo -->                                                  
+ 
+</script>                                                   

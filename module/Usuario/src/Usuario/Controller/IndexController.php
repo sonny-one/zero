@@ -29,7 +29,25 @@ class IndexController extends AbstractActionController
     
     public function micondominioAction()
     { 
-        $result = new ViewModel();
+       
+            //Instancias
+            $sid = new Container('base');            
+            //Obtenemos datos de sesion                  
+              $db_name = $sid->offsetGet('dbNombre');
+            //Conectamos a BBDD Condominio
+            $this->dbAdapter = $this->getServiceLocator()->get($db_name); 
+            
+            //Obtenemos datos POST
+            $data = $this->request->getPost();
+            
+            //Tablas
+            $reclamo = new ReclamoTable($this->dbAdapter);            
+            $info['cantidad'] = $reclamo->getCantReclamo();
+                                    
+        //    $this->layout('layout/usuario');         
+ 
+        
+        $result = new ViewModel($info);
         $result->setTerminal(true);
        
         return $result;      
@@ -41,7 +59,7 @@ class IndexController extends AbstractActionController
             //Instancias
             $sid = new Container('base');            
             //Obtenemos datos de sesion                  
-            $db_name = $sid->offsetGet('dbNombre');
+              $db_name = $sid->offsetGet('dbNombre');
             //Conectamos a BBDD Condominio
             $this->dbAdapter = $this->getServiceLocator()->get($db_name); 
             

@@ -8,14 +8,18 @@ use Zend\Db\ResultSet\ResultSet;
 
 class ReclamoTable extends TableGateway
 {
+    private $ReclamoSugerencia;
     private $id_usuario;
-    private $id_dpto;
-    private $id_tipo_asunto;
-    private $receptor;
-    private $nombre;
-    private $estado;
-    private $descripcion;
-    private $date_start;
+    private $id_unidad;
+    private $id_reseptor;
+    private $id_asunto;
+    private $mensaje;
+    private $titulo;
+    private $id_estado;
+    private $cant_votos_pos;
+    private $cant_votos_neg;
+     
+    private $fecha;
     private $date_update;
     
     public $dbAdapter;
@@ -26,34 +30,37 @@ class ReclamoTable extends TableGateway
     }
      private function cargarCampos($datos=array())
     {
-       
+         
+         
+        $this->ReclamoSugerencia=$datos["ReclamoSugerencia"];
         $this->id_usuario=$datos["id_usuario"];
-        $this->id_dpto=$datos["id_dpto"];
-        $this->id_tipo_asunto=$datos["id_tipo_asunto"];
-        $this->nombre=$datos["nombre"];
-        $this->receptor=$datos["receptor"];
-        $this->estado=$datos["estado"];
-        $this->descripcion=$datos["descripcion"];
-        $fecha = time();
-        $this->date_start=date("Y-m-d H:i:s",$fecha);
-        $this->date_update=date("Y-m-d H:i:s",$fecha);
-        
+        $this->id_unidad=$datos["id_unidad"];
+        $this->id_reseptor=$datos["id_reseptor"];
+        $this->id_asunto=$datos["id_asunto"];
+        $this->mensaje=$datos["mensaje"];
+        $this->titulo=$datos["titulo"];
+        $fechas = time();
+        $this->fecha=date("Y-m-d H:i:s",$fechas);
+        $this->date_update=date("Y-m-d H:i:s",$fechas);
+      
         
     }
-    
-    
-    public function getReclamo($id)
+  public function getReclamo()
     {
-            $datos = $this->select(array('id'=>$id));
+            $datos = $this->select();
             return $datos->toArray();
     }
-    
-    
-    
-    public function getReclamos(Adapter $dbAdapter,$llave)
+    public function getCantReclamo()
+    {
+         
+            $datos = $this->select();
+            return $datos->count();
+    }
+  public function getReclamos(Adapter $dbAdapter,$llave)
     {
         
         $this->dbAdapter=$dbAdapter;
+       
         $query = "SELECT *,(select nombre from ad_s_dpto where id=id_dpto) as dpto ,(select nombre from ad_s_tipo_asunto where id=id_tipo_asunto) as asunto, (date_format(date_start,'%d-%m-%Y')) AS date_corta, substring(descripcion,1,12) as descripcion_corta FROM us_w_reclamo as uwr ";
         
         if($llave>0){
@@ -66,34 +73,42 @@ class ReclamoTable extends TableGateway
         return $result->toArray();
         
     }
-        
-    public function nuevoReclamo($data=array())
+  public function nuevoReclamo($data=array())
     {
-             self::cargarCampos($data);
+      if ($data['mensaje']!='') {
+          
+    
+            self::cargarCampos($data);
              $array=array
              (
-                'id_usuario'=>$this->id_usuario,
-                'id_dpto'=>$this->id_dpto,
-                'id_tipo_asunto'=>$this->id_tipo_asunto,
-                'nombre'=>$this->nombre,
-                'receptor'=>$this->receptor,
-                'descripcion'=>$this->descripcion,
-                'estado'=>'abierto',
-                'date_start'=>$this->date_start,
-                'date_update'=>$this->date_update
-                
-             );
-               $this->insert($array);
+               'ReclamoSugerencia'=>$this->ReclamoSugerencia,
+               'id_usuario'=>$this->id_usuario,
+               'titulo'=>$this->titulo,
+                'id_unidad'=>$this->id_unidad,
+               'id_reseptor'=>$this->id_reseptor,
+               'id_asunto'=>$this->id_asunto,
+               'mensaje'=>$this->mensaje,
+               'id_estado'=>1,
+               'fecha'=>$this->fecha,
+               'cant_votos_pos'=>0,
+               'cant_votos_neg'=>0,
+             // 'date_update'=>$this->date_update
                
+             );
+             
+            
+            $this->insert($array);
+         }
+
         }
-    public function actualizarReclamo($id, $data=array())
+  public function actualizarReclamo($id, $data=array())
     {
              self::cargarCampos($data);
              $array=array
              (
                 'id_usuario'=>$this->id_usuario,
                 'id_dpto'=>$this->id_dpto,
-                'id_tipo_asunto'=>$this->id_tipo_asunto,
+                'id_tipo_asunto'=>$this->asunto,
                 'nombre'=>$this->nombre,
                 'receptor'=>$this->receptor,
                 'descripcion'=>$this->descripcion,
@@ -132,7 +147,7 @@ class ReclamoTable extends TableGateway
     {
         $this->delete(array('id' => $id));
     }
-    
-    
+       
+ 
     
 }

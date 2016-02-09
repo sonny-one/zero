@@ -1,4 +1,5 @@
-            <div class="row">
+
+
                 <div class="col-xs-12">
                     <div class="panel panel-info">
                         <div class="panel-body">
@@ -14,32 +15,53 @@
                                     'method' => 'post'
                                     ));
                                     echo $this->form()->openTag($form);
-                                    echo $this->formRow($this->form->get('nombre'));
-                                    ?>
+                                        ?>
+                                             <div class="form-group">
+                                                 <?php
+                                               
+                                                 echo $this->formRow($this->form->get('id_usuario'));
+                                           ?>
+                                        <div class="form-group">
+                                        <div class="btn-group" data-toggle="buttons">
+                                        <label class="btn btn-default active">
+                                        <input type="radio" name="ReclamoSugerencia" value="Reclamo" id="ReclamoSugerencia"class="toggle">Reclamo</label>
+                                        <label class="btn btn-default">
+                                        <input type="radio" name="ReclamoSugerencia" value="Sugerencia" id="ReclamoSugerencia"class="toggle">Sugerencia</label>
+                                        </div>
+                                        </div>
                                         <div class="form-group">
                                             <label>Departamento</label>
+                                            <?php  
+                                        echo $this->formRow($this->form->get('id_unidad'));
+                                
+                                    ?>
+                                             </div>
+                                                 
+                                        <div class="form-group">
+                                            <label>Titulo</label>
                                             <?php                                             
-                                              echo $this->formRow($this->form->get('nombre'));
+                                              echo $this->formRow($this->form->get('titulo'));
                                             ?>
                                         </div>
                                         <div class="form-group">
                                             <label>Para</label>
                                             <?php 
-                                              echo $this->formInput($this->form->get('nombre'));
+                                              echo $this->formRow($this->form->get('id_reseptor'));
                                             ?>                                            
                                         </div> 
                                         <div class="form-group">
                                             <label>Asunto</label>
                                             <?php 
-                                              echo $this->formRow($this->form->get('asunto'));
+                                              echo $this->formRow($this->form->get('id_asunto'));
                                             ?>
-                                        </div>                                                                                  
-                                        <div class="form-group">
-                                            <label>Descripcion</label>                                            
+                                        </div>
+                                            <div class="form-group">
+                                            <label>Mensaje</label>
                                             <?php 
-                                              echo $this->formRow($this->form->get('nombre'));
+                                              echo $this->formRow($this->form->get('mensaje'));
                                             ?>
-                                        </div>                                    
+                                        </div>  
+                                                                 
                                         <div class="form-group">
                                         <p class="help-block">Su reclamo sera notificado por nuestro sistema al Administrador</p>            
                                         <?php
@@ -64,8 +86,9 @@
                 <!-- /.col-lg-12 -->
             </div>
 <script>
+    
 $("#form_reclamo").submit(function(e){
-    $("#asunto_reclamo").prop("disabled", false);    
+    $("#id_unidad").prop("disabled", false);    
     var postData = $(this).serializeArray();
     var formURL = $(this).attr("action");
     $.ajax(
@@ -75,12 +98,14 @@ $("#form_reclamo").submit(function(e){
         data : postData,
         dataType : 'json',
         success : function(response) {
+            
             if(response.status == 'ok'){              
                 toastr.success(response.desc)             
             }                                                       
         },
         error: function(jqXHR, textStatus, errorThrown) 
         {            
+             $("#id_unidad").prop("disabled", true); 
          toastr.error("Ups! Ocurrio un problema, favor contacta con al equipo de soporte");      
         } 
     });

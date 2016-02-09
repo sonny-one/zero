@@ -1,0 +1,65 @@
+.btns:hover{ 
+
+height:80px;
+width: 105px;
+
+
+ border: 2px solid #00FFE6;
+}
+ 
+ 
+
+.btns{
+ /* background-image:url("../img/casa.png");
+  */
+  background-size: 100%;
+  background-repeat: no-repeat;
+  height:70px;
+  width:105px;
+  background-position:center;
+margin-left: 30px;
+margin-bottom: 10px;
+border-radius: 78px 78px 78px 78px;
+-moz-border-radius: 78px 78px 78px 78px;
+-webkit-border-radius: 78px 78px 78px 78px;
+border: 0px solid #000000;
+
+
+-webkit-box-shadow: -10px 10px 5px 0px rgba(0,0,0,0.75);
+-moz-box-shadow: -10px 10px 5px 0px rgba(0,0,0,0.75);
+box-shadow: -10px 10px 5px 0px rgba(0,0,0,0.75);
+
+
+
+
+}
+
+
+ 
+
+.btnss{
+ /* background-image:url("../img/casa.png");
+  */
+  background-size: 100%;
+  background-repeat: no-repeat;
+  height:70px;
+  width:70px;
+  background-position:center;
+margin-left: 30px;
+margin-bottom: 10px;
+border-radius: 78px 78px 78px 78px;
+-moz-border-radius: 78px 78px 78px 78px;
+-webkit-border-radius: 78px 78px 78px 78px;
+border: 0px solid #000000;
+
+
+-webkit-box-shadow: -10px 10px 5px 0px rgba(0,0,0,0.75);
+-moz-box-shadow: -10px 10px 5px 0px rgba(0,0,0,0.75);
+box-shadow: -10px 10px 5px 0px rgba(0,0,0,0.75);
+
+
+
+
+}
+
+

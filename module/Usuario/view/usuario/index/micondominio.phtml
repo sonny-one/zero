@@ -1,15 +1,21 @@
-<hr>  
+
+
 <div class=" row col-xs-12 col-sm-12  col-md-12  col-lg-12	" > 
- <div class=" row col-xs-6  col-sm-4  col-md-4  col-lg-2 " > 
-     <center>
- <input type="button" class="btnss" onclick="submenu('comunicacion/reclamo')" 
-  style="background-image:url(<?php echo $this->basePath()?>/img/reclamo.jpg)"/> 
-     </center>
-     <center>
-<font SIZE="4" COLOR="#5C9ACF"><b>Reclamos y sugerencias</b></font> </center>
-
+ <div class=" row col-xs-6  col-sm-4  col-md-4  col-lg-2" > 
+    
+ 
+   <a  onclick="submenu('comunicacion/reclamo')" class="icon-btn btns">
+<i class="fa fa-bullhorn "></i>
+<div>
+Reclamos y sugerencias
+</div>
+<span class="badge badge-danger">
+ <?php echo $cantidad ?>
+</span>
+</a>  
+     
+ 
  </div>
 
  </div>
-<hr>
-
+ 
