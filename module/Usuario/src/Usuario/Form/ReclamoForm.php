@@ -253,7 +253,8 @@ class ReclamoForm extends Form {
                 'id' => 'send_prov',
                 'value' => 'Ingresar Nuevo Proveedor',
                 'title' => 'Enviar',
-                'class' => 'btn btn-success'
+                'class' => 'btn btn-success',
+          
             ),
         ));
         //Boton Cancelar
@@ -265,6 +266,7 @@ class ReclamoForm extends Form {
                 'onclick' => "submenu('comunicacion/reclamo');",
                 'title' => 'Cancelar',
                 'class' => 'btn btn-danger'
+              
             ),
         ));
 
