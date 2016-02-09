@@ -20,8 +20,7 @@ class ComunicacionController extends AbstractActionController {
         $this->dbAdapter = $this->getServiceLocator()->get($db_name);
         //Instancias
         $recl = new ReclamoTable($this->dbAdapter);
-      
-          $data['reclamos']=$recl->getReclamo();
+        $data['reclamos']=$recl->getReclamo($this->dbAdapter);
         //Retornamos a la vista       
         $result = new ViewModel($data);
         $result->setTerminal(true);
@@ -73,8 +72,9 @@ class ComunicacionController extends AbstractActionController {
 
 
     public function megustareclamoAction() {
-        //Obtenemos datos post                                                      
-        $data = $this->request->getPost();
+        //Obtenemos datos post               
+       $id=$this->params()->fromRoute("id",null);
+       //$data = $this->request->getPost();
 
         //Conectamos con BBDD
         $sid = new Container('base');
@@ -83,15 +83,36 @@ class ComunicacionController extends AbstractActionController {
 
         //Instancias
         $recl = new ReclamoTable($this->dbAdapter);
-        $recl->megustaReclamo($this->dbAdapter, $data['id']);
+        $recl->megustaReclamo($this->dbAdapter, $id);
 
         //Retornamos a la vista        
-        $result = new JsonModel(array('status' => 'ok', 'desc' => 'Camnpo actualizado'));
+      $result = new JsonModel(array('status' => 'ok', 'desc' => 'Camnpo N°'.$id. ' fue actualizado'));
+        $result->setTerminal(true);
+        return $result;
+        
+    }
+    public function nomegustareclamoAction() {
+        //Obtenemos datos post               
+       $id=$this->params()->fromRoute("id",null);
+       //$data = $this->request->getPost();
+
+        //Conectamos con BBDD
+        $sid = new Container('base');
+        $db_name = $sid->offsetGet('dbNombre');
+        $this->dbAdapter = $this->getServiceLocator()->get($db_name);
+
+        //Instancias
+        $recl = new ReclamoTable($this->dbAdapter);
+        $recl->nomegustaReclamo($this->dbAdapter, $id);
+
+        //Retornamos a la vista        
+      $result = new JsonModel(array('status' => 'ok', 'desc' => 'Camnpo N°'.$id. ' fue actualizado'));
+        $result->setTerminal(true);
         return $result;
         
     }
 
-    
+ 
     /*
       public function modalnotasAction()
       {

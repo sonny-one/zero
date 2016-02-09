@@ -23,10 +23,10 @@
                                            ?>
                                         <div class="form-group">
                                         <div class="btn-group" data-toggle="buttons">
-                                        <label class="btn btn-default active">
-                                        <input type="radio" name="ReclamoSugerencia" value="Reclamo" id="ReclamoSugerencia"class="toggle">Reclamo</label>
                                         <label class="btn btn-default">
-                                        <input type="radio" name="ReclamoSugerencia" value="Sugerencia" id="ReclamoSugerencia"class="toggle">Sugerencia</label>
+                                            <input type="radio" name="ReclamoSugerencia" value="Reclamo"  id="ReclamoSugerencia"class="toggle">Reclamo</label>
+                                        <label class="btn btn-default active">
+                                        <input type="radio" name="ReclamoSugerencia" value="Sugerencia" checked="true" id="ReclamoSugerencia"class="toggle">Sugerencia</label>
                                         </div>
                                         </div>
                                         <div class="form-group">
@@ -100,7 +100,16 @@ $("#form_reclamo").submit(function(e){
         success : function(response) {
             
             if(response.status == 'ok'){              
-                toastr.success(response.desc)             
+                toastr.success(response.desc) 
+             $.ajax({            
+            url: '<?php echo $this->basePath() . "/usuario/comunicacion/reclamo" ?>',
+            type: 'post',
+            success: function (response) {                             
+                $('#menu_usuario').fadeIn('slow');
+                $("#menu_usuario").html(response);
+
+            }
+        });    
             }                                                       
         },
         error: function(jqXHR, textStatus, errorThrown) 

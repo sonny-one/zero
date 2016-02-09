@@ -1,5 +1,6 @@
   <br><br>
 <br><br><br> 
+ 
 
 <div class="row">
 				<div class="col-md-12 ">
@@ -45,7 +46,7 @@
 								</thead>
 								<tbody>
                                                                     <?php
-                                                                    
+                                                                   
                                                    if (!empty($reclamos)) {
                                                         foreach ($reclamos as $rcm) {
                                                             ?>
@@ -58,18 +59,42 @@
 							  	 <?php //echo $rcm['titulo']; ?>
 									</td> -->
                                                                         <td>
-							   <?php echo $rcm['id_asunto']; ?>
-									</td>
+
+
+<div class="dropdown dropdown-extended dropdown-notification dropdown-dark " id="<?php echo $rcm['id']; ?>">
+    
+<a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" 
+   data-close-others="true" aria-expanded="true">
+    
+<?php echo $rcm['asunto'] ?>
+ 
+</a>
+<ul class="dropdown-menu">
+ <div class="slimScrollDiv text-left" style="position: relative; overflow: hidden; width: auto; height: auto;">
+     Titulo:<b><?php echo $rcm['titulo'] ?> </b> <hr>    
+     Estado:<B><?php echo $rcm['estado'] ?> </b>  <hr>    
+     
+     Mensaje:<br><b>  
+<?php echo $rcm['mensaje'] ?>
+     </b>
+    </div>
+</ul>
+</div>
+
+                                                                 
+                                                                        
+                                                                        
+                                                                        </td>
 									<td>
 							  <?php echo "Dpto ".$rcm['id_unidad']; ?>
 									</td>
                                                                         <td>
-										<a class="btn btn-circle btn-default">
-								            <i class="fa fa-thumbs-up"></i> <?php echo $rcm['cant_votos_pos']; ?>
-                                        </a>	
-                                                                            					<a class="btn btn-circle btn-default">
-								            <i class="fa fa-thumbs-down"></i> <?php echo $rcm['cant_votos_neg']; ?>
-                                        </a>	
+                                                                         <a class="btn btn-circle btn-default" onclick="updown('comunicacion/megustareclamo','<?php echo$rcm['id']; ?>' )" >
+								         <i class="fa fa-thumbs-up"></i> <?php echo $rcm['cant_votos_pos']; ?>
+                                                                         </a>	
+                                                                         <a class="btn btn-circle btn-default" onclick="updown('comunicacion/nomegustareclamo','<?php echo$rcm['id']; ?>' )" >
+								         <i class="fa fa-thumbs-down"></i> <?php echo $rcm['cant_votos_neg']; ?>
+                                                                         </a>
 							
 									</td>
 								</tr>

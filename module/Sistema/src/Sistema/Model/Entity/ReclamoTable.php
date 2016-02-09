@@ -45,18 +45,43 @@ class ReclamoTable extends TableGateway
       
         
     }
-  public function getReclamo()
+    
+     public function getReclamo(Adapter $dbAdapter)
     {
-            $datos = $this->select();
-            return $datos->toArray();
-    }
+        
+$this->dbAdapter=$dbAdapter;
+$query="
+select 
+r.id,
+r.id_unidad,
+r.id_asunto,
+r.titulo,
+a.nombre as asunto,
+r.mensaje,
+r.cant_votos_pos,
+r.cant_votos_neg,
+e.nombre as estado
+FROM sis_w_reclamo r 
+inner join sis_m_asunto_reclamo a on a.id=r.id_asunto 
+inner join sis_m_estado_reclamo e on e.id=r.id_estado
+order by id DESC
+"; 
+        
+        $result=$this->dbAdapter->query($query,Adapter::QUERY_MODE_EXECUTE);
+        return $result->toArray();
+        
+    } 
+ 
+
+            
+   
     public function getCantReclamo()
     {
          
             $datos = $this->select();
             return $datos->count();
     }
-  public function getReclamos(Adapter $dbAdapter,$llave)
+  public function getReclamos(Adapter $dbAdapter)
     {
         
         $this->dbAdapter=$dbAdapter;
@@ -124,11 +149,25 @@ class ReclamoTable extends TableGateway
     {             
         $this->dbAdapter=$dbAdapter;
 
-        $query =  "SELECT count(*) as total FROM us_w_reclamo WHERE id='$id' order by id desc";              
+        $query =  "UPDATE sis_w_reclamo
+                    SET sis_w_reclamo.cant_votos_pos=sis_w_reclamo.cant_votos_pos+1
+                    WHERE sis_w_reclamo.id='$id';";              
         
         $this->dbAdapter->query($query,Adapter::QUERY_MODE_EXECUTE);		
 
     }
+       public function nomegustaReclamo(Adapter $dbAdapter, $id)
+    {             
+        $this->dbAdapter=$dbAdapter;
+
+        $query =  "UPDATE sis_w_reclamo
+                    SET sis_w_reclamo.cant_votos_neg=sis_w_reclamo.cant_votos_neg+1
+                    WHERE sis_w_reclamo.id='$id';";              
+        
+        $this->dbAdapter->query($query,Adapter::QUERY_MODE_EXECUTE);		
+
+    }
+    
     public function getEstadistica(Adapter $dbAdapter, $flag)
     {
         
