@@ -74,16 +74,17 @@ class ComunicacionController extends AbstractActionController {
     public function megustareclamoAction() {
         //Obtenemos datos post               
        $id=$this->params()->fromRoute("id",null);
+       
        //$data = $this->request->getPost();
-
+ 
         //Conectamos con BBDD
         $sid = new Container('base');
         $db_name = $sid->offsetGet('dbNombre');
         $this->dbAdapter = $this->getServiceLocator()->get($db_name);
-
+        $id_usuario=$sid->id_usuario;
         //Instancias
         $recl = new ReclamoTable($this->dbAdapter);
-        $recl->megustaReclamo($this->dbAdapter, $id);
+        $recl->megustaReclamo($this->dbAdapter, $id,$id_usuario);
 
         //Retornamos a la vista        
       $result = new JsonModel(array('status' => 'ok', 'desc' => 'Camnpo N°'.$id. ' fue actualizado'));
@@ -100,10 +101,11 @@ class ComunicacionController extends AbstractActionController {
         $sid = new Container('base');
         $db_name = $sid->offsetGet('dbNombre');
         $this->dbAdapter = $this->getServiceLocator()->get($db_name);
+        $id_usuario=$sid->id_usuario;
 
         //Instancias
         $recl = new ReclamoTable($this->dbAdapter);
-        $recl->nomegustaReclamo($this->dbAdapter, $id);
+        $recl->nomegustaReclamo($this->dbAdapter, $id,$id_usuario);
 
         //Retornamos a la vista        
       $result = new JsonModel(array('status' => 'ok', 'desc' => 'Camnpo N°'.$id. ' fue actualizado'));

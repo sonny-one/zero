@@ -58,12 +58,13 @@ r.id_asunto,
 r.titulo,
 a.nombre as asunto,
 r.mensaje,
-r.cant_votos_pos,
-r.cant_votos_neg,
+ifnull(c.cant_votos_pos,0) as cant_votos_pos,
+ifnull(c.cant_votos_neg,0) as cant_votos_neg,
 e.nombre as estado
 FROM sis_w_reclamo r 
 inner join sis_m_asunto_reclamo a on a.id=r.id_asunto 
 inner join sis_m_estado_reclamo e on e.id=r.id_estado
+left join (select id_reclamo,sum(cant_votos_pos) as cant_votos_pos , SUM(cant_votos_neg) as cant_votos_neg from sis_w_contmegusta group by id_reclamo) c on c.id_reclamo=r.id
 order by id DESC
 "; 
         
@@ -145,24 +146,32 @@ order by id DESC
         $this->update($array, array('id' => $id));
     }
     
-    public function megustaReclamo(Adapter $dbAdapter, $id)
+    public function megustaReclamo(Adapter $dbAdapter, $id,$id_usuario)
     {             
         $this->dbAdapter=$dbAdapter;
 
-        $query =  "UPDATE sis_w_reclamo
-                    SET sis_w_reclamo.cant_votos_pos=sis_w_reclamo.cant_votos_pos+1
-                    WHERE sis_w_reclamo.id='$id';";              
+             $query =  "INSERT INTO sis_w_contmegusta 
+                set id_reclamo=$id, 
+		id_usuario=$id_usuario, 
+                cant_votos_pos=1,
+                cant_votos_neg=0 
+                ON DUPLICATE KEY UPDATE id_reclamo=$id, id_usuario=$id_usuario,
+                cant_votos_pos =1,cant_votos_neg=0;";              
+                $this->dbAdapter->query($query,Adapter::QUERY_MODE_EXECUTE);	
         
-        $this->dbAdapter->query($query,Adapter::QUERY_MODE_EXECUTE);		
 
     }
-       public function nomegustaReclamo(Adapter $dbAdapter, $id)
+       public function nomegustaReclamo(Adapter $dbAdapter, $id,$id_usuario)
     {             
         $this->dbAdapter=$dbAdapter;
 
-        $query =  "UPDATE sis_w_reclamo
-                    SET sis_w_reclamo.cant_votos_neg=sis_w_reclamo.cant_votos_neg+1
-                    WHERE sis_w_reclamo.id='$id';";              
+          $query =  "INSERT INTO sis_w_contmegusta 
+                set id_reclamo=$id, 
+		id_usuario=$id_usuario, 
+                cant_votos_pos=0,
+                cant_votos_neg=1 
+                ON DUPLICATE KEY UPDATE id_reclamo=$id, id_usuario=$id_usuario,
+                cant_votos_pos =0,cant_votos_neg=1;";              
         
         $this->dbAdapter->query($query,Adapter::QUERY_MODE_EXECUTE);		
 
