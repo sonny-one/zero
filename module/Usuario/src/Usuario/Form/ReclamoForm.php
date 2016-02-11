@@ -251,7 +251,7 @@ class ReclamoForm extends Form {
             'attributes' => array(
                 'type' => 'submit',
                 'id' => 'send_prov',
-                'value' => 'Ingresar Nuevo Proveedor',
+                'value' => 'Ingresar Reclamo',
                 'title' => 'Enviar',
                 'class' => 'btn btn-success',
           

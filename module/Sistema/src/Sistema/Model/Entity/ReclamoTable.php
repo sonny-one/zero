@@ -157,9 +157,23 @@ order by id DESC
                 cant_votos_neg=0 
                 ON DUPLICATE KEY UPDATE id_reclamo=$id, id_usuario=$id_usuario,
                 cant_votos_pos =1,cant_votos_neg=0;";              
-                $this->dbAdapter->query($query,Adapter::QUERY_MODE_EXECUTE);	
-        
+          $result=$this->dbAdapter->query($query,Adapter::QUERY_MODE_EXECUTE);		
+          if($result->getAffectedRows()==0){
+              
+               $query =  "INSERT INTO sis_w_contmegusta 
+                set id_reclamo=$id, 
+		id_usuario=$id_usuario, 
+                cant_votos_pos=0,
+                cant_votos_neg=0 
+                ON DUPLICATE KEY UPDATE id_reclamo=$id, id_usuario=$id_usuario,
+                cant_votos_pos =0,cant_votos_neg=0;";              
+                $this->dbAdapter->query($query,Adapter::QUERY_MODE_EXECUTE);		
+              
+              
+          }
 
+     
+        
     }
        public function nomegustaReclamo(Adapter $dbAdapter, $id,$id_usuario)
     {             
@@ -173,7 +187,20 @@ order by id DESC
                 ON DUPLICATE KEY UPDATE id_reclamo=$id, id_usuario=$id_usuario,
                 cant_votos_pos =0,cant_votos_neg=1;";              
         
-        $this->dbAdapter->query($query,Adapter::QUERY_MODE_EXECUTE);		
+                $result=$this->dbAdapter->query($query,Adapter::QUERY_MODE_EXECUTE);		
+          if($result->getAffectedRows()==0){
+              
+               $query =  "INSERT INTO sis_w_contmegusta 
+                set id_reclamo=$id, 
+		id_usuario=$id_usuario, 
+                cant_votos_pos=0,
+                cant_votos_neg=0 
+                ON DUPLICATE KEY UPDATE id_reclamo=$id, id_usuario=$id_usuario,
+                cant_votos_pos =0,cant_votos_neg=0;";              
+                $this->dbAdapter->query($query,Adapter::QUERY_MODE_EXECUTE);		
+              
+              
+          }
 
     }
     
